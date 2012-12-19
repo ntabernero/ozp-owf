@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.ozoneplatform</groupId>
+        <artifactId>ozoneplatform</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>owf</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Ozone Widget Framework Parent Project</name>
+    <description>see README.md</description>
+
+    <properties>
+    </properties>
+
+    <scm>
+        <connection>scm:git:https://www.owfgoss.org/git/repos/owf8.git</connection>
+        <developerConnection>scm:git:https://www.owfgoss.org/git/repos/owf8.git</developerConnection>
+        <url>https://www.owfgoss.org/crucible/browse/owf8/</url>
+    </scm>
+
+    <modules>
+    </modules>
+
+</project>
