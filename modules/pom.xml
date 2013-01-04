@@ -3,11 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>marketplace</artifactId>
-        <groupId>org.ozoneplatform.marketplace</groupId>
+        <groupId>org.ozoneplatform.owf</groupId>
+        <artifactId>owf</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>org.ozoneplatform.owf</groupId>
     <artifactId>modules</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
