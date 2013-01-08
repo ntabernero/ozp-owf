@@ -14,8 +14,9 @@
     <name>Ozone Platform :: OWF Server Bundles</name>
     <packaging>pom</packaging>
     <modules>
-        <module>owfcontainer</module>
         <module>api</module>
+        <module>services</module>
+        <module>rest</module>
     </modules>
 
 </project>

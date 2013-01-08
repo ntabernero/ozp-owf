@@ -9,8 +9,8 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <name>Ozone Platform :: OWF Server Bundles :: OWF Container</name>
-    <artifactId>owfcontainer</artifactId>
+    <name>Ozone Platform :: OWF Server Bundles :: OWF Services</name>
+    <artifactId>services</artifactId>
 
 
 </project>
