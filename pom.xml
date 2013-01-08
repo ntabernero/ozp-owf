@@ -29,7 +29,7 @@
     </scm>
 
     <modules>
-        <module>modules</module>
+        <module>bundles</module>
     </modules>
 
 </project>
