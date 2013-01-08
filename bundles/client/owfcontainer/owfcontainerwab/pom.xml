@@ -3,15 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>client</artifactId>
-        <groupId>org.ozoneplatform.owf.client</groupId>
+        <artifactId>owfcontainer</artifactId>
+        <groupId>org.ozoneplatform.owf.client.owfcontainer</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ozoneplatformwab</artifactId>
-    <name>Ozone Platform :: OWF Client Bundles :: Application Server Pages (WAB)</name>
-    <description>Creates a Web Application Bundle for the Ozone Platform application</description>
+    <groupId>org.ozoneplatform.owf.client.owfcontainer</groupId>
+    <artifactId>owfcontainerwab</artifactId>
+
+    <name>Ozone Platform :: OWF Client Bundles :: Client OWF Container JSPs (WAB)</name>
+    <description>Creates a Container Web Application Bundle for the Ozone Platform application</description>
     <packaging>bundle</packaging>
 
     <dependencies>
@@ -36,8 +38,8 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.ozoneplatform.owf.client</groupId>
-                                    <artifactId>jsbase</artifactId>
+                                    <groupId>org.ozoneplatform.owf.client.owfcontainer.owfcontainerjs</groupId>
+                                    <artifactId>owfcontainerjsbase</artifactId>
                                     <version>${project.version}</version>
                                     <type>war</type>
                                     <!--<classifier>min</classifier>-->
@@ -75,10 +77,10 @@
                         <supportedProjectType>war</supportedProjectType>
                     </supportedProjectTypes>
                     <instructions>
-                        <Web-ContextPath>/ozoneplatform</Web-ContextPath>
+                        <Web-ContextPath>${webContextPath}</Web-ContextPath>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Private-Package>org.ozoneplatform.owf.client.*</Private-Package>
-                        <Export-Package>!org.ozoneplatform.owf.client.*</Export-Package>
+                        <Private-Package>org.ozoneplatform.owf.client.owfcontainer.*</Private-Package>
+                        <Export-Package>!org.ozoneplatform.owf.client.owfcontainer.*</Export-Package>
                         <!--<Meta-Persistence></Meta-Persistence>-->
                         <Import-Package>
                             javax.servlet*;version=2.5,

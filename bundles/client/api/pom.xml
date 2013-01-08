@@ -4,20 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>modules</artifactId>
-        <groupId>org.ozoneplatform.owf</groupId>
+        <artifactId>client</artifactId>
+        <groupId>org.ozoneplatform.owf.client</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.ozoneplatform.owf.client</groupId>
-    <artifactId>client</artifactId>
-    <name>Ozone Platform :: OWF Client Bundles</name>
+    <groupId>org.ozoneplatform.owf.client.api</groupId>
+    <artifactId>api</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>api</module>
-        <module>dashboard</module>
-        <module>owfcontainer</module>
-    </modules>
+    <name>Ozone Platform :: OWF Client Bundles :: Client APIs</name>
 
+    <properties>
+        <webContextPath>/ozoneplatform/api</webContextPath>
+    </properties>
+
+    <modules>
+        <module>apijs</module>
+        <module>apiwab</module>
+    </modules>
 
 </project>
