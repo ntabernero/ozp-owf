@@ -11,6 +11,7 @@
 
 
     <name>Ozone Platform :: OWF Server Bundles :: OWF APIs</name>
+    <groupId>org.ozoneplatform.owf.server.api</groupId>
     <artifactId>api</artifactId>
 
 

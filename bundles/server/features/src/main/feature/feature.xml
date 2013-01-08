@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<features name="org.ozoneplatform.owf.server.features.framework">
+	<!--
+		** BY DEFAULT, Features Turned ON:
+
+		-->
+
+	 <!-- FRAMEWORK FEATURES : --> 
+
+    <!-- TODO: API FEATURES -->
+    <feature name='org.ozoneplatform.owf.server.api' version="${project.version}" description="Ozone Platform :: OWF Server Bundles :: OWF OSGi Kernel Features :: Server API : ${project.version}">
+    </feature>
+
+
+
+     
+</features>

@@ -19,6 +19,7 @@
 
         <junitVersion>4.8.1</junitVersion>
         <geronimoServletVersion>1.2</geronimoServletVersion>
+        <build.helper.plugin.version>1.5</build.helper.plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -41,7 +42,7 @@
     </dependencyManagement>
 
     <modules>
-        <module>client</module>
         <module>server</module>
+        <module>client</module>
     </modules>
 </project>
