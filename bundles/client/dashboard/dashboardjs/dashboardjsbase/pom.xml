@@ -7,6 +7,7 @@
         <artifactId>dashboardjs</artifactId>
         <groupId>org.ozoneplatform.owf.client.dashboard</groupId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>org.ozoneplatform.owf.client.dashboard.dashboardjs</groupId>
@@ -26,6 +27,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+            <version>${junitVersion}</version>
         </dependency>
 
         <dependency>

@@ -7,6 +7,7 @@
         <artifactId>apijs</artifactId>
         <groupId>org.ozoneplatform.owf.client.api</groupId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>org.ozoneplatform.owf.client.api.apijs</groupId>
@@ -26,12 +27,13 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+            <version>${junitVersion}</version>
         </dependency>
 
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>jquery-amd</artifactId>
-            <version>1.8.2</version>
+            <version>1.8.3</version>
             <type>js</type>
         </dependency>
         <dependency>
