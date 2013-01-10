@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>org.ozoneplatform.owf.client.dashboard.dashboardjs</groupId>
-    <artifactId>dashboardjsbase</artifactId>
+    <artifactId>jsbase</artifactId>
     <packaging>war</packaging>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client Dashboard JavaScripts :: Base Dashboard</name>
