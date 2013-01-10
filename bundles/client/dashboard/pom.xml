@@ -20,8 +20,8 @@
     </properties>
 
     <modules>
-        <module>dashboardjs</module>
-        <module>dashboardwab</module>
+        <module>js</module>
+        <module>wab</module>
     </modules>
 
 </project>

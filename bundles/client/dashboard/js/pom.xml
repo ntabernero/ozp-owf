@@ -11,13 +11,13 @@
     </parent>
 
 
-    <artifactId>dashboardjs</artifactId>
+    <artifactId>js</artifactId>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client Dashboard JavaScripts</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>dashboardjsbase</module>
+        <module>dev</module>
     </modules>
 
 

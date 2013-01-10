@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.ozoneplatform.owf.client.dashboard</groupId>
-    <artifactId>dashboardwab</artifactId>
+    <artifactId>wab</artifactId>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client Dashboard JSPs (WAB)</name>
     <description>Creates a Dashboard Web Application Bundle for the Ozone Platform application</description>
