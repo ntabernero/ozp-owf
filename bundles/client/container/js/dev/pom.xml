@@ -9,8 +9,8 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.ozoneplatform.owf.client.owfcontainer.owfcontainerjs</groupId>
-    <artifactId>owfcontainerjsbase</artifactId>
+    <groupId>org.ozoneplatform.owf.client.owfcontainer.js</groupId>
+    <artifactId>dev</artifactId>
     <packaging>war</packaging>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client OWF Container JavaScripts :: BASE Container</name>

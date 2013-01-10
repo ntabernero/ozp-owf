@@ -10,13 +10,13 @@
     </parent>
 
 
-    <artifactId>owfcontainerjs</artifactId>
+    <artifactId>js</artifactId>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client OWF Container JavaScripts</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>owfcontainerjsbase</module>
+        <module>dev</module>
     </modules>
 
 

@@ -9,18 +9,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.ozoneplatform.owf.client.owfcontainer</groupId>
-    <artifactId>owfcontainer</artifactId>
+    <groupId>org.ozoneplatform.owf.client.container</groupId>
+    <artifactId>container</artifactId>
     <packaging>pom</packaging>
     <name>Ozone Platform :: OWF Client Bundles :: Client OWF Container</name>
 
     <properties>
-        <webContextPath>/ozoneplatform/owfcontainer</webContextPath>
+        <webContextPath>/ozoneplatform/container</webContextPath>
     </properties>
 
     <modules>
-        <module>owfcontainerjs</module>
-        <module>owfcontainerwab</module>
+        <module>js</module>
+        <module>wab</module>
     </modules>
 
 </project>

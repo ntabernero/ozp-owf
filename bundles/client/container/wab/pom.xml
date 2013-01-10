@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.ozoneplatform.owf.client.owfcontainer</groupId>
-    <artifactId>owfcontainerwab</artifactId>
+    <groupId>org.ozoneplatform.owf.client.container</groupId>
+    <artifactId>wab</artifactId>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client OWF Container JSPs (WAB)</name>
     <description>Creates a Container Web Application Bundle for the Ozone Platform application</description>

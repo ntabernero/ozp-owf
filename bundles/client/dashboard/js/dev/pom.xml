@@ -10,8 +10,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.ozoneplatform.owf.client.dashboard.dashboardjs</groupId>
-    <artifactId>jsbase</artifactId>
+    <groupId>org.ozoneplatform.owf.client.dashboard.js</groupId>
+    <artifactId>dev</artifactId>
     <packaging>war</packaging>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client Dashboard JavaScripts :: Base Dashboard</name>
