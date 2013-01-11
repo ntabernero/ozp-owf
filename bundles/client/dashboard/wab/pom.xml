@@ -50,6 +50,15 @@
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/includeIntoWar</outputDirectory>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                    <artifactId>jquery-ui-amd</artifactId>
+                                    <version>1.9.2</version>
+                                    <type>zip</type>
+                                    <classifier>jquery-ui</classifier>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/includeIntoWar</outputDirectory>
+                                </artifactItem>
                             </artifactItems>
                             <outputDirectory>${project.build.directory}/wars</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
