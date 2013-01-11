@@ -26,6 +26,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+            <version>${junitVersion}</version>
         </dependency>
 
         <dependency>
@@ -48,8 +49,8 @@
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-            <artifactId>lodash-amd</artifactId>
-            <version>1.0.0-rc.3</version>
+            <artifactId>backbone-amd</artifactId>
+            <version>0.9.9</version>
             <type>js</type>
         </dependency>
         <dependency>
@@ -108,7 +109,7 @@
 
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.5</version>
+                <version>2.6</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
@@ -116,8 +117,25 @@
                             <goal>resources</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/minified-output</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/webapp</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
+
             <!--TODO: UNCOMMENT HERE TO BRING IN JS!!!!  -->
             <!--
                 <plugin>
@@ -135,7 +153,7 @@
                     </executions>
                 </plugin>
             -->
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>webminifier-maven-plugin</artifactId>
                 <version>1.0.1</version>
@@ -147,7 +165,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.2.1</version>
@@ -186,7 +204,7 @@
                     <webResources>
                         <resource>
                             <!-- this is relative to the pom.xml directory -->
-                            <directory>${project.build.outputDirectory}</directory>
+                            <directory>${project.build.directory}/minified-output</directory>
                         </resource>
                     </webResources>
                 </configuration>
@@ -200,7 +218,112 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                    <artifactId>jquery-amd</artifactId>
+                                    <version>1.8.3</version>
+                                    <type>zip</type>
+                                    <classifier>jquery</classifier>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                    <artifactId>jquery-ui-amd</artifactId>
+                                    <version>1.9.2</version>
+                                    <type>zip</type>
+                                    <classifier>jquery-ui</classifier>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                    <artifactId>lodash-amd</artifactId>
+                                    <version>1.0.0-rc.3</version>
+                                    <type>zip</type>
+                                    <classifier>lodash</classifier>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                    <artifactId>backbone-amd</artifactId>
+                                    <version>0.9.9</version>
+                                    <type>zip</type>
+                                    <classifier>backbone</classifier>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                    <artifactId>require</artifactId>
+                                    <version>2.1.1</version>
+                                    <type>zip</type>
+                                    <classifier>require</classifier>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/wars</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.mcheely</groupId>
+                <artifactId>requirejs-maven-plugin</artifactId>
+                <version>1.0.3</version>
+                <executions>
+                    <!-- <execution>
+                        <id>concatenate-css</id>
+                        <goals>
+                            <goal>optimize</goal>
+                        </goals>
+                        <configuration>
+                            <configFile>
+                                ${basedir}/src/build/buildconfig-concatenate-css.js
+                            </configFile>
+                            <optimizerFile>
+                                ${basedir}/src/build/r-2.0.6-plus.js
+                            </optimizerFile>
+                            <filterConfig>
+                                false
+                            </filterConfig>
+                        </configuration>
+                    </execution> -->
+                    <execution>
+                        <id>minify-javascript</id>
+                        <goals>
+                            <goal>optimize</goal>
+                        </goals>
+                        <configuration>
+                            <configFile>
+                                ${basedir}/src/build/buildconfig-minify-javascript.js
+                            </configFile>
+                            <optimizerFile>
+                                ${basedir}/src/build/r-2.0.6-plus.js
+                            </optimizerFile>
+                            <filterConfig>
+                                false
+                            </filterConfig>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
         </plugins>
     </build>
