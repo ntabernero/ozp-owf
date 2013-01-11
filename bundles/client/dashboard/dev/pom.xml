@@ -85,10 +85,7 @@
                         <defaultsDescriptor>src/jetty/webdefault.xml</defaultsDescriptor>
                         <contextPath>/</contextPath>
                         <resourceBases>
-                            <resourceBase>src/main/</resourceBase>
-                            <resourceBase>${project.build.outputDirectory}</resourceBase>
-                            <resourceBase>${project.build.directory}/plugins/</resourceBase>
-                            <!--<resourceBase>src/main/resources</resourceBase>-->
+                            <resourceBase>${project.build.directory}/minified-output</resourceBase>
                         </resourceBases>
                     </webAppConfig>
                 </configuration>
@@ -125,7 +122,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/minified-output</outputDirectory>
+                            <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/webapp</directory>
