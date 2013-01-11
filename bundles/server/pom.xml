@@ -19,7 +19,6 @@
         <module>services</module>
         <module>rest</module>
         <module>persistence</module>
-        <module>features</module>
     </modules>
 
 </project>
