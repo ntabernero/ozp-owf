@@ -12,7 +12,7 @@
 
     <artifactId>features</artifactId>
     <packaging>pom</packaging>
-    <name>Ozone Platform :: OWF Server Bundles :: OWF OSGi Kernel Features</name>
+    <name>Ozone Platform :: OWF OSGi Kernel Features</name>
 
 
     <build>

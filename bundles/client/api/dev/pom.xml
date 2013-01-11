@@ -15,7 +15,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>Ozone Platform :: OWF :: Bundles :: Client :: API</name>
+    <name>Ozone Platform :: OWF Client Bundles :: Client APIs :: BASE API</name>
 
     <properties>
         <jslintVersion>1.0.1</jslintVersion>
