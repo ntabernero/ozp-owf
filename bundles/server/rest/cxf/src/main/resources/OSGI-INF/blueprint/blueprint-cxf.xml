@@ -29,7 +29,9 @@
       This bean carries a set of JAX-RS annotations that allow its methods to be mapped to incoming requests.
     -->
 
+    <bean id="dashboardController" class="org.ozoneplatform.owf.server.rest.cxf.UserDashboardController"/>
 
+    <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
     <!--
       The <jaxrs:server/> element sets up our JAX-RS services.  It defines:
       - the server's address, '/crm', relative to the default CXF servlet URI
@@ -37,8 +39,12 @@
       - a list of service beans
     -->
     <jaxrs:server id="ozoneplatform_cxf_endpoint"  address="/ozoneplatform/rest">
-        <jaxrs:serviceBeans></jaxrs:serviceBeans>
-        <jaxrs:providers></jaxrs:providers>
+        <jaxrs:serviceBeans>
+            <ref component-id="dashboardController" />
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref component-id="jsonProvider" />
+        </jaxrs:providers>
     </jaxrs:server>
 
 </blueprint>
