@@ -26,6 +26,7 @@
     </dependencies>
 
     <build>
+        <finalName>${groupId}-${artifactId}-${version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -40,8 +41,8 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.ozoneplatform.owf.client.dashboard.dashboardjs</groupId>
-                                    <artifactId>dashboardjsbase</artifactId>
+                                    <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
+                                    <artifactId>dev</artifactId>
                                     <version>${project.version}</version>
                                     <type>war</type>
                                     <!--<classifier>min</classifier>-->
@@ -79,10 +80,10 @@
                         <supportedProjectType>war</supportedProjectType>
                     </supportedProjectTypes>
                     <instructions>
-                        <Web-ContextPath>${webContextPath}</Web-ContextPath>
-                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Private-Package>org.ozoneplatform.owf.client.dashboard.*</Private-Package>
-                        <Export-Package>!org.ozoneplatform.owf.client.dashboard.*</Export-Package>
+                        <Web-ContextPath>/owf/dashboard</Web-ContextPath>
+                        <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+                        <Private-Package>org.ozoneplatform.owf.bundles.client.dashboard.*</Private-Package>
+                        <Export-Package>!org.ozoneplatform.owf.bundles.client.dashboard.*</Export-Package>
                         <!--<Meta-Persistence></Meta-Persistence>-->
                         <Import-Package>
                             javax.servlet*;version=2.5,

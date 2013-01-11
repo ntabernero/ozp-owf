@@ -3,24 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+        <groupId>org.ozoneplatform.owf.bundles.client</groupId>
         <artifactId>client</artifactId>
-        <groupId>org.ozoneplatform.owf.client</groupId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.ozoneplatform.owf.client.dashboard</groupId>
+    <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
     <artifactId>dashboard</artifactId>
     <packaging>pom</packaging>
     <name>Ozone Platform :: OWF Client Bundles :: Client OWF Dashboard (Canvas)</name>
 
-    <properties>
-        <webContextPath>/ozoneplatform/dashboard</webContextPath>
-    </properties>
-
     <modules>
-        <module>js</module>
+        <module>dev</module>
         <module>wab</module>
     </modules>
 

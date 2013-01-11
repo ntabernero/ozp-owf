@@ -4,18 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>apijs</artifactId>
-        <groupId>org.ozoneplatform.owf.client.api</groupId>
+        <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
+        <artifactId>dashboard</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.ozoneplatform.owf.client.api.apijs</groupId>
-    <artifactId>apijsbase</artifactId>
+    <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
+    <artifactId>dev</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <name>Ozone Platform :: OWF Client Bundles :: Client Dashboard JavaScripts :: Base Dashboard</name>
     <packaging>war</packaging>
-
-    <name>Ozone Platform :: OWF Client Bundles :: Client API JavaScripts :: Base API</name>
-
 
     <properties>
         <jslintVersion>1.0.1</jslintVersion>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>jquery-amd</artifactId>
-            <version>1.8.3</version>
+            <version>1.8.2</version>
             <type>js</type>
         </dependency>
         <dependency>
