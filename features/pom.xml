@@ -1,25 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.ozoneplatform.owf</groupId>
         <artifactId>owf</artifactId>
+        <groupId>org.ozoneplatform.owf</groupId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <groupId>org.ozoneplatform.owf</groupId>
     <artifactId>features</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Ozone Platform :: OWF OSGi Kernel Features</name>
-
+    <name>Ozone Platform :: OWF Server Bundles :: OWF OSGi Kernel Features</name>
 
     <build>
         <resources>
-            <!--
-            Resources for this blog features framework
-            -->
             <resource>
                 <directory>src/main/feature</directory>
                 <filtering>true</filtering>
@@ -48,10 +44,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--
-            	Puts the features XML file for this Distribution
-            	into the maven repo
-             -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -67,7 +59,7 @@
                         <configuration>
                             <artifacts>
                                 <artifact>
-                                    <file>target/classes/feature.xml</file>
+                                    <file>target/classes/features.xml</file>
                                     <type>xml</type>
                                     <classifier>features</classifier>
                                 </artifact>
@@ -78,5 +70,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

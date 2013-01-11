@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<features name="org.ozoneplatform.owf.features-repo">
+   
+    <feature name="owf" version="${project.version}" description="${project.description}">
+        <!--wab bundles-->
+        <bundle start-level="80">mvn:org.ozoneplatform.owf.bundles.client.container/wab/${project.version}</bundle>
+        <bundle start-level="80">mvn:org.ozoneplatform.owf.bundles.client.api/wab/${project.version}</bundle>
+        <bundle start-level="80">mvn:org.ozoneplatform.owf.bundles.client.dashboard/wab/${project.version}</bundle>
+        <!--wab bundles-->
+    </feature>
+
+</features>
