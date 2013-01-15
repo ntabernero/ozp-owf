@@ -29,23 +29,26 @@
       This bean carries a set of JAX-RS annotations that allow its methods to be mapped to incoming requests.
     -->
     
-    <reference id="groupservice" interface="org.ozoneplatform.owf.server.service.GroupService"/>
-    <reference id="userservice" interface="org.ozoneplatform.owf.server.service.UserService"/>
-    <reference id="stackservice" interface="org.ozoneplatform.owf.server.service.StackService"/>
-    <reference id="preferenceservice" interface="org.ozoneplatform.owf.server.service.PreferenceService"/>
+    <reference id="groupService" interface="org.ozoneplatform.owf.server.service.GroupService"/>
+    <reference id="userService" interface="org.ozoneplatform.owf.server.service.UserService"/>
+    <reference id="stackService" interface="org.ozoneplatform.owf.server.service.StackService"/>
+    <reference id="preferenceService" interface="org.ozoneplatform.owf.server.service.PreferenceService"/>
+    <reference id="personalDashboardService" interface="org.ozoneplatform.owf.server.service.PersonalDashboardService"/>
 
-    <bean id="dashboardController" class="org.ozoneplatform.owf.server.rest.cxf.UserDashboardController"/>
+    <bean id="personalDashboardController" class="org.ozoneplatform.owf.server.rest.cxf.PersonalDashboardController">
+        <property name="personalDashboardService" ref="personalDashboardService"/>
+    </bean>
     <bean id="preferences" class="org.ozoneplatform.owf.server.rest.cxf.PreferenceController">
-        <property name="preferenceService" ref="preferenceservice"/>
+        <property name="preferenceService" ref="preferenceService"/>
     </bean>
     <bean id="users" class="org.ozoneplatform.owf.server.rest.cxf.UserController">
-        <property name="userService" ref="userservice"/>
+        <property name="userService" ref="userService"/>
     </bean>
     <bean id="groups" class="org.ozoneplatform.owf.server.rest.cxf.GroupController">
-        <property name="groupService" ref="groupservice"/>
+        <property name="groupService" ref="groupService"/>
     </bean>
     <bean id="stacks" class="org.ozoneplatform.owf.server.rest.cxf.StackController">
-        <property name="stackService" ref="stackservice"/>
+        <property name="stackService" ref="stackService"/>
     </bean>
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
     <!--
@@ -56,7 +59,7 @@
     -->
     <jaxrs:server id="ozoneplatform_cxf_endpoint"  address="/ozoneplatform/rest">
         <jaxrs:serviceBeans>
-            <ref component-id="dashboardController" />
+            <ref component-id="personalDashboardController" />
             <ref component-id="preferences"/>
             <ref component-id="users"/>
             <ref component-id="groups"/>

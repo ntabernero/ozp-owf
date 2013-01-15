@@ -1,6 +1,6 @@
 package org.ozoneplatform.owf.server.service.model
 
-class UserDashboard {
+class PersonalDashboard {
 
     String name
     String guid

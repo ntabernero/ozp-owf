@@ -9,47 +9,47 @@ import javax.ws.rs.Consumes
 import javax.ws.rs.PathParam
 import javax.ws.rs.PUT
 import javax.ws.rs.DELETE
-import org.ozoneplatform.owf.server.service.model.UserDashboard
-import org.ozoneplatform.owf.server.service.UserDashboardService
-import org.ozoneplatform.owf.server.service.UserDashboardServiceImpl
+
+import org.ozoneplatform.owf.server.service.model.PersonalDashboard
+import org.ozoneplatform.owf.server.service.PersonalDashboardService
 
 @Path("/user-dashboards")
 @Produces("application/json")
-class UserDashboardController {
+class PersonalDashboardController {
 
-    UserDashboardService userDashboardService  = new UserDashboardServiceImpl()
+    PersonalDashboardService personalDashboardService
 
     @GET
-    List<UserDashboard> list() {
-        userDashboardService.list()
+    List<PersonalDashboard> list() {
+        personalDashboardService.list()
     }
 
     @POST
     @Consumes("application/json")
-    Response create(UserDashboard dashboardInfo) {
+    Response create(PersonalDashboard dashboardInfo) {
         println "In create(): ${dashboardInfo?.guid}"
-        userDashboardService.create(dashboardInfo)
+        personalDashboardService.create(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }
 
     @GET
     @Path("/{id}")
-    UserDashboard get(@PathParam("id") String id) {
+    PersonalDashboard get(@PathParam("id") String id) {
         println "In get(): $id"
-        userDashboardService.get(id)
+        personalDashboardService.get(id)
     }
 
     @PUT
     @Consumes("application/json")
-    Response update(UserDashboard dashboardInfo) {
-        userDashboardService.update(dashboardInfo)
+    Response update(PersonalDashboard dashboardInfo) {
+        personalDashboardService.update(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }
 
     @DELETE
     @Path("/{id}")
     Response delete(@PathParam("id") String id) {
-        def dashboard = userDashboardService.delete(id)
+        def dashboard = personalDashboardService.delete(id)
         Response.ok(dashboard).build()
     }
 
@@ -57,7 +57,7 @@ class UserDashboardController {
     @Path("/{id}/restore")
     Response restore(@PathParam("id") String id) {
         println "Restored $id"
-        def dashboard = userDashboardService.restore(id)
+        def dashboard = personalDashboardService.restore(id)
         Response.ok(dashboard).build()
     }
 }
