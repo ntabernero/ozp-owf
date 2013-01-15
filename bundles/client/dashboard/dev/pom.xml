@@ -34,31 +34,36 @@
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>jquery</artifactId>
             <version>1.8.3</version>
-            <type>js</type>
+            <type>zip</type>
+            <classifier>js</classifier>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>jquery-ui</artifactId>
             <version>1.9.2</version>
-            <type>js</type>
+            <type>zip</type>
+            <classifier>js</classifier>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>bootstrap</artifactId>
             <version>2.2.1</version>
-            <type>js</type>
+            <type>zip</type>
+            <classifier>js</classifier>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>backbone</artifactId>
             <version>0.9.9</version>
-            <type>js</type>
+            <type>zip</type>
+            <classifier>js</classifier>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>plugin</artifactId>
             <version>${project.version}</version>
-            <type>js</type>
+            <type>zip</type>
+            <classifier>js</classifier>
         </dependency>
 
         <dependency>
@@ -233,7 +238,7 @@
                                     <artifactId>jquery</artifactId>
                                     <version>1.8.3</version>
                                     <type>zip</type>
-                                    <classifier>jquery</classifier>
+                                    <classifier>js</classifier>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                 </artifactItem>
@@ -242,7 +247,7 @@
                                     <artifactId>jquery-ui</artifactId>
                                     <version>1.9.2</version>
                                     <type>zip</type>
-                                    <classifier>jquery-ui</classifier>
+                                    <classifier>js</classifier>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                 </artifactItem>
@@ -251,7 +256,7 @@
                                     <artifactId>lodash</artifactId>
                                     <version>1.0.0-rc.3</version>
                                     <type>zip</type>
-                                    <classifier>lodash</classifier>
+                                    <classifier>js</classifier>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                 </artifactItem>
@@ -260,7 +265,7 @@
                                     <artifactId>backbone</artifactId>
                                     <version>0.9.9</version>
                                     <type>zip</type>
-                                    <classifier>backbone</classifier>
+                                    <classifier>js</classifier>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                 </artifactItem>
@@ -269,7 +274,7 @@
                                     <artifactId>require</artifactId>
                                     <version>2.1.1</version>
                                     <type>zip</type>
-                                    <classifier>require</classifier>
+                                    <classifier>js</classifier>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                 </artifactItem>

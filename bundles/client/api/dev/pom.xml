@@ -34,31 +34,36 @@
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>jquery</artifactId>
             <version>1.8.3</version>
-            <type>js</type>
+            <type>zip</type>
+            <classifier>js</classifier>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>jquery-ui</artifactId>
             <version>1.9.2</version>
-            <type>js</type>
+            <type>zip</type>
+            <classifier>js</classifier>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>bootstrap</artifactId>
             <version>2.2.1</version>
-            <type>js</type>
+            <type>zip</type>
+            <classifier>js</classifier>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>lodash</artifactId>
             <version>1.0.0-rc.3</version>
-            <type>js</type>
+            <type>zip</type>
+            <classifier>js</classifier>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
             <artifactId>plugin</artifactId>
             <version>${project.version}</version>
-            <type>js</type>
+            <type>zip</type>
+            <classifier>js</classifier>
         </dependency>
 
         <dependency>
