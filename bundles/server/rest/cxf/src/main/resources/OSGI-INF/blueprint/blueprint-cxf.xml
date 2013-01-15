@@ -29,7 +29,11 @@
       This bean carries a set of JAX-RS annotations that allow its methods to be mapped to incoming requests.
     -->
 
-    <bean id="dashboardController" class="org.ozoneplatform.owf.server.rest.cxf.UserDashboardController"/>
+    <reference id="userDashboardService" interface="org.ozoneplatform.owf.server.service.UserDashboardService" />
+
+    <bean id="dashboardController" class="org.ozoneplatform.owf.server.rest.cxf.UserDashboardController">
+        <property name="userDashboardService" ref="userDashboardService" />
+    </bean>
 
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
     <!--

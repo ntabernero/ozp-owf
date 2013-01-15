@@ -1,8 +1,5 @@
-package org.ozoneplatform.owf.server.rest.cxf.dto
+package org.ozoneplatform.owf.server.service.dto
 
-import javax.xml.bind.annotation.XmlRootElement
-
-@XmlRootElement
 class UserDashboard {
 
     String name

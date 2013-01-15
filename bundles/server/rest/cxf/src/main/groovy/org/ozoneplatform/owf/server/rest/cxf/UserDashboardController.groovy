@@ -1,8 +1,6 @@
 package org.ozoneplatform.owf.server.rest.cxf
 
-import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
-import org.ozoneplatform.owf.server.rest.cxf.dto.UserDashboard
 import javax.ws.rs.Path
 import javax.ws.rs.Produces
 import javax.ws.rs.GET
@@ -11,27 +9,26 @@ import javax.ws.rs.Consumes
 import javax.ws.rs.PathParam
 import javax.ws.rs.PUT
 import javax.ws.rs.DELETE
+import org.ozoneplatform.owf.server.service.dto.UserDashboard
+import org.ozoneplatform.owf.server.service.UserDashboardService
+import org.ozoneplatform.owf.server.service.UserDashboardServiceImpl
 
 @Path("/user-dashboards")
 @Produces("application/json")
 class UserDashboardController {
 
-//    UserDashboardService userDashboardService
+    UserDashboardService userDashboardService  = new UserDashboardServiceImpl()
 
     @GET
     List<UserDashboard> list() {
-        dashboardMap.values().toList()
+        userDashboardService.list()
     }
 
     @POST
     @Consumes("application/json")
     Response create(UserDashboard dashboardInfo) {
-//      Response create(InputStream is) {
-//        List<String> lines = is.readLines()
-//        println lines
-//        Response.ok().build()
-        println "In create(): $dashboardInfo?.guid"
-        dashboardMap[(dashboardInfo.guid)] = dashboardInfo
+        println "In create(): ${dashboardInfo?.guid}"
+        userDashboardService.create(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }
 
@@ -39,38 +36,27 @@ class UserDashboardController {
     @Path("/{id}")
     UserDashboard get(@PathParam("id") String id) {
         println "In get(): $id"
-        dashboardMap[id]
+        userDashboardService(id)
     }
 
     @PUT
     @Consumes("application/json")
     Response update(UserDashboard dashboardInfo) {
-        dashboardMap[(dashboardInfo.guid)] = dashboardInfo
+        userDashboardService.update(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }
 
     @DELETE
     @Path("/{id}")
     Response delete(@PathParam("id") String id) {
-        def dashboard =  dashboardMap[id]
-        dashboardMap[id] = null
+        def dashboard = userDashboardService.delete(id)
         Response.ok(dashboard).build()
     }
 
     @POST
     @Path("/{id}/restore")
     Response restore(@PathParam("id") id) {
-    }
-
-    Map<String, UserDashboard> dashboardMap;
-
-    UserDashboardController() {
-        dashboardMap = new HashMap<String, UserDashboard>()
-        UserDashboard userDashboard = createExampleDashboard()
-        dashboardMap[userDashboard.guid] = userDashboard
-    }
-
-    UserDashboard createExampleDashboard() {
-        new UserDashboard("Dashboard1", "12345", false, 0, true)
+        userDashboardService.restore(id)
+        println "Restored $id"
     }
 }
