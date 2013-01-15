@@ -28,9 +28,25 @@
       We are using the OSGi Blueprint XML syntax to define a bean that we referred to in our JAX-RS server setup.
       This bean carries a set of JAX-RS annotations that allow its methods to be mapped to incoming requests.
     -->
+    
+    <reference id="groupservice" interface="org.ozoneplatform.owf.server.service.GroupService"/>
+    <reference id="userservice" interface="org.ozoneplatform.owf.server.service.UserService"/>
+    <reference id="stackservice" interface="org.ozoneplatform.owf.server.service.StackService"/>
+    <reference id="preferenceservice" interface="org.ozoneplatform.owf.server.service.PreferenceService"/>
 
     <bean id="dashboardController" class="org.ozoneplatform.owf.server.rest.cxf.UserDashboardController"/>
-
+    <bean id="preferences" class="org.ozoneplatform.owf.server.rest.cxf.PreferenceController">
+        <property name="preferenceService" ref="preferenceservice"/>
+    </bean>
+    <bean id="users" class="org.ozoneplatform.owf.server.rest.cxf.UserController">
+        <property name="userService" ref="userservice"/>
+    </bean>
+    <bean id="groups" class="org.ozoneplatform.owf.server.rest.cxf.GroupController">
+        <property name="groupService" ref="groupservice"/>
+    </bean>
+    <bean id="stacks" class="org.ozoneplatform.owf.server.rest.cxf.StackController">
+        <property name="stackService" ref="stackservice"/>
+    </bean>
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
     <!--
       The <jaxrs:server/> element sets up our JAX-RS services.  It defines:
@@ -41,6 +57,10 @@
     <jaxrs:server id="ozoneplatform_cxf_endpoint"  address="/ozoneplatform/rest">
         <jaxrs:serviceBeans>
             <ref component-id="dashboardController" />
+            <ref component-id="preferences"/>
+            <ref component-id="users"/>
+            <ref component-id="groups"/>
+            <ref component-id="stacks"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref component-id="jsonProvider" />
