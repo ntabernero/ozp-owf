@@ -26,6 +26,11 @@ class UserDashboardController {
     @POST
     @Consumes("application/json")
     Response create(UserDashboard dashboardInfo) {
+//      Response create(InputStream is) {
+//        List<String> lines = is.readLines()
+//        println lines
+//        Response.ok().build()
+        println "In create(): $dashboardInfo?.guid"
         dashboardMap[(dashboardInfo.guid)] = dashboardInfo
         Response.ok(dashboardInfo).build()
     }
@@ -33,6 +38,7 @@ class UserDashboardController {
     @GET
     @Path("/{id}")
     UserDashboard get(@PathParam("id") String id) {
+        println "In get(): $id"
         dashboardMap[id]
     }
 
@@ -65,6 +71,6 @@ class UserDashboardController {
     }
 
     UserDashboard createExampleDashboard() {
-        new UserDashboard("Dashboard1", "12345", false, 0, true, null)
+        new UserDashboard("Dashboard1", "12345", false, 0, true)
     }
 }
