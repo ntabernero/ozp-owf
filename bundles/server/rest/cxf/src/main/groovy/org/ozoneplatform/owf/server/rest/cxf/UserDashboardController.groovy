@@ -9,7 +9,7 @@ import javax.ws.rs.Consumes
 import javax.ws.rs.PathParam
 import javax.ws.rs.PUT
 import javax.ws.rs.DELETE
-import org.ozoneplatform.owf.server.service.dto.UserDashboard
+import org.ozoneplatform.owf.server.service.model.UserDashboard
 import org.ozoneplatform.owf.server.service.UserDashboardService
 import org.ozoneplatform.owf.server.service.UserDashboardServiceImpl
 
@@ -36,7 +36,7 @@ class UserDashboardController {
     @Path("/{id}")
     UserDashboard get(@PathParam("id") String id) {
         println "In get(): $id"
-        userDashboardService(id)
+        userDashboardService.get(id)
     }
 
     @PUT
@@ -55,8 +55,9 @@ class UserDashboardController {
 
     @POST
     @Path("/{id}/restore")
-    Response restore(@PathParam("id") id) {
-        userDashboardService.restore(id)
+    Response restore(@PathParam("id") String id) {
         println "Restored $id"
+        def dashboard = userDashboardService.restore(id)
+        Response.ok(dashboard).build()
     }
 }

@@ -1,6 +1,6 @@
 package org.ozoneplatform.owf.server.service
 
-import org.ozoneplatform.owf.server.service.dto.UserDashboard
+import org.ozoneplatform.owf.server.service.model.UserDashboard
 
 class UserDashboardServiceImpl implements UserDashboardService {
 
@@ -29,8 +29,9 @@ class UserDashboardServiceImpl implements UserDashboardService {
         dashboard
     }
 
-    void restore(String id) {
+    UserDashboard restore(String id) {
         println "Restored $id"
+        dashboardMap[id]
     }
 
     Map<String, UserDashboard> dashboardMap;
@@ -42,6 +43,6 @@ class UserDashboardServiceImpl implements UserDashboardService {
     }
 
     UserDashboard createExampleDashboard() {
-        new UserDashboard("Dashboard1", "12345", false, 0, true)
+        new UserDashboard([name: "Dashboard1", guid: "12345", defaultDashboard: false, dashboardPosition: 0, alteredByAdmin: true])
     }
 }

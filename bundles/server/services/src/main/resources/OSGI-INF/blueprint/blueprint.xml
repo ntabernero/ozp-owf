@@ -18,14 +18,16 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-  <bean id="groupservice" class="org.ozoneplatform.owf.server.service.GroupServiceImpl"/>
-  <bean id="userservice" class="org.ozoneplatform.owf.server.service.UserServiceImpl"/>
-  <bean id="stackservice" class="org.ozoneplatform.owf.server.service.StackServiceImpl"/>
-  <bean id="preferenceservice" class="org.ozoneplatform.owf.server.service.PreferenceServiceImpl"/>
-  
-  <service ref="groupservice" interface="org.ozoneplatform.owf.server.service.GroupService"/>
-  <service ref="userservice" interface="org.ozoneplatform.owf.server.service.UserService"/>
-  <service ref="stackservice" interface="org.ozoneplatform.owf.server.service.StackService"/>
-  <service ref="preferenceservice" interface="org.ozoneplatform.owf.server.service.PreferenceService"/>
+  <bean id="groupService" class="org.ozoneplatform.owf.server.service.GroupServiceImpl"/>
+  <bean id="userService" class="org.ozoneplatform.owf.server.service.UserServiceImpl"/>
+  <bean id="stackService" class="org.ozoneplatform.owf.server.service.StackServiceImpl"/>
+  <bean id="preferenceService" class="org.ozoneplatform.owf.server.service.PreferenceServiceImpl"/>
+  <bean id="userDashboardService" class="org.ozoneplatform.owf.server.service.UserDashboardServiceImpl"/>
+
+  <service ref="groupService" interface="org.ozoneplatform.owf.server.service.GroupService"/>
+  <service ref="userService" interface="org.ozoneplatform.owf.server.service.UserService"/>
+  <service ref="stackService" interface="org.ozoneplatform.owf.server.service.StackService"/>
+  <service ref="preferenceService" interface="org.ozoneplatform.owf.server.service.PreferenceService"/>
+  <service ref="userDashboardService" interface="org.ozoneplatform.owf.server.service.UserDashboardService"/>
 
 </blueprint>

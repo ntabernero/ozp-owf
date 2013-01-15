@@ -1,6 +1,6 @@
 package org.ozoneplatform.owf.server.service
 
-import org.ozoneplatform.owf.server.service.dto.UserDashboard
+import org.ozoneplatform.owf.server.service.model.UserDashboard
 
 interface UserDashboardService {
 
@@ -14,5 +14,5 @@ interface UserDashboardService {
 
     UserDashboard delete(String id)
 
-    void restore(String id)
+    UserDashboard restore(String id)
 }
