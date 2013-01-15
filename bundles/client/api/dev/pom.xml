@@ -32,25 +32,25 @@
 
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-            <artifactId>jquery-amd</artifactId>
+            <artifactId>jquery</artifactId>
             <version>1.8.3</version>
             <type>js</type>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-            <artifactId>jquery-ui-amd</artifactId>
-            <version>1.9.1</version>
+            <artifactId>jquery-ui</artifactId>
+            <version>1.9.2</version>
             <type>js</type>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-            <artifactId>bootstrap-amd</artifactId>
+            <artifactId>bootstrap</artifactId>
             <version>2.2.1</version>
             <type>js</type>
         </dependency>
         <dependency>
             <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-            <artifactId>lodash-amd</artifactId>
+            <artifactId>lodash</artifactId>
             <version>1.0.0-rc.3</version>
             <type>js</type>
         </dependency>

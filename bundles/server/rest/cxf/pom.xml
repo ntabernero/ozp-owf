@@ -69,7 +69,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>generateStubs</goal>
+                            <!--<goal>generateStubs</goal>-->
                             <goal>compile</goal>
                             <goal>generateTestStubs</goal>
                             <goal>testCompile</goal>
@@ -83,18 +83,20 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <version>2.2.0</version>
                 <extensions>true</extensions>
-                <!--
-                <inherited>true</inherited>
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>
-                            org.ozoneplatform.owf.server.rest.cxf;
-                            version=${project.version}
-                        </Export-Package>
+                        <Import-Package>
+                            org.ozoneplatform.owf.server.service;
+                            version=${project.version},
+                            org.ozoneplatform.owf.server.service.dto;
+                            version=${project.version},
+                            org.ozoneplatform.owf.server.service.model;
+                            version=${project.version},*
+                        </Import-Package>
+                        <Private-Package>org.ozoneplatform.owf.server.rest.cxf</Private-Package>
                     </instructions>
                 </configuration>
-                -->
             </plugin>
         </plugins>
     </build>
