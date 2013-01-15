@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <bean id="groupservice" class="org.ozoneplatform.owf.server.service.GroupServiceImpl"/>
+  <bean id="userservice" class="org.ozoneplatform.owf.server.service.UserServiceImpl"/>
+  <bean id="stackservice" class="org.ozoneplatform.owf.server.service.StackServiceImpl"/>
+  <bean id="preferenceservice" class="org.ozoneplatform.owf.server.service.PreferenceServiceImpl"/>
+  
+  <service ref="groupservice" interface="org.ozoneplatform.owf.server.service.GroupService"/>
+  <service ref="userservice" interface="org.ozoneplatform.owf.server.service.UserService"/>
+  <service ref="stackservice" interface="org.ozoneplatform.owf.server.service.StackService"/>
+  <service ref="preferenceservice" interface="org.ozoneplatform.owf.server.service.PreferenceService"/>
+
+</blueprint>
