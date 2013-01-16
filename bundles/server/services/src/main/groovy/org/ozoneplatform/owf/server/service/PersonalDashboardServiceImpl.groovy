@@ -1,48 +1,48 @@
 package org.ozoneplatform.owf.server.service
 
-import org.ozoneplatform.owf.server.service.model.PersonalDashboard
+import org.ozoneplatform.owf.server.service.model.Dashboard
 
 class PersonalDashboardServiceImpl implements PersonalDashboardService {
 
-    List<PersonalDashboard> list() {
+    List<Dashboard> list() {
         dashboardMap.values().toList()
     }
 
-    PersonalDashboard create(PersonalDashboard dashboardInfo) {
+    Dashboard create(Dashboard dashboardInfo) {
         println "In create(): ${dashboardInfo?.guid}"
         dashboardMap[(dashboardInfo.guid)] = dashboardInfo
         dashboardInfo
     }
 
-    PersonalDashboard get(String id) {
+    Dashboard get(String id) {
         println "In get(): $id"
         dashboardMap[id]
     }
 
-    void update(PersonalDashboard dashboardInfo) {
+    void update(Dashboard dashboardInfo) {
         dashboardMap[(dashboardInfo.guid)] = dashboardInfo
     }
 
-    PersonalDashboard delete(String id) {
+    Dashboard delete(String id) {
         def dashboard =  dashboardMap[id]
         dashboardMap[id] = null
         dashboard
     }
 
-    PersonalDashboard restore(String id) {
+    Dashboard restore(String id) {
         println "Restored $id"
         dashboardMap[id]
     }
 
-    Map<String, PersonalDashboard> dashboardMap;
+    Map<String, Dashboard> dashboardMap;
 
     PersonalDashboardServiceImpl() {
-        dashboardMap = new HashMap<String, PersonalDashboard>()
-        PersonalDashboard userDashboard = createExampleDashboard()
+        dashboardMap = new HashMap<String, Dashboard>()
+        Dashboard userDashboard = createExampleDashboard()
         dashboardMap[userDashboard.guid] = userDashboard
     }
 
-    PersonalDashboard createExampleDashboard() {
-        new PersonalDashboard([name: "Dashboard1", guid: "12345", defaultDashboard: false, dashboardPosition: 0, alteredByAdmin: true])
+    Dashboard createExampleDashboard() {
+        new Dashboard([name: "Dashboard1", guid: "12345", defaultDashboard: false, dashboardPosition: 0, alteredByAdmin: true])
     }
 }

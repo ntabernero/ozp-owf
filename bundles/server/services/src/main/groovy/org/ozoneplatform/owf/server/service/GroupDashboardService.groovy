@@ -2,8 +2,7 @@ package org.ozoneplatform.owf.server.service
 
 import org.ozoneplatform.owf.server.service.model.Dashboard
 
-interface PersonalDashboardService {
-
+interface GroupDashboardService {
     List<Dashboard> list()
 
     Dashboard create(Dashboard dashboardInfo)
@@ -14,5 +13,6 @@ interface PersonalDashboardService {
 
     Dashboard delete(String id)
 
-    Dashboard restore(String id)
+    Dashboard copy(String id)
+
 }

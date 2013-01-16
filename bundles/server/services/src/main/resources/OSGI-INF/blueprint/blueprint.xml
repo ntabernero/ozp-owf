@@ -24,11 +24,13 @@
     <bean id="stackService" class="org.ozoneplatform.owf.server.service.StackServiceImpl"/>
     <bean id="preferenceService" class="org.ozoneplatform.owf.server.service.PreferenceServiceImpl"/>
     <bean id="personalDashboardService" class="org.ozoneplatform.owf.server.service.PersonalDashboardServiceImpl"/>
+    <bean id="groupDashboardService" class="org.ozoneplatform.owf.server.service.GroupDashboardServiceImpl"/>
 
     <service ref="groupService" interface="org.ozoneplatform.owf.server.service.GroupService"/>
     <service ref="personService" interface="org.ozoneplatform.owf.server.service.PersonService"/>
     <service ref="stackService" interface="org.ozoneplatform.owf.server.service.StackService"/>
     <service ref="preferenceService" interface="org.ozoneplatform.owf.server.service.PreferenceService"/>
     <service ref="personalDashboardService" interface="org.ozoneplatform.owf.server.service.PersonalDashboardService"/>
+    <service ref="groupDashboardService" interface="org.ozoneplatform.owf.server.service.GroupDashboardService"/>
 
 </blueprint>
