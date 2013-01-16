@@ -105,36 +105,6 @@
                 </executions>
             </plugin>
 
-            <!--TODO: UNCOMMENT HERE TO BRING IN JS!!!!  -->
-            <!--
-                <plugin>
-                    <groupId>org.ozoneplatform.commons.maven</groupId>
-                    <artifactId>js-import-maven-plugin</artifactId>
-                    <version>1.0.0-SNAPSHOT</version>
-                    <executions>
-                        <execution>
-                            <phase>prepare-package</phase>
-                            <goals>
-                                <goal>import-js</goal>
-                                <goal>generate-html</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            -->
-            <!-- <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>webminifier-maven-plugin</artifactId>
-                <version>1.0.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>minify-js</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin> -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.2.1</version>
