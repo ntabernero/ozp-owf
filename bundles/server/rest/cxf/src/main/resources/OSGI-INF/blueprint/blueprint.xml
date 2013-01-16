@@ -34,9 +34,13 @@
     <reference id="stackService" interface="org.ozoneplatform.owf.server.service.StackService"/>
     <reference id="preferenceService" interface="org.ozoneplatform.owf.server.service.PreferenceService"/>
     <reference id="personalDashboardService" interface="org.ozoneplatform.owf.server.service.PersonalDashboardService"/>
+    <reference id="groupDashboardService" interface="org.ozoneplatform.owf.server.service.GroupDashboardService"/>
 
     <bean id="personalDashboardController" class="org.ozoneplatform.owf.server.rest.cxf.PersonalDashboardController">
         <property name="personalDashboardService" ref="personalDashboardService"/>
+    </bean>
+    <bean id="groupDashboardController" class="org.ozoneplatform.owf.server.rest.cxf.GroupDashboardController">
+        <property name="groupDashboardService" ref="groupDashboardService"/>
     </bean>
     <bean id="preferences" class="org.ozoneplatform.owf.server.rest.cxf.PreferenceController">
         <property name="preferenceService" ref="preferenceService"/>
@@ -60,6 +64,7 @@
     <jaxrs:server id="ozoneplatform_cxf_endpoint"  address="/ozoneplatform/rest">
         <jaxrs:serviceBeans>
             <ref component-id="personalDashboardController" />
+            <ref component-id="groupDashboardController" />
             <ref component-id="preferences"/>
             <ref component-id="persons"/>
             <ref component-id="groups"/>
