@@ -1,9 +1,8 @@
-package org.ozoneplatform.owf.server.service;
+package org.ozoneplatform.owf.server.service
 
-import java.util.List;
-import org.ozoneplatform.owf.server.service.model.Group;
+import org.ozoneplatform.owf.server.service.model.Group
 
-public interface GroupService {
+interface GroupService {
     
     List<Group> list();
     Group fetch(Long id);
@@ -12,3 +11,4 @@ public interface GroupService {
     void delete(Long id);
     
 }
+

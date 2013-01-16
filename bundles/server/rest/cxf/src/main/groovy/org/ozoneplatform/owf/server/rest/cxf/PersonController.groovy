@@ -12,57 +12,57 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.ozoneplatform.owf.server.service.UserService
-import org.ozoneplatform.owf.server.service.model.User
+import org.ozoneplatform.owf.server.service.PersonService
+import org.ozoneplatform.owf.server.service.model.Person
 
-@Path("/users")
+@Path("/persons")
 @Produces("application/json")
-public class UserController {
+public class PersonController {
     
-    private UserService userService = null;
+    private PersonService personService = null;
     
-    public UserService getUserService() {
-        return userService;
+    public PersonService getPersonService() {
+        return personService;
     }
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setPersonService(PersonService personService) {
+        this.personService = personService;
     }
     
     @GET
     public Response list() {
         
-        List<User> theList = userService.list();
+        List<Person> theList = personService.list();
         return Response.ok(theList).build();
     }
     
     @POST
     @Consumes("application/json")
-    public Response create(User user) {
-        User theUser = userService.create(user);
-        return Response.ok(theUser).build();
+    public Response create(Person person) {
+        Person thePerson = personService.create(person);
+        return Response.ok(thePerson).build();
     }
     
     @GET
     @Path("/{id}")
     public Response fetch(@PathParam("id") Long id) {
         
-        User theUser = userService.fetch(id);
-        return Response.ok(theUser).build();
+        Person thePerson = personService.fetch(id);
+        return Response.ok(thePerson).build();
     }
     
     @PUT
     @Path("/{id}")
     @Consumes("application/json")
-    public Response update(@PathParam("id") Long id, User user) {
-        User theUser = userService.update(id, user);
-        return Response.ok(theUser).build();
+    public Response update(@PathParam("id") Long id, Person person) {
+        Person thePerson = personService.update(id, person);
+        return Response.ok(thePerson).build();
     }
     
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
-        userService.delete(id);
+        personService.delete(id);
         return Response.ok().build();
     }
     
