@@ -5,6 +5,7 @@
     locale: "en_us",
     
     optimize: "closure",
+    waitSeconds: 15,
     
     name: '../js/require', // just 'require' doesn't work for some reason
     include: ['main'],
