@@ -30,42 +30,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-            <artifactId>jquery</artifactId>
-            <version>1.8.3</version>
-            <type>zip</type>
-            <classifier>js</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-            <artifactId>jquery-ui</artifactId>
-            <version>1.9.2</version>
-            <type>zip</type>
-            <classifier>js</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>2.2.1</version>
-            <type>zip</type>
-            <classifier>js</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-            <artifactId>backbone</artifactId>
-            <version>0.9.9</version>
-            <type>zip</type>
-            <classifier>js</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-            <artifactId>plugin</artifactId>
-            <version>${project.version}</version>
-            <type>zip</type>
-            <classifier>js</classifier>
-        </dependency>
-
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.6.6</version>
@@ -226,67 +190,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-                                    <artifactId>jquery</artifactId>
-                                    <version>1.8.3</version>
-                                    <type>zip</type>
-                                    <classifier>js</classifier>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-                                    <artifactId>jquery-ui</artifactId>
-                                    <version>1.9.2</version>
-                                    <type>zip</type>
-                                    <classifier>js</classifier>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-                                    <artifactId>lodash</artifactId>
-                                    <version>1.0.0-rc.3</version>
-                                    <type>zip</type>
-                                    <classifier>js</classifier>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-                                    <artifactId>backbone</artifactId>
-                                    <version>0.9.9</version>
-                                    <type>zip</type>
-                                    <classifier>js</classifier>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
-                                    <artifactId>require</artifactId>
-                                    <version>2.1.1</version>
-                                    <type>zip</type>
-                                    <classifier>js</classifier>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>${project.build.directory}/wars</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>com.github.mcheely</groupId>

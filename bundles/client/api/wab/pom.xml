@@ -39,7 +39,7 @@
                         <goals>
                             <goal>unpack</goal>
                         </goals>
-                        <configuration>
+                        <configuration combine.self="override">
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>org.ozoneplatform.owf.bundles.client.api</groupId>
