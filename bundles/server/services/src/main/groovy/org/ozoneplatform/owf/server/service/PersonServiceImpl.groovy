@@ -1,6 +1,8 @@
 package org.ozoneplatform.owf.server.service
 
 import org.ozoneplatform.owf.server.service.model.Person
+import org.ozoneplatform.owf.server.service.exception.ValidationException
+import org.ozoneplatform.owf.server.service.exception.NotFoundException
 
 class PersonServiceImpl implements PersonService {
     
@@ -17,10 +19,16 @@ class PersonServiceImpl implements PersonService {
     }
 
     Person fetch(Long id) {
-        theList.find{ it.id == id; }
+        Person thePerson = theList.find{ it.id == id; }
+        if (thePerson) {
+            thePerson;
+        } else {
+            throw new NotFoundException("Person not found");
+        }
     }
 
     Person create(Person person) {
+        this.validate(person);
         def max = theList.max{ it.id }
         person?.id = max.id + 1L;
         theList.add(person);
@@ -29,9 +37,10 @@ class PersonServiceImpl implements PersonService {
 
     Person update(Long id, Person person) {
         Person thePerson = this.fetch(id);
-        if (person?.username) thePerson?.username = person.username;
-        if (person?.fullName) thePerson?.fullName = person.fullName;
-        if (person?.email) thePerson?.email = person.email;
+        thePerson.username = person?.username ?: thePerson.username;
+        thePerson.fullName = person?.fullName ?: thePerson.fullName;
+        thePerson.email = person?.email ?: thePerson.email;
+        this.validate(thePerson);
         thePerson;
     }
 
@@ -40,5 +49,13 @@ class PersonServiceImpl implements PersonService {
         return;
     }
     
+    private void validate(Person person) {
+        boolean validUsername = person?.username?.trim()?.length() > 0;
+        boolean validFullName = person?.fullName?.trim()?.length() > 0;
+        if (!validUsername || !validFullName) {
+            throw new ValidationException("Invalid person");
+        }
+        return;
+    }
+    
 }
-

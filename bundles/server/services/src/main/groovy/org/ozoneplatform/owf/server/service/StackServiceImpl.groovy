@@ -1,6 +1,8 @@
 package org.ozoneplatform.owf.server.service
 
 import org.ozoneplatform.owf.server.service.model.Stack as S;
+import org.ozoneplatform.owf.server.service.exception.ValidationException
+import org.ozoneplatform.owf.server.service.exception.NotFoundException
 
 class StackServiceImpl implements StackService {
     
@@ -16,6 +18,7 @@ class StackServiceImpl implements StackService {
     }
 
     S create(S stack) {
+        this.validate(stack);
         def max = theList.max{ it.id }
         stack?.id = max.id + 1L;
         theList.add(stack);
@@ -27,15 +30,21 @@ class StackServiceImpl implements StackService {
     }
 
     S fetch(Long id) {
-        theList.find{ it.id == id; }
+        S theStack = theList.find{ it.id == id; }
+        if (theStack) {
+            theStack;
+        } else {
+            throw new NotFoundException("Stack not found");
+        }
     }
 
     S update(Long id, S stack) {
         S theStack = this.fetch(id);
-        if (stack?.name) theStack?.name = stack.name;
-        if (stack?.description) theStack?.description = stack.description;
-        if (stack?.urlName) theStack?.urlName = stack.urlName;
-        if (stack?.descriptorUrl) theStack?.descriptorUrl = stack.descriptorUrl;
+        theStack.name = stack?.name ?: theStack.name;
+        theStack.description = stack?.description ?: theStack.description;
+        theStack.urlName = stack?.urlName ?: theStack.urlName;
+        theStack.descriptorUrl = stack?.descriptorUrl ?: theStack.descriptorUrl;
+        this.validate(theStack);
         theStack;
     }
 
@@ -52,5 +61,12 @@ class StackServiceImpl implements StackService {
         this.fetch(id);
     }
     
+    private void validate(S stack) {
+        boolean validName = stack?.name?.trim()?.length() > 0;
+        if (!validName) {
+            throw new ValidationException("Invalid stack");
+        }
+        return;
+    }
+    
 }
-

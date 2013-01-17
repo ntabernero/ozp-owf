@@ -11,73 +11,148 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import org.ozoneplatform.owf.server.service.PreferenceService;
 import org.ozoneplatform.owf.server.service.model.Preference;
+import org.ozoneplatform.owf.server.service.exception.NotFoundException;
+import org.ozoneplatform.owf.server.service.exception.ValidationException;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.UriBuilder;
 
 @Path("/preferences")
 @Produces("application/json")
 class PreferenceController {
     
     PreferenceService preferenceService;
+    
+    @Context
+    private UriInfo uriInfo;
 
     @GET
     Response list() {
-        Response.ok(preferenceService.list()).build();
+        try {
+            List<Preference> list = preferenceService.list();
+            if (list && !list.empty) {
+                Response.ok(list).build();
+            } else {
+                Response.noContent().build();
+            }
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @GET
     @Path("/{namespace}")
     Response list(@PathParam("namespace") String namespace) {
-        Response.ok(preferenceService.list(namespace)).build();
+        try {
+            List<Preference> list = preferenceService.list(namespace);
+            if (list && !list.empty) {
+                Response.ok(list).build();
+            } else {
+                Response.noContent().build();
+            }
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @DELETE
     @Path("/{namespace}")
     Response delete(@PathParam("namespace") String namespace) {
-        preferenceService.delete(namespace);
-        Response.ok().build();
+        try {
+            preferenceService.delete(namespace);
+            Response.ok().build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @GET
     @Path("/{namespace}/{path}")
     Response fetch(@PathParam("namespace") String namespace, @PathParam("path") String path) {
-        Response.ok(preferenceService.fetch(namespace, path)).build();
+        try {
+            Preference thePref = preferenceService.fetch(namespace, path);
+            Response.ok(thePref).build();
+        } catch(NotFoundException f) {
+            Response.status(404).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @POST
     @Path("/{namespace}/{path}")
     @Consumes("application/json")
     Response create(@PathParam("namespace") String namespace, @PathParam("path") String path, Preference pref) {
-        Response.ok(preferenceService.create(namespace, path, pref)).build();
+        try {
+            Preference thePref = preferenceService.create(namespace, path, pref);
+            URI prefUri;
+            UriBuilder builder = uriInfo.getBaseUriBuilder();
+            builder.path(PreferenceController.class);
+            builder.path(PreferenceController.class.getMethod("fetch", String.class, String.class));
+            prefUri = builder.build(pref.namespace, pref.path);
+            Response.created(prefUri).entity(thePref).build();
+        } catch(ValidationException v) {
+            Response.status(400).entity(v.getMessage()).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @PUT
     @Path("/{namespace}/{path}")
     @Consumes("application/json")
     Response update(@PathParam("namespace") String namespace, @PathParam("path") String path, Preference pref) {
-        Response.ok(preferenceService.update(namespace, path, pref)).build();
+        try {
+            Response.ok(preferenceService.update(namespace, path, pref)).build();
+        } catch(NotFoundException f) {
+            Response.status(404).build();
+        } catch(ValidationException v) {
+            Response.status(400).entity(v.getMessage()).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @DELETE
     @Path("/{namespace}/{path}")
     Response delete(@PathParam("namespace") String namespace, @PathParam("path") String path) {
-        preferenceService.delete(namespace, path);
-        Response.ok().build();
+        try {
+            preferenceService.delete(namespace, path);
+            Response.ok().build();
+        } catch(NotFoundException f) {
+            Response.status(404).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @GET
     @Path("/{namespace}/{path}/existence")
     Response doesPreferenceExist(@PathParam("namespace") String namespace, @PathParam("path") String path) {
-        Response.ok(preferenceService.exists(namespace, path)).build();
+        try {
+            Response.ok(preferenceService.exists(namespace, path)).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @GET
     @Path("/server/resources")
     Response getServerResources(@PathParam("namespace") String namespace, @PathParam("path") String path) {
-        Response.ok(["Resource One", "Resource Two"]).build();
+        try {
+            Response.ok(["Resource One", "Resource Two"]).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @GET
     @Path("/server/who")
     Response whoami(@PathParam("namespace") String namespace, @PathParam("path") String path) {
-        Response.ok("me").build();
+        try {
+            Response.ok("me").build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
 }

@@ -11,60 +11,136 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import org.ozoneplatform.owf.server.service.StackService;
 import org.ozoneplatform.owf.server.service.model.Stack;
+import org.ozoneplatform.owf.server.service.exception.NotFoundException;
+import org.ozoneplatform.owf.server.service.exception.ValidationException;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.UriBuilder;
 
 @Path("/stacks")
 @Produces("application/json")
 class StackController {
     
     StackService stackService;
+    
+    @Context
+    private UriInfo uriInfo;
 
     @GET
     Response list() {
-        Response.ok(stackService.list()).build();
+        try {
+            List<Stack> list = stackService.list();
+            if (list && !list.empty) {
+                Response.ok(list).build();
+            } else {
+                Response.noContent().build();
+            }
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @POST
     @Consumes("application/json")
     Response create(Stack stack) {
-        Response.ok(stackService.create(stack)).build();
+        try {
+            Stack theStack = stackService.create(stack);
+            URI stackUri;
+            UriBuilder builder = uriInfo.getBaseUriBuilder();
+            builder.path(StackController.class);
+            builder.path(StackController.class.getMethod("fetch", Long.class));
+            stackUri = builder.build(stack.id);
+            Response.created(stackUri).entity(theStack).build();
+        } catch(ValidationException v) {
+            Response.status(400).entity(v.getMessage()).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @POST
     @Path("/import-operation")
     Response doImport(Stack stack) {
-        Response.ok(stackService.doImport(stack)).build();
+        try {
+            Stack theStack = stackService.doImport(stack);
+            URI stackUri;
+            UriBuilder builder = uriInfo.getBaseUriBuilder();
+            builder.path(StackController.class);
+            builder.path(StackController.class.getMethod("fetch", Long.class));
+            stackUri = builder.build(stack.id);
+            Response.created(stackUri).entity(theStack).build();
+        } catch(ValidationException v) {
+            Response.status(400).entity(v.getMessage()).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @GET
     @Path("/{id}")
     Response fetch(@PathParam("id") Long id) {
-        Response.ok(stackService.fetch(id)).build();
+        try {
+            Stack theStack = stackService.fetch(id);
+            Response.ok(theStack).build();
+        } catch(NotFoundException f) {
+            Response.status(404).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @PUT
     @Path("/{id}")
     @Consumes("application/json")
     Response update(@PathParam("id") Long id, Stack stack) {
-        Response.ok(stackService.update(id, stack)).build();
+        try {
+            Response.ok(stackService.update(id, stack)).build();
+        } catch(NotFoundException f) {
+            Response.status(404).build();
+        } catch(ValidationException v) {
+            Response.status(400).entity(v.getMessage()).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @DELETE
     @Path("/{id}")
     Response delete(@PathParam("id") Long id) {
-        stackService.delete(id);
-        Response.ok().build();
+        try {
+            stackService.delete(id);
+            Response.ok().build();
+        } catch(NotFoundException f) {
+            Response.status(404).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @GET
     @Path("/{id}/export-operation")
     Response export(@PathParam("id") Long id) {
-        Response.ok(stackService.export(id)).build();
+        try {
+            Stack theStack = stackService.export(id);
+            Response.ok(theStack).build();
+        } catch(NotFoundException f) {
+            Response.status(404).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
     @POST
     @Path("/{id}/restore-operation")
     Response restore(@PathParam("id") Long id) {
-        Response.ok(stackService.restore(id)).build();
+        try {
+            Stack theStack = stackService.restore(id);
+            Response.ok(theStack).build();
+        } catch(NotFoundException f) {
+            Response.status(404).build();
+        } catch(Exception e) {
+            Response.serverError().entity(e.toString()).build();
+        }
     }
     
 }
