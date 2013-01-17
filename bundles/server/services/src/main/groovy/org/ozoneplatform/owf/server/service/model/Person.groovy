@@ -1,11 +1,11 @@
 package org.ozoneplatform.owf.server.service.model
 
-class Person {
+class Person extends Entity {
     
-    Long id;
-    String userName;
-    String description;
+    String username;
+    String fullName;
     String email;
+    Calendar lastLogin;
+    Calendar prevLogin;
     
 }
-

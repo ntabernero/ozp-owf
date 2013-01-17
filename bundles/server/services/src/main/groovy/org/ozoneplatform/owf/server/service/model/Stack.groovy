@@ -1,12 +1,10 @@
 package org.ozoneplatform.owf.server.service.model
 
-class Stack {
+class Stack extends Entity {
     
-    Long id;
     String name;
     String description;
-    String stackContext;
-    String imageUrl;
+    String urlName;
     String descriptorUrl;
     
 }
