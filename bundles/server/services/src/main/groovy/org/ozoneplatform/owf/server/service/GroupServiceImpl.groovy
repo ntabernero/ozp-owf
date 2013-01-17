@@ -7,8 +7,8 @@ class GroupServiceImpl implements GroupService {
     def theList = [];
     
     GroupServiceImpl() {
-        theList.add(new Group(id: 1L, name: "Admins"));
-        theList.add(new Group(id: 2L, name: "Users"));
+        theList.add(new Group(id: 1L, name: "admins", displayName: "Administrators", description: "The administrators group"));
+        theList.add(new Group(id: 2L, name: "users", displayName: "Users", description: "The users group"));
     }
     
     List<Group> list() {
@@ -16,13 +16,16 @@ class GroupServiceImpl implements GroupService {
     }
 
     Group fetch(Long id) {
-        Group group;
-        group = theList.find{ it.id == id; }
+        theList.find{ it.id == id; }
     }
 
     Group update(Long id, Group group) {
         Group theGroup = this.fetch(id);
-        theGroup?.name = group?.name;
+        if (group?.name) theGroup?.name = group.name;
+        if (group?.displayName) theGroup?.displayName = group.displayName;
+        if (group?.description) theGroup?.description = group.description;
+        theGroup?.active = group?.active;
+        theGroup?.automatic = group?.automatic;
         theGroup;
     }
 
@@ -34,8 +37,7 @@ class GroupServiceImpl implements GroupService {
     }
 
     void delete(Long id) {
-        Group theGroup = this.fetch(id);
-        theList.remove(theGroup);
+        theList.remove(this.fetch(id));
         return;
     }
     
