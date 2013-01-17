@@ -1,6 +1,8 @@
 package org.ozoneplatform.owf.server.service
 
 import org.ozoneplatform.owf.server.service.model.Group
+import org.ozoneplatform.owf.server.service.exception.ValidationException
+import org.ozoneplatform.owf.server.service.exception.NotFoundException
 
 class GroupServiceImpl implements GroupService {
     
@@ -16,20 +18,27 @@ class GroupServiceImpl implements GroupService {
     }
 
     Group fetch(Long id) {
-        theList.find{ it.id == id; }
+        Group theGroup = theList.find{ it.id == id; }
+        if (theGroup) {
+            theGroup;
+        } else {
+            throw new NotFoundException("Group not found");
+        }
     }
 
     Group update(Long id, Group group) {
         Group theGroup = this.fetch(id);
-        if (group?.name) theGroup?.name = group.name;
-        if (group?.displayName) theGroup?.displayName = group.displayName;
-        if (group?.description) theGroup?.description = group.description;
-        theGroup?.active = group?.active;
-        theGroup?.automatic = group?.automatic;
+        theGroup.name = group?.name ?: theGroup.name;
+        theGroup.displayName = group?.displayName ?: theGroup.displayName;
+        theGroup.description = group?.description ?: theGroup.description;
+        theGroup.active = group?.active;
+        theGroup.automatic = group?.automatic;
+        this.validate(theGroup);
         theGroup;
     }
 
     Group create(Group group) {
+        this.validate(group);
         def max = theList.max{ it.id }
         group?.id = max.id + 1L;
         theList.add(group);
@@ -41,5 +50,12 @@ class GroupServiceImpl implements GroupService {
         return;
     }
     
+    private void validate(Group group) {
+        boolean validName = group?.name?.trim()?.length() > 0;
+        if (!validName) {
+            throw new ValidationException("Invalid group");
+        }
+        return;
+    }
+    
 }
-

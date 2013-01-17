@@ -77,6 +77,8 @@
                             org.ozoneplatform.owf.server.service.dto;
                             version=${project.version},
                             org.ozoneplatform.owf.server.service.model;
+                            version=${project.version},
+                            org.ozoneplatform.owf.server.service.exception;
                             version=${project.version}
                         </Export-Package>
                     </instructions>

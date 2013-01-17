@@ -1,6 +1,8 @@
 package org.ozoneplatform.owf.server.service
 
 import org.ozoneplatform.owf.server.service.model.Preference
+import org.ozoneplatform.owf.server.service.exception.ValidationException
+import org.ozoneplatform.owf.server.service.exception.NotFoundException
 
 class PreferenceServiceImpl implements PreferenceService {
     
@@ -22,7 +24,12 @@ class PreferenceServiceImpl implements PreferenceService {
     }
 
     Preference fetch(String namespace, String path) {
-        theList.find{ it.namespace == namespace && it.path == path; }
+        Preference thePref = theList.find{ it.namespace == namespace && it.path == path; }
+        if (thePref) {
+            thePref;
+        } else {
+            throw new NotFoundException("Preference not found");
+        }
     }
 
     void delete(String namespace) {
@@ -36,6 +43,7 @@ class PreferenceServiceImpl implements PreferenceService {
     }
 
     Preference create(String namespace, String path, Preference preference) {
+        this.validate(preference);
         def max = theList.max{ it.id }
         preference?.id = max.id + 1L;
         theList.add(preference);
@@ -43,14 +51,28 @@ class PreferenceServiceImpl implements PreferenceService {
     }
 
     boolean exists(String namespace, String path) {
-        if (this.fetch(namespace, path)) { true; } else { false; }
+        try {
+            this.fetch(namespace, path);
+            true;
+        } catch(NotFoundException e) {
+            false;
+        }
     }
 
     Preference update(String namespace, String path, Preference preference) {
         Preference thePref = this.fetch(namespace, path);
         if (preference?.value) thePref?.value = preference.value;
+        this.validate(thePref);
         thePref;
     }
     
+    private void validate(Preference pref) {
+        boolean validNamespace = pref?.namespace?.trim()?.length() > 0;
+        boolean validPath = pref?.path?.trim()?.length() > 0;
+        if (!validNamespace || !validPath) {
+            throw new ValidationException("Invalid preference");
+        }
+        return;
+    }
+    
 }
-
