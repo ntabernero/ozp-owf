@@ -1,9 +1,15 @@
 package org.ozoneplatform.owf.server.service.model
 
-class Group {
+class Group extends Entity {
     
-    Long id;
     String name;
+    String displayName;
+    String description;
+    boolean active = true;
+    boolean automatic = false;
+    
+    boolean isActive() { active; }
+    
+    boolean isAutomatic() { automatic; }
     
 }
-
