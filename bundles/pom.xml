@@ -117,6 +117,15 @@
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                     </artifactItem>
+                                    <artifactItem>
+                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <artifactId>handlebars</artifactId>
+                                        <version>1.0.rc.1</version>
+                                        <type>zip</type>
+                                        <classifier>js</classifier>
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                    </artifactItem>
                                 </artifactItems>
                                 <overWriteReleases>false</overWriteReleases>
                                 <overWriteSnapshots>true</overWriteSnapshots>
