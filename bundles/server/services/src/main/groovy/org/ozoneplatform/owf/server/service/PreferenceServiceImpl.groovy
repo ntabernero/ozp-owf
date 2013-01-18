@@ -69,8 +69,11 @@ class PreferenceServiceImpl implements PreferenceService {
     private void validate(Preference pref) {
         boolean validNamespace = pref?.namespace?.trim()?.length() > 0;
         boolean validPath = pref?.path?.trim()?.length() > 0;
-        if (!validNamespace || !validPath) {
-            throw new ValidationException("Invalid preference");
+        if (!validNamespace) {
+            throw new ValidationException("Namespace is required");
+        }
+        if (!validPath) {
+            throw new ValidationException("Path is required");
         }
         return;
     }

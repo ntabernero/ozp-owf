@@ -53,7 +53,7 @@ class GroupServiceImpl implements GroupService {
     private void validate(Group group) {
         boolean validName = group?.name?.trim()?.length() > 0;
         if (!validName) {
-            throw new ValidationException("Invalid group");
+            throw new ValidationException("Name is required");
         }
         return;
     }

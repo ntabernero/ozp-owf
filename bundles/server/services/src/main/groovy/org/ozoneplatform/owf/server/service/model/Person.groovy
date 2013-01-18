@@ -5,7 +5,7 @@ class Person extends Entity {
     String username;
     String fullName;
     String email;
-    Calendar lastLogin;
-    Calendar prevLogin;
+    String lastLogin;
+    String prevLogin;
     
 }
