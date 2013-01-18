@@ -2,7 +2,8 @@ define([
     'views/widgets/Panel',
 
     'backbone',
-    'lodash'
+    'lodash',
+    '../../../development-bundle/ui/jquery-ui.custom'
 ], function (Panel, Backbone, _) {
     
     'use strict';
@@ -80,6 +81,17 @@ define([
             this.maximized = !this.maximized;
         },
 
+        attributes: function() {
+            var model = this.model;
+            return {
+                'style':    'left:' + model.get('x') + 'px;' +
+                            'top:' + model.get('y') + 'px;' + 
+                            'width:' + model.get('width') + 'px;' +
+                            'height:' + model.get('height') + 'px;' + 
+                            'z-index:' + model.get('zIndex') + ';'
+            };
+        },
+
         _onDragStart: function (evt, ui) {
         },
 
@@ -103,7 +115,7 @@ define([
         _hideMaximizeBtn: function () {
             this.header.$('.maximize-btn').parent().hide();
             this.header.$('.restore-btn').parent().show();
-        },
+        }
         
     });
 

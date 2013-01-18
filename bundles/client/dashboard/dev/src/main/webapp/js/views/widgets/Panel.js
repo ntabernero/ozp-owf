@@ -19,7 +19,6 @@ define([
         },
 
         initialize: function () {
-            _.bindAll(this);
             this.containment = this.options.containment || ( this.containment = $(document.body) );
         },
 
@@ -27,9 +26,12 @@ define([
             this.header = new Header({ model: this.model });
             this.iframe = new Iframe({ model: this.model });
 
+            this.$body = $('<div class="body"></div>')
+                            .html( this.iframe.render().el );
+
             this.$el
                 .append( this.header.render().el )
-                .append( this.iframe.render().el );
+                .append( this.$body );
 
             return this;
         },
@@ -37,7 +39,7 @@ define([
         close: function (evt) {
             evt.stopPropagation();
 
-            this.$header = this.$body = null;
+            this.$body = null;
             this.remove();
         },
 
