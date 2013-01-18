@@ -1,45 +1,46 @@
 package org.ozoneplatform.owf.server.service.tests
 
-import org.ozoneplatform.owf.server.service.GroupServiceImpl
+import org.ozoneplatform.owf.server.service.PersonServiceImpl
 import org.ozoneplatform.owf.server.service.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.exception.ValidationException
-import org.ozoneplatform.owf.server.service.model.Group
+import org.ozoneplatform.owf.server.service.model.Person
 import spock.lang.Specification
 
-class DescribeGroupService extends Specification {
+class DescribePersonService extends Specification {
     
-    def groupService = new GroupServiceImpl()
+    def personService = new PersonServiceImpl()
     
-    def "create must receive a valid group"() {
-        when: "creating a new group without a name"
-        groupService.create(new Group())
+    def "create must receive a valid person"() {
+        when: "creating a new person without a username or full name"
+        personService.create(new Person())
 
         then: "throws"
         thrown(ValidationException)
     }
     
     def "fetch must receive an exisiting id"() {
-        when: "fetching a group by invalid id"
-        groupService.fetch(100L)
+        when: "fetching a person by invalid id"
+        personService.fetch(100L)
 
         then: "throws"
         thrown(NotFoundException)
     }
     
     def "delete must receive an exisiting id"() {
-        when: "deleting a group by invalid id"
-        groupService.delete(100L)
+        when: "deleting a person by invalid id"
+        personService.delete(100L)
 
         then: "throws"
         thrown(NotFoundException)
     }
     
     def "update must receive an exisiting id"() {
-        when: "updating a group by invalid id"
-        groupService.update(100L, new Group())
+        when: "updating a person by invalid id"
+        personService.update(100L, new Person())
 
         then: "throws"
         thrown(NotFoundException)
     }
     
 }
+
