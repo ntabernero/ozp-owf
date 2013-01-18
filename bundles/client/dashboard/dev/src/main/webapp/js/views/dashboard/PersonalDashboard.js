@@ -1,7 +1,8 @@
 define([
     'backbone',
-    'handlebars'
-], function (Backbone, Handlebars) {
+    'handlebars',
+    'views/widgets/Window'
+], function (Backbone, Handlebars, Header) {
     
     'use strict';
 
