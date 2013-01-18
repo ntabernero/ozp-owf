@@ -22,6 +22,10 @@ require.config({
         backbone: {
             deps: ['lodash', 'jquery'],
             exports: 'Backbone'
+        },
+
+        handlebars: {
+            exports: 'Handlebars'
         }
     }
 

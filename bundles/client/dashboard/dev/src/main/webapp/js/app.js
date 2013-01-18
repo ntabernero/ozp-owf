@@ -1,9 +1,16 @@
 require([
-	'views/Dashboard',
+	'views/dashboard/PersonalDashboard',
 	'jquery'
 ], function (Dashboard, $) {
 	
-	var dashboard = new Dashboard();
+	var dashboardModel = new Backbone.Model({
+		name: 'Intents'
+	});
+
+	var dashboard = new Dashboard({
+		model: dashboardModel
+	});
+	
 	$('body').html(dashboard.render().el);
 
 });
