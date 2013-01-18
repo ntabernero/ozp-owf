@@ -3,7 +3,7 @@ define([
     'views/widgets/Iframe',
 
     'backbone'
-], function (Header, Backbone) {
+], function (Header, Iframe, Backbone) {
     
     'use strict';
 
