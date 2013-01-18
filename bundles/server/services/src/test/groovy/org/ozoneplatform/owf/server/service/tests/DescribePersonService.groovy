@@ -42,5 +42,14 @@ class DescribePersonService extends Specification {
         thrown(NotFoundException)
     }
     
+    def "update must receive a valid person"() {
+        when: "updating a person without a username or full name"
+        Person person = personService.create(new Person(username: "foo", fullName: "Foo"))
+        personService.update(person.id, new Person(username: "    ", fullName: "    "))
+
+        then: "throws"
+        thrown(ValidationException)
+    }
+    
 }
 

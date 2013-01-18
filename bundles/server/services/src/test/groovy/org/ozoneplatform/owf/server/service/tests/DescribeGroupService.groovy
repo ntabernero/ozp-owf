@@ -42,4 +42,13 @@ class DescribeGroupService extends Specification {
         thrown(NotFoundException)
     }
     
+    def "update must receive a valid group"() {
+        when: "updating a group without a name"
+        Group group = groupService.create(new Group(name: "foo"))
+        groupService.update(group.id, new Group(name: "    "))
+
+        then: "throws"
+        thrown(ValidationException)
+    }
+    
 }
