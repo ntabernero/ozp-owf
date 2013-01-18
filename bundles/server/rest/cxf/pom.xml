@@ -49,7 +49,7 @@
     </dependencies>
 
     <build>
-
+        <sourceDirectory>src/main/groovy</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.gmaven</groupId>
@@ -88,7 +88,20 @@
                     </instructions>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>codenarc-maven-plugin</artifactId>
+                <version>0.18-1</version>
+            </plugin>
         </plugins>
     </build>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>codenarc-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
