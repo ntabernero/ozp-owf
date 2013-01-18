@@ -18,6 +18,22 @@ class DescribePersonService extends Specification {
         thrown(ValidationException)
     }
     
+    def "create must accept valid login dates"() {
+        when: "creating a new person with valid login dates"
+        Person person = personService.create(new Person(username: "testUser", fullName: "Test User", email: "testuser@blah.blah", prevLogin: "07/10/2012 10:30:00", lastLogin: "07/14/2012 14:03:31"))
+
+        then: "passes"
+        person.username == "testUser"
+    }
+    
+    def "create must reject invalid login dates"() {
+        when: "creating a new person with invalid login dates"
+        Person person = personService.create(new Person(username: "testUser", fullName: "Test User", email: "testuser@blah.blah", prevLogin: "invalid", lastLogin: "invalid"))
+
+        then: "throws"
+        thrown(ValidationException)
+    }
+    
     def "fetch must receive an exisiting id"() {
         when: "fetching a person by invalid id"
         personService.fetch(100L)

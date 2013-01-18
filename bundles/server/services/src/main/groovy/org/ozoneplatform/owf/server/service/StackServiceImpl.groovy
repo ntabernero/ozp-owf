@@ -64,7 +64,7 @@ class StackServiceImpl implements StackService {
     private void validate(S stack) {
         boolean validName = stack?.name?.trim()?.length() > 0;
         if (!validName) {
-            throw new ValidationException("Invalid stack");
+            throw new ValidationException("Name is required");
         }
         return;
     }
