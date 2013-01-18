@@ -26,7 +26,8 @@ files = [
   'src/test/js/config.js',
   
   // Include the src and test files on the test server but not as script tags.
-  {pattern: 'src/main/webapp/js/**/*.js', included: false},
+  //{pattern: 'src/main/webapp/js/**/*.js', included: false},
+  {pattern: 'target/minified-output/js/**/*.js', included: false},
   {pattern: 'src/test/js/**/*.js', included: false}
 ];
 
@@ -39,8 +40,11 @@ exclude = [
 
 // test results reporter to use
 // possible values: 'dots', 'progress', 'junit'
-reporters = ['progress'];
+reporters = ['progress', 'junit'];
 
+junitReporter= {
+     outputFile: 'target/surefire-reports/test-results.xml'
+};
 
 // web server port
 port = 9876;

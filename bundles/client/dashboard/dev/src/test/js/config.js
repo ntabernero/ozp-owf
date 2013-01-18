@@ -4,12 +4,10 @@ var tests = Object.keys(window.__testacular__.files).filter(function (file) {
 
 require({
 
-    // !! Testacular serves files from '/base'
-    baseUrl: '/base/src/main/webapp/js',
+    baseUrl: '/base/target/minified-output/js',
     paths: {
       require: '../target/minified-output/js/require',
       backbone: '/base/target/minified-output/js/backbone'
-      //text: '../lib/text'
     },
     shim: {
         backbone: {
