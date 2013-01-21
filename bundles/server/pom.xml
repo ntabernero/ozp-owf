@@ -10,6 +10,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <properties>
+        <spock.version>0.7-groovy-2.0</spock.version>
+        <groovy.version>2.0.6</groovy.version>
+    </properties>
+
     <groupId>org.ozoneplatform.owf.server</groupId>
     <artifactId>server</artifactId>
     <name>Ozone Platform :: OWF Server Bundles</name>
