@@ -39,22 +39,22 @@
         We are using the OSGi Blueprint XML syntax to define a bean that we referred to in our JAX-RS server setup.
         This bean carries a set of JAX-RS annotations that allow its methods to be mapped to incoming requests.
     -->
-    <bean id="personalDashboardController" class="org.ozoneplatform.owf.server.rest.cxf.PersonalDashboardController">
+    <bean id="personalDashboardController" class="org.ozoneplatform.owf.server.rest.PersonalDashboardController">
         <property name="personalDashboardService" ref="personalDashboardService"/>
     </bean>
-    <bean id="groupDashboardController" class="org.ozoneplatform.owf.server.rest.cxf.GroupDashboardController">
+    <bean id="groupDashboardController" class="org.ozoneplatform.owf.server.rest.GroupDashboardController">
         <property name="groupDashboardService" ref="groupDashboardService"/>
     </bean>
-    <bean id="preferences" class="org.ozoneplatform.owf.server.rest.cxf.PreferenceController">
+    <bean id="preferences" class="org.ozoneplatform.owf.server.rest.PreferenceController">
         <property name="preferenceService" ref="preferenceService"/>
     </bean>
-    <bean id="persons" class="org.ozoneplatform.owf.server.rest.cxf.PersonController">
+    <bean id="persons" class="org.ozoneplatform.owf.server.rest.PersonController">
         <property name="personService" ref="personService"/>
     </bean>
-    <bean id="groups" class="org.ozoneplatform.owf.server.rest.cxf.GroupController">
+    <bean id="groups" class="org.ozoneplatform.owf.server.rest.GroupController">
         <property name="groupService" ref="groupService"/>
     </bean>
-    <bean id="stacks" class="org.ozoneplatform.owf.server.rest.cxf.StackController">
+    <bean id="stacks" class="org.ozoneplatform.owf.server.rest.StackController">
         <property name="stackService" ref="stackService"/>
     </bean>
 
@@ -71,7 +71,7 @@
         with the default settings, the server will be running on 'http://localhost:8181/cxf/ozoneplatform/rest'
       - a list of service beans
     -->
-    <jaxrs:server id="ozoneplatform_cxf_endpoint"  address="/ozoneplatform/rest">
+    <jaxrs:server id="ozoneplatform_cxf_endpoint"  address="/owf">
         <jaxrs:serviceBeans>
             <ref component-id="personalDashboardController" />
             <ref component-id="groupDashboardController" />
@@ -81,8 +81,8 @@
             <ref component-id="stacks"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
-            <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.cxf.exceptionmap.ValidationExceptionMapper" />
-            <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.cxf.exceptionmap.NotFoundExceptionMapper" />
+            <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
+            <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
             <ref component-id="jsonProvider" />
         </jaxrs:providers>
     </jaxrs:server>

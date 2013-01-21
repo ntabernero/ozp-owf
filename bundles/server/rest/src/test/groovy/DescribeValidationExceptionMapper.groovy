@@ -1,4 +1,4 @@
-import org.ozoneplatform.owf.server.rest.cxf.exceptionmap.ValidationExceptionMapper
+import org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper
 import org.ozoneplatform.owf.server.service.exception.ValidationException
 import spock.lang.Specification
 
