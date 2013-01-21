@@ -11,6 +11,6 @@ require([
 		model: dashboardModel
 	});
 	
-	$('body').html(dashboard.render().el);
+	$('body').append(dashboard.render().el);
 
 });

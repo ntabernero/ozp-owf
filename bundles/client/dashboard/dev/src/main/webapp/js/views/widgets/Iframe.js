@@ -7,18 +7,19 @@ define([
     return Backbone.View.extend({
 
         model: null,
+        tagName: 'iframe',
 
         attributes: function() {
             var model = this.model;
 
             return {
                 'frameborder' : 0,
-                'src': 'about:blank' /* model.get('url') +';' */,
+                'src': model.get('url'),
                 // id: ...
                 // name: ...,
                 'role': 'presentation'
             };
-        },
+        }
         
     });
 

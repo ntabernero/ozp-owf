@@ -35,18 +35,28 @@ define([
                     me.$el
                         .draggable({
                             containment: me.containment,
-                            start: me._onDragStart,
-                            stop: me._onDragStop
+                            start: me._mask,
+                            stop: me._unmask
                         })
                         .trigger(evt);
                 })
                 .resizable({
-                    start: me._onResizeStart,
+                    minHeight: 50,
+                    minWidth: 50,
+                    start: me._mask,
                     resize: me._onResize,
-                    stop: me._onResizeStop
+                    stop: me._unmask
                 });
 
             return me;
+        },
+
+        close: function () {
+            this.$el
+                .draggable( 'destroy' )
+                .resizable( 'destroy' );
+
+            this.constructor.__super__.close.call(this);
         },
 
         minimize: function(evt) {
@@ -54,6 +64,7 @@ define([
         },
 
         toggleMaximize: function(evt) {
+            debugger;
             var container = this.options.containment,
                 offset = container.offset(),
                 $el = this.$el,
@@ -92,19 +103,17 @@ define([
             };
         },
 
-        _onDragStart: function (evt, ui) {
+        //TODO: refactor
+        _mask: function () {
+            $('#mask').removeClass('hide');
         },
 
-        _onDragStop: function (evt, ui) {
-        },
-
-        _onResizeStart: function (evt, ui) {
+        //TODO: refactor 
+        _unmask: function () {
+            $('#mask').addClass('hide');
         },
 
         _onResize: function (evt, ui) {
-        },
-
-        _onResizeStop: function (evt, ui) {
         },
 
         _hideRestoreBtn: function () {

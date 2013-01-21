@@ -14,12 +14,15 @@ define([
         render: function() {
             var desktopPane = new DesktopPane({
                 widgets: [{
-                    name: 'A Widget',
+                    title: 'A Widget',
                     url: 'widget.html',
                     x: 50,
                     y: 50,
                     width: 400,
-                    height: 500
+                    height: 500,
+                    zIndex: 10000,
+                    maximizable: true,
+                    closable: true
                 }]
             });
 
