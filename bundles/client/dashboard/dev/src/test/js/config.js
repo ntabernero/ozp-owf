@@ -1,5 +1,12 @@
-var tests = Object.keys(window.__testacular__.files).filter(function (file) {
-    return /Spec\.js$/.test(file);
+var tests = [];
+for (var file in window.__testacular__.files) {
+    if (/Spec\.js$/.test(file)) {
+        tests.push(file);
+    }
+}
+
+requirejs.config({
+    enforceDefine: true
 });
 
 require({
