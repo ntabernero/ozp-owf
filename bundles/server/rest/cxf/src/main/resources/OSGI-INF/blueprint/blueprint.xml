@@ -24,11 +24,10 @@
            http://cxf.apache.org/schemas/blueprint/jaxrs.xsd
            ">
 
+
     <!--
-      We are using the OSGi Blueprint XML syntax to define a bean that we referred to in our JAX-RS server setup.
-      This bean carries a set of JAX-RS annotations that allow its methods to be mapped to incoming requests.
+        References to the service API to inject in the Controllers
     -->
-    
     <reference id="groupService" interface="org.ozoneplatform.owf.server.service.GroupService"/>
     <reference id="personService" interface="org.ozoneplatform.owf.server.service.PersonService"/>
     <reference id="stackService" interface="org.ozoneplatform.owf.server.service.StackService"/>
@@ -36,6 +35,10 @@
     <reference id="personalDashboardService" interface="org.ozoneplatform.owf.server.service.PersonalDashboardService"/>
     <reference id="groupDashboardService" interface="org.ozoneplatform.owf.server.service.GroupDashboardService"/>
 
+    <!--
+        We are using the OSGi Blueprint XML syntax to define a bean that we referred to in our JAX-RS server setup.
+        This bean carries a set of JAX-RS annotations that allow its methods to be mapped to incoming requests.
+    -->
     <bean id="personalDashboardController" class="org.ozoneplatform.owf.server.rest.cxf.PersonalDashboardController">
         <property name="personalDashboardService" ref="personalDashboardService"/>
     </bean>
@@ -54,7 +57,14 @@
     <bean id="stacks" class="org.ozoneplatform.owf.server.rest.cxf.StackController">
         <property name="stackService" ref="stackService"/>
     </bean>
+
+
+    <!--
+        JAX-RS Providers
+    -->
+
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+
     <!--
       The <jaxrs:server/> element sets up our JAX-RS services.  It defines:
       - the server's address, '/crm', relative to the default CXF servlet URI
@@ -71,6 +81,8 @@
             <ref component-id="stacks"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
+            <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.cxf.exceptionmap.ValidationExceptionMapper" />
+            <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.cxf.exceptionmap.NotFoundExceptionMapper" />
             <ref component-id="jsonProvider" />
         </jaxrs:providers>
     </jaxrs:server>
