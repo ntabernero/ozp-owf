@@ -1,0 +1,65 @@
+$baseBorderRadius:      0;
+$borderRadiusLarge:     0;
+$borderRadiusSmall:     0;
+
+$baseColor: #fff;
+
+//$linkColor: #3367D0;
+
+@import "jquery.ui.core.css";
+@import "jquery.ui.theme.css";
+@import "jquery.ui.resizable.css";
+@import "utils/functions";
+@import "utils/animations";
+@import "compass_twitter_bootstrap_awesome";
+@import "overrides/bootstrap.scss";
+
+.modal-backdrop,
+.modal-backdrop.fade.in {
+  @include opacity(0.3);
+}
+
+// bannerGray: #6E7478;
+
+/** {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}*/
+
+.no-border-radius {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+}
+
+html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
+    -webkit-backface-visibility: hidden;
+    
+    background-image: url('../images/stripes_rpt.png'), url('../images/bkg_owf.png'), -webkit-radial-gradient(white, #E6E7E8);
+    background-image: url("../images/stripes_rpt.png"), url("../images/bkg_owf.png"), -moz-radial-gradient(white, #E6E7E8);
+    height: 100%;
+    outline: 0 none;
+    cursor: default;
+    background-attachment: fixed;
+    background-position: center center, center center;
+    background-repeat: repeat, no-repeat, no-repeat;
+}
+
+#mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1000000000;
+}
+
+
+@import "components/dashboard";
+@import "components/widget";
