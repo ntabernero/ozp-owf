@@ -1,4 +1,4 @@
-import org.ozoneplatform.owf.server.rest.cxf.exceptionmap.NotFoundExceptionMapper
+import org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper
 import org.ozoneplatform.owf.server.service.exception.NotFoundException
 import spock.lang.Specification
 

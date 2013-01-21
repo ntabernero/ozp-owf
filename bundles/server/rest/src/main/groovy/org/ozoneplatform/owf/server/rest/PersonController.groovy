@@ -1,4 +1,4 @@
-package org.ozoneplatform.owf.server.rest.cxf
+package org.ozoneplatform.owf.server.rest
 import org.ozoneplatform.owf.server.service.PersonService
 import org.ozoneplatform.owf.server.service.model.Person
 

@@ -1,4 +1,4 @@
-package org.ozoneplatform.owf.server.rest.cxf
+package org.ozoneplatform.owf.server.rest
 import org.ozoneplatform.owf.server.service.PreferenceService
 import org.ozoneplatform.owf.server.service.model.Preference
 

@@ -1,4 +1,4 @@
-package org.ozoneplatform.owf.server.rest.cxf.exceptionmap
+package org.ozoneplatform.owf.server.rest.exceptionmap
 
 import org.ozoneplatform.owf.server.service.exception.ValidationException
 

@@ -1,4 +1,4 @@
-package org.ozoneplatform.owf.server.rest.cxf
+package org.ozoneplatform.owf.server.rest
 
 import javax.ws.rs.core.Response
 import javax.ws.rs.Path
