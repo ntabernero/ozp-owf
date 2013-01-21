@@ -20,6 +20,8 @@
     <description>see README.md</description>
 
     <properties>
+        <groovy.version>2.0.6</groovy.version>
+        <jackson.version>1.9.11</jackson.version>
     </properties>
 
     <scm>
