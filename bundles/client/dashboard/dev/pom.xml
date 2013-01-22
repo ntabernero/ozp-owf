@@ -69,7 +69,6 @@
 
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
@@ -79,7 +78,7 @@
                     </execution>
                     <execution>
                         <id>copy-resources</id>
-                        <phase>validate</phase>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
@@ -95,7 +94,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.2.1</version>
