@@ -160,7 +160,7 @@
                                         <artifactId>sinon</artifactId>
                                         <version>1.5.2</version>
                                         <type>zip</type>
-                                        <classifier>sinon</classifier>
+                                        <classifier>js</classifier>
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                     </artifactItem>
@@ -169,7 +169,7 @@
                                         <artifactId>expect</artifactId>
                                         <version>0.2.0</version>
                                         <type>zip</type>
-                                        <classifier>expect</classifier>
+                                        <classifier>js</classifier>
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                     </artifactItem>
