@@ -1,5 +1,5 @@
 import org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper
-import org.ozoneplatform.owf.server.service.exception.NotFoundException
+import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import spock.lang.Specification
 
 class DescribeNotFoundExceptionMapper extends Specification {

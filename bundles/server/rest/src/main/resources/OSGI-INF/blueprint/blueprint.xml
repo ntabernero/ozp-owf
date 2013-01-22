@@ -28,12 +28,12 @@
     <!--
         References to the service API to inject in the Controllers
     -->
-    <reference id="groupService" interface="org.ozoneplatform.owf.server.service.GroupService"/>
-    <reference id="personService" interface="org.ozoneplatform.owf.server.service.PersonService"/>
-    <reference id="stackService" interface="org.ozoneplatform.owf.server.service.StackService"/>
-    <reference id="preferenceService" interface="org.ozoneplatform.owf.server.service.PreferenceService"/>
-    <reference id="personalDashboardService" interface="org.ozoneplatform.owf.server.service.PersonalDashboardService"/>
-    <reference id="groupDashboardService" interface="org.ozoneplatform.owf.server.service.GroupDashboardService"/>
+    <reference id="groupService" interface="org.ozoneplatform.owf.server.service.api.GroupService"/>
+    <reference id="personService" interface="org.ozoneplatform.owf.server.service.api.PersonService"/>
+    <reference id="stackService" interface="org.ozoneplatform.owf.server.service.api.StackService"/>
+    <reference id="preferenceService" interface="org.ozoneplatform.owf.server.service.api.PreferenceService"/>
+    <reference id="personalDashboardService" interface="org.ozoneplatform.owf.server.service.api.PersonalDashboardService"/>
+    <reference id="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.GroupDashboardService"/>
 
     <!--
         We are using the OSGi Blueprint XML syntax to define a bean that we referred to in our JAX-RS server setup.
