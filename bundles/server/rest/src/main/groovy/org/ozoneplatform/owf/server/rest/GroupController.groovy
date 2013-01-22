@@ -1,7 +1,7 @@
 package org.ozoneplatform.owf.server.rest
 
-import org.ozoneplatform.owf.server.service.GroupService
-import org.ozoneplatform.owf.server.service.model.Group
+import org.ozoneplatform.owf.server.service.api.GroupService
+import org.ozoneplatform.owf.server.service.api.model.Group
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Context

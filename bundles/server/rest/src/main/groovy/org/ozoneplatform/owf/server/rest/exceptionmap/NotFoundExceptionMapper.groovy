@@ -1,6 +1,6 @@
 package org.ozoneplatform.owf.server.rest.exceptionmap
 
-import org.ozoneplatform.owf.server.service.exception.NotFoundException
+import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 
 import javax.ws.rs.core.Response
 import javax.ws.rs.ext.ExceptionMapper

@@ -1,17 +1,10 @@
 package org.ozoneplatform.owf.server.rest
 
-import javax.ws.rs.core.Response
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
-import javax.ws.rs.GET
-import javax.ws.rs.POST
-import javax.ws.rs.Consumes
-import javax.ws.rs.PathParam
-import javax.ws.rs.PUT
-import javax.ws.rs.DELETE
+import org.ozoneplatform.owf.server.service.api.PersonalDashboardService
+import org.ozoneplatform.owf.server.service.api.model.Dashboard
 
-import org.ozoneplatform.owf.server.service.PersonalDashboardService
-import org.ozoneplatform.owf.server.service.model.Dashboard
+import javax.ws.rs.*
+import javax.ws.rs.core.Response
 
 @Path("/user-dashboards")
 @Produces("application/json")

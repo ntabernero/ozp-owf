@@ -11,7 +11,8 @@
     </feature>
 
     <feature name="owf-rest" version="${project.version}" description="OWF REST API and backend service bundles">
-        <bundle start-level="80">mvn:org.ozoneplatform.owf.server/services/${project.version}</bundle>
+        <bundle start-level="80">mvn:org.ozoneplatform.owf.server/services-api/${project.version}</bundle>
+        <bundle start-level="80">mvn:org.ozoneplatform.owf.server/services-impl/${project.version}</bundle>
         <bundle start-level="80">mvn:org.ozoneplatform.owf.server/rest/${project.version}</bundle>
         <bundle start-level="70">mvn:org.codehaus.groovy/groovy-all/${groovy.version}</bundle>
         <bundle start-level="70">mvn:org.codehaus.jackson/jackson-core-asl/${jackson.version}</bundle>

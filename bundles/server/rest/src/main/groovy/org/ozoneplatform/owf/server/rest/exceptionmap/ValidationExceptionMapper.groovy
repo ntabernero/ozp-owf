@@ -1,6 +1,6 @@
 package org.ozoneplatform.owf.server.rest.exceptionmap
 
-import org.ozoneplatform.owf.server.service.exception.ValidationException
+import org.ozoneplatform.owf.server.service.api.exception.ValidationException
 
 import javax.ws.rs.core.Response
 import javax.ws.rs.ext.ExceptionMapper
