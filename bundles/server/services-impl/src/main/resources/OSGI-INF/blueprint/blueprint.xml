@@ -25,6 +25,7 @@
     <bean id="preferenceService" class="org.ozoneplatform.owf.server.service.impl.PreferenceServiceImpl"/>
     <bean id="personalDashboardService" class="org.ozoneplatform.owf.server.service.impl.PersonalDashboardServiceImpl"/>
     <bean id="groupDashboardService" class="org.ozoneplatform.owf.server.service.impl.GroupDashboardServiceImpl"/>
+    <bean id="intentService" class="org.ozoneplatform.owf.server.service.impl.IntentServiceImpl"/>
 
     <service ref="groupService" interface="org.ozoneplatform.owf.server.service.api.GroupService"/>
     <service ref="personService" interface="org.ozoneplatform.owf.server.service.api.PersonService"/>
@@ -32,5 +33,6 @@
     <service ref="preferenceService" interface="org.ozoneplatform.owf.server.service.api.PreferenceService"/>
     <service ref="personalDashboardService" interface="org.ozoneplatform.owf.server.service.api.PersonalDashboardService"/>
     <service ref="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.GroupDashboardService"/>
+    <service ref="intentService" interface="org.ozoneplatform.owf.server.service.api.IntentService"/>
 
 </blueprint>
