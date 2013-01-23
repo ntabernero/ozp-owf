@@ -31,20 +31,20 @@ class WidgetDefinitionController {
     @POST
     @Consumes("application/json")
     WidgetDefinition create(WidgetDefinition widgetDefinition) {
-
+        widgetDefinitionService.create(widgetDefinition)
     }
 
     @PUT
     @Path("/{widgetId}")
     @Consumes("application/json")
-    WidgetDefinition update(WidgetDefinition widgetDefinition) {
-
+    WidgetDefinition update(@PathParam("widgetId") String widgetId, WidgetDefinition widgetDefinition) {
+        widgetDefinitionService.update(widgetId, widgetDefinition)
     }
 
     @DELETE
     @Path("/{widgetId}")
-    WidgetDefinition delete() {
-        widgetDefinitionService.delete()
+    WidgetDefinition delete(@PathParam("widgetId") String widgetId) {
+        widgetDefinitionService.delete(widgetId)
     }
 
     @POST

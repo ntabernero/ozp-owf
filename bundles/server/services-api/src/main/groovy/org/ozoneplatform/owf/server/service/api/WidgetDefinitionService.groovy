@@ -10,6 +10,10 @@ interface WidgetDefinitionService {
 
     WidgetDefinition get(String widgetId)
 
+    WidgetDefinition create(WidgetDefinition widgetDefinition)
+
+    WidgetDefinition update(String widgetId, WidgetDefinition widgetDefinition)
+
     WidgetDefinition delete(String widgetId)
 
     WidgetDefinition addIntent(String widgetId, Intent intent)

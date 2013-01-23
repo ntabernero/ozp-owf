@@ -35,15 +35,16 @@
     <reference id="personalDashboardService" interface="org.ozoneplatform.owf.server.service.api.PersonalDashboardService"/>
     <reference id="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.GroupDashboardService"/>
     <reference id="intentService" interface="org.ozoneplatform.owf.server.service.api.IntentService"/>
+    <reference id="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService"/>
 
     <!--
         We are using the OSGi Blueprint XML syntax to define a bean that we referred to in our JAX-RS server setup.
         This bean carries a set of JAX-RS annotations that allow its methods to be mapped to incoming requests.
     -->
-    <bean id="personalDashboardController" class="org.ozoneplatform.owf.server.rest.PersonalDashboardController">
+    <bean id="personalDashboards" class="org.ozoneplatform.owf.server.rest.PersonalDashboardController">
         <property name="personalDashboardService" ref="personalDashboardService"/>
     </bean>
-    <bean id="groupDashboardController" class="org.ozoneplatform.owf.server.rest.GroupDashboardController">
+    <bean id="groupDashboards" class="org.ozoneplatform.owf.server.rest.GroupDashboardController">
         <property name="groupDashboardService" ref="groupDashboardService"/>
     </bean>
     <bean id="preferences" class="org.ozoneplatform.owf.server.rest.PreferenceController">
@@ -61,7 +62,9 @@
     <bean id="intents" class="org.ozoneplatform.owf.server.rest.IntentController">
         <property name="intentService" ref="intentService"/>
     </bean>
-
+    <bean id="widgetDefinitions" class="org.ozoneplatform.owf.server.rest.WidgetDefinitionController">
+        <property name="widgetDefinitionService" ref="widgetDefinitionService"/>
+    </bean>
 
     <!--
         JAX-RS Providers
@@ -77,13 +80,14 @@
     -->
     <jaxrs:server id="ozoneplatform_cxf_endpoint"  address="/owf">
         <jaxrs:serviceBeans>
-            <ref component-id="personalDashboardController" />
-            <ref component-id="groupDashboardController" />
+            <ref component-id="personalDashboards" />
+            <ref component-id="groupDashboards" />
             <ref component-id="preferences"/>
             <ref component-id="persons"/>
             <ref component-id="groups"/>
             <ref component-id="stacks"/>
             <ref component-id="intents"/>
+            <ref component-id="widgetDefinitions"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
