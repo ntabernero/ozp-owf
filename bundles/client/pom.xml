@@ -104,7 +104,7 @@
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
                                         <artifactId>backbone</artifactId>
-                                        <version>0.9.9</version>
+                                        <version>0.9.10</version>
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
@@ -151,7 +151,7 @@
                                         <artifactId>sinon</artifactId>
                                         <version>1.5.2</version>
                                         <type>zip</type>
-                                        <classifier>sinon</classifier>
+                                        <classifier>js</classifier>
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                     </artifactItem>
@@ -160,7 +160,7 @@
                                         <artifactId>expect</artifactId>
                                         <version>0.2.0</version>
                                         <type>zip</type>
-                                        <classifier>expect</classifier>
+                                        <classifier>js</classifier>
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                     </artifactItem>
