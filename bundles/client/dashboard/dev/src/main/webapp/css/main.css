@@ -7792,6 +7792,16 @@ a.label:hover, a.badge:hover {
   padding-right: 2em;
 }
 
+/* line 20, overrides/bootstrap.scss */
+.modal-header > h4 {
+  margin: 0;
+}
+/* line 24, overrides/bootstrap.scss */
+.modal-header > button {
+  margin: 0;
+  line-height: 17.5px;
+}
+
 /* line 18, main.scss */
 .modal-backdrop,
 .modal-backdrop.fade.in {
@@ -7805,7 +7815,7 @@ a.label:hover, a.badge:hover {
     box-sizing: border-box;
 }*/
 /* line 30, main.scss */
-.no-border-radius {
+.no-border-radius, #create-edit-dashboard-window {
   -webkit-border-radius: 0px !important;
   -moz-border-radius: 0px !important;
   border-radius: 0px !important;
@@ -7840,11 +7850,27 @@ body {
   z-index: 1000000000;
 }
 
+/* line 63, main.scss */
+.modal-backdrop {
+  z-index: 1000000;
+}
+
 /* line 1, components/dashboard.scss */
 .dashboard, .pane, .desktoppane {
   overflow: hidden;
   width: 100%;
   height: 100%;
+}
+
+/* line 1, components/create_edit_dashboard.scss */
+#create-edit-dashboard-window {
+  border: 5px solid gray;
+  border: 5px solid rgba(128, 128, 128, 0.5);
+  z-index: 10000000;
+}
+/* line 7, components/create_edit_dashboard.scss */
+#create-edit-dashboard-window .row {
+  line-height: 3em;
 }
 
 /* line 11, components/widget.scss */

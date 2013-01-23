@@ -15,3 +15,14 @@
 	padding-left: 2em;
 	padding-right: 2em;
 }
+
+.modal-header {
+    & > h4 {
+        margin: 0;
+    }
+
+    & > button {
+        margin: 0;
+        line-height: $baseFontSize * 1.25;
+    }
+}
