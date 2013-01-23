@@ -1,13 +1,15 @@
 define([
+    'views/View',
     'views/widgets/Header',
     'views/widgets/Iframe',
-
+    'jquery',
+    'lodash',
     'backbone'
-], function (Header, Iframe, Backbone) {
+], function (View, Header, Iframe, $, _, Backbone) {
     
     'use strict';
 
-    return Backbone.View.extend({
+    return View.extend({
 
         model: null,
         className: 'widget panel',
@@ -19,7 +21,11 @@ define([
         },
 
         initialize: function () {
+            View.prototype.initialize.apply(this, arguments);
             this.containment = this.options.containment || ( this.containment = $(document.body) );
+
+            this.model.on('change:active', _.bind(this.updateActive, this));
+            this.updateActive();
         },
 
         render: function() {
@@ -65,8 +71,12 @@ define([
                 top: $el.css('top'),
                 left: $el.css('left')
             };
+        },
+
+        updateActive: function(widget) {
+            //add or remove the active class as appropriate
+            this.$el[this.model.get('active') ? 'addClass' : 'removeClass']('active');
         }
-        
     });
 
 });

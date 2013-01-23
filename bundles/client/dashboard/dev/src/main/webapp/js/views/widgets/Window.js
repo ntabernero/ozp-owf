@@ -19,10 +19,16 @@ define([
             'dblclick': 'toggleMaximize'
         },
 
-        initialize: function () {
+        initialize: function (options) {
+            this.zIndexManager = options.zIndexManager;
+            this.zIndexManager.register(this, {
+                activate: options.model.get('active')
+            });
+
             var parent =  this.constructor.__super__;
-            parent.initialize.call(this);
+            parent.initialize.apply(this, options);
             this.events = _.extend({}, parent.events, this.events);
+
         },
 
         render: function() {
@@ -90,6 +96,11 @@ define([
             }
 
             this.maximized = !this.maximized;
+        },
+
+        updateActive: function() {
+            Panel.prototype.updateActive.apply(this, arguments);
+            if (this.model.get('active')) this.zIndexManager.bringToFront(this);
         },
 
         attributes: function() {

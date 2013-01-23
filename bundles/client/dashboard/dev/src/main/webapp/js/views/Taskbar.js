@@ -19,15 +19,15 @@ define([
 
         initialize: function() {
             Header.prototype.initialize.apply(this, arguments);
-            _.bindAll(this);
+            _.bindAll(this, 'activateWidget', 'updateActive');
 
-            this.model.on('change', this.updateActive);
+            this.model.on('change:active', this.updateActive);
 
             this.updateActive();
         },
 
         activateWidget: function() {
-            this.model.activate();
+            this.model.set('active', true);
         },
 
         updateActive: function() {
@@ -41,8 +41,7 @@ define([
 
         initialize: function(options) {
             View.prototype.initialize.apply(this, arguments);
-
-            _.bindAll(this);
+            _.bindAll(this, 'addWidget', 'removeWidget');
 
             this.widgets = options.widgets;
             this.widgets.on({

@@ -1,8 +1,9 @@
 define([
     'views/panes/DesktopPane',
+    'collections/WidgetStatesCollection',
     'backbone',
     'views/View'
-], function (DesktopPane, Backbone, View) {
+], function (DesktopPane, WidgetStatesCollection,  Backbone, View) {
     
     'use strict';
 
@@ -14,7 +15,7 @@ define([
 
         render: function() {
             var desktopPane = new DesktopPane({
-                widgets: [{
+                widgets: new WidgetStatesCollection([{
                     title: 'A Widget',
                     uniqueId: '1234-5678',
                     url: 'widget.html',
@@ -38,7 +39,7 @@ define([
                     zIndex: 10000,
                     maximizable: true,
                     closable: true
-                }]
+                }])
             });
 
             this.$el.html(desktopPane.render().el);

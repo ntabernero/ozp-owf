@@ -2,21 +2,30 @@ define([
     'views/panes/Pane',
     'views/widgets/Window',
     'views/Taskbar',
+    'services/ZIndexManager',
     'jquery',
     'backbone'
-], function (Pane, WidgetWindow, Taskbar, $, Backbone) {
+], function (Pane, WidgetWindow, Taskbar, ZIndexManager, $, Backbone) {
     
     'use strict';
 
     return Pane.extend({
 
         model: null,
-    
+   
         
         $body: null, //jquery element for the dashboard body
         taskbar: null, //taskbar View
 
         className: 'pane desktoppane',
+
+        initialize: function() {
+            Pane.prototype.initialize.apply(this, arguments);
+
+            this.windows = [];
+
+            this.zIndexManager = new ZIndexManager();
+        },
 
         render: function () {
             var me = this;
@@ -66,12 +75,15 @@ define([
         
             var ww = new WidgetWindow({
                 model: widgetState,
-                containment: this.$body
+                containment: this.$body,
+                zIndexManager: this.zIndexManager
             });
 
             ww.render();
 
             console.timeEnd('widget');
+
+            this.windows.push(ww);
 
             return ww;
         },
@@ -80,6 +92,19 @@ define([
             var ww = this.renderWidget(model);
             this.$el.append(ww.$el);
             return ww;
+        },
+
+        changeActivation: function(widget) {
+            var active = widget.get('active');
+
+            if (active) {
+                //deactivate all widgets first
+                this.widgets.each(function(widg) {
+                    if (widget !== widg) widg.set('active', false);
+                });
+            }
+
+            
         }
         
     });
