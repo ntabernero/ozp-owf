@@ -6,18 +6,48 @@ define([
     'lodash'
 ], function (View, Header, $, Backbone, _) {
     'use strict';
+    
+    //subclass of header with extra logic 
+    //for being in the taskbar
+    var TaskbarHeader = Header.extend({
+        events: function() {
+            return _.extend({
+                "click": 'activateWidget'
+            }, Header.prototype.events);
+
+        },
+
+        initialize: function() {
+            Header.prototype.initialize.apply(this, arguments);
+            _.bindAll(this);
+
+            this.model.on('change', this.updateActive);
+
+            this.updateActive();
+        },
+
+        activateWidget: function() {
+            this.model.activate();
+        },
+
+        updateActive: function() {
+            //add or remove the active class as appropriate
+            this.$el[this.model.get('active') ? 'addClass' : 'removeClass']('active');
+        }
+    });
 
     return View.extend({
         className: 'taskbar', 
 
         initialize: function(options) {
+            View.prototype.initialize.apply(this, arguments);
+
             _.bindAll(this);
 
             this.widgets = options.widgets;
             this.widgets.on({
                 add: this.addWidget,
-                remove: this.removeWidget,
-                change: this.updateHeaderActive
+                remove: this.removeWidget
             });
 
             //list of Header views
@@ -25,16 +55,11 @@ define([
         },
 
         render: function() {
-            var me = this;
-
-            this.widgets.each(function(widget) {
-                me.addWidget(widget);
-                me.updateHeaderActive(widget);
-            });
+            this.widgets.each(this.addWidget);
         },
 
         addWidget: function(widget) {
-            var header = new Header({
+            var header = new TaskbarHeader({
                 model: widget
             });
 
@@ -52,14 +77,7 @@ define([
                 header.remove();
                 delete this.headers[id];
             }
-        },
-
-        updateHeaderActive: function(widget) {
-            var header = this.headers[widget.get('uniqueId')];
-
-            //add or remove the active class as appropriate.  This is specific to
-            header.$el[widget.get('active') ? 'addClass' : 'removeClass']('active');
-
         }
+
     });
 });

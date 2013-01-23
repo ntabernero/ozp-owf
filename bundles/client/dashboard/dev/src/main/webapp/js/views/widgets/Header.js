@@ -1,7 +1,7 @@
 define([
-    'backbone',
+    'views/View',
     'handlebars'
-], function (Backbone, Handlebars) {
+], function (View, Handlebars) {
     
     'use strict';
 
@@ -48,7 +48,7 @@ define([
             '{{/if}}' +
         '</ul>';
 
-    return Backbone.View.extend({
+    return View.extend({
 
         model: null,
         className: 'header',
