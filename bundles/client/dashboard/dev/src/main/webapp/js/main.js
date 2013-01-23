@@ -5,7 +5,8 @@ require.config({
     deps: ['app'],
 
     paths: {
-        bootstrap: '../vendor/assets/javascripts'
+        bootstrap: '../vendor/assets/javascripts',
+        jqueryui: '../development-bundle/ui'
         // // alias versioned dependencies to simplify updating as new versions are released
         // jquery: 'jquery',
         // lodash: 'lodash',
@@ -41,6 +42,10 @@ require.config({
         },
         'bootstrap/bootstrap-modal': {
             deps: ['jquery', 'bootstrap/bootstrap-transition'],
+            exports: '$'
+        },
+        'jqueryui/jquery-ui.custom': {
+            deps: ['jquery'],
             exports: '$'
         }
     }

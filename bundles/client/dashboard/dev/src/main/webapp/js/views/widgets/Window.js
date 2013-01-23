@@ -3,7 +3,7 @@ define([
 
     'backbone',
     'lodash',
-    '../../../development-bundle/ui/jquery-ui.custom'
+    'jqueryui/jquery-ui.custom'
 ], function (Panel, Backbone, _) {
     
     'use strict';
