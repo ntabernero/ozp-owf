@@ -69,7 +69,9 @@
             <!--</plugin>-->
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
