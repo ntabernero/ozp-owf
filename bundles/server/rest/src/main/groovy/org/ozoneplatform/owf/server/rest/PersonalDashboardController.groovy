@@ -6,7 +6,7 @@ import org.ozoneplatform.owf.server.service.api.model.Dashboard
 import javax.ws.rs.*
 import javax.ws.rs.core.Response
 
-@Path("/user-dashboards")
+@Path("/personal-dashboards")
 @Produces("application/json")
 class PersonalDashboardController {
 
