@@ -41,9 +41,11 @@ define([
 
             this.$body = null;
             this.remove();
+
+            this.model.destroy();
         },
 
-        toggleCollapse: function () {
+        toggleCollapse: function (evt) {
             evt.stopPropagation();
 
             if(this.isCollapsed === true)

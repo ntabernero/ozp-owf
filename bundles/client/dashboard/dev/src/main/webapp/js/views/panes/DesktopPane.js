@@ -4,38 +4,46 @@ define([
     'views/Taskbar',
     'jquery',
     'backbone'
-], function (Pane, WidgetWindow, $, Backbone) {
+], function (Pane, WidgetWindow, Taskbar, $, Backbone) {
     
     'use strict';
 
     return Pane.extend({
 
         model: null,
+    
+        
+        $body: null, //jquery element for the dashboard body
+        taskbar: null, //taskbar View
 
         className: 'pane desktoppane',
 
         render: function () {
-            var me = this,
-                fragment = $(document.createDocumentFragment());
+            var me = this;
 
             console.time('pane');
             this.constructor.__super__.render.call(this);
 
+            this.renderBody();
             this.renderTaskbar();
-
-
-            this.$el.append(fragment);
+            this.$body.append(this.renderWidgets());
 
             console.timeEnd('pane');
             return this;
         },
 
+        renderBody: function() {
+            this.$body = $(document.createElement('div')).addClass('body');
+            this.$el.append(this.$body);
+        },
+
         renderTaskbar: function() {
-            var taskbar = new Taskbar({
+            this.taskbar = new Taskbar({
                 widgets: this.widgets
             });
 
-            this.$el.append(taskbar.$el);
+            this.taskbar.render();
+            this.$el.append(this.taskbar.$el);
         },
 
         /**
@@ -58,7 +66,7 @@ define([
         
             var ww = new WidgetWindow({
                 model: widgetState,
-                containment: this.$el
+                containment: this.$body
             });
 
             ww.render();

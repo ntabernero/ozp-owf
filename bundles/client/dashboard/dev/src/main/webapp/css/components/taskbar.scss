@@ -1,0 +1,16 @@
+.taskbar {
+    position: absolute;
+
+    bottom: 0;
+    width: 100%;
+
+    > .header {
+        width: 20em;
+
+        display: inline-block;
+
+        margin: 0 1px;
+
+        @include box-shadow(2px -2px 8px 2px #ccc);
+    }
+}

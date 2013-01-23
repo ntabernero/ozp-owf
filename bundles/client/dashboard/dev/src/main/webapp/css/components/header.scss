@@ -1,0 +1,68 @@
+$headerLineHeight: 2.5em;
+
+.header {
+    @include ctb-gradient-vertical($widgetInactiveBackground, darken($widgetInactiveBackground, 5%));
+    @include ctb-text-overflow();
+    line-height: $headerLineHeight;
+
+    position: relative;
+    //white-space: nowrap;
+
+    span {
+        padding: 0 0 0 0.5em;
+        color: $widgetInactiveColor;
+        overflow: hidden;
+        cursor: default;
+        text-overflow: ellipsis;
+    }
+
+    a {
+        cursor: pointer;
+    }
+    .actions {
+        margin: 0;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        white-space: nowrap;
+
+        & > li {
+            float: left;
+            line-height: $baseFontSize * 2.5;
+
+            &.close-li {
+                padding: 0 0.5em 0 0.5em;
+                background: darken($widgetInactiveBackground, 10%);
+            }
+        }
+        
+        & > li > a {
+            text-decoration: none;
+            color: $widgetInactiveColor;
+
+            &:hover {
+                background: transparent;
+                color: $widgetInactiveColorHover;
+            }
+        }
+    }
+}
+
+.active .header, .active.header {
+    @include ctb-gradient-vertical($widgetActiveBackground, darken($widgetActiveBackground, 5%));
+
+    span {
+        color: $widgetActiveColor;
+    }
+    .actions > li > a {
+        color: $widgetActiveColor;
+
+        &:hover {
+            color: $widgetActiveColorHover;
+        }
+    }
+}
+
+.window .header {
+    cursor: move;
+}

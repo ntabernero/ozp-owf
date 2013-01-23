@@ -56,7 +56,7 @@ define([
                 .draggable( 'destroy' )
                 .resizable( 'destroy' );
 
-            this.constructor.__super__.close.call(this);
+            this.constructor.__super__.close.apply(this, arguments);
         },
 
         minimize: function(evt) {
