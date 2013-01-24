@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
 
-@Path("/preferences")
+@Path("/")
 @Produces("application/json")
 class PreferenceController {
 
