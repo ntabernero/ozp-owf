@@ -11,6 +11,10 @@ define([
     return View.extend({
 
         className: 'pane',
+
+        modelEvents: {
+            'add': 'addWidget'
+        },
         
         initialize: function () {
             View.prototype.initialize.apply(this, arguments);
@@ -28,6 +32,8 @@ define([
 
         //abstract method, override to provide widget activation semantics
         changeActivation: $.noop,
+
+        addWidget: $.noop, //abstract
 
         launchWidget: function (evt, model) {}
 

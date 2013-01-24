@@ -33,17 +33,11 @@ define([
             console.time('pane');
             this.constructor.__super__.render.call(this);
 
-            this.renderBody();
             this.renderTaskbar();
-            this.$body.append(this.renderWidgets());
+            this.renderWidgets();
 
             console.timeEnd('pane');
             return this;
-        },
-
-        renderBody: function() {
-            this.$body = $(document.createElement('div')).addClass('body');
-            this.$el.append(this.$body);
         },
 
         renderTaskbar: function() {
@@ -55,19 +49,16 @@ define([
             this.$el.append(this.taskbar.$el);
         },
 
-        /**
-         * Creates a DocumentFragment containing rendered widgets
-         * @return the document fragment
-         */
         renderWidgets: function() {
-            var fragment = $(document.createDocumentFragment()),
-                me = this;
+            var me = this;
+
+            me.$body = $(document.createElement('div')).addClass('body');
 
             this.widgets.each(function (widgetState) {
-                fragment.append(me.renderWidget(widgetState).$el);
+                me.$body.append(me.renderWidget(widgetState).$el);
             });
 
-            return fragment;
+            me.$el.append(me.$body);
         },
 
         renderWidget: function(widgetState) {
@@ -86,6 +77,10 @@ define([
             this.windows.push(ww);
 
             return ww;
+        },
+
+        addWidget: function(widget) {
+            this.renderWidget(widget);
         },
 
         launchWidget: function (evt, model) {
