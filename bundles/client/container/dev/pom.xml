@@ -199,12 +199,12 @@
                             <target>
                                 <!-- TODO: Only compile when a scss file was modified more recently 
                                     than the css files. -->
-                                <apply executable="compass.bat" type="dir">
+                                <!-- <apply executable="compass.bat" type="dir">
                                     <arg value="compile"/>
                                     <dirset dir="${basedir}/src/main/webapp/themes" >
                                         <include name="*.theme/sass/"/>
                                     </dirset>
-                                </apply>
+                                </apply> -->
                                                         
                                 <!-- Make sure sass-cache folders are deleted -->
                                 <delete includeemptydirs="true" failonerror="false">
