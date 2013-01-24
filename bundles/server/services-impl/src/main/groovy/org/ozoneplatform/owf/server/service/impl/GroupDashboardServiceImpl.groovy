@@ -2,31 +2,30 @@ package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.GroupDashboardService
 import org.ozoneplatform.owf.server.service.api.model.Dashboard
+import org.ozoneplatform.owf.server.service.api.model.GroupDashboard
 
 class GroupDashboardServiceImpl implements GroupDashboardService {
 
-    List<Dashboard> list() {
+    List<GroupDashboard> list() {
         dashboardMap.values().toList()
     }
 
-    Dashboard create(Dashboard dashboardInfo) {
-        println "In create(): ${dashboardInfo?.guid}"
+    GroupDashboard create(GroupDashboard dashboardInfo) {
         dashboardMap[(dashboardInfo.guid)] = dashboardInfo
         dashboardInfo
     }
 
-    Dashboard get(String id) {
-        println "In get(): $id"
+    GroupDashboard get(String id) {
         dashboardMap[id]
     }
 
-    void update(Dashboard dashboardInfo) {
+    void update(GroupDashboard dashboardInfo) {
         if (dashboardMap[(dashboardInfo.guid)]) {
             dashboardMap[(dashboardInfo.guid)] = dashboardInfo
         }
     }
 
-    Dashboard delete(String id) {
+    GroupDashboard delete(String id) {
         if (dashboardMap[id]) {
             Dashboard dashboard =  dashboardMap[id]
             dashboardMap[id] = null
@@ -36,7 +35,7 @@ class GroupDashboardServiceImpl implements GroupDashboardService {
         }
     }
 
-    Dashboard copy(String id) {
+    GroupDashboard copy(String id) {
         if (dashboardMap[id]) {
             println "Copied $id"
             Dashboard copy = copyDashboard(dashboardMap[id])
@@ -48,16 +47,16 @@ class GroupDashboardServiceImpl implements GroupDashboardService {
         }
     }
 
-    Map<String, Dashboard> dashboardMap;
+    Map<String, GroupDashboard> dashboardMap;
 
     GroupDashboardServiceImpl() {
-        dashboardMap = new HashMap<String, Dashboard>()
-        Dashboard userDashboard = createExampleDashboard()
+        dashboardMap = new HashMap<String, GroupDashboard>()
+        GroupDashboard userDashboard = createExampleDashboard()
         dashboardMap[userDashboard.guid] = userDashboard
     }
 
-    Dashboard createExampleDashboard() {
-        new Dashboard([name: "Dashboard1", guid: "12345", defaultDashboard: false, dashboardPosition: 0, alteredByAdmin: true])
+    GroupDashboard createExampleDashboard() {
+        new GroupDashboard([name: "Dashboard1", guid: "12345", dashboardPosition: 0, alteredByAdmin: true])
     }
 
     private Dashboard copyDashboard(Dashboard original) {

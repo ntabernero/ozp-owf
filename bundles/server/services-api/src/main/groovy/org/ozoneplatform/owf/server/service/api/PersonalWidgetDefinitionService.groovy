@@ -3,11 +3,11 @@ package org.ozoneplatform.owf.server.service.api
 import org.ozoneplatform.owf.server.service.api.model.PersonalWidgetDefinition
 
 interface PersonalWidgetDefinitionService {
-    List<PersonalWidgetDefinition> list()
+    List<PersonalWidgetDefinition> list(String personId)
 
     PersonalWidgetDefinition get(String widgetId)
 
-    PersonalWidgetDefinition create(PersonalWidgetDefinition personalWidgetDefinition)
+    PersonalWidgetDefinition create(String personId, PersonalWidgetDefinition personalWidgetDefinition)
 
     PersonalWidgetDefinition update(String widgetId, PersonalWidgetDefinition personalWidgetDefinition)
 

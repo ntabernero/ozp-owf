@@ -23,21 +23,21 @@ class PersonalWidgetDefinitionController {
     Logger logger = LoggerFactory.getLogger(PersonalWidgetDefinitionController.class)
 
     @GET
-    List<PersonalWidgetDefinition> list() {
+    List<PersonalWidgetDefinition> list(@PathParam("personId") String personId) {
         personalWidgetDefinitionService.list()
     }
 
     @GET
-    @Path("/{id}")
-    PersonalWidgetDefinition get(@PathParam("id") String id) {
-        logger.debug "In get(): $id"
-        personalWidgetDefinitionService.get(id)
+    @Path("/{widgetId}")
+    PersonalWidgetDefinition get(@PathParam("widgetId") String widgetId) {
+        logger.debug "In get(): $widgetId"
+        personalWidgetDefinitionService.get(widgetId)
     }
 
     @POST
     @Consumes("application/json")
-    PersonalWidgetDefinition create(PersonalWidgetDefinition personalWidgetDefinition) {
-        personalWidgetDefinitionService.create(personalWidgetDefinition)
+    PersonalWidgetDefinition create(@PathParam("personId") String personId, PersonalWidgetDefinition personalWidgetDefinition) {
+        personalWidgetDefinitionService.create(personId, personalWidgetDefinition)
     }
 
     @PUT

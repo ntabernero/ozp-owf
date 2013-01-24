@@ -2,48 +2,49 @@ package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.PersonalDashboardService
 import org.ozoneplatform.owf.server.service.api.model.Dashboard
+import org.ozoneplatform.owf.server.service.api.model.PersonalDashboard
 
 class PersonalDashboardServiceImpl implements PersonalDashboardService {
 
-    List<Dashboard> list() {
+    List<PersonalDashboard> list() {
         dashboardMap.values().toList()
     }
 
-    Dashboard create(Dashboard dashboardInfo) {
+    PersonalDashboard create(PersonalDashboard dashboardInfo) {
         println "In create(): ${dashboardInfo?.guid}"
         dashboardMap[(dashboardInfo.guid)] = dashboardInfo
         dashboardInfo
     }
 
-    Dashboard get(String id) {
+    PersonalDashboard get(String id) {
         println "In get(): $id"
         dashboardMap[id]
     }
 
-    void update(Dashboard dashboardInfo) {
+    void update(PersonalDashboard dashboardInfo) {
         dashboardMap[(dashboardInfo.guid)] = dashboardInfo
     }
 
-    Dashboard delete(String id) {
+    PersonalDashboard delete(String id) {
         def dashboard =  dashboardMap[id]
         dashboardMap[id] = null
         dashboard
     }
 
-    Dashboard restore(String id) {
+    PersonalDashboard restore(String id) {
         println "Restored $id"
         dashboardMap[id]
     }
 
-    Map<String, Dashboard> dashboardMap;
+    Map<String, PersonalDashboard> dashboardMap;
 
     PersonalDashboardServiceImpl() {
-        dashboardMap = new HashMap<String, Dashboard>()
-        Dashboard userDashboard = createExampleDashboard()
-        dashboardMap[userDashboard.guid] = userDashboard
+        dashboardMap = new HashMap<String, PersonalDashboard>()
+        PersonalDashboard personalDashboard = createExampleDashboard()
+        dashboardMap[personalDashboard.guid] = personalDashboard
     }
 
-    Dashboard createExampleDashboard() {
-        new Dashboard([name: "Dashboard1", guid: "12345", defaultDashboard: false, dashboardPosition: 0, alteredByAdmin: true])
+    PersonalDashboard createExampleDashboard() {
+        new PersonalDashboard([name: "Dashboard1", guid: "12345", defaultDashboard: false, dashboardPosition: 0, alteredByAdmin: true])
     }
 }

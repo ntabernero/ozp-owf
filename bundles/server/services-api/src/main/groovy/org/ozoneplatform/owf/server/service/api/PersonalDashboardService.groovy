@@ -1,19 +1,18 @@
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.owf.server.service.api.model.Dashboard
-
+import org.ozoneplatform.owf.server.service.api.model.PersonalDashboard
 
 interface PersonalDashboardService {
 
-    List<Dashboard> list()
+    List<PersonalDashboard> list()
 
-    Dashboard create(Dashboard dashboardInfo)
+    PersonalDashboard create(PersonalDashboard dashboardInfo)
 
-    Dashboard get(String id)
+    PersonalDashboard get(String id)
 
-    void update(Dashboard dashboardInfo)
+    void update(PersonalDashboard dashboardInfo)
 
-    Dashboard delete(String id)
+    PersonalDashboard delete(String id)
 
-    Dashboard restore(String id)
+    PersonalDashboard restore(String id)
 }

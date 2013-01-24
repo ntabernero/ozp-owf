@@ -98,8 +98,7 @@
     
     <!--
         Annotation Authorization Providers
-    -->
-    <!--
+    
     <bean id="groupsAuthInterceptor" class="org.apache.cxf.interceptor.security.SecureAnnotationsInterceptor">
         <property name="securedObject" ref="groups"/>
     </bean>
@@ -115,7 +114,9 @@
     <bean id="prefsAuthFilter" class="org.apache.cxf.jaxrs.security.SimpleAuthorizingFilter">
         <property name="interceptor" ref="prefsAuthInterceptor"/>
     </bean>
+
     -->
+
     <!--
       The <jaxrs:server/> element sets up our JAX-RS services.  It defines:
       - the server's address, '/crm', relative to the default CXF servlet URI

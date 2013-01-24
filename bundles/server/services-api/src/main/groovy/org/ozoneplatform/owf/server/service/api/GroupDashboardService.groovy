@@ -1,18 +1,19 @@
 package org.ozoneplatform.owf.server.service.api
 
 import org.ozoneplatform.owf.server.service.api.model.Dashboard
+import org.ozoneplatform.owf.server.service.api.model.GroupDashboard
 
 interface GroupDashboardService {
-    List<Dashboard> list()
+    List<GroupDashboard> list()
 
-    Dashboard create(Dashboard dashboardInfo)
+    GroupDashboard create(GroupDashboard dashboardInfo)
 
-    Dashboard get(String id)
+    GroupDashboard get(String id)
 
-    void update(Dashboard dashboardInfo)
+    void update(GroupDashboard dashboardInfo)
 
-    Dashboard delete(String id)
+    GroupDashboard delete(String id)
 
-    Dashboard copy(String id)
+    GroupDashboard copy(String id)
 
 }

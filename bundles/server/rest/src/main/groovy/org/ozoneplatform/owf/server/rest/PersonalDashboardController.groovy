@@ -5,6 +5,7 @@ import org.ozoneplatform.owf.server.service.api.model.Dashboard
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Response
+import org.ozoneplatform.owf.server.service.api.model.PersonalDashboard
 
 @Path("/personal-dashboards")
 @Produces("application/json")
@@ -13,13 +14,13 @@ class PersonalDashboardController {
     PersonalDashboardService personalDashboardService
 
     @GET
-    List<Dashboard> list() {
+    List<PersonalDashboard> list() {
         personalDashboardService.list()
     }
 
     @POST
     @Consumes("application/json")
-    Response create(Dashboard dashboardInfo) {
+    Response create(PersonalDashboard dashboardInfo) {
         println "In create(): ${dashboardInfo?.guid}"
         personalDashboardService.create(dashboardInfo)
         Response.ok(dashboardInfo).build()
@@ -27,14 +28,14 @@ class PersonalDashboardController {
 
     @GET
     @Path("/{id}")
-    Dashboard get(@PathParam("id") String id) {
+    PersonalDashboard get(@PathParam("id") String id) {
         println "In get(): $id"
         personalDashboardService.get(id)
     }
 
     @PUT
     @Consumes("application/json")
-    Response update(Dashboard dashboardInfo) {
+    Response update(PersonalDashboard dashboardInfo) {
         personalDashboardService.update(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }

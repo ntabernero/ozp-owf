@@ -5,6 +5,7 @@ import org.ozoneplatform.owf.server.service.api.model.Dashboard
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Response
+import org.ozoneplatform.owf.server.service.api.model.GroupDashboard
 
 @Path("/group-dashboards")
 @Produces("application/json")
@@ -19,7 +20,7 @@ class GroupDashboardController {
 
     @POST
     @Consumes("application/json")
-    Response create(Dashboard dashboardInfo) {
+    Response create(GroupDashboard dashboardInfo) {
         println "In create(): ${dashboardInfo?.guid}"
         groupDashboardService.create(dashboardInfo)
         Response.ok(dashboardInfo).build()
@@ -34,7 +35,7 @@ class GroupDashboardController {
 
     @PUT
     @Consumes("application/json")
-    Response update(Dashboard dashboardInfo) {
+    Response update(GroupDashboard dashboardInfo) {
         groupDashboardService.update(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }

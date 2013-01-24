@@ -4,7 +4,6 @@ class Dashboard {
 
     String name
     String guid
-    boolean defaultDashboard
     Integer dashboardPosition
     boolean alteredByAdmin
     String description = ''
@@ -17,9 +16,5 @@ class Dashboard {
 
     boolean isLocked() {
         return locked
-    }
-
-    boolean isDefaultDashboard() {
-        return defaultDashboard
     }
 }
