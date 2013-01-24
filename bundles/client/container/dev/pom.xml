@@ -15,10 +15,38 @@
 
     <name>Ozone Platform :: OWF Client Bundles :: Client OWF Container JavaScripts :: BASE Container</name>
 
-
     <properties>
         <jslintVersion>1.0.1</jslintVersion>
     </properties>
+    
+    <!-- Identify the platform to set the appropriate OS extension (.bat or .sh) -->
+    <profiles>
+        <profile>
+            <id>platform-windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+
+            <properties>
+                <os.extension>.bat</os.extension>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>platform-unix</id>
+            <activation>
+                <os>
+                    <family>!windows</family>
+                </os>
+            </activation>
+            
+            <properties>
+                <os.extension>.sh</os.extension>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
 
@@ -37,7 +65,6 @@
         </dependency>
 
     </dependencies>
-
 
     <build>
 
@@ -188,35 +215,22 @@
                 </executions>
             </plugin>
 
+            <!-- Run compile_all_themes (.bat/.sh) to generate css from the scss files -->
             <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1</version>
                 <executions>
                     <execution>
-                        <id>compile-themes</id>
+                        <id>Compile themes</id>
                         <phase>compile</phase>
-                        <configuration>
-                            <target>
-                                <!-- TODO: Only compile when a scss file was modified more recently 
-                                    than the css files. -->
-                                <!-- <apply executable="compass.bat" type="dir">
-                                    <arg value="compile"/>
-                                    <dirset dir="${basedir}/src/main/webapp/themes" >
-                                        <include name="*.theme/sass/"/>
-                                    </dirset>
-                                </apply> -->
-                                                        
-                                <!-- Make sure sass-cache folders are deleted -->
-                                <delete includeemptydirs="true" failonerror="false">
-                                    <fileset dir="${basedir}/src/main/webapp/themes" >
-                                        <include name="**/.sass-cache/**"/>
-                                    </fileset>
-                                </delete>
-                            </target>
-                        </configuration>
                         <goals>
-                            <goal>run</goal>
+                            <goal>exec</goal>
                         </goals>
+                        <configuration>
+                            <workingDirectory>${basedir}/src/main/webapp/themes</workingDirectory>
+                            <executable>${basedir}/src/main/webapp/themes/compile_all_themes${os.extension}</executable>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
