@@ -14,7 +14,7 @@ import javax.ws.rs.*
 @Produces("application/json")
 class WidgetDefinitionController {
     WidgetDefinitionService widgetDefinitionService
-    Logger logger = LoggerFactory.getLogger(PersonalDashboardController.class)
+    Logger logger = LoggerFactory.getLogger(WidgetDefinitionController.class)
 
     @GET
     List<WidgetDefinition> list() {

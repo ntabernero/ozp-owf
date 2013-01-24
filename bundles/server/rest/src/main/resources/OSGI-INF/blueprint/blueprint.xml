@@ -36,6 +36,7 @@
     <reference id="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.GroupDashboardService"/>
     <reference id="intentService" interface="org.ozoneplatform.owf.server.service.api.IntentService"/>
     <reference id="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService"/>
+    <reference id="personalWidgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService"/>
 
     <!--
         We are using the OSGi Blueprint XML syntax to define a bean that we referred to in our JAX-RS server setup.
@@ -64,6 +65,9 @@
     </bean>
     <bean id="widgetDefinitions" class="org.ozoneplatform.owf.server.rest.WidgetDefinitionController">
         <property name="widgetDefinitionService" ref="widgetDefinitionService"/>
+    </bean>
+    <bean id="personalWidgetDefinitions" class="org.ozoneplatform.owf.server.rest.PersonalWidgetDefinitionController">
+        <property name="personalWidgetDefinitionService" ref="personalWidgetDefinitionService"/>
     </bean>
 
     <!--
@@ -128,6 +132,7 @@
             <ref component-id="stacks"/>
             <ref component-id="intents"/>
             <ref component-id="widgetDefinitions"/>
+            <ref component-id="personalWidgetDefinitionService"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
