@@ -70,7 +70,6 @@ define([
         },
 
         toggleMaximize: function(evt) {
-            debugger;
             var container = this.options.containment,
                 offset = container.offset(),
                 $el = this.$el,

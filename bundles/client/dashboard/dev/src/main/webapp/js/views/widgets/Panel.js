@@ -14,6 +14,7 @@ define([
         model: null,
         className: 'widget panel',
         events: {
+            'click' : 'activateWidget',
             'dblclick' : 'toggleCollapse',
             'click .collapse-btn' : 'toggleCollapse',
             'click .expand-btn' : 'toggleCollapse',
@@ -76,6 +77,10 @@ define([
         updateActive: function(widget) {
             //add or remove the active class as appropriate
             this.$el[this.model.get('active') ? 'addClass' : 'removeClass']('active');
+        },
+
+        activateWidget: function() {
+            this.model.set('active', true);
         }
     });
 
