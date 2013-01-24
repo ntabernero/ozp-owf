@@ -1,14 +1,20 @@
+/*global define*/
 define([
     'backbone',
-     'views/dashboard/PersonalDashboard'
+     'views/dashboard/PersonalDashboard',
+     'jquery'
 
-], function (Backbone, Dashboard) {
+], function (Backbone, Dashboard, $) {
 
     return Backbone.View.extend({
 
-        render: function() {
-            //this.$el.html('This is a Container.');
+        el: $('#dashboard-container'),
 
+        initialize: function() {
+
+        },
+
+        render: function() {
 
             var dashboardModel = new Backbone.Model({
                 name: 'Intents'
@@ -17,9 +23,6 @@ define([
             var dashboard = new Dashboard({
                 model: dashboardModel
             });
-
-            this.$el.css('height', '100%');
-            this.$el.css('width', '100%');
 
             this.$el.append(dashboard.render().el);
 
