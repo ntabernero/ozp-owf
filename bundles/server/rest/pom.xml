@@ -45,11 +45,13 @@
             <version>${groovy.version}</version>
         </dependency>
         
+        <!--
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>6.0</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>junit</groupId>

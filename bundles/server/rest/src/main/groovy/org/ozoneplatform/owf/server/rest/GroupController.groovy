@@ -3,7 +3,7 @@ package org.ozoneplatform.owf.server.rest
 import org.ozoneplatform.owf.server.service.api.GroupService
 import org.ozoneplatform.owf.server.service.api.model.Group
 
-import javax.annotation.security.*
+//import javax.annotation.security.*
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
@@ -33,7 +33,7 @@ class GroupController {
 
     @POST
     @Consumes("application/json")
-    @RolesAllowed("ROLE_ADMIN")
+    //@RolesAllowed("ROLE_ADMIN")
     Response create(Group group) {
         Group theGroup = groupService.create(group);
         URI groupUri;
@@ -54,14 +54,14 @@ class GroupController {
     @PUT
     @Path("/{id}")
     @Consumes("application/json")
-    @RolesAllowed("ROLE_ADMIN")
+    //@RolesAllowed("ROLE_ADMIN")
     Response update(@PathParam("id") Long id, Group group) {
         Response.ok(groupService.update(id, group)).build();
     }
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed("ROLE_ADMIN")
+    //@RolesAllowed("ROLE_ADMIN")
     Response delete(@PathParam("id") Long id) {
         groupService.delete(id);
         Response.ok().build();
