@@ -48,7 +48,7 @@ define([
 
         renderTaskbar: function() {
             this.taskbar = new Taskbar({
-                widgets: this.widgets
+                collection: this.widgets
             });
 
             this.taskbar.render();

@@ -1,10 +1,10 @@
 define([
     'views/widgets/Panel',
-
+    'jquery',
     'backbone',
     'lodash',
     '../../../development-bundle/ui/jquery-ui.custom'
-], function (Panel, Backbone, _) {
+], function (Panel, $, Backbone, _) {
     
     'use strict';
 
@@ -12,12 +12,6 @@ define([
 
         model: null,
         className: 'widget window',
-        events: {
-            'click .minimize-btn' : 'minimize',
-            'click .maximize-btn' : 'toggleMaximize',
-            'click .restore-btn' : 'toggleMaximize',
-            'dblclick': 'toggleMaximize'
-        },
 
         initialize: function (options) {
             this.zIndexManager = options.zIndexManager;
@@ -27,8 +21,6 @@ define([
 
             var parent =  this.constructor.__super__;
             parent.initialize.apply(this, options);
-            this.events = _.extend({}, parent.events, this.events);
-
         },
 
         render: function() {
@@ -65,36 +57,12 @@ define([
             this.constructor.__super__.close.apply(this, arguments);
         },
 
-        minimize: function(evt) {
-            console.log('minimize');
+        updateMinimize: function() {
+            this.$el[this.model.get('minimized') ? 'addClass' : 'removeClass']('minimized');
         },
 
-        toggleMaximize: function(evt) {
-            var container = this.options.containment,
-                offset = container.offset(),
-                $el = this.$el,
-                $target = $(evt.target),
-                $currentTarget = $(evt.currentTarget);
-
-            if(this.maximized) {
-                this._restoreBox && $el.css(this._restoreBox);
-                this._hideRestoreBtn();
-
-                delete this._restoreBox;
-            }
-            else {
-                this._restoreBox = this.getBox();
-
-                this.$el.css({
-                    width: container.width(),
-                    height: container.height(),
-                    top: '0px',
-                    left: '0px'
-                });
-                this._hideMaximizeBtn();
-            }
-
-            this.maximized = !this.maximized;
+        updateMaximize: function() {
+            this.$el[this.model.get('maximized') ? 'addClass' : 'removeClass']('maximized');
         },
 
         updateActive: function() {
@@ -124,18 +92,8 @@ define([
         },
 
         _onResize: function (evt, ui) {
-        },
-
-        _hideRestoreBtn: function () {
-            this.header.$('.restore-btn').parent().hide();
-            this.header.$('.maximize-btn').parent().show();
-        },
-
-        _hideMaximizeBtn: function () {
-            this.header.$('.maximize-btn').parent().hide();
-            this.header.$('.restore-btn').parent().show();
         }
-        
+
     });
 
 });

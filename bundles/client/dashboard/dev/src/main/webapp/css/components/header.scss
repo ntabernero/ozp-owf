@@ -35,6 +35,10 @@ $headerLineHeight: 2.5em;
                 background: darken($widgetInactiveBackground, 10%);
             }
         }
+
+        > .restore {
+            display: none;
+        }
         
         & > li > a {
             text-decoration: none;
@@ -60,6 +64,26 @@ $headerLineHeight: 2.5em;
         &:hover {
             color: $widgetActiveColorHover;
         }
+    }
+}
+
+.minimized .header, .minimized.header {
+    > .actions > .minimize {
+        display: none;
+    }
+
+    > .actions > .restore {
+        display: inline-block;
+    }
+}
+
+.maximized .header, .maximized.header {
+    > .actions > .maximize {
+        display: none;
+    }
+
+    > .actions > .restore {
+        display: inline-block;
     }
 }
 

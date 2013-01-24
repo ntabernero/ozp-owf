@@ -1,60 +1,41 @@
 define([
     'views/View',
     'views/widgets/Header',
+    'mixins/widgets/WidgetControl',
     'jquery',
     'backbone',
     'lodash'
-], function (View, Header, $, Backbone, _) {
+], function (View, Header, WidgetControl, $, Backbone, _) {
     'use strict';
     
     //subclass of header with extra logic 
     //for being in the taskbar
-    var TaskbarHeader = Header.extend({
+    var TaskbarHeader = Header.extend(_.extend({}, WidgetControl, {
         events: function() {
-            return _.extend({
-                "click": 'activateWidget'
-            }, Header.prototype.events);
-
+            return _.extend({}, WidgetControl.events, Header.prototype.events);
         },
 
         initialize: function() {
             Header.prototype.initialize.apply(this, arguments);
-            _.bindAll(this, 'activateWidget', 'updateActive');
-
-            this.model.on('change:active', this.updateActive);
-
-            this.updateActive();
-        },
-
-        activateWidget: function() {
-            this.model.set('active', true);
-        },
-
-        updateActive: function() {
-            //add or remove the active class as appropriate
-            this.$el[this.model.get('active') ? 'addClass' : 'removeClass']('active');
+            WidgetControl.initialize.apply(this, arguments);
         }
-    });
+    }));
 
     return View.extend({
         className: 'taskbar', 
 
+        modelEvents: {
+            'add': 'addWidget'
+        },
+
         initialize: function(options) {
             View.prototype.initialize.apply(this, arguments);
-            _.bindAll(this, 'addWidget', 'removeWidget');
 
-            this.widgets = options.widgets;
-            this.widgets.on({
-                add: this.addWidget,
-                remove: this.removeWidget
-            });
-
-            //list of Header views
-            this.headers = {};
+            this.collection = options.collection;
         },
 
         render: function() {
-            this.widgets.each(this.addWidget);
+            this.collection.each(_.bind(this.addWidget, this));
         },
 
         addWidget: function(widget) {
@@ -64,19 +45,6 @@ define([
 
             header.render();
             this.$el.append(header.$el);
-
-            this.headers[widget.get('uniqueId')] = header;
-        },
-
-        removeWidget: function(widget) {
-            var id = widget.get('uniqueId'),
-                header = this.headers[id];
-
-            if (header) {
-                header.remove();
-                delete this.headers[id];
-            }
         }
-
     });
 });
