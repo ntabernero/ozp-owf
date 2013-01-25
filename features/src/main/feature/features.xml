@@ -2,12 +2,27 @@
 
 <features name="org.ozoneplatform.owf.features-repo">
    
-    <feature name="owf" version="${project.version}" description="${project.description}">
+    <feature name="owf-web" version="${project.version}" description="OWF client bundles">
         <!--wab bundles-->
         <bundle start-level="80">mvn:org.ozoneplatform.owf.bundles.client.container/wab/${project.version}</bundle>
         <bundle start-level="80">mvn:org.ozoneplatform.owf.bundles.client.api/wab/${project.version}</bundle>
         <bundle start-level="80">mvn:org.ozoneplatform.owf.bundles.client.dashboard/wab/${project.version}</bundle>
         <!--wab bundles-->
+    </feature>
+
+    <feature name="owf-rest" version="${project.version}" description="OWF REST API and backend service bundles">
+        <bundle start-level="80">mvn:org.ozoneplatform.owf.server/services-api/${project.version}</bundle>
+        <bundle start-level="80">mvn:org.ozoneplatform.owf.server/services-impl/${project.version}</bundle>
+        <bundle start-level="80">mvn:org.ozoneplatform.owf.server/rest/${project.version}</bundle>
+        <bundle start-level="70">mvn:org.codehaus.groovy/groovy-all/${groovy.version}</bundle>
+        <bundle start-level="70">mvn:org.codehaus.jackson/jackson-core-asl/${jackson.version}</bundle>
+        <bundle start-level="70">mvn:org.codehaus.jackson/jackson-mapper-asl/${jackson.version}</bundle>
+        <bundle start-level="75">mvn:org.codehaus.jackson/jackson-jaxrs/${jackson.version}</bundle>"
+    </feature>
+
+    <feature name="owf" version="${project.version}" description="${project.description}">
+        <feature>owf-web</feature>
+        <feature>owf-rest</feature>
     </feature>
 
 </features>

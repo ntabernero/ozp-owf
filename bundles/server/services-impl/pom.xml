@@ -2,73 +2,57 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>server</artifactId>
         <groupId>org.ozoneplatform.owf.server</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <name>Ozone Platform :: OWF Server Bundles :: OWF Services Implementation</name>
+    <artifactId>services-impl</artifactId>
     <groupId>org.ozoneplatform.owf.server</groupId>
-    <artifactId>rest</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>Ozone Platform :: OWF Server Bundles :: OWF RESTful Endpoints</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.ozoneplatform.owf.server</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>services-api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
-        
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-            <version>2.6.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-jaxrs</artifactId>
-            <version>1.9.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.gmaven.runtime</groupId>
-            <artifactId>gmaven-runtime-2.0</artifactId>
-            <version>1.5</version>
-        </dependency>
-
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
             <version>${groovy.version}</version>
         </dependency>
-        
-        <!--
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>6.0</version>
-        </dependency>
-        -->
 
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>1.4.0</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junitVersion}</version>
+            <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
-            <version>${spock.version}</version>
+            <version>0.7-groovy-2.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
-
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.gmaven</groupId>
@@ -86,12 +70,12 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <version>2.2.0</version>
                 <extensions>true</extensions>
+                <inherited>true</inherited>
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
@@ -103,11 +87,10 @@
                             org.ozoneplatform.owf.server.service.api.model;
                             version=${project.version},*
                         </Import-Package>
-                        <Private-Package>org.ozoneplatform.owf.server.rest;org.ozoneplatform.owf.server.rest.exceptionmap</Private-Package>
+                        <Private-Package>org.ozoneplatform.owf.server.service.impl</Private-Package>
                     </instructions>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -118,12 +101,12 @@
                     </includes>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>codenarc-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
+
 
 </project>
