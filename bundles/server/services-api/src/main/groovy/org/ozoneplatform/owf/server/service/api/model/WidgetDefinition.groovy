@@ -39,4 +39,17 @@ class WidgetDefinition extends Entity {
     final Set<String> tags = new HashSet<String>()
     final Set<Intent> sendableIntents = new HashSet<Intent>()
     final Set<Intent> receivableIntents = new HashSet<Intent>()
+
+
+    boolean isBackground() {
+        return this.background
+    }
+
+    boolean isSingleton() {
+        return this.singleton
+    }
+
+    boolean isVisibleForLaunch() {
+        return this.visibleForLaunch
+    }
 }

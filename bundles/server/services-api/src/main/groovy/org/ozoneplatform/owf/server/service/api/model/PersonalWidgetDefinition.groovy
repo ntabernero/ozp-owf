@@ -10,6 +10,26 @@ class PersonalWidgetDefinition extends Entity {
     boolean launchDisabled = false //Changed from disabled
     boolean visibleForLaunch = true //Changed from visible
 
+    boolean isAssignedByGroup() {
+        return assignedByGroup
+    }
+
+    boolean isAssignedToPerson() {
+        return assignedToPerson
+    }
+
+    boolean isFavorite() {
+        return favorite
+    }
+
+    boolean isLaunchDisabled() {
+        return launchDisabled
+    }
+
+    boolean isVisibleForLaunch() {
+        return visibleForLaunch
+    }
+
     String widgetDefinitionGuid
 
     Set<String> tags

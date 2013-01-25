@@ -133,7 +133,7 @@
             <ref component-id="stacks"/>
             <ref component-id="intents"/>
             <ref component-id="widgetDefinitions"/>
-            <ref component-id="personalWidgetDefinitionService"/>
+            <ref component-id="personalWidgetDefinitions"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
