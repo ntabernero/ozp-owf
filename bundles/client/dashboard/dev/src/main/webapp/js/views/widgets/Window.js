@@ -4,7 +4,7 @@ define([
     'backbone',
     'lodash',
     'jqueryui/jquery-ui.custom'
-], function (Panel, Backbone, _) {
+], function (Panel, Backbone, _, $) {
     
     'use strict';
 
@@ -64,7 +64,7 @@ define([
         },
 
         toggleMaximize: function(evt) {
-            debugger;
+            //debugger;
             var container = this.options.containment,
                 offset = container.offset(),
                 $el = this.$el,
@@ -72,7 +72,9 @@ define([
                 $currentTarget = $(evt.currentTarget);
 
             if(this.maximized) {
-                this._restoreBox && $el.css(this._restoreBox);
+                if (this._restoreBox) {
+                    $el.css(this._restoreBox);
+                }
                 this._hideRestoreBtn();
 
                 delete this._restoreBox;

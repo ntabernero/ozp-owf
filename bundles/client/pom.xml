@@ -62,9 +62,9 @@
                                         <artifactId>client</artifactId>
                                         <version>1.0.0-SNAPSHOT</version>
                                         <type>zip</type>
-                                        <classifier>common-js</classifier>
+                                        <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output/js</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
