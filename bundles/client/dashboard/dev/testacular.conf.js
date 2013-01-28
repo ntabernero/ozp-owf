@@ -17,6 +17,7 @@ files = [
   // Libs required for test framework
   
   // libs
+  'target/minified-output/js/json2.js',
   'target/minified-output/js/jquery.js',
   'target/minified-output/js/backbone.js',
   'target/minified-output/js/expect.js',
