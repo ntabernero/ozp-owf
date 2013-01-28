@@ -88,6 +88,7 @@ require([
             height: 500,
             zIndex: 10000,
             maximizable: true,
+            minimizable: true,
             closable: true
         }, {
             title: 'Widget Two',
@@ -98,6 +99,7 @@ require([
             height: 200,
             zIndex: 10000,
             maximizable: true,
+            minimizable: true,
             closable: true
         }]
     };

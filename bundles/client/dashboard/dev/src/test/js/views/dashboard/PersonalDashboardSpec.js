@@ -1,5 +1,5 @@
-define(['views/PersonalDashboardView'], function(View) {
-    describe('PersonalDashboardViewSpec', function() {
+define(['views/dashboard/PersonalDashboard'], function(View) {
+    describe('PersonalDashboardSpec', function() {
 
         beforeEach(function(done) {
             // Stub test initialization method;  And any custom pre-test elements here.
