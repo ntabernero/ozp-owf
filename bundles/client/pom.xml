@@ -47,6 +47,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.4</version>
                     <executions>
                         <execution>
                             <id>copy</id>
@@ -61,9 +62,9 @@
                                         <artifactId>client</artifactId>
                                         <version>1.0.0-SNAPSHOT</version>
                                         <type>zip</type>
-                                        <classifier>common-js</classifier>
+                                        <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output/js</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -104,7 +105,7 @@
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
                                         <artifactId>backbone</artifactId>
-                                        <version>0.9.9</version>
+                                        <version>0.9.10</version>
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
@@ -122,7 +123,7 @@
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
                                         <artifactId>handlebars</artifactId>
-                                        <version>1.0.rc.1</version>
+                                        <version>1.0</version>
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
@@ -151,7 +152,7 @@
                                         <artifactId>sinon</artifactId>
                                         <version>1.5.2</version>
                                         <type>zip</type>
-                                        <classifier>sinon</classifier>
+                                        <classifier>js</classifier>
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                     </artifactItem>
@@ -160,7 +161,7 @@
                                         <artifactId>expect</artifactId>
                                         <version>0.2.0</version>
                                         <type>zip</type>
-                                        <classifier>expect</classifier>
+                                        <classifier>js</classifier>
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                     </artifactItem>

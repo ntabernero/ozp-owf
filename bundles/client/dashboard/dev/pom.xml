@@ -53,19 +53,11 @@
                 <artifactId>jetty-maven-plugin</artifactId>
             </plugin>
 
-            <!--<plugin>-->
-            <!--<groupId>org.codehaus.mojo</groupId>-->
-            <!--<artifactId>jslint-maven-plugin</artifactId>-->
-            <!--<version>${jslintVersion}</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<goals>-->
-            <!--<goal>jslint</goal>-->
-            <!--<goal>test-jslint</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
+            <!-- this executes jshint ant plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
 
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>

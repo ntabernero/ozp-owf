@@ -1,10 +1,9 @@
 define([
     'views/widgets/Panel',
-    'jquery',
     'backbone',
     'lodash',
-    '../../../development-bundle/ui/jquery-ui.custom'
-], function (Panel, $, Backbone, _) {
+    'jqueryui/jquery-ui.custom'
+], function (Panel, Backbone, _, $) {
     
     'use strict';
 
@@ -67,7 +66,9 @@ define([
 
         updateActive: function() {
             Panel.prototype.updateActive.apply(this, arguments);
-            if (this.model.get('active')) this.zIndexManager.bringToFront(this);
+            if (this.model.get('active')) {
+                this.zIndexManager.bringToFront(this);
+            }
         },
 
         attributes: function() {

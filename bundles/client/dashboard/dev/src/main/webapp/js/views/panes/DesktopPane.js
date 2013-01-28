@@ -95,7 +95,9 @@ define([
             if (active) {
                 //deactivate all widgets first
                 this.widgets.each(function(widg) {
-                    if (widget !== widg) widg.set('active', false);
+                    if (widget !== widg) {
+                        widg.set('active', false);
+                    }
                 });
             }
 
