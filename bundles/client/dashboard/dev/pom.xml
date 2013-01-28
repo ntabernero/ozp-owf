@@ -173,6 +173,13 @@
                         <goals>
                             <goal>optimize</goal>
                         </goals>
+                        <!-- rebinding from the default phase of process-classes, so
+                             that this plugin doesn't have to run every time you do
+                             mvn jetty:run.  The jetty plugin internally executes the
+                             lifecycle up to the test-compile phase, so I picked one after
+                             that
+                        -->
+                        <phase>prepare-package</phase>
                         <configuration>
                             <configFile>
                                 ${basedir}/src/build/buildconfig-minify-javascript.js
