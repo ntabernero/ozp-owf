@@ -21,6 +21,7 @@ files = [
   'target/minified-output/js/backbone.js',
   'target/minified-output/js/expect.js',
   'target/minified-output/js/sinon.js',
+  'target/minified-output/development-bundle/ui/jquery-ui.custom.js',
   
   // Include the script to configure and trigger require.
   'src/test/js/config.js',
