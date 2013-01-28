@@ -36,6 +36,7 @@ define([
 
         render: function() {
             this.collection.each(_.bind(this.addWidget, this));
+            return this;
         },
 
         addWidget: function(widget) {
