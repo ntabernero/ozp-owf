@@ -1,7 +1,7 @@
 package org.ozoneplatform.owf.itests.rest
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.impl.client.DefaultHttpClient
-import org.junit.Test
+import groovy.json.JsonSlurper
+import org.apache.http.client.fluent.Request
+import org.junit.Before
 import org.junit.runner.RunWith
 import org.ops4j.pax.exam.Option
 import org.ops4j.pax.exam.junit.Configuration
@@ -15,7 +15,9 @@ import static org.ops4j.pax.exam.CoreOptions.provision
 
 @RunWith(JUnit4TestRunner.class)
 @ExamReactorStrategy(AllConfinedStagedReactorFactory.class)
-class DescribeRestBundleConfiguration extends OzoneTestSupport {
+abstract class RestTestBase extends OzoneTestSupport {
+
+    def uriBase = "http://localhost:8181/cxf/owf"
 
     @Configuration
     Option[] configure() {
@@ -26,55 +28,40 @@ class DescribeRestBundleConfiguration extends OzoneTestSupport {
                         mavenBundle().groupId('org.codehaus.groovy').artifactId('groovy-all').version('2.0.6'),
                         mavenBundle().groupId('org.apache.httpcomponents').artifactId('httpclient-osgi').version('4.2.1'),
                         mavenBundle().groupId('org.apache.httpcomponents').artifactId('httpcore-osgi').version('4.2.1'),
-
                 )
         ]
     }
 
-//    @Test
-//    void itHasItsDependenciesSatisfiedAtRuntime() {
-//        def restBundle = bundleContext.bundles.find {
-//            'rest' == it.symbolicName
-//        }
-//        assertNotNull('rest bundle not loaded', restBundle)
-//        assertNotNull(personService)
-//    }
-//
-    @Test
-    void cxfFeatureInstalled() {
+    @Before
+    void setup() {
         executeCommands('features:addurl mvn:org.apache.cxf.karaf/apache-cxf/2.7.2/xml/features', 'features:install http', 'features:install cxf')
         executeCommands('features:addurl mvn:org.ozoneplatform.owf/features/1.0.0-SNAPSHOT/xml/features', 'features:install owf-services', 'features:install owf-rest')
 
-        System.err.println executeCommand('osgi:list | grep REST')
-        waitForBlueprintToCreateRestBundle()
-        System.err.println executeCommand('osgi:list | grep REST')
+        System.err.println executeCommand('osgi:list | grep OWF')
+        waitForServices()
+        System.err.println executeCommand('osgi:list | grep OWF')
+    }
 
-        def httpClient = new DefaultHttpClient()
-        def get = new HttpGet('http://localhost:8181/cxf/owf/user-dashboards')
-        def response = httpClient.execute(get)
-
-        try {
-            assert response.statusLine.statusCode == 200
-        } finally {
-            get.releaseConnection()
+    /**
+     * Even though the REST bundle is installed, the REST services need additional time to start up
+     * This method will block until it can determine the REST services have been established.
+     * Will try some number of times un til
+     *
+     * CXF will return an HTML document with "No service have been found" until the services are available
+     */
+    private void waitForServices() {
+        int attempts = 3
+        boolean ready = false
+        while(!ready && attempts > 0) {
+            Thread.sleep(1000)
+            def response = Request.Get('http://localhost:8181/cxf').execute().returnContent().asString()
+            ready = !response.contains('No services have been found')
         }
     }
 
-    private void waitForBlueprintToCreateRestBundle() {
-        // TODO Change this to poll for Pax-Web service
-        Thread.sleep(4000)
-    }
-
-    //@Test
-    void itWorks() {
-        def httpClient = new DefaultHttpClient()
-        def get = new HttpGet('http://google.com')
-        def response = httpClient.execute(get)
-
-        try {
-            assert response.statusLine.statusCode == 200
-        } finally {
-            get.releaseConnection()
-        }
+    def getJson(GString uri) {
+        def jsonSlurper = new JsonSlurper()
+        def json = Request.Get(uri).addHeader('Accept','application/json').execute().returnContent().asString()
+        jsonSlurper.parseText(json)
     }
 }
