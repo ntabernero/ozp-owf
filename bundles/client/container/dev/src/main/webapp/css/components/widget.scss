@@ -16,54 +16,6 @@ $widgetActiveBorder: 1px solid #ccc !default;
     left: 0px;
     top: 0px;
 
-    .header {
-        @include ctb-gradient-vertical($widgetInactiveBackground, darken($widgetInactiveBackground, 5%));
-        @include ctb-text-overflow();
-        line-height: 2.5em;
-
-        /*position: relative;
-        white-space: nowrap;*/
-
-        span {
-            padding: 0 0 0 0.5em;
-            color: $widgetInactiveColor;
-            overflow: hidden;
-            cursor: default;
-            text-overflow: ellipsis;
-        }
-
-        a {
-            cursor: pointer;
-        }
-        .actions {
-            margin: 0;
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            white-space: nowrap;
-
-            & > li {
-                float: left;
-                line-height: $baseFontSize * 2.5;
-
-                &.close-li {
-                    padding: 0 0.5em 0 0.5em;
-                    background: darken($widgetInactiveBackground, 10%);
-                }
-            }
-            
-            & > li > a {
-                text-decoration: none;
-                color: $widgetInactiveColor;
-
-                &:hover {
-                    background: transparent;
-                    color: $widgetInactiveColorHover;
-                }
-            }
-        }
-    }
-
     .show-all-tools-li  {
         position: relative;
         background: darken($widgetInactiveBackground, 10%);
@@ -81,32 +33,35 @@ $widgetActiveBorder: 1px solid #ccc !default;
         }
     }
 
+    @include box-shadow(2px 2px 8px 2px #ccc);
+
     .show-all-tools-btn {
         margin-bottom: 0px; // IE7
     }
-}
 
-.widget.active{
-    border: $widgetActiveBorder;
-    box-shadow: 2px 2px 2em #ccc;
-    .header {
-        @include ctb-gradient-vertical($widgetActiveBackground, darken($widgetActiveBackground, 5%));
+    &.active{
+        border: $widgetActiveBorder;
+        @include box-shadow(2px 2px 2em #ccc);
 
-        span {
-            color: $widgetActiveColor;
-        }
-        .actions > li > a {
-            color: $widgetActiveColor;
-
-            &:hover {
-                color: $widgetActiveColorHover;
-            }
+        .show-all-tools-li {
+            background: darken($widgetActiveBackground, 10%);
         }
     }
-    .show-all-tools-li {
-        background: darken($widgetActiveBackground, 10%);
+
+    &.maximized {
+        width: 100% !important;
+        height: 100% !important;
+
+        top: 0px !important;
+        left: 0px !important;
+    }
+
+    &.minimized {
+        top: -10000px !important;
+        left: -10000px !important;
     }
 }
+
 
 
 .widget .body {
