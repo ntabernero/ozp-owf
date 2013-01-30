@@ -19,7 +19,7 @@ define([
             });
 
             var parent =  this.constructor.__super__;
-            parent.initialize.apply(this, options);
+            parent.initialize.apply(this, arguments);
         },
 
         render: function() {
