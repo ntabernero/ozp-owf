@@ -95,6 +95,15 @@
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <artifactId>animate</artifactId>
+                                        <version>1</version>
+                                        <type>zip</type>
+                                        <classifier>js</classifier>
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
+                                    </artifactItem>
+                                    <artifactItem>
+                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
                                         <artifactId>bootstrap</artifactId>
                                         <version>2.2.2.1</version>
                                         <type>zip</type>

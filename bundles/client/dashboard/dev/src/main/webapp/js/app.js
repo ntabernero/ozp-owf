@@ -131,4 +131,33 @@ require([
         }
     });
 
+    $('#create-dashboard').on('click', function () {
+        require([
+            'views/dashboard/designer/CreateEditDashboard',
+            'views/dashboard/designer/Designer'
+        ], function(CreateEditDashboard, Designer) {
+            var cd = new CreateEditDashboard({
+                title: 'Create Dashboard',
+                removeOnClose: true
+            });
+
+            cd.show();
+           
+            cd.create().then(function( dashboardModel ) {
+                var me =this,
+                    dd = new DashboardDesigner();
+
+                dd.render();
+                $(document.body).append(dd.$el);
+
+                dd.design().then(function(config) {
+                    dd.remove();
+                    dashboardModel.set( 'layoutConfig', config );
+
+                    console.log(config);
+                });
+            });
+        });
+   });
+
 });
