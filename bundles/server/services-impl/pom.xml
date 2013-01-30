@@ -4,13 +4,13 @@
     <parent>
         <artifactId>server</artifactId>
         <groupId>org.ozoneplatform.owf.server</groupId>
-        <version>8.0.0-ALPHA-SPRINT2</version>
+        <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
     </parent>
 
     <name>Ozone Platform :: OWF Server Bundles :: OWF Services Implementation</name>
     <artifactId>services-impl</artifactId>
     <groupId>org.ozoneplatform.owf.server</groupId>
-    <version>8.0.0-ALPHA-SPRINT2</version>
+    <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <dependencies>

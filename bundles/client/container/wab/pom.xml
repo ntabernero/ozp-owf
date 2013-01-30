@@ -3,13 +3,13 @@
     <parent>
         <groupId>org.ozoneplatform.owf.bundles.client.container</groupId>
         <artifactId>container</artifactId>
-        <version>8.0.0-ALPHA-SPRINT2</version>
+        <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.ozoneplatform.owf.bundles.client.container</groupId>
     <artifactId>wab</artifactId>
-    <version>8.0.0-ALPHA-SPRINT2</version>
+    <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client OWF Container JSPs (WAB)</name>
     <description>Creates a Container Web Application Bundle for the Ozone Platform application</description>

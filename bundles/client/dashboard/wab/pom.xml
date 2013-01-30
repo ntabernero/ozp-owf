@@ -3,14 +3,14 @@
     <parent>
         <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
         <artifactId>dashboard</artifactId>
-        <version>8.0.0-ALPHA-SPRINT2</version>
+        <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
     <artifactId>wab</artifactId>
-    <version>8.0.0-ALPHA-SPRINT2</version>
+    <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client Dashboard JSPs (WAB)</name>
     <description>Creates a Dashboard Web Application Bundle for the Ozone Platform application</description>
