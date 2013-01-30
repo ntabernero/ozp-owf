@@ -1,26 +1,26 @@
 define([
+    'views/View',
     'views/widgets/Header',
     'views/widgets/Iframe',
-
-    'backbone',
-    'jquery'
-], function (Header, Iframe, Backbone, $) {
+    'mixins/widgets/WidgetControl',
+    'jquery',
+    'lodash',
+    'backbone'
+], function (View, Header, Iframe, WidgetControl, $, _, Backbone) {
     
     'use strict';
 
-    return Backbone.View.extend({
+    return View.extend(_.extend({}, WidgetControl, {
 
         model: null,
         className: 'widget panel',
-        events: {
-            'dblclick' : 'toggleCollapse',
-            'click .collapse-btn' : 'toggleCollapse',
-            'click .expand-btn' : 'toggleCollapse',
-            'click .close-btn' : 'close'
-        },
 
         initialize: function () {
+            View.prototype.initialize.apply(this, arguments);
+            WidgetControl.initialize.apply(this, arguments);
+
             this.containment = this.options.containment || ( this.containment = $(document.body) );
+
         },
 
         render: function() {
@@ -37,25 +37,25 @@ define([
             return this;
         },
 
-        close: function (evt) {
-            evt.stopPropagation();
+//        close: function (evt) {
+//            evt.stopPropagation();
+//
+//            this.$body = null;
+//            this.remove();
+//
+//            this.model.destroy();
+//        },
 
-            this.$body = null;
-            this.remove();
-        },
-
-        toggleCollapse: function (evt) {
-            evt.stopPropagation();
-
-            if(this.isCollapsed === true) {
-                this.$body.slideDown();
-            }
-            else {
-                this.$body.slideUp();
-            }
-            
-            this.isCollapsed = !this.isCollapsed;
-        },
+//        toggleCollapse: function (evt) {
+//            evt.stopPropagation();
+//
+//            if(this.isCollapsed === true)
+//                this.$body.slideDown();
+//            else
+//                this.$body.slideUp();
+//            
+//            this.isCollapsed = !this.isCollapsed;
+//        },
 
         getBox: function () {
             var $el = this.$el;
@@ -67,7 +67,6 @@ define([
                 left: $el.css('left')
             };
         }
-        
-    });
+    }));
 
 });

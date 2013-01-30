@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import url(jquery.ui.core.css);
 @import url(jquery.ui.theme.css);
 @import url(jquery.ui.resizable.css);
@@ -7856,86 +7855,6 @@ body {
   z-index: 1000000;
 }
 
-/* line 3, components/dashboard.scss */
-.dashboard, .dashboard .pane, .dashboard .desktoppane {
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-
-/* line 1, components/designer.scss */
-#dashboard-designer {
-  z-index: 1000000000;
-  background: white;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: auto;
-  height: auto;
-}
-
-/* line 13, components/designer.scss */
-#designer {
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: auto;
-  height: auto;
-  margin: 0 120px 3em 0;
-  background: white;
-}
-/* line 24, components/designer.scss */
-#designer.highlight, #designer .pane.highlight {
-  background-color: #0088cc;
-  background-color: rgba(0, 136, 204, 0.1);
-}
-
-/* line 30, components/designer.scss */
-#side-panel {
-  position: absolute;
-  float: right;
-  width: 120px;
-  height: 100%;
-  top: 0;
-  right: 0;
-  background: #e6e6e6;
-}
-/* line 39, components/designer.scss */
-#side-panel > ul > li {
-  text-align: center;
-  font-size: 2em;
-  padding: 1em;
-}
-
-/* line 46, components/designer.scss */
-#dashboard-designer .actions {
-  background: #e6e6e6;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 3em;
-  padding: 0 6px;
-}
-/* line 53, components/designer.scss */
-#dashboard-designer .actions .btn {
-  margin-top: 6px;
-}
-
-/* line 1, components/create_edit_dashboard.scss */
-#create-edit-dashboard-window {
-  border: 5px solid gray;
-  border: 5px solid rgba(128, 128, 128, 0.5);
-  z-index: 10000000;
-}
-/* line 7, components/create_edit_dashboard.scss */
-#create-edit-dashboard-window .row {
-  line-height: 3em;
-}
-
 /* line 11, components/widget.scss */
 .widget {
   width: 100%;
@@ -7944,120 +7863,56 @@ body {
   position: absolute;
   left: 0px;
   top: 0px;
+  -webkit-box-shadow: 2px 2px 8px 2px #cccccc;
+  -moz-box-shadow: 2px 2px 8px 2px #cccccc;
+  box-shadow: 2px 2px 8px 2px #cccccc;
 }
 /* line 19, components/widget.scss */
-.widget .header {
-  background-color: #fafafa;
-  background-image: -moz-linear-gradient(top, white, #f2f2f2);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), to(#f2f2f2));
-  background-image: -webkit-linear-gradient(top, white, #f2f2f2);
-  background-image: -o-linear-gradient(top, white, #f2f2f2);
-  background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#f0f0f0', GradientType=0);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 2.5em;
-  /*position: relative;
-  white-space: nowrap;*/
-}
-/* line 27, components/widget.scss */
-.widget .header span {
-  padding: 0 0 0 0.5em;
-  color: #777777;
-  overflow: hidden;
-  cursor: default;
-  text-overflow: ellipsis;
-}
-/* line 35, components/widget.scss */
-.widget .header a {
-  cursor: pointer;
-}
-/* line 38, components/widget.scss */
-.widget .header .actions {
-  margin: 0;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  white-space: nowrap;
-}
-/* line 45, components/widget.scss */
-.widget .header .actions > li {
-  float: left;
-  line-height: 35px;
-}
-/* line 49, components/widget.scss */
-.widget .header .actions > li.close-li {
-  padding: 0 0.5em 0 0.5em;
-  background: #e6e6e6;
-}
-/* line 55, components/widget.scss */
-.widget .header .actions > li > a {
-  text-decoration: none;
-  color: #777777;
-}
-/* line 59, components/widget.scss */
-.widget .header .actions > li > a:hover {
-  background: transparent;
-  color: #333333;
-}
-/* line 67, components/widget.scss */
 .widget .show-all-tools-li {
   position: relative;
   background: #e6e6e6;
   padding: 0 1em;
 }
-/* line 72, components/widget.scss */
+/* line 24, components/widget.scss */
 .widget .show-all-tools-li .dropdown-menu {
   right: 0px;
   left: auto;
   margin: 0;
   padding: 0;
 }
-/* line 78, components/widget.scss */
+/* line 30, components/widget.scss */
 .widget .show-all-tools-li .dropdown-menu i {
   margin-right: 1em;
 }
-/* line 84, components/widget.scss */
+/* line 38, components/widget.scss */
 .widget .show-all-tools-btn {
   margin-bottom: 0px;
 }
-
-/* line 89, components/widget.scss */
+/* line 42, components/widget.scss */
 .widget.active {
   border: 1px solid #cccccc;
+  -webkit-box-shadow: 2px 2px 2em #cccccc;
+  -moz-box-shadow: 2px 2px 2em #cccccc;
   box-shadow: 2px 2px 2em #cccccc;
 }
-/* line 92, components/widget.scss */
-.widget.active .header {
-  background-color: #0081c2;
-  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
-  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
-  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
-  background-image: linear-gradient(to bottom, #0088cc, #0077b3);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0085c7', endColorstr='#0074ad', GradientType=0);
-}
-/* line 95, components/widget.scss */
-.widget.active .header span {
-  color: white;
-}
-/* line 98, components/widget.scss */
-.widget.active .header .actions > li > a {
-  color: white;
-}
-/* line 101, components/widget.scss */
-.widget.active .header .actions > li > a:hover {
-  color: #333333;
-}
-/* line 106, components/widget.scss */
+/* line 46, components/widget.scss */
 .widget.active .show-all-tools-li {
   background: #006699;
 }
+/* line 51, components/widget.scss */
+.widget.maximized {
+  width: 100% !important;
+  height: 100% !important;
+  top: 0px !important;
+  left: 0px !important;
+}
+/* line 59, components/widget.scss */
+.widget.minimized {
+  top: -10000px !important;
+  left: -10000px !important;
+}
 
-/* line 112, components/widget.scss */
+/* line 67, components/widget.scss */
 .widget .body {
   border: 0px;
   background: white;
@@ -8071,166 +7926,169 @@ body {
   margin-top: 2.5em;
   z-index: -1;
 }
-/* line 126, components/widget.scss */
+/* line 81, components/widget.scss */
 .widget .body iframe {
   width: 100%;
   height: 100%;
 }
 
-/* line 133, components/widget.scss */
+/* line 88, components/widget.scss */
 .pane > iframe {
   height: 100%;
 }
 
-/* line 137, components/widget.scss */
+/* line 92, components/widget.scss */
 .widget.window .header {
   cursor: move;
 }
 
-/*
-
-Split Pane v0.1
-
-Copyright (c) 2012 Simon Hagström
-
-Released under the MIT license
-https://raw.github.com/shagstrom/split-pane/master/LICENSE
-
-*/
-/* line 84, main.scss */
-.box {
-  position: relative;
-  height: 100%;
-  width: 100%;
+/* line 3, components/header.scss */
+.header {
+  background-color: #fafafa;
+  background-image: -moz-linear-gradient(top, white, #f2f2f2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(top, white, #f2f2f2);
+  background-image: -o-linear-gradient(top, white, #f2f2f2);
+  background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#f0f0f0', GradientType=0);
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 2.5em;
+  position: relative;
 }
-
-/* line 91, main.scss */
-.box > .divider {
-  background: #aaa;
+/* line 11, components/header.scss */
+.header span {
+  padding: 0 0 0 0.5em;
+  color: #777777;
+  overflow: hidden;
+  cursor: default;
+  text-overflow: ellipsis;
 }
-
-/* line 95, main.scss */
-.box > .divider.horizontal-divider {
-  height: 5px;
+/* line 19, components/header.scss */
+.header a {
+  cursor: pointer;
 }
-
-/* line 99, main.scss */
-.box > .divider.vertical-divider {
-  width: 5px;
-}
-
-/* line 104, main.scss */
-.horizontal-percent > .one,
-.fixed-bottom > .one {
-  margin-bottom: 5px;
-}
-
-/* line 108, main.scss */
-.fixed-top > .two {
-  margin-top: 5px;
-}
-
-/* line 113, main.scss */
-.fixed-right > .one,
-.vertical-percent > .one {
-  margin-right: 5px;
-}
-
-/* line 117, main.scss */
-.fixed-left > .two {
-  margin-left: 5px;
-}
-
-/* line 123, main.scss */
-.box.fixed-top > .pane,
-.box.fixed-bottom > .pane,
-.box.horizontal-percent > .pane {
+/* line 22, components/header.scss */
+.header .actions {
+  margin: 0;
   position: absolute;
-  left: 0;
-  width: 100%;
-  overflow: auto;
-  top: auto;
-  bottom: 0;
-  z-index: 1;
+  top: 0px;
+  right: 0px;
+  white-space: nowrap;
 }
-
-/* line 135, main.scss */
-.box.fixed-top > .pane:first-child,
-.box.fixed-bottom > .pane:first-child,
-.box.horizontal-percent > .pane:first-child {
-  top: 0;
-  bottom: auto;
+/* line 29, components/header.scss */
+.header .actions > li {
+  float: left;
+  line-height: 35px;
 }
-
-/* line 142, main.scss */
-.box.fixed-top > .divider,
-.box.fixed-bottom > .divider,
-.box.horizontal-percent > .divider {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  cursor: ns-resize;
-  cursor: n-resize\9;
-  z-index: 2;
+/* line 33, components/header.scss */
+.header .actions > li.close-li {
+  padding: 0 0.5em 0 0.5em;
+  background: #e6e6e6;
 }
-
-/* line 153, main.scss */
-.box.fixed-left > .pane,
-.box.fixed-right > .pane,
-.box.vertical-percent > .pane {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  overflow: auto;
-  left: auto;
-  right: 0;
-  z-index: 1;
-}
-
-/* line 165, main.scss */
-.box.fixed-left > .pane:first-child,
-.box.fixed-right > .pane:first-child,
-.box.vertical-percent > .pane:first-child {
-  left: 0;
-  right: auto;
-}
-
-/* line 172, main.scss */
-.box.fixed-left > .divider,
-.box.fixed-right > .divider,
-.box.vertical-percent > .divider {
-  position: absolute;
-  height: 100%;
-  top: 0;
-  cursor: ew-resize;
-  cursor: w-resize\9;
-  z-index: 2;
-}
-
-/* line 181, main.scss */
-.resize-shim {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10000;
+/* line 39, components/header.scss */
+.header .actions > .restore {
   display: none;
 }
-
-/* line 193, main.scss */
-.box.fixed-left > .resize-shim,
-.box.fixed-right > .resize-shim,
-.box.vertical-percent > .resize-shim {
-  cursor: ew-resize;
-  cursor: w-resize\9;
+/* line 43, components/header.scss */
+.header .actions > li > a {
+  text-decoration: none;
+  color: #777777;
+}
+/* line 47, components/header.scss */
+.header .actions > li > a:hover {
+  background: transparent;
+  color: #333333;
 }
 
-/* line 200, main.scss */
-.box.fixed-top > .resize-shim,
-.box.fixed-bottom > .resize-shim,
-.box.horizontal-percent > .resize-shim {
-  cursor: ns-resize;
-  cursor: n-resize\9;
+/* line 55, components/header.scss */
+.active .header, .active.header {
+  background-color: #0081c2;
+  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+  background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0085c7', endColorstr='#0074ad', GradientType=0);
+}
+/* line 58, components/header.scss */
+.active .header span, .active.header span {
+  color: white;
+}
+/* line 61, components/header.scss */
+.active .header .actions > li > a, .active.header .actions > li > a {
+  color: white;
+}
+/* line 64, components/header.scss */
+.active .header .actions > li > a:hover, .active.header .actions > li > a:hover {
+  color: #333333;
+}
+
+/* line 71, components/header.scss */
+.minimized .header > .actions > .minimize, .minimized.header > .actions > .minimize {
+  display: none;
+}
+/* line 75, components/header.scss */
+.minimized .header > .actions > .restore, .minimized.header > .actions > .restore {
+  display: inline-block;
+}
+
+/* line 81, components/header.scss */
+.maximized .header > .actions > .maximize, .maximized.header > .actions > .maximize {
+  display: none;
+}
+/* line 85, components/header.scss */
+.maximized .header > .actions > .restore, .maximized.header > .actions > .restore {
+  display: inline-block;
+}
+
+/* line 90, components/header.scss */
+.window .header {
+  cursor: move;
+}
+
+/* line 3, components/dashboard.scss */
+.dashboard, .dashboard .pane, .dashboard .desktoppane {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 11, components/dashboard.scss */
+.desktoppane > .body {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 2.5em;
+}
+
+/* line 1, components/taskbar.scss */
+.taskbar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+/* line 7, components/taskbar.scss */
+.taskbar > .header {
+  width: 20em;
+  display: inline-block;
+  margin: 0 1px;
+  cursor: pointer;
+  -webkit-box-shadow: 2px -2px 8px 2px #cccccc;
+  -moz-box-shadow: 2px -2px 8px 2px #cccccc;
+  box-shadow: 2px -2px 8px 2px #cccccc;
+}
+
+/* line 1, components/create_edit_dashboard.scss */
+#create-edit-dashboard-window {
+  border: 5px solid gray;
+  border: 5px solid rgba(128, 128, 128, 0.5);
+  z-index: 10000000;
+}
+/* line 7, components/create_edit_dashboard.scss */
+#create-edit-dashboard-window .row {
+  line-height: 3em;
 }

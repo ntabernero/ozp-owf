@@ -1,10 +1,10 @@
 /*global require*/
 require([
-	'views/Container',
+	'views/DashboardContainer',
 	'jquery'
-], function (Container, $) {
+], function (DashboardContainer, $) {
 	
-	var container = new Container();
+	var container = new DashboardContainer();
 	container.render();
 
 });

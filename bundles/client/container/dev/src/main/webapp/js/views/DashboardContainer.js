@@ -30,6 +30,7 @@ define([
                         height: 500,
                         zIndex: 10000,
                         maximizable: true,
+                        minimizable: true,
                         closable: true
                     },
                     {
@@ -41,6 +42,7 @@ define([
                         height: 200,
                         zIndex: 10000,
                         maximizable: true,
+                        minimizable: true,
                         closable: true
                     }
                 ]

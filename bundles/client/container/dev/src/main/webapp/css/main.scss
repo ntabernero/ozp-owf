@@ -61,5 +61,7 @@ body {
 }
 
 
-@import "components/dashboard";
 @import "components/widget";
+@import "components/header"; //depends on: widget
+@import "components/dashboard"; //depends on: header
+@import "components/taskbar";

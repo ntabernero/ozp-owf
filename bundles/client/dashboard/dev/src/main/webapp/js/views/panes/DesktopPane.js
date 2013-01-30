@@ -1,47 +1,107 @@
 define([
     'views/panes/Pane',
     'views/widgets/Window',
-
+    'views/Taskbar',
+    'services/ZIndexManager',
+    'jquery',
     'backbone'
-], function (Pane, WidgetWindow, Backbone) {
+], function (Pane, WidgetWindow, Taskbar, ZIndexManager, $, Backbone) {
     
     'use strict';
 
     return Pane.extend({
 
         model: null,
+   
+        
+        $body: null, //jquery element for the dashboard body
+        taskbar: null, //taskbar View
 
         className: 'pane desktoppane',
 
+        initialize: function() {
+            Pane.prototype.initialize.apply(this, arguments);
+
+            this.windows = [];
+
+            this.zIndexManager = new ZIndexManager();
+        },
+
         render: function () {
             var me = this;
+
             console.time('pane');
             this.constructor.__super__.render.call(this);
 
-            this.widgets.each(function (widgetState) {
-                
-                console.time('widget');
-            
-                var ww = new WidgetWindow({
-                    model: widgetState,
-                    containment: me.$el
-                });
-                me.$el.append( ww.render().$el );
+            this.renderTaskbar();
+            this.renderWidgets();
 
-                console.timeEnd('widget');
-
-            });
             console.timeEnd('pane');
             return this;
         },
 
-        launchWidget: function (evt, model) {
-            var ww = new WidgetWindow({
-                model: model,
-                containment: this.$el
+        renderTaskbar: function() {
+            this.taskbar = new Taskbar({
+                collection: this.widgets
             });
-            this.$el.append( ww.render().$el );
+
+            this.taskbar.render();
+            this.$el.append(this.taskbar.$el);
+        },
+
+        renderWidgets: function() {
+            var me = this;
+
+            me.$body = $(document.createElement('div')).addClass('body');
+
+            this.widgets.each(function (widgetState) {
+                me.$body.append(me.renderWidget(widgetState).$el);
+            });
+
+            me.$el.append(me.$body);
+        },
+
+        renderWidget: function(widgetState) {
+            console.time('widget');
+        
+            var ww = new WidgetWindow({
+                model: widgetState,
+                containment: this.$body,
+                zIndexManager: this.zIndexManager
+            });
+
+            ww.render();
+
+            console.timeEnd('widget');
+
+            this.windows.push(ww);
+
             return ww;
+        },
+
+        addWidget: function(widget) {
+            this.renderWidget(widget);
+        },
+
+        launchWidget: function (evt, model) {
+            var ww = this.renderWidget(model);
+            this.$el.append(ww.$el);
+            return ww;
+        },
+
+        changeActivation: function(widget) {
+            var active = widget.get('active');
+
+            if (active) {
+                //deactivate all widgets first
+                this.widgets.each(function(widg) {
+                    if (widget !== widg) {
+                        widg.set('active', false);
+                    }
+                });
+            }
+
+            
         }
         
     });

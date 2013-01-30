@@ -1,11 +1,12 @@
 define([
     'views/panes/DesktopPane',
-    'backbone'
-], function (DesktopPane, Backbone) {
+    'backbone',
+    'views/View'
+], function (DesktopPane, Backbone, View) {
     
     'use strict';
 
-    return Backbone.View.extend({
+    return View.extend({
 
         className: 'dashboard',
 
