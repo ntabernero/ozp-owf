@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.ozoneplatform</groupId>
         <artifactId>ozoneplatform</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>8.0.0-ALPHA-SPRINT2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>org.ozoneplatform.owf</groupId>
     <artifactId>owf</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>8.0.0-ALPHA-SPRINT2</version>
     <packaging>pom</packaging>
 
     <name>Ozone Widget Framework Parent Project</name>
@@ -49,16 +48,12 @@
                             <phase>validate</phase>
                             <configuration>
                                 <target>
-                                    <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask"
-                                             classpathref="maven.plugin.classpath"/>
+                                    <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask" classpathref="maven.plugin.classpath" />
 
-                                    <jshint dir="${project.basedir}/src/main/webapp/js"
-                                            options="strict=false, devel=true, expr=true"
-                                            globals="define:true, require:true">
-                                        <include name="**/*.js"/>
-                                        <exclude name="**/*.min.js"/>
-                                        <report type="jslint-xml"
-                                                destFile="${project.build.directory}/jslint-reports/jslint.xml"/>
+                                    <jshint dir="${project.basedir}/src/main/webapp/js" options="strict=false, devel=true, expr=true" globals="define:true, require:true">
+                                        <include name="**/*.js" />
+                                        <exclude name="**/*.min.js" />
+                                        <report type="jslint-xml" destFile="${project.build.directory}/jslint-reports/jslint.xml" />
                                     </jshint>
                                 </target>
                             </configuration>
