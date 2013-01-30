@@ -24,7 +24,7 @@ class PersonalWidgetDefinitionController {
 
     @GET
     List<PersonalWidgetDefinition> list(@PathParam("personId") String personId) {
-        personalWidgetDefinitionService.list()
+        personalWidgetDefinitionService.list(personId)
     }
 
     @GET
@@ -37,6 +37,7 @@ class PersonalWidgetDefinitionController {
     @POST
     @Consumes("application/json")
     PersonalWidgetDefinition create(@PathParam("personId") String personId, PersonalWidgetDefinition personalWidgetDefinition) {
+        logger.debug "In create() for person $personId"
         personalWidgetDefinitionService.create(personId, personalWidgetDefinition)
     }
 
