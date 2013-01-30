@@ -1,8 +1,9 @@
 define([
     'views/View',
     'backbone',
-    'jquery'
-], function (View, Backbone, $) {
+    'jquery',
+    'lodash'
+], function (View, Backbone, $, _) {
     
     return View.extend({
 

@@ -2,8 +2,9 @@ define([
     'views/widgets/Header',
     'views/widgets/Iframe',
 
-    'backbone'
-], function (Header, Iframe, Backbone) {
+    'backbone',
+    'jquery'
+], function (Header, Iframe, Backbone, $) {
     
     'use strict';
 
@@ -43,13 +44,15 @@ define([
             this.remove();
         },
 
-        toggleCollapse: function () {
+        toggleCollapse: function (evt) {
             evt.stopPropagation();
 
-            if(this.isCollapsed === true)
+            if(this.isCollapsed === true) {
                 this.$body.slideDown();
-            else
+            }
+            else {
                 this.$body.slideUp();
+            }
             
             this.isCollapsed = !this.isCollapsed;
         },
