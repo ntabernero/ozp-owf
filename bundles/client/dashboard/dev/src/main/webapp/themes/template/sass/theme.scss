@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+@import 'compass'; //pull in base functions and mixins provided by the compass framework
+
+/*
+ * This variable is required.  It must be equal to the name property in the 
+ * theme.json file
+ */
+$theme-name: 'YOUR_THEME_NAME';
+
+/*
+ * Import Compass Twitter Bootstrap and variable overrides.
+ */
+@import 'variables/bootstrap_overrides';
+@import 'compass_twitter_bootstrap';
+
+
+/*****************************************************************
+ * Put your theme customizations here. If you have many customizations,
+ * you may want to put them in a separate file which you import here. 
+ * The import statements in this file reference stylesheets from Twitter 
+ * Bootstrap and from the themes/common folder.
+ */
+
+/*
+ * Note that you MUST define a background here, as the default is to have none.
+ * For examples of how to do this, look in the themes that already exist
+ */
+
+/* These styles will be applied to the body of both OWF itself and the admin widgets */
+body {
+}
+
+/*
+ * These styles will only be applied to the OWf container, not the admin widgets
+ */
+#owf-body {
+}
+
+// ===============================
+//  Theme Variables 
+// ===============================
+
+$owf-base-color: #222;
+$owf-alt-base-color: #aaa;
+$owf-focus-color: red;

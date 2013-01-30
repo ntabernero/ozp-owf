@@ -187,10 +187,57 @@
                 </executions>
             </plugin>
 
+            <!-- Run compile_all_themes (.bat/.sh) to generate css from the scss files -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>Compile themes</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${basedir}/src/main/webapp/themes</workingDirectory>
+                            <executable>${basedir}/src/main/webapp/themes/compile_all_themes${os.extension}</executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
     <profiles>
+
+        <!-- Identify the platform to set the appropriate OS extension (.bat or .sh) -->
+        <profile>
+            <id>platform-windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+
+            <properties>
+                <os.extension>.bat</os.extension>
+            </properties>
+        </profile>
+        <profile>
+            <id>platform-unix</id>
+            <activation>
+                <os>
+                    <family>!windows</family>
+                </os>
+            </activation>
+            
+            <properties>
+                <os.extension>.sh</os.extension>
+            </properties>
+        </profile>
+
         <profile>
             <id>testacular</id>
             <activation>
