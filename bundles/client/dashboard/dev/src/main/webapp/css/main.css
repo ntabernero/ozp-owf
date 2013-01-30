@@ -7967,28 +7967,29 @@ body {
 .header .actions > li {
   float: left;
   line-height: 35px;
+  height: 35px;
 }
-/* line 33, components/header.scss */
+/* line 34, components/header.scss */
 .header .actions > li.close-li {
   padding: 0 0.5em 0 0.5em;
   background: #e6e6e6;
 }
-/* line 39, components/header.scss */
+/* line 40, components/header.scss */
 .header .actions > .restore {
   display: none;
 }
-/* line 43, components/header.scss */
+/* line 44, components/header.scss */
 .header .actions > li > a {
   text-decoration: none;
   color: #777777;
 }
-/* line 47, components/header.scss */
+/* line 48, components/header.scss */
 .header .actions > li > a:hover {
   background: transparent;
   color: #333333;
 }
 
-/* line 55, components/header.scss */
+/* line 56, components/header.scss */
 .active .header, .active.header {
   background-color: #0081c2;
   background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
@@ -7999,38 +8000,38 @@ body {
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0085c7', endColorstr='#0074ad', GradientType=0);
 }
-/* line 58, components/header.scss */
+/* line 59, components/header.scss */
 .active .header span, .active.header span {
   color: white;
 }
-/* line 61, components/header.scss */
+/* line 62, components/header.scss */
 .active .header .actions > li > a, .active.header .actions > li > a {
   color: white;
 }
-/* line 64, components/header.scss */
+/* line 65, components/header.scss */
 .active .header .actions > li > a:hover, .active.header .actions > li > a:hover {
   color: #333333;
 }
 
-/* line 71, components/header.scss */
+/* line 72, components/header.scss */
 .minimized .header > .actions > .minimize, .minimized.header > .actions > .minimize {
   display: none;
 }
-/* line 75, components/header.scss */
+/* line 76, components/header.scss */
 .minimized .header > .actions > .restore, .minimized.header > .actions > .restore {
   display: inline-block;
 }
 
-/* line 81, components/header.scss */
+/* line 82, components/header.scss */
 .maximized .header > .actions > .maximize, .maximized.header > .actions > .maximize {
   display: none;
 }
-/* line 85, components/header.scss */
+/* line 86, components/header.scss */
 .maximized .header > .actions > .restore, .maximized.header > .actions > .restore {
   display: inline-block;
 }
 
-/* line 90, components/header.scss */
+/* line 91, components/header.scss */
 .window .header {
   cursor: move;
 }
@@ -8038,11 +8039,12 @@ body {
 /* line 1, components/dashboard.scss */
 .dashboard, .pane, .desktoppane {
   overflow: hidden;
+  position: relative;
   width: 100%;
   height: 100%;
 }
 
-/* line 7, components/dashboard.scss */
+/* line 8, components/dashboard.scss */
 .desktoppane > .body {
   position: absolute;
   width: 100%;
@@ -8065,4 +8067,10 @@ body {
   -webkit-box-shadow: 2px -2px 8px 2px #cccccc;
   -moz-box-shadow: 2px -2px 8px 2px #cccccc;
   box-shadow: 2px -2px 8px 2px #cccccc;
+}
+
+/* line 21, components/taskbar.scss */
+.lt-ie8 .taskbar > .header {
+  display: inline;
+  zoom: 1;
 }

@@ -29,6 +29,7 @@ $headerLineHeight: 2.5em;
         & > li {
             float: left;
             line-height: $baseFontSize * 2.5;
+            height: $baseFontSize * 2.5;
 
             &.close-li {
                 padding: 0 0.5em 0 0.5em;
