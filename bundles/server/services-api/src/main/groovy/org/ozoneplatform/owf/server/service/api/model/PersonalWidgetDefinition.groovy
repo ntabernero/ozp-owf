@@ -46,7 +46,7 @@ class PersonalWidgetDefinition extends Entity {
         return visibleForLaunch
     }
 
-    String widgetDefinitionGuid
+    WidgetDefinition widgetDefinition
 
     Set<String> tags
 }

@@ -18,6 +18,7 @@ package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService
 import org.ozoneplatform.owf.server.service.api.model.PersonalWidgetDefinition
+import org.ozoneplatform.owf.server.service.api.model.WidgetDefinition
 
 class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionService {
     @Override
@@ -77,6 +78,9 @@ class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionSer
     }
 
     PersonalWidgetDefinition createExamplePersonalWidgetDefinition() {
-        new PersonalWidgetDefinition([id: 12345, position: 1, tags: ["one", "two", "three"] as Set ])
+        new PersonalWidgetDefinition([id: 12345, position: 1, tags: ["one", "two", "three"] as Set ,
+                widgetDefinition: new WidgetDefinition([guid:"12345", displayName: "Example Widget Definition", widgetUrl: "http://www.example.com",
+                        imageUrlLarge: "http://large.image.com", imageUrlSmall: "http://small.image.com", widgetType:"standard"])
+        ])
     }
 }
