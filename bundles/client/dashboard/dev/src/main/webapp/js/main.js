@@ -47,6 +47,10 @@ require.config({
         'jqueryui/jquery-ui.custom': {
             deps: ['jquery'],
             exports: '$'
+        },
+        'splitter': {
+            deps: ['jquery'],
+            exports: '$'
         }
     }
 

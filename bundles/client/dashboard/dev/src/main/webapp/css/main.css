@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url(jquery.ui.core.css);
 @import url(jquery.ui.theme.css);
 @import url(jquery.ui.resizable.css);
@@ -7855,11 +7856,73 @@ body {
   z-index: 1000000;
 }
 
-/* line 1, components/dashboard.scss */
-.dashboard, .pane, .desktoppane {
+/* line 3, components/dashboard.scss */
+.dashboard, .dashboard .pane, .dashboard .desktoppane {
   overflow: hidden;
   width: 100%;
   height: 100%;
+}
+
+/* line 1, components/designer.scss */
+#dashboard-designer {
+  z-index: 1000000000;
+  background: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+}
+
+/* line 13, components/designer.scss */
+#designer {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  height: auto;
+  margin: 0 120px 3em 0;
+  background: white;
+}
+/* line 24, components/designer.scss */
+#designer.highlight, #designer .pane.highlight {
+  background-color: #0088cc;
+  background-color: rgba(0, 136, 204, 0.1);
+}
+
+/* line 30, components/designer.scss */
+#side-panel {
+  position: absolute;
+  float: right;
+  width: 120px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background: #e6e6e6;
+}
+/* line 39, components/designer.scss */
+#side-panel > ul > li {
+  text-align: center;
+  font-size: 2em;
+  padding: 1em;
+}
+
+/* line 46, components/designer.scss */
+#dashboard-designer .actions {
+  background: #e6e6e6;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 3em;
+  padding: 0 6px;
+}
+/* line 53, components/designer.scss */
+#dashboard-designer .actions .btn {
+  margin-top: 6px;
 }
 
 /* line 1, components/create_edit_dashboard.scss */
@@ -8022,4 +8085,152 @@ body {
 /* line 137, components/widget.scss */
 .widget.window .header {
   cursor: move;
+}
+
+/*
+
+Split Pane v0.1
+
+Copyright (c) 2012 Simon Hagström
+
+Released under the MIT license
+https://raw.github.com/shagstrom/split-pane/master/LICENSE
+
+*/
+/* line 84, main.scss */
+.box {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* line 91, main.scss */
+.box > .divider {
+  background: #aaa;
+}
+
+/* line 95, main.scss */
+.box > .divider.horizontal-divider {
+  height: 5px;
+}
+
+/* line 99, main.scss */
+.box > .divider.vertical-divider {
+  width: 5px;
+}
+
+/* line 104, main.scss */
+.horizontal-percent > .one,
+.fixed-bottom > .one {
+  margin-bottom: 5px;
+}
+
+/* line 108, main.scss */
+.fixed-top > .two {
+  margin-top: 5px;
+}
+
+/* line 113, main.scss */
+.fixed-right > .one,
+.vertical-percent > .one {
+  margin-right: 5px;
+}
+
+/* line 117, main.scss */
+.fixed-left > .two {
+  margin-left: 5px;
+}
+
+/* line 123, main.scss */
+.box.fixed-top > .pane,
+.box.fixed-bottom > .pane,
+.box.horizontal-percent > .pane {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: auto;
+  top: auto;
+  bottom: 0;
+  z-index: 1;
+}
+
+/* line 135, main.scss */
+.box.fixed-top > .pane:first-child,
+.box.fixed-bottom > .pane:first-child,
+.box.horizontal-percent > .pane:first-child {
+  top: 0;
+  bottom: auto;
+}
+
+/* line 142, main.scss */
+.box.fixed-top > .divider,
+.box.fixed-bottom > .divider,
+.box.horizontal-percent > .divider {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  cursor: ns-resize;
+  cursor: n-resize\9;
+  z-index: 2;
+}
+
+/* line 153, main.scss */
+.box.fixed-left > .pane,
+.box.fixed-right > .pane,
+.box.vertical-percent > .pane {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  overflow: auto;
+  left: auto;
+  right: 0;
+  z-index: 1;
+}
+
+/* line 165, main.scss */
+.box.fixed-left > .pane:first-child,
+.box.fixed-right > .pane:first-child,
+.box.vertical-percent > .pane:first-child {
+  left: 0;
+  right: auto;
+}
+
+/* line 172, main.scss */
+.box.fixed-left > .divider,
+.box.fixed-right > .divider,
+.box.vertical-percent > .divider {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  cursor: ew-resize;
+  cursor: w-resize\9;
+  z-index: 2;
+}
+
+/* line 181, main.scss */
+.resize-shim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: none;
+}
+
+/* line 193, main.scss */
+.box.fixed-left > .resize-shim,
+.box.fixed-right > .resize-shim,
+.box.vertical-percent > .resize-shim {
+  cursor: ew-resize;
+  cursor: w-resize\9;
+}
+
+/* line 200, main.scss */
+.box.fixed-top > .resize-shim,
+.box.fixed-bottom > .resize-shim,
+.box.horizontal-percent > .resize-shim {
+  cursor: ns-resize;
+  cursor: n-resize\9;
 }

@@ -1,8 +1,9 @@
 require([
 	'views/dashboard/PersonalDashboard',
 	'views/dashboard/CreateEditDashboard',
+	'views/dashboard/designer/Designer',
 	'jquery'
-], function (Dashboard, CreateEditDashboard, $) {
+], function (Dashboard, CreateEditDashboard, DashboardDesigner, $) {
 	
 	var dashboardModel = new Backbone.Model({
 		name: 'Intents'
@@ -22,9 +23,21 @@ require([
 
 		cd.show();
 		
-        cd.create().then(function() {
-            console.log(arguments);
+        cd.create().then(function( dashboardModel ) {
+            var me =this,
+                dd = new DashboardDesigner();
+
+            dd.render();
+            $(document.body).append(dd.$el);
+
+            dd.design().then(function(config) {
+                dd.remove();
+                dashboardModel.set( 'layoutConfig', config );
+
+                console.log(config);
+            });
         });
 	});
 
 });
+
