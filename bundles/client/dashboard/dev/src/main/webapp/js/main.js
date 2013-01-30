@@ -11,7 +11,8 @@ require.config({
         jquery: '../libs/js/jquery',
         lodash: '../libs/js/lodash',
         backbone: '../libs/js/backbone',
-        handlebars: '../libs/js/handlebars'
+        handlebars: '../libs/js/handlebars',
+        'jquery-splitter': '../libs/js/jquery-splitter'
         // modernizr: '../libs/js/modernizr'
         // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
         // hbs: 'js/handlebars/handlebars-plugin-0.2.1',

@@ -133,9 +133,10 @@ require([
 
     $('#create-dashboard').on('click', function () {
         require([
-            'views/dashboard/designer/CreateEditDashboard',
-            'views/dashboard/designer/Designer'
-        ], function(CreateEditDashboard, Designer) {
+            'views/dashboard/CreateEditDashboard',
+            'views/designer/Designer'
+        ], function(CreateEditDashboard, DashboardDesigner) {
+            
             var cd = new CreateEditDashboard({
                 title: 'Create Dashboard',
                 removeOnClose: true

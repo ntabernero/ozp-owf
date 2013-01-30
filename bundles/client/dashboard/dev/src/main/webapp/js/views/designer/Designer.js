@@ -1,13 +1,14 @@
 define([
     'views/View',
+    './Box',
 
     'jquery',
     'lodash',
     'jqueryui/jquery-ui.custom',
-    'splitter'
+    'jquery-splitter'
 ],
 
-function(View, $, _) {
+function(View, Box, $, _) {
 
     var boxTpl = '<div class="box"><div class="pane"></div><div class="pane"></div></div>',
         HIGHLIGHTCLASS = 'highlight',
@@ -81,11 +82,11 @@ function(View, $, _) {
         },
 
         _onMouseOverPane: function (evt) {
-            this.$_mouseOverPane = $(evt.target).addClass(HIGHLIGHTCLASS);
+            this._$mouseOverPane = $(evt.target).addClass(HIGHLIGHTCLASS);
         },
 
         _onMouseOutPane: function  () {
-            this.$_mouseOverPane && this.$_mouseOverPane.removeClass(HIGHLIGHTCLASS);
+            this._$mouseOverPane && this._$mouseOverPane.removeClass(HIGHLIGHTCLASS);
         },
 
         _onDragStart: function(evt, ui) {
@@ -97,46 +98,38 @@ function(View, $, _) {
                 .on('mouseenter.designerdrag', '#designer, #designer .pane', _.bind(this._onMouseOverPane, this))
                 .on('mouseleave.designerdrag', '#designer, #designer .pane', _.bind(this._onMouseOutPane, this));
         },
-
+        
         _onDrop: function (evt, ui) {
             var data = $(ui.helper).data(),
-                panes = [
-                    { collapsible: false },
-                    { collapsible: false }
-                ],  
                 options = {
-                    panes: panes
+                    orientation: data.type || 'vertical',
+                    panes: [
+                        { collapsible: false, htmlText: '50%' },
+                        { collapsible: false, htmlText: '50%' }
+                    ]
                 },
-                $box = $(boxTpl);
+                box = new Box( options );
 
-            options.orientation = data.type || 'vertical';
-
-            var index = this.$_mouseOverPane.index(),
-                parentConfig = this.$_mouseOverPane.parent().parent().data('config');
-
-            // account for splitter
-            if(index === 2) {
-                index = 1;
+            // is it a pane?
+            var paneView = this._$mouseOverPane.data().view;
+            if( paneView && (paneView !== this) ) {
+                paneView.nest( box, options );
+            }
+            else {
+                this.nest( box, options, this._$mouseOverPane );
             }
 
-            // if parent has a config
-            if(parentConfig) {
-                parentConfig.panes[index].box = options;
-            }
-
-            this.$_mouseOverPane
-                .data('config', options)
-                .removeClass(HIGHLIGHTCLASS)
-                .append( $box.splitPane(options) );
-
-            // this.$_mouseOverPane.data("splitter").bind("resize", function (evt) {
-            //     console.log('resized panes');
-            //     //panes = evt.sender.options.panes;
-            // });
+            this._$mouseOverPane.removeClass( HIGHLIGHTCLASS );
         },
 
         _onDragStop: function(evt, ui) {
             $(document).off('.designerdrag');
+        },
+
+        nest: function (box, options, $el) {
+            $el.append( box.render().el );
+            $el.data( 'layoutConfig', options );
+            return this;
         }
     });
 
