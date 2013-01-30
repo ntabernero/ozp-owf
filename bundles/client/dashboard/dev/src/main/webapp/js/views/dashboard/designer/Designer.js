@@ -85,7 +85,7 @@ function(View, $, _) {
         },
 
         _onMouseOutPane: function  () {
-            this.$_mouseOverPane && this.$_mouseOverPane.removeClass(HIGHLIGHTCLASS)
+            this.$_mouseOverPane && this.$_mouseOverPane.removeClass(HIGHLIGHTCLASS);
         },
 
         _onDragStart: function(evt, ui) {

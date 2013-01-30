@@ -68,7 +68,7 @@ function(DashboardModel, Modal, $) {
                 });
             }
             else {
-                //this._editDeferred.resolve()
+                this._editDeferred.resolve();
             }
         },
 
