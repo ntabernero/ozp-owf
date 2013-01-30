@@ -68,12 +68,21 @@
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <artifactId>json</artifactId>
+                                        <version>2</version>
+                                        <type>zip</type>
+                                        <classifier>js</classifier>
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
+                                    </artifactItem>
+                                    <artifactItem>
+                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
                                         <artifactId>jquery</artifactId>
                                         <version>1.8.3</version>
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -82,7 +91,16 @@
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
+                                    </artifactItem>
+                                    <artifactItem>
+                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <artifactId>animate</artifactId>
+                                        <version>1</version>
+                                        <type>zip</type>
+                                        <classifier>js</classifier>
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -91,7 +109,7 @@
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -100,7 +118,7 @@
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -109,7 +127,7 @@
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -118,7 +136,7 @@
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -127,7 +145,7 @@
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -136,7 +154,7 @@
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -145,7 +163,7 @@
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -154,7 +172,7 @@
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
@@ -163,7 +181,7 @@
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                 </artifactItems>
                                 <overWriteReleases>false</overWriteReleases>

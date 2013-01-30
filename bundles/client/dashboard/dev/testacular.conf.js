@@ -10,18 +10,19 @@ basePath = '';
 files = [
   MOCHA,
   MOCHA_ADAPTER,
-  'target/minified-output/js/lodash.js',
+  'target/minified-output/libs/js/lodash.js',
   REQUIRE,
   REQUIRE_ADAPTER,
   
   // Libs required for test framework
   
   // libs
-  'target/minified-output/js/jquery.js',
-  'target/minified-output/js/backbone.js',
-  'target/minified-output/js/expect.js',
-  'target/minified-output/js/sinon.js',
-  'target/minified-output/development-bundle/ui/jquery-ui.custom.js',
+  'target/minified-output/libs/js/json2.js',
+  'target/minified-output/libs/js/jquery.js',
+  'target/minified-output/libs/js/backbone.js',
+  'target/minified-output/libs/js/expect.js',
+  'target/minified-output/libs/js/sinon.js',
+  'target/minified-output/libs/development-bundle/ui/jquery-ui.custom.js',
   
   // Include the script to configure and trigger require.
   'src/test/js/config.js',
@@ -29,6 +30,7 @@ files = [
   // Include the src and test files on the test server but not as script tags.
   //{pattern: 'src/main/webapp/js/**/*.js', included: false},
   {pattern: 'target/minified-output/js/**/*.js', included: false},
+  {pattern: 'target/minified-output/libs/js/**/*.js', included: false},
   {pattern: 'src/test/js/**/*.js', included: false}
 ];
 

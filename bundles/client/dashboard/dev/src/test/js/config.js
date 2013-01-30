@@ -22,14 +22,14 @@ require({
 //        }
 //    }
     paths: {
-        bootstrap: '../vendor/assets/javascripts',
-        jqueryui: '../development-bundle/ui'
-        // // alias versioned dependencies to simplify updating as new versions are released
-        // jquery: 'jquery',
-        // lodash: 'lodash',
-        // backbone: 'backbone',
-        // modernizr: 'modernizr',
-        // Handlebars: 'handlebars',
+        bootstrap: '../libs/js/bootstrap',
+        jqueryui: '../libs/development-bundle/ui',
+        // alias versioned dependencies to simplify updating as new versions are released
+        jquery: '../libs/js/jquery',
+        lodash: '../libs/js/lodash',
+        backbone: '../libs/js/backbone',
+        modernizr: '../libs/js/modernizr',
+        handlebars: '../libs/js/handlebars'
         // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
         // hbs: 'js/handlebars/handlebars-plugin-0.2.1',
         // json2: 'js/json2',

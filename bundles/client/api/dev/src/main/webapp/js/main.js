@@ -6,14 +6,14 @@ require.config({
     deps: ['app'],
 
     paths: {
-        bootstrap: '../vendor/assets/javascripts',
-        jqueryui: '../development-bundle/ui'
-        // // alias versioned dependencies to simplify updating as new versions are released
-        // jquery: 'jquery',
-        // lodash: 'lodash',
-        // backbone: 'backbone',
+        bootstrap: '../libs/js/bootstrap',
+        jqueryui: '../development-bundle/ui',
+        // alias versioned dependencies to simplify updating as new versions are released
+        jquery: '../libs/js/jquery',
+        lodash: '../libs/js/lodash',
+        backbone: '../libs/js/backbone',
+        handlebars: '../libs/js/handlebars'
         // modernizr: 'modernizr',
-        // Handlebars: 'handlebars',
         // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
         // hbs: 'js/handlebars/handlebars-plugin-0.2.1',
         // json2: 'js/json2',

@@ -13,8 +13,8 @@ require({
 
     baseUrl: '/base/target/minified-output/js',
     paths: {
-      require: '../target/minified-output/js/require',
-      backbone: '/base/target/minified-output/js/backbone'
+      require: '../target/minified-output/libs/js/require',
+      backbone: '/base/target/minified-output/libs/js/backbone'
     },
     shim: {
         backbone: {
