@@ -65,7 +65,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>json</artifactId>
                                         <version>2</version>
                                         <type>zip</type>
@@ -74,7 +74,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>jquery</artifactId>
                                         <version>1.8.3</version>
                                         <type>zip</type>
@@ -83,7 +83,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>jquery-ui</artifactId>
                                         <version>1.9.2</version>
                                         <type>zip</type>
@@ -92,7 +92,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>animate</artifactId>
                                         <version>1</version>
                                         <type>zip</type>
@@ -101,7 +101,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>bootstrap</artifactId>
                                         <version>2.2.2.1</version>
                                         <type>zip</type>
@@ -110,7 +110,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>lodash</artifactId>
                                         <version>1.0.0-rc.3</version>
                                         <type>zip</type>
@@ -119,7 +119,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>backbone</artifactId>
                                         <version>0.9.10</version>
                                         <type>zip</type>
@@ -128,7 +128,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>require</artifactId>
                                         <version>2.1.1</version>
                                         <type>zip</type>
@@ -137,7 +137,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>handlebars</artifactId>
                                         <version>1.0</version>
                                         <type>zip</type>
@@ -146,7 +146,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>mocha</artifactId>
                                         <version>1.8.1</version>
                                         <type>zip</type>
@@ -155,7 +155,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>modernizr</artifactId>
                                         <version>2.6.2</version>
                                         <type>zip</type>
@@ -164,7 +164,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>sinon</artifactId>
                                         <version>1.5.2</version>
                                         <type>zip</type>
@@ -173,7 +173,7 @@
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.javascript-libraries</groupId>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>expect</artifactId>
                                         <version>0.2.0</version>
                                         <type>zip</type>
