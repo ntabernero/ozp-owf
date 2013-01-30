@@ -17,6 +17,9 @@
 </head>
 <body>
     <noscript>This application requires javascript to be enabled.</noscript>
+    
+    <div id="mask" class="hide"></div>
+
 
     <script type="text/javascript">
         ;(function() {
@@ -37,8 +40,7 @@
             }
         })();
     </script>
-    <script type="text/javascript" charset="utf-8" src="js/json2.js"></script>
-    <div id="mask" class="hide"></div>
+    <script src="libs/js/json2.js"></script>
     <script data-main="js/main" src="libs/js/require.js"></script>
     <script type="text/template" id="dashboard-template">
         <h1><%- name %></h1>
