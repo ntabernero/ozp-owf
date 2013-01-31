@@ -42,7 +42,7 @@ define([
 
         renderTaskbar: function() {
             this.taskbar = new Taskbar({
-                collection: this.widgets
+                collection: this.collection
             });
 
             this.taskbar.render();
@@ -54,8 +54,8 @@ define([
 
             me.$body = $(document.createElement('div')).addClass('body');
 
-            this.widgets.each(function (widgetState) {
-                me.$body.append(me.renderWidget(widgetState).$el);
+            this.collection.each(function (widgetState) {
+                me.renderWidget(widgetState);
             });
 
             me.$el.append(me.$body);
@@ -70,7 +70,7 @@ define([
                 zIndexManager: this.zIndexManager
             });
 
-            ww.render();
+            this.$body.append(ww.render().$el);
 
             console.timeEnd('widget');
 
@@ -85,7 +85,6 @@ define([
 
         launchWidget: function (evt, model) {
             var ww = this.renderWidget(model);
-            this.$el.append(ww.$el);
             return ww;
         },
 
@@ -93,15 +92,13 @@ define([
             var active = widget.get('active');
 
             if (active) {
-                //deactivate all widgets first
-                this.widgets.each(function(widg) {
+                //deactivate all other widgets
+                this.collection.each(function(widg) {
                     if (widget !== widg) {
                         widg.set('active', false);
                     }
                 });
             }
-
-            
         }
         
     });

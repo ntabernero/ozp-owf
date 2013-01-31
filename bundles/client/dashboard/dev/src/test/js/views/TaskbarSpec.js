@@ -102,4 +102,20 @@ define([
 
         expect(taskbar.$('.header:last-child').hasClass('maximized')).to.be.ok();
     });
+
+    it('shrinks headers to fit within available width', function() {
+        var contentWidth = 0;
+
+        $(document.body).append(taskbar.$el);
+        taskbar.$el.width(200);
+        taskbar.resize();
+
+        expect(taskbar.$el.width()).to.equal(200);
+
+        taskbar.$el.children().each(function(idx, header) {
+            contentWidth += $(header).outerWidth(true);
+        });
+
+        expect(taskbar.$el.width()).to.equal(contentWidth);
+    });
 });
