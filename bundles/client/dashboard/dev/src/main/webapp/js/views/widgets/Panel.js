@@ -1,12 +1,12 @@
 define([
     'views/View',
-    'views/widgets/Header',
+    'views/widgets/PanelHeader',
     'views/widgets/Iframe',
     'mixins/widgets/WidgetControl',
     'jquery',
     'lodash',
     'backbone'
-], function (View, Header, Iframe, WidgetControl, $, _, Backbone) {
+], function (View, PanelHeader, Iframe, WidgetControl, $, _, Backbone) {
     
     'use strict';
 
@@ -14,6 +14,8 @@ define([
 
         model: null,
         className: 'widget panel',
+
+        headerClass: PanelHeader,    //subclassses can override to get different headers
 
         initialize: function () {
             View.prototype.initialize.apply(this, arguments);
@@ -24,7 +26,7 @@ define([
         },
 
         render: function() {
-            this.header = new Header({ model: this.model });
+            this.header = new this.headerClass({ model: this.model });
             this.iframe = new Iframe({ model: this.model });
 
             this.$body = $('<div class="body"></div>')

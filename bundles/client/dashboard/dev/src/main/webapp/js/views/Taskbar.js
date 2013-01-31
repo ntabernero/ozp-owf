@@ -1,22 +1,22 @@
 define([
     'views/View',
-    'views/widgets/Header',
+    'views/widgets/WindowHeader',
     'mixins/widgets/WidgetControl',
     'jquery',
     'backbone',
     'lodash'
-], function (View, Header, WidgetControl, $, Backbone, _) {
+], function (View, WindowHeader, WidgetControl, $, Backbone, _) {
     'use strict';
     
     //subclass of header with extra logic 
     //for being in the taskbar
-    var TaskbarHeader = Header.extend(_.extend({}, WidgetControl, {
+    var TaskbarHeader = WindowHeader.extend(_.extend({}, WidgetControl, {
         events: function() {
-            return _.extend({}, WidgetControl.events, Header.prototype.events);
+            return _.extend({}, WidgetControl.events, WindowHeader.prototype.events);
         },
 
         initialize: function() {
-            Header.prototype.initialize.apply(this, arguments);
+            WindowHeader.prototype.initialize.apply(this, arguments);
             WidgetControl.initialize.apply(this, arguments);
         }
     }));

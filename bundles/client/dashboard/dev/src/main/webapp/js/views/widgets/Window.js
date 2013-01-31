@@ -1,9 +1,10 @@
 define([
     'views/widgets/Panel',
+    'views/widgets/WindowHeader',
     'backbone',
     'lodash',
     'jqueryui/jquery-ui.custom'
-], function (Panel, Backbone, _, $) {
+], function (Panel, WindowHeader, Backbone, _, $) {
     
     'use strict';
 
@@ -11,6 +12,8 @@ define([
 
         model: null,
         className: 'widget window',
+
+        headerClass: WindowHeader,
 
         initialize: function (options) {
             this.zIndexManager = options.zIndexManager;
