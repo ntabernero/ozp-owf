@@ -41,9 +41,6 @@
         })();
     </script>
     <div id="mask" class="hide"></div>
-    <script src="libs/js/json2.js"></script>
-    <script data-main="js/main" src="libs/js/require.js"></script>
-
     <div id="main" style="height:100%; width:100%">
 
         <div id="banner" class="navbar navbar-static-top">
@@ -77,6 +74,9 @@
 
     </div>
 
+    <script src="libs/js/json2.js"></script>
+    <script src="config.js"></script>
+    <script data-main="js/main" src="libs/js/require.js"></script>
     <script type="text/template" id="dashboard-template">
         <h1><%- name %></h1>
         <%- layoutConfig %>
