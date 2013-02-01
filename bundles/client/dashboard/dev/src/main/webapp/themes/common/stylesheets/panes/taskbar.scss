@@ -9,10 +9,16 @@
 
         display: inline-block;
 
+
         margin: 0 1px;
 
         cursor: pointer;
 
         @include box-shadow(2px -2px 8px 2px #ccc);
     }
+}
+
+.lt-ie8 .taskbar > .header {
+    display: inline;
+    zoom: 1;
 }

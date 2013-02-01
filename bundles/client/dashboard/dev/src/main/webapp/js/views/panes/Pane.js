@@ -19,11 +19,14 @@ define([
         initialize: function () {
             View.prototype.initialize.apply(this, arguments);
 
-            this.widgets = this.options.widgets instanceof Backbone.Collection ? 
-                this.options.widgets :
-                new WidgetStatesCollection(this.options.widgets || []);
+            //for now, accept collections as either 'collection' or 'widgets'
+            var collectionProp = this.options.collection ? 'collection' : 'widgets';
 
-            this.widgets.on('change:active', _.bind(this.changeActivation, this));
+            this.collection = this.options[collectionProp] instanceof Backbone.Collection ? 
+                this.options[collectionProp] :
+                new WidgetStatesCollection(this.options[collectionProp] || []);
+
+            this.collection.on('change:active', _.bind(this.changeActivation, this));
         },
 
         render: function () {

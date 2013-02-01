@@ -1,10 +1,12 @@
-.desktoppane > .body {
-    position: absolute;
+.desktoppane {
+    position: relative;
 
-    width: 100%;
+    > .body {
+        position: absolute;
+        width: 100%;
+        top: 0;
 
-    top: 0;
-
-    //make space for the taskbar
-    bottom: $headerLineHeight;
+        //make space for the taskbar
+        bottom: $headerLineHeight;
+    }
 }

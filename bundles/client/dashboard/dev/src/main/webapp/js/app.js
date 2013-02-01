@@ -80,27 +80,21 @@ require([
     // Create a test dashboard.
     var layout = {
         widgets: [{
-            title: 'Widget One',
+            name: 'Widget One',
             url: 'widget.html',
             x: 50,
             y: 50,
             width: 400,
             height: 500,
-            zIndex: 10000,
-            maximizable: true,
-            minimizable: true,
-            closable: true
+            zIndex: 2
         }, {
-            title: 'Widget Two',
+            name: 'Widget Two',
             url: 'widget.html',
             x: 400,
             y: 300,
             width: 200,
             height: 200,
-            zIndex: 10000,
-            maximizable: true,
-            minimizable: true,
-            closable: true
+            zIndex: 1
         }]
     };
     
