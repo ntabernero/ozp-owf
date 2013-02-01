@@ -86,7 +86,7 @@ require([
             y: 50,
             width: 400,
             height: 500,
-            zIndex: 10000
+            zIndex: 2
         }, {
             name: 'Widget Two',
             url: 'widget.html',
@@ -94,7 +94,7 @@ require([
             y: 300,
             width: 200,
             height: 200,
-            zIndex: 10000
+            zIndex: 1
         }]
     };
     

@@ -9,7 +9,7 @@ define([
 
     return {
         events: {
-            'click': 'activateWidget'
+            'mousedown': 'activateWidget'
         },
 
         modelEvents: {

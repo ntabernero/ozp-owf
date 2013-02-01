@@ -16,13 +16,11 @@ define([
         headerClass: WindowHeader,
 
         initialize: function (options) {
-            this.zIndexManager = options.zIndexManager;
-            this.zIndexManager.register(this, {
-                activate: options.model.get('active')
-            });
-
             var parent =  this.constructor.__super__;
             parent.initialize.apply(this, arguments);
+
+            this.zIndexManager = options.zIndexManager;
+            this.zIndexManager.register(this, this.model.get('zIndex'));
         },
 
         render: function() {
@@ -36,7 +34,10 @@ define([
                         .draggable({
                             containment: me.containment,
                             start: me._mask,
-                            stop: me._unmask
+                            stop: function(evt, ui) {
+                                me._unmask();
+                                me._onMove(evt, ui);
+                            }
                         })
                         .trigger(evt);
                 })
@@ -44,7 +45,7 @@ define([
                     minHeight: 50,
                     minWidth: 50,
                     start: me._mask,
-                    resize: me._onResize,
+                    resize: _.bind(me._onResize, me),
                     stop: me._unmask
                 });
 
@@ -72,6 +73,9 @@ define([
             if (this.model.get('active')) {
                 this.zIndexManager.bringToFront(this);
             }
+
+            if (this.zIndexManager)
+                this.model.set('zIndex', this.zIndexManager.getLogicalIndex(this));
         },
 
         attributes: function() {
@@ -80,8 +84,7 @@ define([
                 'style':    'left:' + model.get('x') + 'px;' +
                             'top:' + model.get('y') + 'px;' + 
                             'width:' + model.get('width') + 'px;' +
-                            'height:' + model.get('height') + 'px;' + 
-                            'z-index:' + model.get('zIndex') + ';'
+                            'height:' + model.get('height') + 'px;'
             };
         },
 
@@ -96,6 +99,13 @@ define([
         },
 
         _onResize: function (evt, ui) {
+            this.model.set('height', ui.size.height);
+            this.model.set('width', ui.size.width);
+        },
+
+        _onMove: function(evt, ui) {
+            this.model.set('x', ui.position.left);
+            this.model.set('y', ui.position.top);
         }
 
     });

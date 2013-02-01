@@ -21,7 +21,7 @@ define([
             View.prototype.initialize.apply(this, arguments);
             WidgetControl.initialize.apply(this, arguments);
 
-            this.containment = this.options.containment || ( this.containment = $(document.body) );
+            this.containment = this.options.containment || $(document.body);
 
         },
 
@@ -37,38 +37,18 @@ define([
                 .append( this.$body );
 
             return this;
-        },
-
-//        close: function (evt) {
-//            evt.stopPropagation();
-//
-//            this.$body = null;
-//            this.remove();
-//
-//            this.model.destroy();
-//        },
-
-//        toggleCollapse: function (evt) {
-//            evt.stopPropagation();
-//
-//            if(this.isCollapsed === true)
-//                this.$body.slideDown();
-//            else
-//                this.$body.slideUp();
-//            
-//            this.isCollapsed = !this.isCollapsed;
-//        },
-
-        getBox: function () {
-            var $el = this.$el;
-
-            return {
-                width: $el.width(),
-                height: $el.height(),
-                top: $el.css('top'),
-                left: $el.css('left')
-            };
         }
+
+//        getBox: function () {
+//            var $el = this.$el;
+//
+//            return {
+//                width: $el.width(),
+//                height: $el.height(),
+//                top: $el.css('top'),
+//                left: $el.css('left')
+//            };
+//        }
     }));
 
 });
