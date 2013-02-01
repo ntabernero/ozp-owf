@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.ozoneplatform.owf.bundles.client.container</groupId>
         <artifactId>container</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
     </parent>
 
     <groupId>org.ozoneplatform.owf.bundles.client.container</groupId>
@@ -74,36 +72,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.5</version>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>resources</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target/minified-output</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/webapp</directory>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.2.1</version>
             </plugin>
@@ -132,6 +100,8 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- copy any dependencies into the target dir -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -147,15 +117,40 @@
                                 <artifactItem>
                                     <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
                                     <artifactId>dev</artifactId>
-                                    <version>1.0.0-SNAPSHOT</version>
+                                    <version>${project.version}</version>
                                     <type>war</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/minified-output/</outputDirectory>
-                                    <excludes>js/*.js</excludes>
                                 </artifactItem>
                             </artifactItems>
                             <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- copy src/main/webapp into target directory, overwrite any files already there -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/minified-output</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/webapp</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>

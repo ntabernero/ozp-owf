@@ -1,7 +1,24 @@
+/* 
+   Copyright 2013 Next Century Corporation 
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService
 import org.ozoneplatform.owf.server.service.api.model.PersonalWidgetDefinition
+import org.ozoneplatform.owf.server.service.api.model.WidgetDefinition
 
 class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionService {
     @Override
@@ -61,6 +78,9 @@ class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionSer
     }
 
     PersonalWidgetDefinition createExamplePersonalWidgetDefinition() {
-        new PersonalWidgetDefinition([id: 12345, position: 1, tags: ["one", "two", "three"] as Set ])
+        new PersonalWidgetDefinition([id: 12345, position: 1, tags: ["one", "two", "three"] as Set ,
+                widgetDefinition: new WidgetDefinition([guid:"12345", displayName: "Example Widget Definition", widgetUrl: "http://www.example.com",
+                        imageUrlLarge: "http://large.image.com", imageUrlSmall: "http://small.image.com", widgetType:"standard"])
+        ])
     }
 }

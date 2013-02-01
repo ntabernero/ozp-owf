@@ -1,0 +1,28 @@
+.widget {
+
+    &.active{
+        border: $widgetActiveBorder;
+        @include box-shadow(2px 2px 2em #ccc);
+
+        .show-all-tools-li {
+            background: darken($widgetActiveBackground, 10%);
+        }
+    }
+
+    &.maximized {
+        width: 100% !important;
+        height: 100% !important;
+
+        top: 0px !important;
+        left: 0px !important;
+    }
+
+    &.minimized {
+        top: -10000px !important;
+        left: -10000px !important;
+    }
+}
+
+.widget.window .header {
+    cursor: move;
+}
