@@ -138,8 +138,8 @@
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.vendor</groupId>
-                                        <artifactId>jeditable</artifactId>
-                                        <version>1.7.2</version>
+                                        <artifactId>bootstrap-editable</artifactId>
+                                        <version>1.4.1</version>
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>

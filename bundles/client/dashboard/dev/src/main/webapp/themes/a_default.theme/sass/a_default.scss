@@ -67,7 +67,9 @@ body {
     position: absolute;
     z-index: 1000000000;
 }
-
+.modal-backdrop {
+    z-index: 10000000 !important;
+}
 
 // Import Compass Twitter Bootstrap and variable overrides.
 @import "bootstrap_overrides";

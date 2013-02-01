@@ -43,12 +43,13 @@ function(View, Box, $, _) {
         },
 
         save: function () {
-            var config = this.$designer.data('config');
+            var config = this.$designer.data('layoutConfig');
             console.log('Designer- layout config: ', config);
             this._deferred.resolve( config );
         },
 
         cancel: function () {
+            this.remove();
             this._deferred.reject();
         },
 
@@ -101,13 +102,21 @@ function(View, Box, $, _) {
         
         _onDrop: function (evt, ui) {
             var data = $(ui.helper).data(),
-                options = {
-                    orientation: data.type || 'vertical',
+                hBoxOptions = {
+                    orientation: 'vertical',
                     panes: [
-                        { collapsible: false, htmlText: '50%' },
-                        { collapsible: false, htmlText: '50%' }
+                        { collapsible: false, htmlText: '50%', width: '50%' },
+                        { collapsible: false, htmlText: '50%', width: '50%' }
                     ]
                 },
+                vBoxOptions = {
+                    orientation: 'horizontal',
+                    panes: [
+                        { collapsible: false, htmlText: '50%', height: '50%' },
+                        { collapsible: false, htmlText: '50%', height: '50%' }
+                    ]
+                },
+                options = data.type === 'vertical' ? hBoxOptions : vBoxOptions,
                 box = new Box( options );
 
             // is it a pane?

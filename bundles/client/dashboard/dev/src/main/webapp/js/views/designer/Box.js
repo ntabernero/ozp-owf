@@ -8,6 +8,11 @@ define([
     
     'use strict';
 
+    var percentageUnitsRegex = /^\d+(\.\d+)?%$/i,
+        isPercentageSize = function (size) {
+            return size && percentageUnitsRegex.test(size);
+        };
+
     return View.extend({
 
         className: 'box',
@@ -17,6 +22,10 @@ define([
         },
 
         initialize: function () {
+            if( !this.options.orientation ) {
+                this.options.orientation = 'vertical';
+            }
+
             this.$el.addClass( this.options.orientation && this.options.orientation === 'vertical' ? 'hbox' : 'vbox');
             View.prototype.initialize.apply(this, arguments);
         },
@@ -30,13 +39,39 @@ define([
             this.$el
                 .append( this.firstPane.render().el )
                 .append( this.secondPane.render().el )
-                .splitPane( this.options );
+                .splitter( this.options );
+
+            this.listenTo( this.firstPane, 'sizeChange', _.bind(this.updateSecondPane, this) );
+            this.listenTo( this.secondPane, 'sizeChange', _.bind(this.updateFirstPane, this) );
 
             return this;
         },
 
         updateLayout: function () {
             console.log('update box layout');
+        },
+
+        updatePane: function (pane, secondPaneSize) {
+            var size = parseFloat( secondPaneSize ),
+                options = {},
+                prop = this.options.orientation === 'vertical' ? 'width' : 'height';
+
+            if( isPercentageSize( secondPaneSize ) ) {
+                options[ prop ] = (100 - size) + '%';
+                pane.updateSize( options );
+            }
+            else {
+                pane.updateSize( options );
+            }
+            this.$el.splitter( this.options );
+        },
+
+        updateFirstPane: function (secondPaneSize) {
+            this.updatePane( this.firstPane, secondPaneSize );
+        },
+
+        updateSecondPane: function (firstPaneSize) {
+            this.updatePane( this.secondPane, firstPaneSize );
         }
 
     });

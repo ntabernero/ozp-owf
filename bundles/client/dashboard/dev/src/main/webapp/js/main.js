@@ -12,7 +12,8 @@ require.config({
         lodash: '../libs/js/lodash',
         backbone: '../libs/js/backbone',
         handlebars: '../libs/js/handlebars',
-        'jquery-splitter': '../libs/js/jquery-splitter'
+        'jquery-splitter': '../libs/js/jquery-splitter',
+        'bootstrap-editable': '../libs/js/bootstrap-editable'
         // modernizr: '../libs/js/modernizr'
         // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
         // hbs: 'js/handlebars/handlebars-plugin-0.2.1',
@@ -43,6 +44,18 @@ require.config({
         },
         'bootstrap/bootstrap-modal': {
             deps: ['jquery', 'bootstrap/bootstrap-transition'],
+            exports: '$'
+        },
+        'bootstrap/bootstrap-tooltip': {
+            deps: ['jquery', 'bootstrap/bootstrap-transition'],
+            exports: '$'
+        },
+        'bootstrap/bootstrap-popover': {
+            deps: ['jquery', 'bootstrap/bootstrap-transition', 'bootstrap/bootstrap-tooltip'],
+            exports: '$'
+        },
+        'bootstrap-editable': {
+            deps: ['jquery', 'bootstrap/bootstrap-transition', 'bootstrap/bootstrap-tooltip', 'bootstrap/bootstrap-popover'],
             exports: '$'
         },
         'jqueryui/jquery-ui.custom': {
