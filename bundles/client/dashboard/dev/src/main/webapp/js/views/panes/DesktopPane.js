@@ -30,13 +30,13 @@ define([
         render: function () {
             var me = this;
 
-            console.time('pane');
+//            console.time('pane');
             this.constructor.__super__.render.call(this);
 
             this.renderTaskbar();
             this.renderWidgets();
 
-            console.timeEnd('pane');
+//            console.timeEnd('pane');
             return this;
         },
 
@@ -62,7 +62,7 @@ define([
         },
 
         renderWidget: function(widgetState) {
-            console.time('widget');
+//            console.time('widget');
         
             var ww = new WidgetWindow({
                 model: widgetState,
@@ -72,7 +72,7 @@ define([
 
             this.$body.append(ww.render().$el);
 
-            console.timeEnd('widget');
+//            console.timeEnd('widget');
 
             this.windows.push(ww);
 
