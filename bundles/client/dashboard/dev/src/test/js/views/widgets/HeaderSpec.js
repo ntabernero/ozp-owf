@@ -15,7 +15,7 @@ define([
     beforeEach(function(done) {
         header = new Header({
             model: new WidgetStateModel(widget)
-        });
+        }).render();
 
         done();
     });

@@ -74,8 +74,9 @@ define([
                 this.zIndexManager.bringToFront(this);
             }
 
-            if (this.zIndexManager)
+            if (this.zIndexManager) {
                 this.model.set('zIndex', this.zIndexManager.getLogicalIndex(this));
+            }
         },
 
         attributes: function() {

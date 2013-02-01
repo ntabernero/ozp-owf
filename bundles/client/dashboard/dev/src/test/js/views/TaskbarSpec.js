@@ -79,7 +79,8 @@ define([
         var model = new WidgetStateModel(widget3);
         collection.add(model);
 
-        taskbar.$('.header:last-child').click();
+        taskbar.$('.header:last-child').trigger('mousedown');
+        taskbar.$('.header:last-child').trigger('mouseup');
 
         expect(model.get('active')).to.be(true);
         expect(taskbar.$('.header:last-child').hasClass('active')).to.be.ok();
