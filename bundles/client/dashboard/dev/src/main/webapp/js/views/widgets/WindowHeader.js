@@ -31,16 +31,6 @@ define([
 
         btnTemplate: btnTpl,
 
-//        render: function() {
-//            Header.prototype.render.apply(this, arguments);
-//
-//            this.maximizeBtn = this.$('.maximize-btn');
-//            this.minimizeBtn = this.$('.minimize-btn');
-//            this.restoreBtn = this.$('.restore-btn');
-//
-//            return this;
-//        },
-
         minimize: function() {
             this.model.set('minimized', true);
             this.model.set('maximized', false);

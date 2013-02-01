@@ -6,7 +6,7 @@ define([
     'use strict';
 
     var tpl =
-        '<span class="title">{{name}}</span>' +
+        '<span class="name">{{name}}</span>' +
         '<ul class="actions nav">' +
             '{{{btnTemplate}}}' +
             '<li class="close-li">' +
