@@ -27,7 +27,7 @@ define([
         btnTemplate: btnTpl,
 
         createTemplateModel: function() {
-            var templateModel = Header.prototype.createTemplateModel();
+            var templateModel = Header.prototype.createTemplateModel.apply(this, arguments);
 
             templateModel.restorable = templateModel.maximizable || templateModel.minimizable;
 
