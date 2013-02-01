@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.ozoneplatform.owf.bundles.client.container</groupId>
@@ -16,7 +17,7 @@
     <properties>
         <jslintVersion>1.0.1</jslintVersion>
     </properties>
-    
+
     <!-- Identify the platform to set the appropriate OS extension (.bat or .sh) -->
     <profiles>
         <profile>
@@ -39,7 +40,7 @@
                     <family>!windows</family>
                 </os>
             </activation>
-            
+
             <properties>
                 <os.extension>.sh</os.extension>
             </properties>
@@ -69,11 +70,6 @@
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.2.1</version>
             </plugin>
 
             <plugin>
@@ -160,14 +156,18 @@
                 <artifactId>requirejs-maven-plugin</artifactId>
                 <version>1.0.3</version>
                 <executions>
-                    <!-- <execution>
-                        <id>concatenate-css</id>
+                    <execution>
+                        <id>minify-javascript</id>
                         <goals>
                             <goal>optimize</goal>
                         </goals>
+                        <!--
+                          The default phase is process-classes.
+                        -->
+                        <!--<phase>process-classes</phase>-->
                         <configuration>
                             <configFile>
-                                ${basedir}/src/build/buildconfig-concatenate-css.js
+                                ${basedir}/src/build/buildconfig-minify-javascript.js
                             </configFile>
                             <optimizerFile>
                                 ${basedir}/src/build/r-2.0.6-plus.js
@@ -176,22 +176,19 @@
                                 false
                             </filterConfig>
                         </configuration>
-                    </execution> -->
+                    </execution>
                     <execution>
-                        <id>minify-javascript</id>
+                        <id>debug-javascript</id>
                         <goals>
                             <goal>optimize</goal>
                         </goals>
-                        <!-- rebinding from the default phase of process-classes, so
-                             that this plugin doesn't have to run every time you do
-                             mvn jetty:run.  The jetty plugin internally executes the
-                             lifecycle up to the test-compile phase, so I picked one after
-                             that
+                        <!--
+                          The default phase is process-classes
                         -->
-                        <phase>prepare-package</phase>
+                        <!--<phase>process-classes</phase>-->
                         <configuration>
                             <configFile>
-                                ${basedir}/src/build/buildconfig-minify-javascript.js
+                                ${basedir}/src/build/buildconfig-debug-javascript.js
                             </configFile>
                             <optimizerFile>
                                 ${basedir}/src/build/r-2.0.6-plus.js
