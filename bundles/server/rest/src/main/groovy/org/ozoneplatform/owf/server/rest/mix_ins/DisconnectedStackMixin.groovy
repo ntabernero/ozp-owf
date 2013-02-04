@@ -14,17 +14,15 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.rest.mixin
+package org.ozoneplatform.owf.server.rest.mix_ins
 
-import org.codehaus.jackson.annotate.*
+import com.fasterxml.jackson.annotation.*
 import ozone.platform.server.model.*
 
-class PersonMixin {
-    PersonMixin(@JsonProperty("username") String username, @JsonProperty("fullName") String fullName){}
-    @JsonIgnore Set<PersonalDashboard> dashboards
+class DisconnectedStackMixin {
+    DisconnectedStackMixin(@JsonProperty("name") String name, @JsonProperty("urlName") String urlName){}
     @JsonIgnore Set<Group> groups
-    @JsonIgnore Set<PersonalWidgetDefinition> personalWidgetDefinitions
-    @JsonIgnore Set<Preference> preferences
-    @JsonIgnore Set<Role> authorities
+    @JsonIgnore Set<GroupDashboard> dashboards
+    @JsonIgnore Set<Person> people
 }
 

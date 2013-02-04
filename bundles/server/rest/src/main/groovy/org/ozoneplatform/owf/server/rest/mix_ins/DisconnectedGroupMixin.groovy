@@ -14,14 +14,19 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.rest.mixin
+package org.ozoneplatform.owf.server.rest.mix_ins
 
-import org.codehaus.jackson.annotate.*
+import com.fasterxml.jackson.annotation.*
 import ozone.platform.server.model.*
 
-class StackMixin {
-    StackMixin(@JsonProperty("name") String name, @JsonProperty("urlName") String urlName){}
-    @JsonIgnore Set<Group> groups
+class DisconnectedGroupMixin {
+    DisconnectedGroupMixin(@JsonProperty("name") String name){}
+    @JsonIgnore boolean getActive(){}
+    @JsonProperty boolean isActive(){}
+    @JsonIgnore boolean getAutomatic(){}
+    @JsonProperty boolean isAutomatic(){}
+    @JsonIgnore Set<WidgetDefinition> widgetDefinitions
+    @JsonIgnore Set<Stack> stacks
     @JsonIgnore Set<GroupDashboard> dashboards
     @JsonIgnore Set<Person> people
 }

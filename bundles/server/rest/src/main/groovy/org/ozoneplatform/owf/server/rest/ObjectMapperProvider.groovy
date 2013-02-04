@@ -9,17 +9,23 @@ import ozone.platform.server.model.WidgetDefinition
 import ozone.platform.server.model.Person
 import ozone.platform.server.model.Dashboard
 import ozone.platform.server.model.DashboardInstance
+import ozone.platform.server.model.PersonalDashboard
+import java.text.SimpleDateFormat
 
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
     private ObjectMapper mapper = new ObjectMapper();
 
     public ObjectMapperProvider() {
+        mapper.dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         mapper.addMixInAnnotations(PersonalWidgetDefinition.class, ConnectedPersonalWidgetDefinitionMixIn.class);
         mapper.addMixInAnnotations(WidgetDefinition.class, ConnectedWidgetDefinitionMixIn.class);
         mapper.addMixInAnnotations(Person.class, ConnectedPersonMixIn.class);
         mapper.addMixInAnnotations(Dashboard.class, ConnectedDashboardMixIn.class);
         mapper.addMixInAnnotations(DashboardInstance.class, ConnectedDashboardInstanceMixIn.class);
+        mapper.addMixInAnnotations(PersonalDashboard.class, ConnectedPersonalDashboardMixIn.class);
+        mapper.addMixInAnnotations(Group.class, DisconnectedGroupMixIn.class);
+        mapper.addMixInAnnotations(Stack.class, DisconnectedStackMixIn.class);
     }
 
     public ObjectMapper getContext(Class<?> type) { return mapper; }
