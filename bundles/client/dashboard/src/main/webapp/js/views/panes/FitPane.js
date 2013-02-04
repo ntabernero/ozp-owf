@@ -1,22 +1,40 @@
 define([
     'views/panes/Pane',
-
+    'views/widgets/Iframe',
     'backbone'
-], function (Pane, Backbone) {
+], function (Pane, Iframe, Backbone) {
     
     'use strict';
 
     return Pane.extend({
+        className: 'pane fitpane',
 
-        model: null,
+        initialize: function() {
+            Pane.prototype.initialize.apply(this, arguments);
 
-        className: 'pane',
+            if (this.collection.length > 1) {
+                throw "Fit Panes cannot contain more than one widget";
+            }
+        },
 
         render: function() {
-            this.$el.html('This is a fit pane.');
+            Pane.prototype.render.apply(this, arguments);
+            this.addWidget();
             return this;
+        },
+
+        addWidget: function() {
+            if (this.collection.length > 1) {
+                throw "Fit Panes cannot contain more than one widget";
+            }
+            else if (this.collection.length === 1) {
+                this.$el.append(
+                    new Iframe({
+                        model: this.collection.at(0)
+                    }).render().$el
+                );
+            }
         }
-        
     });
 
 });
