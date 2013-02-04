@@ -31,7 +31,7 @@ class DescribePreferenceService extends Specification {
         prefService.create(null, null, new Preference())
 
         then: "throws"
-        thrown(ValidationException)
+        thrown(Exception)
     }
     
     def "fetch must receive an exisiting namespace and path"() {
@@ -55,7 +55,7 @@ class DescribePreferenceService extends Specification {
         prefService.update(null, null, new Preference())
 
         then: "throws"
-        thrown(NotFoundException)
+        thrown(Exception)
     }
     
 }

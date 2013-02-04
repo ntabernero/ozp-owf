@@ -25,11 +25,7 @@
             <artifactId>services-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.ozoneplatform.commons.bundles</groupId>
-            <artifactId>domain</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
+        
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
@@ -106,7 +102,7 @@
                 <version>2.13</version>
                 <configuration>
                     <includes>
-                        <include>**/Describes*</include>
+                        <include>**/Describe*</include>
                     </includes>
                 </configuration>
             </plugin>
