@@ -16,22 +16,51 @@
 
 package org.ozoneplatform.owf.server.service.impl
 
-import org.ozoneplatform.owf.server.service.api.PersonService
-import ozone.platform.server.model.Person
-import org.ozoneplatform.owf.server.service.api.exception.*
-
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.Calendar
+import org.ozoneplatform.owf.server.service.api.PersonService
+import org.ozoneplatform.owf.server.service.api.exception.*
+import ozone.platform.server.model.Person
 
 class PersonServiceImpl implements PersonService {
     
     def theList = [];
     
     PersonServiceImpl() {
-        theList.add(new Person("testUser1", "Test User 1"));
-        theList.add(new Person("testUser2", "Test User 2"));
-        theList.add(new Person("testAdmin1", "Test Administrator 1"));
+
+        DateFormat fmt = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        Calendar cal = Calendar.instance
+        def person
+        
+        person = new Person("testUser1", "Test User 1");
+        person.id = 1L;
+        person.email = "testuser1@blah.blah";
+        cal.time = fmt.parse("07/10/2012 10:30:00");
+        person.prevLogin = (Calendar)cal.clone();
+        cal.time = fmt.parse("07/14/2012 14:03:31");
+        person.lastLogin = (Calendar)cal.clone();
+        theList.add(person);
+        
+        person = new Person("testUser2", "Test User 2");
+        person.id = 2L;
+        person.email = "testuser2@blah.blah";
+        cal.time = fmt.parse("11/06/2012 12:36:21");
+        person.prevLogin = (Calendar)cal.clone();
+        cal.time = fmt.parse("11/08/2012 16:58:05");
+        person.lastLogin = (Calendar)cal.clone();
+        theList.add(person);
+        
+        person = new Person("testAdmin1", "Test Administrator 1");
+        person.id = 3L;
+        person.email = "testadmin1@blah.blah";
+        cal.time = fmt.parse("09/25/2012 10:30:00");
+        person.prevLogin = (Calendar)cal.clone();
+        cal.time = fmt.parse("09/26/2012 14:03:31");
+        person.lastLogin = (Calendar)cal.clone();
+        theList.add(person);
+
     }
     
     List<Person> list() {
@@ -72,26 +101,11 @@ class PersonServiceImpl implements PersonService {
     private void validate(Person person) {
         boolean validUsername = person?.username?.trim()?.length() > 0;
         boolean validFullName = person?.fullName?.trim()?.length() > 0;
-        DateFormat fmt = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         if (!validUsername) {
             throw new ValidationException("Username is required");
         }
         if (!validFullName) {
             throw new ValidationException("Full Name is required");
-        }
-        if (person?.prevLogin) {
-            try {
-                fmt.parse(person.prevLogin)
-            } catch(ParseException e) {
-                throw new ValidationException("Previous login date is invalid");
-            }
-        }
-        if (person?.lastLogin) {
-            try {
-                fmt.parse(person.lastLogin)
-            } catch(ParseException e) {
-                throw new ValidationException("Last login date is invalid");
-            }
         }
         return;
     }

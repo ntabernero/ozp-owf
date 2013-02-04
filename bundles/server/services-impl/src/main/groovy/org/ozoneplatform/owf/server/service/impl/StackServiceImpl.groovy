@@ -26,8 +26,21 @@ class StackServiceImpl implements StackService {
     def theList = [];
     
     StackServiceImpl() {
-        theList.add(new Stack("Stack One", "stackone"));
-        theList.add(new Stack("Stack Two","stacktwo"));
+
+        def stack;
+        
+        stack = new Stack("Stack One", "stackone");
+        stack.id = 1L;
+        stack.description = "This is stack one.";
+        stack.descriptorUrl = "http://the.descriptor.url";
+        theList.add(stack);
+        
+        stack = new Stack("Stack Two", "stacktwo");
+        stack.id = 2L;
+        stack.description = "This is stack two.";
+        stack.descriptorUrl = "http://the.descriptor.url";
+        theList.add(stack);
+
     }
     
     List<Stack> list() {

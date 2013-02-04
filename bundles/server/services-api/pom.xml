@@ -13,6 +13,14 @@
     <packaging>bundle</packaging>
 
     <name>Ozone Platform :: OWF Server Bundles :: OWF Services API</name>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.ozoneplatform.commons.bundles</groupId>
+            <artifactId>domain</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
     <dependencies>
         <dependency>

@@ -14,19 +14,15 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.service.api
+package org.ozoneplatform.owf.server.rest.mixin
 
-import ozone.platform.server.model.Group
-import ozone.platform.server.model.GroupDashboard
+import org.codehaus.jackson.annotate.*
+import ozone.platform.server.model.*
 
-interface GroupService {
-    
-    List<Group> list();
-    Group fetch(Long id);
-    Group update(Long id, Group group);
-    Group create(Group group);
-    void delete(Long id);
-    List<GroupDashboard> listGroupDashboards(Long id);
-    
+class StackMixin {
+    StackMixin(@JsonProperty("name") String name, @JsonProperty("urlName") String urlName){}
+    @JsonIgnore Set<Group> groups
+    @JsonIgnore Set<GroupDashboard> dashboards
+    @JsonIgnore Set<Person> people
 }
 

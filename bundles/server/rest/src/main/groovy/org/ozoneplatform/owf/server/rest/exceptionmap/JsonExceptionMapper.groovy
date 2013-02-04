@@ -14,19 +14,17 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.service.api
+package org.ozoneplatform.owf.server.rest.exceptionmap
 
-import ozone.platform.server.model.Group
-import ozone.platform.server.model.GroupDashboard
+import groovy.json.JsonException
+import javax.ws.rs.core.Response
+import javax.ws.rs.ext.ExceptionMapper
+import javax.ws.rs.ext.Provider
 
-interface GroupService {
-    
-    List<Group> list();
-    Group fetch(Long id);
-    Group update(Long id, Group group);
-    Group create(Group group);
-    void delete(Long id);
-    List<GroupDashboard> listGroupDashboards(Long id);
-    
+@Provider
+class JsonExceptionMapper implements ExceptionMapper<JsonException> {
+    @Override
+    Response toResponse(JsonException e) {
+        return Response.status(400).entity(e.message).build()
+    }
 }
-

@@ -139,8 +139,10 @@
         <jaxrs:providers>
             <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
             <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
-            <ref component-id="jsonProvider" />
+            <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
             <bean id="objectMapperProvider" class="org.ozoneplatform.owf.server.rest.ObjectMapperProvider"/>
+            <ref component-id="jsonProvider" />
+            
         </jaxrs:providers>
     </jaxrs:server>
     
@@ -151,6 +153,7 @@
         <jaxrs:providers>
             <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
             <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
+            <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
             <!--ref component-id="prefsAuthFilter"/-->
             <ref component-id="jsonProvider" />
         </jaxrs:providers>
@@ -163,7 +166,9 @@
         <jaxrs:providers>
             <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
             <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
+            <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
             <!--ref component-id="groupsAuthFilter"/-->
+            <bean id="objectMapperProvider" class="org.ozoneplatform.owf.server.rest.ObjectMapperProvider"/>
             <ref component-id="jsonProvider" />
         </jaxrs:providers>
     </jaxrs:server>

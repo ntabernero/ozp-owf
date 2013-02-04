@@ -18,8 +18,8 @@ package org.ozoneplatform.owf.server.service.tests
 
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
-import ozone.platform.server.model.Group
 import org.ozoneplatform.owf.server.service.impl.GroupServiceImpl
+import ozone.platform.server.model.Group
 import spock.lang.Specification
 
 class DescribeGroupService extends Specification {
@@ -31,7 +31,7 @@ class DescribeGroupService extends Specification {
         groupService.create(new Group())
 
         then: "throws"
-        thrown(ValidationException)
+        thrown(AssertionError)
     }
     
     def "fetch must receive an exisiting id"() {
@@ -52,7 +52,7 @@ class DescribeGroupService extends Specification {
     
     def "update must receive an exisiting id"() {
         when: "updating a group by invalid id"
-        groupService.update(100L, new Group())
+        groupService.update(100L, new Group("foo"))
 
         then: "throws"
         thrown(NotFoundException)
@@ -60,11 +60,11 @@ class DescribeGroupService extends Specification {
     
     def "update must receive a valid group"() {
         when: "updating a group without a name"
-        Group group = groupService.create(new Group(name: "foo"))
-        groupService.update(group.id, new Group(name: "    "))
+        Group group = groupService.create(new Group("foo"))
+        groupService.update(group.id, new Group())
 
         then: "throws"
-        thrown(ValidationException)
+        thrown(AssertionError)
     }
     
 }

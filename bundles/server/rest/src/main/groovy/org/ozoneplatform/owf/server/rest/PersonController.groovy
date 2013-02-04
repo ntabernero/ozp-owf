@@ -16,14 +16,13 @@
 
 package org.ozoneplatform.owf.server.rest
 
-import org.ozoneplatform.owf.server.service.api.PersonService
-import ozone.platform.server.model.Person
-
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
+import org.ozoneplatform.owf.server.service.api.PersonService
+import ozone.platform.server.model.Person
 
 @Path("/persons")
 @Produces("application/json")

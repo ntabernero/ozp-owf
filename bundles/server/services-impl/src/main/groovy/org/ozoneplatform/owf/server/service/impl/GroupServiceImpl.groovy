@@ -19,23 +19,28 @@ package org.ozoneplatform.owf.server.service.impl
 import org.ozoneplatform.owf.server.service.api.GroupService
 import org.ozoneplatform.owf.server.service.api.exception.*
 import ozone.platform.server.model.Group
+import ozone.platform.server.model.GroupDashboard
 
 class GroupServiceImpl implements GroupService {
     
     def theList = [];
     
     GroupServiceImpl() {
-        def group = new Group('admins')
-        group.id = 1
-        group.displayName = 'Administrators'
-        group.description = 'The administrators group'
-        theList << group
 
-        group = new Group('users')
-        group.id = 2
-        group.displayName = 'Users'
-        group.description = 'The users group'
-        theList << group
+        def group;
+        
+        group = new Group("admins");
+        group.id = 1L;
+        group.displayName = "Administrators";
+        group.description = "The administrators group";
+        theList.add(group);
+        
+        group = new Group("users");
+        group.id = 2L;
+        group.displayName = "Users";
+        group.description = "The users group";
+        theList.add(group);
+
     }
     
     List<Group> list() {
@@ -58,12 +63,10 @@ class GroupServiceImpl implements GroupService {
         theGroup.description = group?.description ?: theGroup.description;
         theGroup.active = group?.active;
         theGroup.automatic = group?.automatic;
-        this.validate(theGroup);
         theGroup;
     }
 
     Group create(Group group) {
-        this.validate(group);
         def max = theList.max{ it.id }
         group?.id = max.id + 1L;
         theList.add(group);
@@ -75,12 +78,19 @@ class GroupServiceImpl implements GroupService {
         return;
     }
     
-    private void validate(Group group) {
-        boolean validName = group?.name?.trim()?.length() > 0;
-        if (!validName) {
-            throw new ValidationException("Name is required");
-        }
-        return;
+    List<GroupDashboard> listGroupDashboards(Long id) {
+        def dashList = [];
+        def dash;
+        
+        dash = new GroupDashboard("Dashboard1", "123-4567-1001", 0);
+        dash.id = 1L;
+        dashList.add(dash);
+        
+        dash = new GroupDashboard("Dashboard2", "123-4567-1002", 0);
+        dash.id = 2L;
+        dashList.add(dash);
+        
+        dashList;
     }
     
 }
