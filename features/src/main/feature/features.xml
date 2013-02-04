@@ -15,9 +15,10 @@
         <bundle start-level="80">mvn:org.ozoneplatform.owf.server/services-impl/${project.version}</bundle>
         <bundle start-level="80">mvn:org.ozoneplatform.owf.server/rest/${project.version}</bundle>
         <bundle start-level="70">mvn:org.codehaus.groovy/groovy-all/${groovy.version}</bundle>
-        <bundle start-level="70">mvn:org.codehaus.jackson/jackson-core-asl/${jackson.version}</bundle>
-        <bundle start-level="70">mvn:org.codehaus.jackson/jackson-mapper-asl/${jackson.version}</bundle>
-        <bundle start-level="75">mvn:org.codehaus.jackson/jackson-jaxrs/${jackson.version}</bundle>"
+        <bundle start-level="70">mvn:com.fasterxml.jackson.core/jackson-core/${jackson.version}</bundle>
+        <bundle start-level="70">mvn:com.fasterxml.jackson.core/jackson-databind/${jackson.version}</bundle>
+        <bundle start-level="75">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${jackson.version}</bundle>"
+        <bundle start-level="75">mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson.version}</bundle>"
     </feature>
 
     <feature name="owf" version="${project.version}" description="${project.description}">
