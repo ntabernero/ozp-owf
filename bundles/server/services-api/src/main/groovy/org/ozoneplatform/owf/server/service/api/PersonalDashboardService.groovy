@@ -16,19 +16,19 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import ozone.platform.server.model.PersonalDashboard
+import ozone.platform.server.model.DashboardInstance
 
-interface PersonalDashboardService {
+interface DashboardInstanceService {
 
-    List<PersonalDashboard> list()
+    List<DashboardInstance> list()
 
-    PersonalDashboard create(PersonalDashboard dashboardInfo)
+    DashboardInstance create(DashboardInstance dashboardInfo)
 
-    PersonalDashboard get(String id)
+    DashboardInstance get(String id)
 
-    void update(PersonalDashboard dashboardInfo)
+    void update(DashboardInstance dashboardInfo)
 
-    PersonalDashboard delete(String id)
+    DashboardInstance delete(String id)
 
-    PersonalDashboard restore(String id)
+    DashboardInstance restore(String id)
 }

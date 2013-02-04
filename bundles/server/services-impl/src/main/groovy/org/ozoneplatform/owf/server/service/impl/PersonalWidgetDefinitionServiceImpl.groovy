@@ -75,13 +75,14 @@ class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionSer
     PersonalWidgetDefinitionServiceImpl() {
         personalWidgetDefinitionMap = new HashMap<String, PersonalWidgetDefinition>()
         PersonalWidgetDefinition personalWidgetDefinition = createExamplePersonalWidgetDefinition()
-        personalWidgetDefinitionMap['12345' as String] = personalWidgetDefinition
+        personalWidgetDefinitionMap[personalWidgetDefinition.id] = personalWidgetDefinition
     }
 
     PersonalWidgetDefinition createExamplePersonalWidgetDefinition() {
-        new Person('user2', 'User Two').createPersonalWidgetDefinition(WidgetDefinition.builder().withGuid('12345').withDisplayName('Example Widget Definition').
+        PersonalWidgetDefinition personalWidgetDefinition = new Person('user2', 'User Two').createPersonalWidgetDefinition(WidgetDefinition.builder().withDisplayName('Example Widget Definition').
                 withImageUrlLarge('http://large.image.com').withImageUrlSmall('http://small.image.com').
                 withUrl('http://www.example.com').withWidgetType('standard').build())
-
+        personalWidgetDefinition.id = 12345
+        personalWidgetDefinition
     }
 }

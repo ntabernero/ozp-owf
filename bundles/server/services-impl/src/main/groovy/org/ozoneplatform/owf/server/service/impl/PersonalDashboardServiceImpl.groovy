@@ -16,54 +16,55 @@
 
 package org.ozoneplatform.owf.server.service.impl
 
-import org.ozoneplatform.owf.server.service.api.PersonalDashboardService
+import org.ozoneplatform.owf.server.service.api.DashboardInstanceService
 import ozone.platform.server.model.Dashboard
-import ozone.platform.server.model.PersonalDashboard
+import ozone.platform.server.model.DashboardInstance
 import ozone.platform.server.model.Person
 
-class PersonalDashboardServiceImpl implements PersonalDashboardService {
+class DashboardInstanceServiceImpl implements DashboardInstanceService {
 
-    List<PersonalDashboard> list() {
+    List<DashboardInstance> list() {
         dashboardMap.values().toList()
     }
 
-    PersonalDashboard create(PersonalDashboard dashboardInfo) {
+    DashboardInstance create(DashboardInstance dashboardInfo) {
         println "In create(): ${dashboardInfo?.guid}"
         dashboardMap[(dashboardInfo.guid)] = dashboardInfo
         dashboardInfo
     }
 
-    PersonalDashboard get(String id) {
+    DashboardInstance get(String id) {
         println "In get(): $id"
         dashboardMap[id]
     }
 
-    void update(PersonalDashboard dashboardInfo) {
+    void update(DashboardInstance dashboardInfo) {
         dashboardMap[(dashboardInfo.guid)] = dashboardInfo
     }
 
-    PersonalDashboard delete(String id) {
+    DashboardInstance delete(String id) {
         def dashboard =  dashboardMap[id]
         dashboardMap[id] = null
         dashboard
     }
 
-    PersonalDashboard restore(String id) {
+    DashboardInstance restore(String id) {
         println "Restored $id"
         dashboardMap[id]
     }
 
-    Map<String, PersonalDashboard> dashboardMap;
+    Map<String, DashboardInstance> dashboardMap;
 
-    PersonalDashboardServiceImpl() {
-        dashboardMap = new HashMap<String, PersonalDashboard>()
-        PersonalDashboard personalDashboard = createExampleDashboard()
-        dashboardMap[personalDashboard.guid] = personalDashboard
+    DashboardInstanceServiceImpl() {
+        dashboardMap = new HashMap<String, DashboardInstance>()
+        DashboardInstance dashboardInstance = createExampleDashboard()
+        dashboardMap[dashboardInstance.id] = dashboardInstance
     }
 
-    PersonalDashboard createExampleDashboard() {
-        PersonalDashboard personalDashboard = (PersonalDashboard)new Person('user1', 'User One').createPersonalDashboard("Dashboard1", "12345", 1, )
+    DashboardInstance createExampleDashboard() {
+        DashboardInstance personalDashboard = (DashboardInstance)new Person('user1', 'User One').createDashboardInstance("Dashboard1", 1, )
         personalDashboard.isDefault = true
+        personalDashboard.id = 12345
         personalDashboard
     }
 }

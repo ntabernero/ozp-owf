@@ -16,20 +16,19 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import ozone.platform.server.model.Dashboard
-import ozone.platform.server.model.GroupDashboard
+import ozone.platform.server.model.DashboardTemplate
 
-interface GroupDashboardService {
-    List<GroupDashboard> list()
+interface DashboardTemplateService {
+    List<DashboardTemplate> list()
 
-    GroupDashboard create(GroupDashboard dashboardInfo)
+    DashboardTemplate create(DashboardTemplate dashboardInfo)
 
-    GroupDashboard get(String id)
+    DashboardTemplate get(String id)
 
-    void update(GroupDashboard dashboardInfo)
+    void update(DashboardTemplate dashboardInfo)
 
-    GroupDashboard delete(String id)
+    DashboardTemplate delete(String id)
 
-    GroupDashboard copy(String id)
+    DashboardTemplate copy(String id)
 
 }

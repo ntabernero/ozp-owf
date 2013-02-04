@@ -16,7 +16,7 @@
 
 package org.ozoneplatform.owf.server.service.api.model
 
-class PersonalDashboard extends Dashboard {
+class DashboardInstance extends Dashboard {
 
     boolean defaultDashboard = false
 

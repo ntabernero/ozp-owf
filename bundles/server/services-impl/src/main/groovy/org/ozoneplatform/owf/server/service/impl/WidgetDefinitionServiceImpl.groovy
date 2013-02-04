@@ -102,13 +102,14 @@ class WidgetDefinitionServiceImpl implements WidgetDefinitionService {
     WidgetDefinitionServiceImpl() {
         widgetDefinitionMap = new HashMap<String, WidgetDefinition>()
         WidgetDefinition widgetDefinition = createExampleWidgetDefinition()
-        widgetDefinitionMap[widgetDefinition.guid] = widgetDefinition
+        widgetDefinitionMap[widgetDefinition.id] = widgetDefinition
     }
 
     WidgetDefinition createExampleWidgetDefinition() {
-        WidgetDefinition widgetDefinition = WidgetDefinition.builder().withGuid('12345').withDisplayName('Example Widget Definition').
+        WidgetDefinition widgetDefinition = WidgetDefinition.builder().withDisplayName('Example Widget Definition').
                 withImageUrlLarge('http://large.image.com').withImageUrlSmall('http://small.image.com').
                 withUrl('http://www.example.com').withWidgetType('standard').build()
+        widgetDefinition.id = 12345
         widgetDefinition.receivableIntents << new Intent('plot', 'lat/long')
         widgetDefinition.receivableIntents << new Intent('render', 'html')
         widgetDefinition

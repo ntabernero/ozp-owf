@@ -16,58 +16,58 @@
 
 package org.ozoneplatform.owf.server.rest
 
-import org.ozoneplatform.owf.server.service.api.GroupDashboardService
+import org.ozoneplatform.owf.server.service.api.DashboardInstanceService
 import ozone.platform.server.model.Dashboard
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Response
-import ozone.platform.server.model.GroupDashboard
+import ozone.platform.server.model.DashboardInstance
 
-@Path("/group-dashboards")
+@Path("/personal-dashboards")
 @Produces("application/json")
-class GroupDashboardController {
+class DashboardInstanceController {
 
-    GroupDashboardService groupDashboardService
+    DashboardInstanceService personalDashboardService
 
     @GET
-    List<Dashboard> list() {
-        groupDashboardService.list()
+    List<DashboardInstance> list() {
+        personalDashboardService.list()
     }
 
     @POST
     @Consumes("application/json")
-    Response create(GroupDashboard dashboardInfo) {
+    Response create(DashboardInstance dashboardInfo) {
         println "In create(): ${dashboardInfo?.guid}"
-        groupDashboardService.create(dashboardInfo)
+        personalDashboardService.create(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }
 
     @GET
     @Path("/{id}")
-    Dashboard get(@PathParam("id") String id) {
+    DashboardInstance get(@PathParam("id") String id) {
         println "In get(): $id"
-        groupDashboardService.get(id)
+        personalDashboardService.get(id)
     }
 
     @PUT
     @Consumes("application/json")
-    Response update(GroupDashboard dashboardInfo) {
-        groupDashboardService.update(dashboardInfo)
+    Response update(DashboardInstance dashboardInfo) {
+        personalDashboardService.update(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }
 
     @DELETE
     @Path("/{id}")
     Response delete(@PathParam("id") String id) {
-        def dashboard = groupDashboardService.delete(id)
+        def dashboard = personalDashboardService.delete(id)
         Response.ok(dashboard).build()
     }
 
     @POST
-    @Path("/{id}/copy")
-    Response copy(@PathParam("id") String id) {
-        println "Copied $id"
-        def dashboard = groupDashboardService.copy(id)
+    @Path("/{id}/restore")
+    Response restore(@PathParam("id") String id) {
+        println "Restored $id"
+        def dashboard = personalDashboardService.restore(id)
         Response.ok(dashboard).build()
     }
 }
