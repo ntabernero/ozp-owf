@@ -1,21 +1,274 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.ozoneplatform.owf.bundles.client</groupId>
-        <artifactId>client</artifactId>
+        <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
+        <artifactId>dashboard</artifactId>
         <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
-    <artifactId>dashboard</artifactId>
-    <packaging>pom</packaging>
-    <name>Ozone Platform :: OWF Client Bundles :: Client OWF Dashboard (Canvas)</name>
+    <artifactId>dev</artifactId>
+    <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
 
-    <modules>
-        <module>dev</module>
-        <module>wab</module>
-    </modules>
+    <name>Ozone Platform :: OWF Client Bundles :: Client Dashboard JavaScripts :: Base Dashboard</name>
+    <packaging>war</packaging>
 
+    <properties>
+        <jslintVersion>1.0.1</jslintVersion>
+        <browsers>PhantomJS</browsers>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+            <version>${junitVersion}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.6</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- this executes jshint ant plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/webapp</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+            </plugin>
+
+            <!--<plugin>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>build-helper-maven-plugin</artifactId>-->
+            <!--<version>1.7</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>attach-artifacts</id>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+            <!--<goal>attach-artifact</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<artifacts>-->
+            <!--<artifact>-->
+            <!--<file>target/min/classes/1.js</file>-->
+            <!--<type>js</type>-->
+            <!--</artifact>-->
+            <!--</artifacts>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <!--there's no java in this project-->
+                    <packagingExcludes>WEB-INF/lib/**, WEB-INF/classes/**</packagingExcludes>
+                    <webResources>
+                        <resource>
+                            <!-- this is relative to the pom.xml directory -->
+                            <directory>${project.build.directory}/minified-output</directory>
+                        </resource>
+                    </webResources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>war</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.mcheely</groupId>
+                <artifactId>requirejs-maven-plugin</artifactId>
+                <version>1.0.3</version>
+                <executions>
+                    <!-- <execution>
+                        <id>concatenate-css</id>
+                        <goals>
+                            <goal>optimize</goal>
+                        </goals>
+                        <configuration>
+                            <configFile>
+                                ${basedir}/src/build/buildconfig-concatenate-css.js
+                            </configFile>
+                            <optimizerFile>
+                                ${basedir}/src/build/r-2.0.6-plus.js
+                            </optimizerFile>
+                            <filterConfig>
+                                false
+                            </filterConfig>
+                        </configuration>
+                    </execution> -->
+                    <execution>
+                        <id>minify-javascript</id>
+                        <goals>
+                            <goal>optimize</goal>
+                        </goals>
+                        <!-- rebinding from the default phase of process-classes, so
+                             that this plugin doesn't have to run every time you do
+                             mvn jetty:run.  The jetty plugin internally executes the
+                             lifecycle up to the test-compile phase, so I picked one after
+                             that
+                        -->
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <configFile>
+                                ${basedir}/src/build/buildconfig-minify-javascript.js
+                            </configFile>
+                            <optimizerFile>
+                                ${basedir}/src/build/r-2.0.6-plus.js
+                            </optimizerFile>
+                            <filterConfig>
+                                false
+                            </filterConfig>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Run compile_all_themes (.bat/.sh) to generate css from the scss files -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>Compile themes</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${basedir}/src/main/webapp/themes</workingDirectory>
+                            <executable>${basedir}/src/main/webapp/themes/compile_all_themes${os.extension}</executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+
+        <!-- Identify the platform to set the appropriate OS extension (.bat or .sh) -->
+        <profile>
+            <id>platform-windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+
+            <properties>
+                <os.extension>.bat</os.extension>
+            </properties>
+        </profile>
+        <profile>
+            <id>platform-unix</id>
+            <activation>
+                <os>
+                    <family>!windows</family>
+                </os>
+            </activation>
+            
+            <properties>
+                <os.extension>.sh</os.extension>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>testacular</id>
+            <activation>
+                <property>
+                    <name>!skipClientTests</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <id>JS Testing</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>testacular</executable>
+                                    <arguments>
+                                        <argument>start</argument>
+                                        <argument>--browsers</argument>
+                                        <argument>${browsers}</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

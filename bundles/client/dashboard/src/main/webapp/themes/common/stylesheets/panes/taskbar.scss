@@ -1,0 +1,27 @@
+.taskbar {
+    position: absolute;
+
+    bottom: 0;
+    width: 100%;
+
+    > .header {
+        width: 20em;
+
+        display: inline-block;
+
+        /*
+         * hack ot get inline-block in IE7.  
+         * We can't rely on the .lt-ie8 class
+         * because this also needs to work in unit tests
+         */
+        *display: inline;
+        *zoom: 1;
+
+
+        margin: 0 1px;
+
+        cursor: pointer;
+
+        @include box-shadow(2px -2px 8px 2px #ccc);
+    }
+}
