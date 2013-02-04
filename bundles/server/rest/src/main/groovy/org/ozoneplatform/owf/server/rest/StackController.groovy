@@ -17,7 +17,7 @@
 package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.owf.server.service.api.StackService
-import org.ozoneplatform.owf.server.service.api.model.Stack
+import ozone.platform.server.model.Stack
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Context

@@ -16,7 +16,7 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.owf.server.service.api.model.Preference
+import ozone.platform.server.model.Preference
 
 interface PreferenceService {
     

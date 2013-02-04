@@ -22,13 +22,13 @@ import org.ozoneplatform.owf.server.service.api.WidgetDefinitionService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.ws.rs.GET
-import org.ozoneplatform.owf.server.service.api.model.WidgetDefinition
+import ozone.platform.server.model.WidgetDefinition
 import javax.ws.rs.PathParam
 import javax.ws.rs.POST
 import javax.ws.rs.Consumes
 import javax.ws.rs.PUT
 import javax.ws.rs.DELETE
-import org.ozoneplatform.owf.server.service.api.model.PersonalWidgetDefinition
+import ozone.platform.server.model.PersonalWidgetDefinition
 import org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService
 import javax.ws.rs.core.Response
 

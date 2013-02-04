@@ -15,6 +15,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.ozoneplatform.commons.bundles</groupId>
+            <artifactId>domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>services-api</artifactId>
             <version>${project.version}</version>
@@ -82,7 +88,7 @@
                             version=${project.version},
                             org.ozoneplatform.owf.server.service.api.exception;
                             version=${project.version},
-                            org.ozoneplatform.owf.server.service.api.model;
+                            ozone.platform.server.model;
                             version=${project.version},*
                         </Import-Package>
                         <Private-Package>org.ozoneplatform.owf.server.service.impl</Private-Package>
@@ -95,7 +101,7 @@
                 <version>2.13</version>
                 <configuration>
                     <includes>
-                        <include>**/Describe*</include>
+                        <include>**/Describes*</include>
                     </includes>
                 </configuration>
             </plugin>

@@ -16,7 +16,7 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.owf.server.service.api.model.PersonalWidgetDefinition
+import ozone.platform.server.model.PersonalWidgetDefinition
 
 interface PersonalWidgetDefinitionService {
     List<PersonalWidgetDefinition> list(String personId)

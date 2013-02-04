@@ -18,17 +18,17 @@ package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.PreferenceService
 import org.ozoneplatform.owf.server.service.api.exception.*
-import org.ozoneplatform.owf.server.service.api.model.Preference
+import ozone.platform.server.model.Preference
 
 class PreferenceServiceImpl implements PreferenceService {
     
     def theList = [];
     
     PreferenceServiceImpl() {
-        theList.add(new Preference(id: 1L, namespace: "Namespace One", path: "Path One", value: "Value One"));
-        theList.add(new Preference(id: 2L, namespace: "Namespace One", path: "Path Two", value: "Value Two"));
-        theList.add(new Preference(id: 3L, namespace: "Namespace Two", path: "Path One", value: "Value One"));
-        theList.add(new Preference(id: 4L, namespace: "Namespace Two", path: "Path Two", value: "Value Two"));
+//        theList.add(new Preference(id: 1L, namespace: "Namespace One", path: "Path One", value: "Value One"));
+//        theList.add(new Preference(id: 2L, namespace: "Namespace One", path: "Path Two", value: "Value Two"));
+//        theList.add(new Preference(id: 3L, namespace: "Namespace Two", path: "Path One", value: "Value One"));
+//        theList.add(new Preference(id: 4L, namespace: "Namespace Two", path: "Path Two", value: "Value Two"));
     }
     
     List<Preference> list() {

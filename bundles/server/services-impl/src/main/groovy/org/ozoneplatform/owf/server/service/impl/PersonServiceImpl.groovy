@@ -17,7 +17,7 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.PersonService
-import org.ozoneplatform.owf.server.service.api.model.Person
+import ozone.platform.server.model.Person
 import org.ozoneplatform.owf.server.service.api.exception.*
 
 import java.text.DateFormat
@@ -29,9 +29,9 @@ class PersonServiceImpl implements PersonService {
     def theList = [];
     
     PersonServiceImpl() {
-        theList.add(new Person(id: 1L, username: "testUser1", fullName: "Test User 1", email: "testuser1@blah.blah", prevLogin: "07/10/2012 10:30:00", lastLogin: "07/14/2012 14:03:31"));
-        theList.add(new Person(id: 2L, username: "testUser2", fullName: "Test User 2", email: "testuser2@blah.blah", prevLogin: "11/06/2012 12:36:21", lastLogin: "11/08/2012 16:58:05"));
-        theList.add(new Person(id: 3L, username: "testAdmin1", fullName: "Test Administrator 1", email: "testadmin1@blah.blah", prevLogin: "09/25/2012 10:30:00", lastLogin: "09/26/2012 14:03:31"));
+        theList.add(new Person("testUser1", "Test User 1"));
+        theList.add(new Person("testUser2", "Test User 2"));
+        theList.add(new Person("testAdmin1", "Test Administrator 1"));
     }
     
     List<Person> list() {

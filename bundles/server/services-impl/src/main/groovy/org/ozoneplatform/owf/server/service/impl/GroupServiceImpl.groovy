@@ -18,15 +18,24 @@ package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.GroupService
 import org.ozoneplatform.owf.server.service.api.exception.*
-import org.ozoneplatform.owf.server.service.api.model.Group
+import ozone.platform.server.model.Group
 
 class GroupServiceImpl implements GroupService {
     
     def theList = [];
     
     GroupServiceImpl() {
-        theList.add(new Group(id: 1L, name: "admins", displayName: "Administrators", description: "The administrators group"));
-        theList.add(new Group(id: 2L, name: "users", displayName: "Users", description: "The users group"));
+        def group = new Group('admins')
+        group.id = 1
+        group.displayName = 'Administrators'
+        group.description = 'The administrators group'
+        theList << group
+
+        group = new Group('users')
+        group.id = 2
+        group.displayName = 'Users'
+        group.description = 'The users group'
+        theList << group
     }
     
     List<Group> list() {

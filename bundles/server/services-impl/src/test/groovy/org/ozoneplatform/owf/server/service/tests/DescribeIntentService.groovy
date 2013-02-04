@@ -18,7 +18,7 @@ package org.ozoneplatform.owf.server.service.tests
 
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
-import org.ozoneplatform.owf.server.service.api.model.Intent
+import ozone.platform.server.model.Intent
 import org.ozoneplatform.owf.server.service.impl.IntentServiceImpl
 import spock.lang.Specification
 

@@ -17,7 +17,7 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.IntentService
-import org.ozoneplatform.owf.server.service.api.model.Intent
+import ozone.platform.server.model.Intent
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
 
@@ -26,8 +26,8 @@ class IntentServiceImpl implements IntentService {
     def theList = [];
     
     IntentServiceImpl() {
-        theList.add(new Intent(id: 1L, action: "plot", dataType: "lat/long"));
-        theList.add(new Intent(id: 2L, action: "graph", dataType: "cartesian"));
+        theList.add(new Intent("plot", "lat/long"));
+        theList.add(new Intent("graph", "cartesian"));
     }
     
     List<Intent> list() {

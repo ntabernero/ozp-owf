@@ -19,7 +19,7 @@ package org.ozoneplatform.owf.server.service.tests
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
 import org.ozoneplatform.owf.server.service.impl.StackServiceImpl
-import org.ozoneplatform.owf.server.service.api.model.Stack
+import ozone.platform.server.model.Stack
 import spock.lang.Specification
 
 class DescribeStackService extends Specification {

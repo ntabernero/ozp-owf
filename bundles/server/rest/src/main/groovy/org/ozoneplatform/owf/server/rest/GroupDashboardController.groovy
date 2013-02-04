@@ -17,11 +17,11 @@
 package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.owf.server.service.api.GroupDashboardService
-import org.ozoneplatform.owf.server.service.api.model.Dashboard
+import ozone.platform.server.model.Dashboard
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Response
-import org.ozoneplatform.owf.server.service.api.model.GroupDashboard
+import ozone.platform.server.model.GroupDashboard
 
 @Path("/group-dashboards")
 @Produces("application/json")

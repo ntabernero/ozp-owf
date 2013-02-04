@@ -16,8 +16,8 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.owf.server.service.api.model.Dashboard
-import org.ozoneplatform.owf.server.service.api.model.GroupDashboard
+import ozone.platform.server.model.Dashboard
+import ozone.platform.server.model.GroupDashboard
 
 interface GroupDashboardService {
     List<GroupDashboard> list()

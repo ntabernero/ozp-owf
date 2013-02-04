@@ -17,10 +17,10 @@
 package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.owf.server.service.api.WidgetDefinitionService
-import org.ozoneplatform.owf.server.service.api.model.Group
-import org.ozoneplatform.owf.server.service.api.model.Intent
-import org.ozoneplatform.owf.server.service.api.model.Person
-import org.ozoneplatform.owf.server.service.api.model.WidgetDefinition
+import ozone.platform.server.model.Group
+import ozone.platform.server.model.Intent
+import ozone.platform.server.model.Person
+import ozone.platform.server.model.WidgetDefinition
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 

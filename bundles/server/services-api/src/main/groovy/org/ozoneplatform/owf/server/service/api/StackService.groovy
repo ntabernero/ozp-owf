@@ -16,7 +16,7 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.owf.server.service.api.model.Stack
+import ozone.platform.server.model.Stack
 
 interface StackService {
 

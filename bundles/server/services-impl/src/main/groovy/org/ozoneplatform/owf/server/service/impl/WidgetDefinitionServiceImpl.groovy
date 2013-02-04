@@ -17,10 +17,10 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.WidgetDefinitionService
-import org.ozoneplatform.owf.server.service.api.model.WidgetDefinition
-import org.ozoneplatform.owf.server.service.api.model.Intent
-import org.ozoneplatform.owf.server.service.api.model.Person
-import org.ozoneplatform.owf.server.service.api.model.Group
+import ozone.platform.server.model.WidgetDefinition
+import ozone.platform.server.model.Intent
+import ozone.platform.server.model.Person
+import ozone.platform.server.model.Group
 
 class WidgetDefinitionServiceImpl implements WidgetDefinitionService {
     @Override
@@ -106,7 +106,11 @@ class WidgetDefinitionServiceImpl implements WidgetDefinitionService {
     }
 
     WidgetDefinition createExampleWidgetDefinition() {
-        new WidgetDefinition([guid:"12345", displayName: "Example Widget Definition", widgetUrl: "http://www.example.com",
-                imageUrlLarge: "http://large.image.com", imageUrlSmall: "http://small.image.com", widgetType:"standard"])
+        WidgetDefinition widgetDefinition = WidgetDefinition.builder().withGuid('12345').withDisplayName('Example Widget Definition').
+                withImageUrlLarge('http://large.image.com').withImageUrlSmall('http://small.image.com').
+                withUrl('http://www.example.com').withWidgetType('standard').build()
+        widgetDefinition.receivableIntents << new Intent('plot', 'lat/long')
+        widgetDefinition.receivableIntents << new Intent('render', 'html')
+        widgetDefinition
     }
 }

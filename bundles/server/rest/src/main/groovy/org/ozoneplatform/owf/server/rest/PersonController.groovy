@@ -17,7 +17,7 @@
 package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.owf.server.service.api.PersonService
-import org.ozoneplatform.owf.server.service.api.model.Person
+import ozone.platform.server.model.Person
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Context

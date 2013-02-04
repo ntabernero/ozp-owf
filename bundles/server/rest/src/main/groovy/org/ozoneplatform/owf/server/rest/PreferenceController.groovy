@@ -17,7 +17,7 @@
 package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.owf.server.service.api.PreferenceService
-import org.ozoneplatform.owf.server.service.api.model.Preference
+import ozone.platform.server.model.Preference
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Context

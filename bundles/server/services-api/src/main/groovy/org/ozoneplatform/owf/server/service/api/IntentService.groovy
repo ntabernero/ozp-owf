@@ -16,7 +16,7 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.owf.server.service.api.model.Intent
+import ozone.platform.server.model.Intent
 
 interface IntentService {
     

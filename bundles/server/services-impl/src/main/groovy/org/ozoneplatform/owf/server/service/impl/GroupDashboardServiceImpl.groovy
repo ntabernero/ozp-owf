@@ -17,8 +17,8 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.GroupDashboardService
-import org.ozoneplatform.owf.server.service.api.model.Dashboard
-import org.ozoneplatform.owf.server.service.api.model.GroupDashboard
+import ozone.platform.server.model.Dashboard
+import ozone.platform.server.model.GroupDashboard
 
 class GroupDashboardServiceImpl implements GroupDashboardService {
 
@@ -72,14 +72,14 @@ class GroupDashboardServiceImpl implements GroupDashboardService {
     }
 
     GroupDashboard createExampleDashboard() {
-        new GroupDashboard([name: "Dashboard1", guid: "12345", dashboardPosition: 0, alteredByAdmin: true])
+        new GroupDashboard("Dashboard1", "12345", 0)
     }
 
     private Dashboard copyDashboard(Dashboard original) {
         def propsMap = original.properties
         propsMap.remove('metaClass')
         propsMap.remove('class')
-        Dashboard dashboard = new Dashboard(propsMap)
+        Dashboard dashboard = new GroupDashboard(original.name, original.guid, original.position)
         dashboard.guid = original.guid + "-copy"
         dashboard
     }

@@ -17,7 +17,7 @@
 package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.owf.server.service.api.GroupService
-import org.ozoneplatform.owf.server.service.api.model.Group
+import ozone.platform.server.model.Group
 
 //import javax.annotation.security.*
 

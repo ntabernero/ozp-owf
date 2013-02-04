@@ -19,15 +19,15 @@ package org.ozoneplatform.owf.server.service.impl
 import org.ozoneplatform.owf.server.service.api.StackService
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
-import org.ozoneplatform.owf.server.service.api.model.Stack
+import ozone.platform.server.model.Stack
 
 class StackServiceImpl implements StackService {
     
     def theList = [];
     
     StackServiceImpl() {
-        theList.add(new Stack(id: 1L, name: "Stack One", description: "This is stack one.", urlName: "stackone", descriptorUrl: "http://the.descriptor.url"));
-        theList.add(new Stack(id: 2L, name: "Stack Two", description: "This is stack two.", urlName: "stacktwo", descriptorUrl: "http://the.descriptor.url"));
+        theList.add(new Stack("Stack One", "stackone"));
+        theList.add(new Stack("Stack Two","stacktwo"));
     }
     
     List<Stack> list() {

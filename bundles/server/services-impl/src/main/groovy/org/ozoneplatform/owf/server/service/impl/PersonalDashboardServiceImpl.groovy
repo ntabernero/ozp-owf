@@ -17,8 +17,9 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.PersonalDashboardService
-import org.ozoneplatform.owf.server.service.api.model.Dashboard
-import org.ozoneplatform.owf.server.service.api.model.PersonalDashboard
+import ozone.platform.server.model.Dashboard
+import ozone.platform.server.model.PersonalDashboard
+import ozone.platform.server.model.Person
 
 class PersonalDashboardServiceImpl implements PersonalDashboardService {
 
@@ -61,6 +62,8 @@ class PersonalDashboardServiceImpl implements PersonalDashboardService {
     }
 
     PersonalDashboard createExampleDashboard() {
-        new PersonalDashboard([name: "Dashboard1", guid: "12345", defaultDashboard: false, dashboardPosition: 0, alteredByAdmin: true])
+        PersonalDashboard personalDashboard = (PersonalDashboard)new Person('user1', 'User One').createPersonalDashboard("Dashboard1", "12345", 1, )
+        personalDashboard.isDefault = true
+        personalDashboard
     }
 }
