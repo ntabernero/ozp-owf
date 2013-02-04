@@ -19,7 +19,7 @@
     </modules>
 
     <properties>
-        <jetty.defaults.descriptor>${project.parent.parent.basedir}/webdefault.xml</jetty.defaults.descriptor>
+        <jetty.defaults.descriptor>${project.parent.basedir}/webdefault.xml</jetty.defaults.descriptor>
     </properties>
 
     <build>
