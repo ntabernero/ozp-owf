@@ -1,7 +1,9 @@
+$taskbarBottom: 0 !default;
+
 .taskbar {
     position: absolute;
 
-    bottom: 0;
+    bottom: $taskbarBottom;
     width: 100%;
 
     > .header {

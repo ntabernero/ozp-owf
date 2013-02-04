@@ -130,6 +130,23 @@
                 <artifactId>requirejs-maven-plugin</artifactId>
                 <version>1.0.3</version>
                 <executions>
+                    <!-- <execution>
+                        <id>concatenate-css</id>
+                        <goals>
+                            <goal>optimize</goal>
+                        </goals>
+                        <configuration>
+                            <configFile>
+                                ${basedir}/src/build/buildconfig-concatenate-css.js
+                            </configFile>
+                            <optimizerFile>
+                                ${basedir}/src/build/r-2.0.6-plus.js
+                            </optimizerFile>
+                            <filterConfig>
+                                false
+                            </filterConfig>
+                        </configuration>
+                    </execution> -->
                     <execution>
                         <id>minify-javascript</id>
                         <goals>
