@@ -37,6 +37,12 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+
                 <!--JsHint Plugin-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -50,7 +56,7 @@
                                 <target>
                                     <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask" classpathref="maven.plugin.classpath" />
 
-                                    <jshint dir="${project.basedir}/src/main/webapp/js" options="strict=false, devel=true, expr=true" globals="define:true, require:true">
+                                    <jshint dir="${project.basedir}/src/main/webapp/js" options="strict=false, devel=true, expr=true, eqnull=true" globals="define:true, require:true">
                                         <include name="**/*.js" />
                                         <exclude name="**/*.min.js" />
                                         <report type="jslint-xml" destFile="${project.build.directory}/jslint-reports/jslint.xml" />

@@ -1,4 +1,5 @@
-$lib_path = "../../../../../../target/minified-output/libs" #location of stylesheets and images belonging to external libraries
+#sass files are compiled in the target/minified-output folder.  the paths below are relative to that dir.
+$lib_path = "../../../libs" #location of stylesheets and images belonging to external libraries
 $common_path = "../../common" #location of owf's stylesheets and images that are common to mutiple themes
 $image_path = "../images"  #path to the images directory in this theme
 

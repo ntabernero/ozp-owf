@@ -70,7 +70,7 @@ define([
 
         updateActive: function() {
             Panel.prototype.updateActive.apply(this, arguments);
-            if (this.model.get('active')) {
+            if (this.model.get('active') && this.zIndexManager != null) {
                 this.zIndexManager.bringToFront(this);
             }
 

@@ -1,6 +1,5 @@
 define([
-    // Application.
-    'app',
+    'events/EventBus',
 
     //views
     'views/Banner',
@@ -9,9 +8,7 @@ define([
     'backbone',
     'lodash',
     'jquery'
-],
-
-function(app, Banner, DashboardContainer, Backbone, _, $) {
+], function(EventBus, Banner, DashboardContainer, Backbone, _, $) {
     var pluses = /\+/g;
 
     function raw(s) {
@@ -42,9 +39,9 @@ function(app, Banner, DashboardContainer, Backbone, _, $) {
             return (document.cookie = [
                 encodeURIComponent(key), '=', config.raw ? value : encodeURIComponent(value),
                 options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-                options.path    ? '; path=' + options.path : '',
-                options.domain  ? '; domain=' + options.domain : '',
-                options.secure  ? '; secure' : ''
+                options.path ? '; path=' + options.path : '',
+                options.domain ? '; domain=' + options.domain : '',
+                options.secure ? '; secure' : ''
             ].join(''));
         }
 
@@ -73,35 +70,48 @@ function(app, Banner, DashboardContainer, Backbone, _, $) {
     };
     $.cookie.json = true;
 
-    
+
     // Defining the application router, you can attach sub routers here.
     var Router = Backbone.Router.extend({
         routes: {
             '': 'index',
+            ':guid': 'index',
             'perf/:count': 'measurePerformance'
         },
 
-        index: function() {
-            var banner = new Banner(),
-                dashboardContainer = new DashboardContainer();
-            
-            dashboardContainer.render();
+        initialize: function(options) {
+            this.options = options;
+        },
+
+        index: function(guid) {
+            var dashboardContainer = this.options.dashboardContainer;
+            if (dashboardContainer != null && !dashboardContainer.rendered) {
+                dashboardContainer.render({
+                    guid:guid
+                });
+            }
+//            else {
+                //container already rendered, use guid to switch dashboards
+//            }
+
         },
 
         measurePerformance: function (count) {
             var startTime = +(new Date());
-            count = parseInt(count,10);
-                
-            app.on('dashboard:activated', function (model, view) {
+            count = parseInt(count, 10);
+
+            EventBus.on('dashboard:activated', function (model, view) {
                 var endTime = +(new Date());
                 var renderTimes = $.cookie('renderTimes') || [];
-                renderTimes.push( endTime-startTime );
+                renderTimes.push(endTime - startTime);
                 $.cookie('renderTimes', renderTimes, { expires: 7, path: '/' });
 
-                if(renderTimes.length >= count) {
-                    var sum = _.reduce(renderTimes, function(memo, num){ return memo + num; }, 0);
-                    console.log('Average render time ', sum/(renderTimes.length), renderTimes);
-                    alert('Average render time ' + sum/(renderTimes.length) + ' ms');
+                if (renderTimes.length >= count) {
+                    var sum = _.reduce(renderTimes, function(memo, num) {
+                        return memo + num;
+                    }, 0);
+                    console.log('Average render time ', sum / (renderTimes.length), renderTimes);
+                    alert('Average render time ' + sum / (renderTimes.length) + ' ms');
 
                     $.removeCookie('renderTimes');
                 }

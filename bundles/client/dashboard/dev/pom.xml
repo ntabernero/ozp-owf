@@ -58,6 +58,7 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
@@ -193,13 +194,13 @@
                 <executions>
                     <execution>
                         <id>Compile themes</id>
-                        <phase>compile</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${basedir}/src/main/webapp/themes</workingDirectory>
-                            <executable>${basedir}/src/main/webapp/themes/compile_all_themes${os.extension}</executable>
+                            <workingDirectory>${project.build.directory}/minified-output/themes</workingDirectory>
+                            <executable>${project.build.directory}/minified-output/themes/compile_all_themes${os.extension}</executable>
                         </configuration>
                     </execution>
                 </executions>

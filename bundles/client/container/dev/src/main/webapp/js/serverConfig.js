@@ -1,4 +1,3 @@
-/*global initialWidgetDefinitions*/
 var initialWidgetDefinitions = [
     {
         guid: "eb5435cf-4021-4f2a-ba69-dde451d12551",
@@ -172,8 +171,6 @@ var initialWidgetDefinitions = [
     }
 ];
 
-
-/*global initialDashboards*/
 var initialDashboards = [
     {
         name: 'Test Dashboard 1',
