@@ -38,13 +38,24 @@ function(View, Box, $, _) {
         template: tpl,
 
         events: {
+            'click .reset-btn': 'reset',
             'click .save-btn': 'save',
             'click .cancel-btn': 'cancel'
         },
 
+        reset: function (evt) {
+            var $resetBtn = $(evt.target);
+            if($resetBtn.hasClass('disabled')) {
+                return;
+            }
+            $resetBtn.addClass('disabled');
+
+            this.$designer.removeData('layoutConfig');
+            this.box.remove();
+        },
+
         save: function () {
             var config = this.$designer.data('layoutConfig');
-            console.log('Designer- layout config: ', config);
             this._deferred.resolve( config );
         },
 
@@ -136,9 +147,17 @@ function(View, Box, $, _) {
         },
 
         nest: function (box, options, $el) {
+            this.box = box;
+            this.$el.find('.reset-btn').removeClass('disabled');
+
             $el.append( box.render().el );
             $el.data( 'layoutConfig', options );
             return this;
+        },
+
+        remove: function () {
+            this.box.remove();
+            View.prototype.remove.apply( this, arguments );
         }
     });
 

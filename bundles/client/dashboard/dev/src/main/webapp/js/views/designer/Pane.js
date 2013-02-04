@@ -8,8 +8,12 @@ define([
     'use strict';
 
     var percentageUnitsRegex = /^\d+(\.\d+)?%$/i,
+        pxUnitsRegex = /^\d+(\.\d+)?px$/i,
         isPercentageSize = function (size) {
             return size && percentageUnitsRegex.test(size);
+        },
+        isPixelSize = function (size) {
+            return size && pxUnitsRegex.test(size);
         };
 
     return View.extend({
@@ -47,8 +51,8 @@ define([
                 mode: 'inline',
                 onblur : 'submit',
                 showbuttons: false,
-                validate: _.bind(this.validate, this),
-                display: _.bind(this.editComplete, this, $size)
+                validate: _.bind( this.validate, this ),
+                display: _.bind( this.editComplete, this, $size )
             });
         },
 
@@ -60,7 +64,7 @@ define([
                 return "Nice try! Invalid input, please enter a valid value. For example, 400px or 50%.";
             }
 
-            if( value.charAt(value.length-1) === "%" ) {
+            if( isPercentageSize( value ) ) {
                 if( num <= 0 ) {
                     return "Width/Height of 0% or lower is not allowed";
                 }
@@ -74,19 +78,12 @@ define([
         },
 
         editComplete: function ($editable, value) {
-            value = isPercentageSize( value ) ? value : (value + 'px');
-            console.log('new value is ', value);
-            $editable.html(value);
-            
-            this.options.htmlText = value;
-            if(this.options.width) {
-                this.options.width = value;
+            if( !isPixelSize( value ) && !isPercentageSize( value ) ) {
+                value = parseFloat( value ) + 'px';
             }
-            else if(this.options.height) {
-                this.options.height = value;
-            }
-            
-            this.trigger('sizeChange', value);
+            $editable.html( value );
+
+            this.trigger( 'sizeChange', value );
         },
 
         updateSize: function (options) {
@@ -96,6 +93,7 @@ define([
             if(options.width || options.height) {
                 this.options[ options.width ? 'width' : 'height' ] = size;
                 this.options.htmlText = size;
+                delete this.options.flex;
             }
             else {
                 delete this.options.width;
@@ -108,6 +106,16 @@ define([
                 .html( value );
 
             this.initEditable();
+        },
+
+        remove: function () {
+            if(this.box) {
+                this.box.remove();
+            }
+            else {
+                this.$el.children('h3').editable( 'destroy' );
+            }
+            View.prototype.remove.apply( this, arguments );
         }
 
     });

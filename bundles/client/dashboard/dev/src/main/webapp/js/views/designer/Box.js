@@ -41,22 +41,38 @@ define([
                 .append( this.secondPane.render().el )
                 .splitter( this.options );
 
-            this.listenTo( this.firstPane, 'sizeChange', _.bind(this.updateSecondPane, this) );
-            this.listenTo( this.secondPane, 'sizeChange', _.bind(this.updateFirstPane, this) );
+            this.listenTo( this.firstPane, 'sizeChange', _.bind(this.firstPaneSizeChanged, this) );
+            this.listenTo( this.secondPane, 'sizeChange', _.bind(this.secondPaneSizeChanged, this) );
 
             return this;
         },
 
-        updateLayout: function () {
-            console.log('update box layout');
+        getSizingProperty: function () {
+            return this.options.orientation === 'vertical' ? 'width' : 'height';
         },
 
-        updatePane: function (pane, secondPaneSize) {
-            var size = parseFloat( secondPaneSize ),
-                options = {},
-                prop = this.options.orientation === 'vertical' ? 'width' : 'height';
+        updateLayout: function (evt) {
+            var firstPaneOptions = this.firstPane.options,
+                prop = this.getSizingProperty();
 
-            if( isPercentageSize( secondPaneSize ) ) {
+            if( firstPaneOptions.flex ) {
+                this.secondPaneSizeChanged( this.firstPane.$el[prop]() + 'px' );
+            }
+            else if( isPercentageSize( firstPaneOptions[prop] ) ) {
+                var newSize = Math.round( (this.firstPane.$el[prop]() / this.$el[prop]()) * 100 ) + '%';
+                this.firstPaneSizeChanged( newSize );
+            }
+            else {
+                this.firstPaneSizeChanged( this.firstPane.$el[prop]() + 'px' );
+            }
+        },
+
+        updatePane: function (pane, otherPaneSize) {
+            var size = parseFloat( otherPaneSize ),
+                options = {},
+                prop = this.getSizingProperty();
+
+            if( isPercentageSize( otherPaneSize ) ) {
                 options[ prop ] = (100 - size) + '%';
                 pane.updateSize( options );
             }
@@ -66,12 +82,28 @@ define([
             this.$el.splitter( this.options );
         },
 
-        updateFirstPane: function (secondPaneSize) {
-            this.updatePane( this.firstPane, secondPaneSize );
+        secondPaneSizeChanged: function (size) {
+            var options = {},
+                prop = this.getSizingProperty();
+
+            options[prop] = size;
+            this.secondPane.updateSize( options );
+            this.updatePane( this.firstPane, size );
         },
 
-        updateSecondPane: function (firstPaneSize) {
-            this.updatePane( this.secondPane, firstPaneSize );
+        firstPaneSizeChanged: function (size) {
+            var options = {},
+                prop = this.getSizingProperty();
+
+            options[prop] = size;
+            this.firstPane.updateSize( options );
+            this.updatePane( this.secondPane, size );
+        },
+
+        remove: function () {
+            this.firstPane.remove();
+            this.secondPane.remove();
+            View.prototype.remove.apply( this, arguments );
         }
 
     });
