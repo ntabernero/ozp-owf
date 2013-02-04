@@ -67,5 +67,19 @@ require({
         }
     }
   }, tests, function() {
+    var cssPath = '/base/target/minified-output/themes/a_default.theme/css/a_default.css';
+
+    //before starting tests, import default css
+    if (document.createStyleSheet) {
+        document.createStyleSheet(cssPath);
+    }
+    else {
+        var stylesheet = $('<link>')
+            .appendTo('head')
+            .attr('type', 'text/css')
+            .attr('rel', 'stylesheet')
+            .attr('href', cssPath);
+    }
+
     window.__testacular__.start();
 });

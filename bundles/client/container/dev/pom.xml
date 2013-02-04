@@ -16,6 +16,7 @@
 
     <properties>
         <jslintVersion>1.0.1</jslintVersion>
+        <jetty.defaults.descriptor>${project.parent.parent.basedir}/webdefault.xml</jetty.defaults.descriptor>
     </properties>
 
     <!-- Identify the platform to set the appropriate OS extension (.bat or .sh) -->
@@ -87,7 +88,7 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
-                                    <artifactId>dev</artifactId>
+                                    <artifactId>dashboard</artifactId>
                                     <version>${project.version}</version>
                                     <type>war</type>
                                     <overWrite>true</overWrite>

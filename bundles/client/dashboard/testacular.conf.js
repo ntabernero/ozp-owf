@@ -22,6 +22,7 @@ files = [
   'target/minified-output/libs/js/backbone.js',
   'target/minified-output/libs/js/expect.js',
   'target/minified-output/libs/js/sinon.js',
+  'target/minified-output/libs/patches/**/*.js',
   'target/minified-output/libs/development-bundle/ui/jquery-ui.custom.js',
   
   // Include the script to configure and trigger require.
@@ -31,7 +32,10 @@ files = [
   //{pattern: 'src/main/webapp/js/**/*.js', included: false},
   {pattern: 'target/minified-output/js/**/*.js', included: false},
   {pattern: 'target/minified-output/libs/js/**/*.js', included: false},
-  {pattern: 'src/test/js/**/*.js', included: false}
+  {pattern: 'src/test/js/**/*.js', included: false},
+
+  //css files necessary for proper test functioning
+  {pattern: 'target/minified-output/themes/a_default.theme/css/a_default.css', included: false}
 ];
 
 
