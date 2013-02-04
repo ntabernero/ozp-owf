@@ -9,6 +9,14 @@
 
         display: inline-block;
 
+        /*
+         * hack ot get inline-block in IE7.  
+         * We can't rely on the .lt-ie8 class
+         * because this also needs to work in unit tests
+         */
+        *display: inline;
+        *zoom: 1;
+
 
         margin: 0 1px;
 
@@ -16,9 +24,4 @@
 
         @include box-shadow(2px -2px 8px 2px #ccc);
     }
-}
-
-.lt-ie8 .taskbar > .header {
-    display: inline;
-    zoom: 1;
 }
