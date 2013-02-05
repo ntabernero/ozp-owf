@@ -14,7 +14,8 @@ define([
         };
 
     return View.extend({
-
+        vtype: 'box',
+        
         className: 'box',
 
         events: {

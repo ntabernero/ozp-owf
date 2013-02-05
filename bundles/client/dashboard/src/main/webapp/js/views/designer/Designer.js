@@ -2,20 +2,20 @@ define([
     'views/View',
     './Box',
     './Pane',
+    './WorkingArea',
     'jquery',
     'lodash',
     'jqueryui/jquery-ui.custom',
     'jquery-splitter'
 ],
 
-function(View, Box, Pane, $, _) {
+function(View, Box, Pane, WorkingArea, $, _) {
 
     'use strict';
 
     var boxTpl = '<div class="box"><div class="pane"></div><div class="pane"></div></div>',
         HIGHLIGHTCLASS = 'highlight',
         tpl = 
-            '<div id="designer"></div>' +
             '<div id="side-panel">' +
                 '<ul class="unstyled">' +
                     '<li data-type="vertical">|</li>' +
@@ -45,6 +45,28 @@ function(View, Box, Pane, $, _) {
             'click .cancel-btn': 'cancel'
         },
 
+        _$draggables: null,
+        _$droppables: null,
+
+        views: function() {
+            return {
+                vtype: 'working.area',
+                model: this.model
+            };
+        },
+
+        afterRender: function() {
+            this.$el.append(this.template);
+            this.$designer = this.$el.find('.working-area');
+
+            this._initDragAndDrop();
+        },
+        
+        design: function() {
+            this.render();
+            return (this._deferred = $.Deferred());
+        },
+
         reset: function (evt) {
             var $resetBtn = $(evt.target);
             if($resetBtn.hasClass('disabled')) {
@@ -66,32 +88,8 @@ function(View, Box, Pane, $, _) {
             this._deferred.reject();
         },
 
-        render: function() {
-            this.$el.html(this.template);
-            this.$designer = $('#designer');
-            
-            if(this.model) {
-                console.log('render existing dashboard here....', this.model.get('layoutConfig'));
-                var box = new Box({
-                    orientation: 'vertical',
-                    panes: [
-                        { collapsible: false, htmlText: '50%', width: '50%' },
-                        { collapsible: false, htmlText: '50%', width: '50%' }
-                    ]
-                });
-                this.$designer.html(box.render().el);
-            }
-            
-            this._initDragAndDrop();
-        },
-
-        design: function() {
-            this.render();
-            return (this._deferred = $.Deferred());
-        },
-
         _initDragAndDrop: function() {
-            this.$('li').draggable({
+            this._$draggables = this.$('#side-panel li').draggable({
                 cursorAt: { left: -50 },
                 helper: 'clone',
                 scroll: false,
@@ -99,13 +97,9 @@ function(View, Box, Pane, $, _) {
                 stop: _.bind(this._onDragStop, this)
             });
 
-            $('#designer').droppable({
+            this._$droppables = this.$designer.droppable({
                 drop: _.bind(this._onDrop, this)
             });
-        },
-
-        _uninitDragAndDrop: function () {
-            // clean up
         },
 
         _onMouseOverPane: function (evt) {
@@ -142,17 +136,11 @@ function(View, Box, Pane, $, _) {
                         { collapsible: false, htmlText: '50%', height: '50%' }
                     ]
                 },
-                options = data.type === 'vertical' ? hBoxOptions : vBoxOptions,
-                box = new Box( options );
+                options = data.type === 'vertical' ? hBoxOptions : vBoxOptions;
 
-            // is it a pane?
-            var paneView = this._$mouseOverPane.data().view;
-            if( paneView && (paneView !== this) ) {
-                paneView.nest( box, options );
-            }
-            else {
-                this.nest( box, options, this._$mouseOverPane );
-            }
+            // can be either working area or a pane
+            var view = this._$mouseOverPane.data().view;
+            view.nest( options );
 
             this._$mouseOverPane.removeClass( HIGHLIGHTCLASS );
         },
@@ -161,17 +149,10 @@ function(View, Box, Pane, $, _) {
             $(document).off('.designerdrag');
         },
 
-        nest: function (box, options, $el) {
-            this.box = box;
-            this.$el.find('.reset-btn').removeClass('disabled');
-
-            $el.append( box.render().el );
-            $el.data( 'layoutConfig', options );
-            return this;
-        },
-
         remove: function () {
-            this.box.remove();
+            this._$draggables.draggable('destroy');
+            this._$droppables.droppable('destroy');
+
             View.prototype.remove.apply( this, arguments );
         }
     });

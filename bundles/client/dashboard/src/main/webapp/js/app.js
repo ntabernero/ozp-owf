@@ -7,8 +7,7 @@ require([
     'collections/PreferencesCollection',
     'collections/PeopleCollection',
     'collections/GroupsCollection',
-	'jquery',
-    './backbone.declarative.views'
+	'jquery'
 ], function (PersonalDashboardModel, PersonalDashboardsCollection, Dashboard, 
              StacksCollection, WidgetDefinitionsCollection, PreferencesCollection,
              PeopleCollection, GroupsCollection, $) {
@@ -165,35 +164,55 @@ require([
             var me = this,
                 dashboardModel = new PersonalDashboardModel({
                     layoutConfig: {
+                        vtype: 'box',
                         orientation: "vertical",
                         panes: [{
+                            vtype: 'pane',
                             collapsible: false,
                             htmlText: '50%',
                             width: '50%'
                         }, {
+                            vtype: 'pane',
                             collapsible: false,
                             htmlText: '50%',
                             width: '50%',
                             box: {
+                                vtype: 'box',
                                 orientation: "horizontal",
                                 panes: [{
+                                    vtype: 'pane',
                                     collapsible: false,
                                     htmlText: '50%',
                                     height: '50%'
                                 }, {
+                                    vtype: 'pane',
                                     collapsible: false,
                                     htmlText: '50%',
-                                    height: '50%'
+                                    height: '50%',
+                                    box: {
+                                        vtype: 'box',
+                                        orientation: "horizontal",
+                                        panes: [{
+                                            vtype: 'pane',
+                                            collapsible: false,
+                                            htmlText: '50%',
+                                            height: '50%'
+                                        }, {
+                                            vtype: 'pane',
+                                            collapsible: false,
+                                            htmlText: '50%',
+                                            height: '50%'
+                                        }]
+                                    }
                                 }]
                             }
                         }]
                     }
-                }),
-                dd = new DashboardDesigner({
+                });
+            
+            var dd = new DashboardDesigner({
                     model: dashboardModel
                 });
-        
-            $(document.body).append(dd.$el);
 
             dd.design().then(function(config) {
                 dd.remove();
@@ -201,7 +220,8 @@ require([
 
                 console.log(config);
             });
-
+        
+            $(document.body).append(dd.$el);
         });
        
     });

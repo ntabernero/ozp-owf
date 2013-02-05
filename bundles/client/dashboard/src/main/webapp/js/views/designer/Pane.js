@@ -19,6 +19,7 @@ define([
         };
 
     return View.extend({
+        vtype: 'pane',
 
         className: 'pane',
 
@@ -29,6 +30,10 @@ define([
             tabindex: 0
         },
 
+        views: function () {
+            return (this.options.box || null);
+        },
+
         initialize: function () {
             if(!Box) {
                 Box = require('views/designer/Box');
@@ -36,16 +41,18 @@ define([
             View.prototype.initialize.apply( this, arguments );
         },
 
-        render: function () {
-            var $size = $( '<h3>' + _.escape(this.options.htmlText) + '</h3>' );
-            this.$el.append( $size );
-            this.$el.data( 'view', this );
-            this.initEditable();
+        afterRender: function () {
+            if(!this.options.box) {
+                var $size = $( '<h3>' + _.escape(this.options.htmlText) + '</h3>' );
+                this.$el.append( $size );
+                this.initEditable();
+            }
             return this;
         },
 
-        nest: function (box, options) {
-            this.$el.empty().append( box.render().el );
+        nest: function (options) {
+            this.box = new Box(options);
+            this.$el.empty().append( this.box.render().el );
             this.options.box = options;
             return this;
         },
