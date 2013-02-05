@@ -11,10 +11,6 @@ define([
     'use strict';
 
     return Pane.extend({
-
-        model: null,
-   
-        
         $body: null, //jquery element for the dashboard body
         taskbar: null, //taskbar View
 
