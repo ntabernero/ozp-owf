@@ -7,7 +7,8 @@ require([
     'collections/PreferencesCollection',
     'collections/PeopleCollection',
     'collections/GroupsCollection',
-	'jquery'
+	'jquery',
+    './backbone.declarative.views'
 ], function (PersonalDashboardModel, PersonalDashboardsCollection, Dashboard, 
              StacksCollection, WidgetDefinitionsCollection, PreferencesCollection,
              PeopleCollection, GroupsCollection, $) {
@@ -153,6 +154,56 @@ require([
                 });
             });
         });
-   });
+    });
+
+    $('#design-dashboard').on('click', function() {
+
+        require([
+            'views/designer/Designer'
+        ], function(DashboardDesigner) {
+            
+            var me = this,
+                dashboardModel = new PersonalDashboardModel({
+                    layoutConfig: {
+                        orientation: "vertical",
+                        panes: [{
+                            collapsible: false,
+                            htmlText: '50%',
+                            width: '50%'
+                        }, {
+                            collapsible: false,
+                            htmlText: '50%',
+                            width: '50%',
+                            box: {
+                                orientation: "horizontal",
+                                panes: [{
+                                    collapsible: false,
+                                    htmlText: '50%',
+                                    height: '50%'
+                                }, {
+                                    collapsible: false,
+                                    htmlText: '50%',
+                                    height: '50%'
+                                }]
+                            }
+                        }]
+                    }
+                }),
+                dd = new DashboardDesigner({
+                    model: dashboardModel
+                });
+        
+            $(document.body).append(dd.$el);
+
+            dd.design().then(function(config) {
+                dd.remove();
+                dashboardModel.set( 'layoutConfig', config );
+
+                console.log(config);
+            });
+
+        });
+       
+    });
 
 });

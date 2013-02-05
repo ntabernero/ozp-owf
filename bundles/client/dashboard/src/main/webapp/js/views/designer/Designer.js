@@ -1,14 +1,16 @@
 define([
     'views/View',
     './Box',
-
+    './Pane',
     'jquery',
     'lodash',
     'jqueryui/jquery-ui.custom',
     'jquery-splitter'
 ],
 
-function(View, Box, $, _) {
+function(View, Box, Pane, $, _) {
+
+    'use strict';
 
     var boxTpl = '<div class="box"><div class="pane"></div><div class="pane"></div></div>',
         HIGHLIGHTCLASS = 'highlight',
@@ -67,6 +69,19 @@ function(View, Box, $, _) {
         render: function() {
             this.$el.html(this.template);
             this.$designer = $('#designer');
+            
+            if(this.model) {
+                console.log('render existing dashboard here....', this.model.get('layoutConfig'));
+                var box = new Box({
+                    orientation: 'vertical',
+                    panes: [
+                        { collapsible: false, htmlText: '50%', width: '50%' },
+                        { collapsible: false, htmlText: '50%', width: '50%' }
+                    ]
+                });
+                this.$designer.html(box.render().el);
+            }
+            
             this._initDragAndDrop();
         },
 

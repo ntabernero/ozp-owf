@@ -1,9 +1,11 @@
 define([
+    'require',
     'views/View',
+    'views/designer/Box',
     'jquery',
     'lodash',
     'bootstrap-editable'
-], function (View, $, _) {
+], function (require, View, Box, $, _) {
 
     'use strict';
 
@@ -28,6 +30,9 @@ define([
         },
 
         initialize: function () {
+            if(!Box) {
+                Box = require('views/designer/Box');
+            }
             View.prototype.initialize.apply( this, arguments );
         },
 
