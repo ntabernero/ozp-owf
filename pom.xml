@@ -80,8 +80,8 @@
                             <configuration>
                                 <target>
                                     <chmod perm="u+x">
-                                        <fileset dir="${project.build.directory}/minified-output/themes">
-                                            <include name="*.sh"/>
+                                        <fileset dir="${project.build.directory}/minified-output/">
+                                            <include name="themes/*.sh"/>
                                         </fileset>
                                     </chmod>
                                 </target>
