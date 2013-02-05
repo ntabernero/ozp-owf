@@ -23,7 +23,7 @@ import javax.ws.rs.*
 import javax.ws.rs.core.Response
 import ozone.platform.server.model.DashboardInstance
 
-@Path("/personal-dashboards")
+@Path("/dashboard-instances")
 @Produces("application/json")
 class DashboardInstanceController {
 

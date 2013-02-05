@@ -13,6 +13,7 @@ import ozone.platform.server.model.Group
 import ozone.platform.server.model.Stack
 //import ozone.platform.server.model.PersonalDashboard
 import java.text.SimpleDateFormat
+import ozone.platform.server.model.DashboardTemplate
 
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
@@ -20,12 +21,11 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
     public ObjectMapperProvider() {
         mapper.dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        mapper.addMixInAnnotations(PersonalWidgetDefinition.class, ConnectedPersonalWidgetDefinitionMixIn.class);
-        mapper.addMixInAnnotations(WidgetDefinition.class, ConnectedWidgetDefinitionMixIn.class);
+        mapper.addMixInAnnotations(PersonalWidgetDefinition.class, PersonalWidgetDefinitionMixIn.class);
+        mapper.addMixInAnnotations(WidgetDefinition.class, WidgetDefinitionMixIn.class);
         mapper.addMixInAnnotations(Person.class, ConnectedPersonMixIn.class);
-        mapper.addMixInAnnotations(Dashboard.class, ConnectedDashboardMixIn.class);
-        mapper.addMixInAnnotations(DashboardInstance.class, ConnectedDashboardInstanceMixIn.class);
-        //mapper.addMixInAnnotations(PersonalDashboard.class, ConnectedPersonalDashboardMixIn.class);
+        mapper.addMixInAnnotations(DashboardInstance.class, DashboardInstanceMixIn.class);
+        mapper.addMixInAnnotations(DashboardTemplate.class, DashboardTemplateMixIn.class);
         mapper.addMixInAnnotations(Group.class, DisconnectedGroupMixin.class);
         mapper.addMixInAnnotations(Stack.class, DisconnectedStackMixin.class);
     }

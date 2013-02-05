@@ -5,7 +5,7 @@ import ozone.platform.server.model.WidgetDefinition
 import ozone.platform.server.model.Person
 import com.fasterxml.jackson.annotation.JsonIgnore
 
-interface ConnectedPersonalWidgetDefinitionMixIn {
+interface PersonalWidgetDefinitionMixIn {
     @JsonManagedReference
     WidgetDefinition getWidgetDefinition()
 

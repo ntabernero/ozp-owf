@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference
 import ozone.platform.server.model.PersonalWidgetDefinition
 import com.fasterxml.jackson.annotation.JsonIgnore
 
-public interface ConnectedWidgetDefinitionMixIn {
+public interface WidgetDefinitionMixIn {
     @JsonBackReference
     Set<PersonalWidgetDefinition> getPersonalWidgetDefinitions()
 

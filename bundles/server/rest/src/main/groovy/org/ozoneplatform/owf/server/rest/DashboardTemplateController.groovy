@@ -23,7 +23,7 @@ import javax.ws.rs.*
 import javax.ws.rs.core.Response
 import ozone.platform.server.model.DashboardTemplate
 
-@Path("/group-dashboards")
+@Path("/dashboard-templates")
 @Produces("application/json")
 class DashboardTemplateController {
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference
 import ozone.platform.server.model.Person
 import com.fasterxml.jackson.annotation.JsonProperty
 
-public interface ConnectedDashboardInstanceMixIn {
+public interface DashboardInstanceMixIn extends DashboardMixIn {
 
     @JsonIgnore
     boolean isIsDefault()
