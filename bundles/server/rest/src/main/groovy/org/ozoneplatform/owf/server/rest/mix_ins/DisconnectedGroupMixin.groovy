@@ -22,9 +22,9 @@ import ozone.platform.server.model.*
 class DisconnectedGroupMixin {
     DisconnectedGroupMixin(@JsonProperty("name") String name){}
     @JsonIgnore boolean getActive(){}
-    @JsonProperty boolean isActive(){}
+    @JsonProperty boolean isIsActive(){}
     @JsonIgnore boolean getAutomatic(){}
-    @JsonProperty boolean isAutomatic(){}
+    @JsonProperty boolean isIsAutomatic(){}
     @JsonIgnore Set<WidgetDefinition> widgetDefinitions
     @JsonIgnore Set<Stack> stacks
     @JsonIgnore Set<DashboardTemplate> dashboardTemplates

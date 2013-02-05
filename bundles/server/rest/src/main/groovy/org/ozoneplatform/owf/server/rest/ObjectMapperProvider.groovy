@@ -9,6 +9,8 @@ import ozone.platform.server.model.WidgetDefinition
 import ozone.platform.server.model.Person
 import ozone.platform.server.model.Dashboard
 import ozone.platform.server.model.DashboardInstance
+import ozone.platform.server.model.Group
+import ozone.platform.server.model.Stack
 //import ozone.platform.server.model.PersonalDashboard
 import java.text.SimpleDateFormat
 
@@ -24,8 +26,8 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
         mapper.addMixInAnnotations(Dashboard.class, ConnectedDashboardMixIn.class);
         mapper.addMixInAnnotations(DashboardInstance.class, ConnectedDashboardInstanceMixIn.class);
         //mapper.addMixInAnnotations(PersonalDashboard.class, ConnectedPersonalDashboardMixIn.class);
-        mapper.addMixInAnnotations(Group.class, DisconnectedGroupMixIn.class);
-        mapper.addMixInAnnotations(Stack.class, DisconnectedStackMixIn.class);
+        mapper.addMixInAnnotations(Group.class, DisconnectedGroupMixin.class);
+        mapper.addMixInAnnotations(Stack.class, DisconnectedStackMixin.class);
     }
 
     public ObjectMapper getContext(Class<?> type) { return mapper; }
