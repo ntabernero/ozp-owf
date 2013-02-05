@@ -1,10 +1,10 @@
 define([
-    'backbone'
-], function (Backbone) {
+    'views/View'
+], function (View) {
     
     'use strict';
 
-    return Backbone.View.extend({
+    return View.extend({
 
         model: null,
         tagName: 'iframe',
