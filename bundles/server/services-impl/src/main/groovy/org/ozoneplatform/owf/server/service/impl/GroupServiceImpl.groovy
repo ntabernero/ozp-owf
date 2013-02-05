@@ -19,7 +19,6 @@ package org.ozoneplatform.owf.server.service.impl
 import org.ozoneplatform.owf.server.service.api.GroupService
 import org.ozoneplatform.owf.server.service.api.exception.*
 import ozone.platform.server.model.Group
-import ozone.platform.server.model.GroupDashboard
 
 class GroupServiceImpl implements GroupService {
     
@@ -76,21 +75,6 @@ class GroupServiceImpl implements GroupService {
     void delete(Long id) {
         theList.remove(this.fetch(id));
         return;
-    }
-    
-    List<GroupDashboard> listGroupDashboards(Long id) {
-        def dashList = [];
-        def dash;
-        
-        dash = new GroupDashboard("Dashboard1", "123-4567-1001", 0);
-        dash.id = 1L;
-        dashList.add(dash);
-        
-        dash = new GroupDashboard("Dashboard2", "123-4567-1002", 0);
-        dash.id = 2L;
-        dashList.add(dash);
-        
-        dashList;
     }
     
 }

@@ -22,20 +22,16 @@
     <bean id="groupService" class="org.ozoneplatform.owf.server.service.impl.GroupServiceImpl"/>
     <bean id="personService" class="org.ozoneplatform.owf.server.service.impl.PersonServiceImpl"/>
     <bean id="stackService" class="org.ozoneplatform.owf.server.service.impl.StackServiceImpl"/>
-    <bean id="preferenceService" class="org.ozoneplatform.owf.server.service.impl.PreferenceServiceImpl"/>
     <bean id="personalDashboardService" class="org.ozoneplatform.owf.server.service.impl.DashboardInstanceServiceImpl"/>
     <bean id="groupDashboardService" class="org.ozoneplatform.owf.server.service.impl.DashboardTemplateServiceImpl"/>
-    <bean id="intentService" class="org.ozoneplatform.owf.server.service.impl.IntentServiceImpl"/>
     <bean id="widgetDefinitionService" class="org.ozoneplatform.owf.server.service.impl.WidgetDefinitionServiceImpl"/>
     <bean id="personalWidgetDefinitionService" class="org.ozoneplatform.owf.server.service.impl.PersonalWidgetDefinitionServiceImpl"/>
 
     <service ref="groupService" interface="org.ozoneplatform.owf.server.service.api.GroupService"/>
     <service ref="personService" interface="org.ozoneplatform.owf.server.service.api.PersonService"/>
     <service ref="stackService" interface="org.ozoneplatform.owf.server.service.api.StackService"/>
-    <service ref="preferenceService" interface="org.ozoneplatform.owf.server.service.api.PreferenceService"/>
     <service ref="personalDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardInstanceService"/>
     <service ref="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
-    <service ref="intentService" interface="org.ozoneplatform.owf.server.service.api.IntentService"/>
     <service ref="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService"/>
     <service ref="personalWidgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService"/>
 

@@ -17,7 +17,6 @@
 package org.ozoneplatform.owf.server.service.api
 
 import ozone.platform.server.model.Group
-import ozone.platform.server.model.GroupDashboard
 
 interface GroupService {
     
@@ -26,7 +25,6 @@ interface GroupService {
     Group update(Long id, Group group);
     Group create(Group group);
     void delete(Long id);
-    List<GroupDashboard> listGroupDashboards(Long id);
     
 }
 

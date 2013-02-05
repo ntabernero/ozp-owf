@@ -27,7 +27,7 @@ class DisconnectedGroupMixin {
     @JsonProperty boolean isAutomatic(){}
     @JsonIgnore Set<WidgetDefinition> widgetDefinitions
     @JsonIgnore Set<Stack> stacks
-    @JsonIgnore Set<GroupDashboard> dashboards
+    @JsonIgnore Set<DashboardTemplate> dashboardTemplates
     @JsonIgnore Set<Person> people
 }
 

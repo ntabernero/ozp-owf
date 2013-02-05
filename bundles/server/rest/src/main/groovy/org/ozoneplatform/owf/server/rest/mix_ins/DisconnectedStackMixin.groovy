@@ -21,8 +21,7 @@ import ozone.platform.server.model.*
 
 class DisconnectedStackMixin {
     DisconnectedStackMixin(@JsonProperty("name") String name, @JsonProperty("urlName") String urlName){}
-    @JsonIgnore Set<Group> groups
-    @JsonIgnore Set<GroupDashboard> dashboards
-    @JsonIgnore Set<Person> people
+    @JsonIgnore Set<Principal> principals
+    @JsonIgnore Set<DashboardTemplate> dashboardTemplates
 }
 

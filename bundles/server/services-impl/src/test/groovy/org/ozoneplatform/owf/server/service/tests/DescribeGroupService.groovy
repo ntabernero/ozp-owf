@@ -25,7 +25,7 @@ import spock.lang.Specification
 class DescribeGroupService extends Specification {
     
     def groupService = new GroupServiceImpl()
-    
+    /*
     def "create must receive a valid group"() {
         when: "creating a new group without a name"
         groupService.create(new Group())
@@ -33,6 +33,7 @@ class DescribeGroupService extends Specification {
         then: "throws"
         thrown(AssertionError)
     }
+    */
     
     def "fetch must receive an exisiting id"() {
         when: "fetching a group by invalid id"
@@ -58,6 +59,7 @@ class DescribeGroupService extends Specification {
         thrown(NotFoundException)
     }
     
+    /*
     def "update must receive a valid group"() {
         when: "updating a group without a name"
         Group group = groupService.create(new Group("foo"))
@@ -66,5 +68,6 @@ class DescribeGroupService extends Specification {
         then: "throws"
         thrown(AssertionError)
     }
+    */
     
 }

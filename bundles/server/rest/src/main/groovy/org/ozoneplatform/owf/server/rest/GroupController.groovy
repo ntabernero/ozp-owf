@@ -84,6 +84,6 @@ class GroupController {
     @GET
     @Path("/{id}/group-dashboards")
     Response listGroupDashboards(@PathParam("id") Long id) {
-        Response.ok(groupService.listGroupDashboards(id)).build();
+        Response.ok().build();
     }
 }
