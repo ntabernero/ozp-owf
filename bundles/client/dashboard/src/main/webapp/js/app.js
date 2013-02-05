@@ -87,7 +87,7 @@ require([
             width: 400,
             height: 500,
             zIndex: 2
-        }, {
+        }/*, {
             name: 'Widget Two',
             url: 'widget.html',
             x: 400,
@@ -95,7 +95,7 @@ require([
             width: 200,
             height: 200,
             zIndex: 1
-        }]
+        }*/]
     };
     
     var testDashboard = new PersonalDashboardModel({

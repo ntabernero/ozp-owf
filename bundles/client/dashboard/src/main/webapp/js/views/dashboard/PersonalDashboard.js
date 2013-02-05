@@ -1,8 +1,8 @@
 define([
-    'views/panes/DesktopPane',
+    'views/panes/FitPane',
     'backbone',
     'views/View'
-], function (DesktopPane, Backbone, View) {
+], function (FitPane, Backbone, View) {
     
     'use strict';
 
@@ -14,8 +14,8 @@ define([
             // Get the dashboard.
             
             // Create a desktop pane for it.
-            var desktopPane = new DesktopPane(JSON.parse(this.model.get('layoutConfig')));
-            this.$el.html(desktopPane.render().el);
+            var pane = new FitPane(JSON.parse(this.model.get('layoutConfig')));
+            this.$el.html(pane.render().el);
             
             // Set the browser title to the dashboard name.
             document.title = this.model.get('name');
