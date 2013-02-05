@@ -22,7 +22,7 @@ import java.util.Calendar
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
 import org.ozoneplatform.owf.server.service.impl.PersonServiceImpl
-import ozone.platform.server.model.Person
+import org.ozoneplatform.commons.server.domain.model.Person
 import spock.lang.Specification
 
 class DescribePersonService extends Specification {

@@ -16,7 +16,7 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import ozone.platform.server.model.DashboardTemplate
+import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 
 interface DashboardTemplateService {
     List<DashboardTemplate> list()

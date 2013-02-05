@@ -17,9 +17,9 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.DashboardInstanceService
-import ozone.platform.server.model.Dashboard
-import ozone.platform.server.model.DashboardInstance
-import ozone.platform.server.model.Person
+import org.ozoneplatform.commons.server.domain.model.Dashboard
+import org.ozoneplatform.commons.server.domain.model.DashboardInstance
+import org.ozoneplatform.commons.server.domain.model.Person
 
 class DashboardInstanceServiceImpl implements DashboardInstanceService {
 
@@ -63,7 +63,6 @@ class DashboardInstanceServiceImpl implements DashboardInstanceService {
 
     DashboardInstance createExampleDashboard() {
         DashboardInstance personalDashboard = (DashboardInstance)new Person('user1', 'User One').createDashboardInstance("Dashboard1", 1, )
-        personalDashboard.isDefault = true
         personalDashboard.id = 12345
         personalDashboard
     }

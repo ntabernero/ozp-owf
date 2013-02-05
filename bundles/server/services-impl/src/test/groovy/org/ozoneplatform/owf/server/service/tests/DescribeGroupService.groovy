@@ -19,7 +19,7 @@ package org.ozoneplatform.owf.server.service.tests
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
 import org.ozoneplatform.owf.server.service.impl.GroupServiceImpl
-import ozone.platform.server.model.Group
+import org.ozoneplatform.commons.server.domain.model.Group
 import spock.lang.Specification
 
 class DescribeGroupService extends Specification {

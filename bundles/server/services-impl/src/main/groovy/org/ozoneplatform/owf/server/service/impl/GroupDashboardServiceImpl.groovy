@@ -17,8 +17,8 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.DashboardTemplateService
-import ozone.platform.server.model.Dashboard
-import ozone.platform.server.model.DashboardTemplate
+import org.ozoneplatform.commons.server.domain.model.Dashboard
+import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 
 class DashboardTemplateServiceImpl implements DashboardTemplateService {
 

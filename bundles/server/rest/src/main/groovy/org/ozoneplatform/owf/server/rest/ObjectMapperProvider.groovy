@@ -3,17 +3,17 @@ package org.ozoneplatform.owf.server.rest
 import javax.ws.rs.ext.Provider
 import com.fasterxml.jackson.databind.ObjectMapper
 import javax.ws.rs.ext.ContextResolver
-import ozone.platform.server.model.PersonalWidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
 import org.ozoneplatform.owf.server.rest.mix_ins.*
-import ozone.platform.server.model.WidgetDefinition
-import ozone.platform.server.model.Person
-import ozone.platform.server.model.Dashboard
-import ozone.platform.server.model.DashboardInstance
-import ozone.platform.server.model.Group
-import ozone.platform.server.model.Stack
-//import ozone.platform.server.model.PersonalDashboard
+import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.commons.server.domain.model.Dashboard
+import org.ozoneplatform.commons.server.domain.model.DashboardInstance
+import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.commons.server.domain.model.Stack
+//import org.ozoneplatform.commons.server.domain.model.PersonalDashboard
 import java.text.SimpleDateFormat
-import ozone.platform.server.model.DashboardTemplate
+import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {

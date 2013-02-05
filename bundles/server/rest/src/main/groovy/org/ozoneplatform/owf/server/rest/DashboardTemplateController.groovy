@@ -17,11 +17,11 @@
 package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.owf.server.service.api.DashboardTemplateService
-import ozone.platform.server.model.Dashboard
+import org.ozoneplatform.commons.server.domain.model.Dashboard
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Response
-import ozone.platform.server.model.DashboardTemplate
+import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 
 @Path("/dashboard-templates")
 @Produces("application/json")

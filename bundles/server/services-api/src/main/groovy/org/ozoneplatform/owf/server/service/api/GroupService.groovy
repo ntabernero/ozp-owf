@@ -16,7 +16,7 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import ozone.platform.server.model.Group
+import org.ozoneplatform.commons.server.domain.model.Group
 
 interface GroupService {
     

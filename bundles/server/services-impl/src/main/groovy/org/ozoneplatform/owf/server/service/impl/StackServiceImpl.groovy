@@ -19,7 +19,7 @@ package org.ozoneplatform.owf.server.service.impl
 import org.ozoneplatform.owf.server.service.api.StackService
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
-import ozone.platform.server.model.Stack
+import org.ozoneplatform.commons.server.domain.model.Stack
 
 class StackServiceImpl implements StackService {
     

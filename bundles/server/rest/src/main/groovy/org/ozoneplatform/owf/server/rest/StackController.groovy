@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
 import org.ozoneplatform.owf.server.service.api.StackService
-import ozone.platform.server.model.Stack
+import org.ozoneplatform.commons.server.domain.model.Stack
 
 @Path("/stacks")
 @Produces("application/json")

@@ -17,9 +17,9 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService
-import ozone.platform.server.model.PersonalWidgetDefinition
-import ozone.platform.server.model.WidgetDefinition
-import ozone.platform.server.model.Person
+import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.Person
 
 class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionService {
     @Override

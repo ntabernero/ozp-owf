@@ -18,7 +18,7 @@ package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.GroupService
 import org.ozoneplatform.owf.server.service.api.exception.*
-import ozone.platform.server.model.Group
+import org.ozoneplatform.commons.server.domain.model.Group
 
 class GroupServiceImpl implements GroupService {
     

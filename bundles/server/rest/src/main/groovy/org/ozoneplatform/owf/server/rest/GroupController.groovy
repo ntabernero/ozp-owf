@@ -23,7 +23,7 @@ import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
 import org.ozoneplatform.owf.server.service.api.GroupService
-import ozone.platform.server.model.Group
+import org.ozoneplatform.commons.server.domain.model.Group
 
 @Path("/")
 @Produces("application/json")

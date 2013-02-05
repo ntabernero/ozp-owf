@@ -39,12 +39,6 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.codehaus.jackson</groupId>-->
-            <!--<artifactId>jackson-jaxrs</artifactId>-->
-            <!--<version>1.9.0</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.codehaus.gmaven.runtime</groupId>
             <artifactId>gmaven-runtime-2.0</artifactId>
@@ -112,7 +106,7 @@
                             version=${project.version},
                             org.ozoneplatform.owf.server.service.api.exception;
                             version=${project.version},
-                            ozone.platform.server.model;
+                            org.ozoneplatform.commons.server.domain.model;
                             version=${project.version},*
                         </Import-Package>
                         <Private-Package>org.ozoneplatform.owf.server.rest;org.ozoneplatform.owf.server.rest.exceptionmap;org.ozoneplatform.owf.server.rest.mix_ins</Private-Package>

@@ -90,7 +90,7 @@
                             version=${project.version},
                             org.ozoneplatform.owf.server.service.api.exception;
                             version=${project.version},
-                            ozone.platform.server.model;
+                            org.ozoneplatform.commons.server.domain.model;
                             version=${project.version},*
                         </Import-Package>
                         <Private-Package>org.ozoneplatform.owf.server.service.impl</Private-Package>

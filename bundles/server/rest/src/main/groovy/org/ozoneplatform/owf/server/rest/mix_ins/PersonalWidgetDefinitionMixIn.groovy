@@ -1,8 +1,8 @@
 package org.ozoneplatform.owf.server.rest.mix_ins
 
 import com.fasterxml.jackson.annotation.JsonManagedReference
-import ozone.platform.server.model.WidgetDefinition
-import ozone.platform.server.model.Person
+import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.Person
 import com.fasterxml.jackson.annotation.JsonIgnore
 
 interface PersonalWidgetDefinitionMixIn {
