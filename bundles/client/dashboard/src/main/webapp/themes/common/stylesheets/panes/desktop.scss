@@ -1,3 +1,5 @@
+$desktopTaskbarBottom: 0 !default;
+
 .desktoppane {
     position: relative;
 
@@ -8,5 +10,10 @@
 
         //make space for the taskbar
         bottom: $headerLineHeight;
+    }
+
+    > .taskbar {
+        position: absolute;
+        bottom: $desktopTaskbarBottom;
     }
 }

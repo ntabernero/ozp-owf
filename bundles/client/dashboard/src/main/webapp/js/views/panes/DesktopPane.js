@@ -80,21 +80,6 @@ define([
         launchWidget: function (evt, model) {
             var ww = this.renderWidget(model);
             return ww;
-        },
-
-        changeActivation: function(widget) {
-            var active = widget.get('active');
-
-            if (active) {
-                //deactivate all other widgets
-                this.collection.each(function(widg) {
-                    if (widget !== widg) {
-                        widg.set('active', false);
-                    }
-                });
-            }
         }
-        
     });
-
 });

@@ -9,6 +9,8 @@ define([
         model: null,
         tagName: 'iframe',
 
+        className: 'widgetframe',
+
         attributes: function() {
             var model = this.model;
 
