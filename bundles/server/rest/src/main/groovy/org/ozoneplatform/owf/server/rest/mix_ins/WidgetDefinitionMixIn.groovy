@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference
 import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.ozoneplatform.commons.server.domain.model.Intent
 
 abstract class WidgetDefinitionMixIn {
 
@@ -22,4 +23,10 @@ abstract class WidgetDefinitionMixIn {
 
     @JsonIgnore
     abstract boolean isIsVisibleForLaunch()
+
+    @JsonProperty("sendableIntents")
+    abstract Set<Intent> getMutableSendableIntents()
+
+    @JsonProperty("receivableIntents")
+    abstract Set<Intent> getMutableReceivableIntents()
 }
