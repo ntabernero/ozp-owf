@@ -3,7 +3,8 @@ define([
     'mixins/widgets/WidgetControl',
     'jquery',
     'backbone',
-    'lodash'
+    'lodash',
+    'jqueryui/jquery-ui.custom'
 ], function (View, WidgetControl, $, Backbone, _) {
     'use strict';
  
@@ -15,6 +16,8 @@ define([
      */
     function createTaskbarHeaderClass(SuperClass) {
         return SuperClass.extend(_.extend({}, WidgetControl, {
+            tagName: 'li',
+
             events: function() {
                 return _.extend({}, WidgetControl.events, SuperClass.prototype.events);
             },
@@ -27,6 +30,8 @@ define([
     }   
 
     return View.extend({
+        tagName: 'ol',
+
         className: 'taskbar', 
 
         modelEvents: {
@@ -46,6 +51,10 @@ define([
         },
 
         render: function() {
+            this.$el.sortable({
+                update: _.bind(this.handleReorder, this)
+            });
+
             this.collection.each(_.bind(this.addWidget, this));
             return this;
         },
@@ -95,6 +104,13 @@ define([
                     $header.width($header.width() * ratio);
                 });
             }
+        },
+
+        handleReorder: function(event, ui) {
+            var $item = $(ui.item),
+                header = $item.data('view');
+
+            this.collection.updateIndex(header.model, $item.index());
         }
     });
 });

@@ -1,6 +1,8 @@
 .taskbar {
     width: 100%;
 
+    margin: 0;
+
     > .header {
         width: 20em;
 
@@ -14,6 +16,7 @@
         *display: inline;
         *zoom: 1;
 
+        vertical-align: bottom;
 
         margin: 0 1px;
 
