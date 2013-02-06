@@ -17,7 +17,7 @@
 package org.ozoneplatform.owf.server.rest.mix_ins
 
 import com.fasterxml.jackson.annotation.*
-import ozone.platform.server.model.*
+import org.ozoneplatform.commons.server.domain.model.*
 
 class StackMixin {
     StackMixin(@JsonProperty("name") String name, @JsonProperty("urlName") String urlName){}

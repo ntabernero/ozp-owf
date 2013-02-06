@@ -33,16 +33,16 @@ class GroupServiceImpl implements GroupService {
         group.id = 1L;
         group.displayName = "Administrators";
         group.description = "The administrators group";
-        group.createPreference("fooone", "foo.namespace", "foooneval");
-        group.createPreference("footwo", "foo.namespace", "footwoval");
+        group.setPreference("fooone", "foo.namespace", "foooneval");
+        group.setPreference("footwo", "foo.namespace", "footwoval");
         theList.add(group);
         
         group = new Group("users");
         group.id = 2L;
         group.displayName = "Users";
         group.description = "The users group";
-        group.createPreference("barone", "bar.namespace", "baroneval");
-        group.createPreference("bartwo", "bar.namespace", "bartwoval");
+        group.setPreference("barone", "bar.namespace", "baroneval");
+        group.setPreference("bartwo", "bar.namespace", "bartwoval");
         theList.add(group);
 
     }

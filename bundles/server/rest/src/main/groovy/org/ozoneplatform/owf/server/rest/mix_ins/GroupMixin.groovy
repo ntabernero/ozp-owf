@@ -17,12 +17,12 @@
 package org.ozoneplatform.owf.server.rest.mix_ins
 
 import com.fasterxml.jackson.annotation.*
-import ozone.platform.server.model.*
+import org.ozoneplatform.commons.server.domain.model.*
 
 class GroupMixin {
     GroupMixin(@JsonProperty("name") String name){}
     @JsonIgnore boolean getActive(){}
-    @JsonProperty boolean isIsActive(){}
+    @JsonProperty boolean isIsPermissionsActive(){}
     @JsonIgnore boolean getAutomatic(){}
     @JsonProperty boolean isIsAutomatic(){}
     @JsonIgnore Set<Stack> stacks

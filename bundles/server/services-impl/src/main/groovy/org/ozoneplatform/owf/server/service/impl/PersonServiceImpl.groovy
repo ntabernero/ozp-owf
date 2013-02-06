@@ -17,6 +17,7 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.commons.server.domain.model.Preference
 import org.ozoneplatform.owf.server.service.api.PersonService
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
@@ -26,8 +27,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import org.ozoneplatform.owf.server.service.api.PersonService
 import org.ozoneplatform.owf.server.service.api.exception.*
-import ozone.platform.server.model.Person
-import ozone.platform.server.model.Preference
 
 class PersonServiceImpl implements PersonService {
     
@@ -46,8 +45,8 @@ class PersonServiceImpl implements PersonService {
         person.prevLogin = (Calendar)cal.clone();
         cal.time = fmt.parse("07/14/2012 14:03:31");
         person.lastLogin = (Calendar)cal.clone();
-        person.createPreference("fooone", "foo.namespace", "foooneval");
-        person.createPreference("footwo", "foo.namespace", "footwoval");
+        person.setPreference("fooone", "foo.namespace", "foooneval");
+        person.setPreference("footwo", "foo.namespace", "footwoval");
         theList.add(person);
         
         person = new Person("testUser2", "Test User 2");
@@ -57,7 +56,7 @@ class PersonServiceImpl implements PersonService {
         person.prevLogin = (Calendar)cal.clone();
         cal.time = fmt.parse("11/08/2012 16:58:05");
         person.lastLogin = (Calendar)cal.clone();
-        person.createPreference("bartwo", "bar.namespace", "bartwoval");
+        person.setPreference("bartwo", "bar.namespace", "bartwoval");
         theList.add(person);
         
         person = new Person("testAdmin1", "Test Administrator 1");
@@ -67,7 +66,7 @@ class PersonServiceImpl implements PersonService {
         person.prevLogin = (Calendar)cal.clone();
         cal.time = fmt.parse("09/26/2012 14:03:31");
         person.lastLogin = (Calendar)cal.clone();
-        person.createPreference("bartwo", "bar.namespace", "bartwoval");
+        person.setPreference("bartwo", "bar.namespace", "bartwoval");
         theList.add(person);
 
     }
