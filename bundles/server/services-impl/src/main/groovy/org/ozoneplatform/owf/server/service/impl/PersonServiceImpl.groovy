@@ -24,9 +24,6 @@ import org.ozoneplatform.owf.server.service.api.exception.ValidationException
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import org.ozoneplatform.owf.server.service.api.PersonService
-import org.ozoneplatform.owf.server.service.api.exception.*
 
 class PersonServiceImpl implements PersonService {
     
