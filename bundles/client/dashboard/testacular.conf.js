@@ -36,6 +36,7 @@ files = [
   'target/minified-output/libs/js/json2.js',
   'target/minified-output/libs/js/jquery.js',
   'target/minified-output/libs/js/backbone.js',
+  'target/minified-output/libs/js/backbone.declarative.views.js',
   'target/minified-output/libs/js/expect.js',
   'target/minified-output/libs/js/sinon.js',
   'target/minified-output/libs/patches/**/*.js',

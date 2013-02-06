@@ -27,6 +27,7 @@ require.config({
         jquery: '../libs/js/jquery',
         lodash: '../libs/js/lodash',
         backbone: '../libs/js/backbone',
+        'backbone.declarative.views': '../libs/js/backbone.declarative.views',
         handlebars: '../libs/js/handlebars'
         // modernizr: '../libs/js/modernizr'
         // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
@@ -63,6 +64,10 @@ require.config({
         'jqueryui/jquery-ui.custom': {
             deps: ['jquery'],
             exports: '$'
+        },
+        'backbone.declarative.views': {
+            deps: ['lodash', 'backbone'],
+            exports: 'Backbone'
         }
     }
 
