@@ -105,6 +105,7 @@
                     <artifactId>codenarc-maven-plugin</artifactId>
                     <version>0.18-1</version>
                     <configuration>
+                        <codeNarcVersion>0.18</codeNarcVersion>
                         <sourceDirectory>src/main/groovy</sourceDirectory>
                         <groovyVersion>${groovy.version}</groovyVersion>
                         <maxPriority1Violations>0</maxPriority1Violations>
