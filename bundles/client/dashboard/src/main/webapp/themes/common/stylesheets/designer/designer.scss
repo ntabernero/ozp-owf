@@ -29,7 +29,7 @@
     }
 }
 
-#designer, .working-area {
+.working-area {
     position: absolute;
     bottom:0;
     top:0;
@@ -39,6 +39,11 @@
     height: auto;
     margin: 0 120px 3em 0;
     background: $baseColor;
+
+    > .pane {
+        width: 100%;
+        height: 100%;
+    }
 
     &.highlight, .pane.highlight {
         background-color: $linkColor;
@@ -98,7 +103,7 @@ $dashboard-designer-tabbed-pane-ie78-background-color: #e5f0f7 !default;
 
 $dashboard-designer-fit-pane-image: 'dashboard-designer/fit.png' !default;
 $dashboard-designer-fit-pane-background-color: #9600C8 !default;
-$dashboard-designer-fit-pane-opacity: 0.1 !default;
+$dashboard-designer-fit-pane-opacity: 0.2 !default;
 $dashboard-designer-fit-pane-ie78-background-color: #f4e5f9 !default;
 
 $dashboard-designer-drop-shim-background-color: #000 !default;
@@ -109,38 +114,44 @@ $dashboard-designer-border: 1px solid black !default;
 
 $active-pane-border-color: red !default;
 
-.pane {
-    & > .editable, & > .editable-inline {
-        position: absolute;
-        bottom: 1.25em;
-        left: 40%;
-        width: 4em;
+#dashboard-designer {
+    .pane {
+        & > .editable, & > .editable-inline {
+            position: absolute;
+            bottom: 1.25em;
+            left: 40%;
+            width: 4em;
+        }
+
+        & > .editable {
+            line-height: 2em;
+            font-size: 1.25em;
+            border-radius: 0.5em;
+            text-shadow: $dashboard-designer-pane-dimensions-text-shadow;
+            color: $dashboard-designer-pane-dimensions-color;
+            text-align: center;
+            border: $dashboard-designer-pane-dimensions-border;
+            background: rgba($dashboard-designer-pane-dimensions-background-color, $dashboard-designer-pane-dimensions-opacity);
+        }
+
+        &.tabbed {
+            background-color: $dashboard-designer-tabbed-pane-background-color;
+            background-color: rgba($dashboard-designer-tabbed-pane-background-color, $dashboard-designer-fit-pane-opacity);
+        }
     }
 
-    & > .editable {
-        line-height: 2em;
-        font-size: 1.25em;
-        border-radius: 0.5em;
-        text-shadow: $dashboard-designer-pane-dimensions-text-shadow;
-        color: $dashboard-designer-pane-dimensions-color;
-        text-align: center;
-        border: $dashboard-designer-pane-dimensions-border;
-        background: rgba($dashboard-designer-pane-dimensions-background-color, $dashboard-designer-pane-dimensions-opacity);
-    }
-}
-
-.vbox > .one > .editable, .vbox > .two > .editable {
-    left: 1.25em;
-    bottom: 40%;
-}
-
-.vbox > .one, .vbox > .two {
-    > .editable, > .editable-inline {
+    .vbox > .one > .editable, .vbox > .two > .editable {
         left: 1.25em;
         bottom: 40%;
     }
-} 
 
+    .vbox > .one, .vbox > .two {
+        > .editable, > .editable-inline {
+            left: 1.25em;
+            bottom: 40%;
+        }
+    } 
+}
 
 
 

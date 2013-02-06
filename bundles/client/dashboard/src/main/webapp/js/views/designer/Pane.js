@@ -38,12 +38,16 @@ define([
             if(!Box) {
                 Box = require('views/designer/Box');
             }
+            this.$el.addClass( this.options.paneType );
             View.prototype.initialize.apply( this, arguments );
         },
 
         afterRender: function () {
-            if(!this.options.box) {
-                var $size = $( '<h3>' + _.escape(this.options.htmlText) + '</h3>' );
+            var text = this.options.htmlText;
+
+            // don't allow editing for a single pane
+            if(!this.options.box && text !== '100%') {
+                var $size = $( '<h3>' + _.escape( text ) + '</h3>' );
                 this.$el.append( $size );
                 this.initEditable();
             }

@@ -13,8 +13,7 @@ function(View, Box, Pane, WorkingArea, $, _) {
 
     'use strict';
 
-    var boxTpl = '<div class="box"><div class="pane"></div><div class="pane"></div></div>',
-        HIGHLIGHTCLASS = 'highlight',
+    var HIGHLIGHTCLASS = 'highlight',
         tpl = 
             '<div id="side-panel">' +
                 '<ul class="unstyled">' +
@@ -24,7 +23,7 @@ function(View, Box, Pane, WorkingArea, $, _) {
             '</div>' +
             '<div class="actions">' +
                 '<div class="pull-left">' +
-                    '<button class="btn disabled reset-btn">Reset</button>' +
+                    '<button class="btn enabled reset-btn">Reset</button>' +
                     '<button class="btn disabled lock-btn">Lock</button>' +
                 '</div>' +
                 '<div class="pull-right">' +
@@ -50,14 +49,15 @@ function(View, Box, Pane, WorkingArea, $, _) {
 
         views: function() {
             return {
-                vtype: 'working.area',
+                vtype: 'workingArea',
+                vid: 'workingArea',
                 model: this.model
             };
         },
 
         afterRender: function() {
-            this.$el.append(this.template);
-            this.$designer = this.$el.find('.working-area');
+            this.$el.append(this.template); 
+            this.$designer = this.$el.find( '.working-area' );
 
             this._initDragAndDrop();
         },
@@ -69,13 +69,16 @@ function(View, Box, Pane, WorkingArea, $, _) {
 
         reset: function (evt) {
             var $resetBtn = $(evt.target);
-            if($resetBtn.hasClass('disabled')) {
+            if( $resetBtn.hasClass('disabled') ) {
                 return;
             }
-            $resetBtn.addClass('disabled');
 
-            this.$designer.removeData('layoutConfig');
-            this.box.remove();
+            this.getView( 'workingArea' ).reset();
+            $resetBtn.addClass('disabled');
+        },
+
+        enableReset: function () {
+            this.$el.find('.reset-btn').removeClass('disabled');
         },
 
         save: function () {
@@ -116,8 +119,8 @@ function(View, Box, Pane, WorkingArea, $, _) {
             });
 
             $(document)
-                .on('mouseenter.designerdrag', '#designer, #designer .pane', _.bind(this._onMouseOverPane, this))
-                .on('mouseleave.designerdrag', '#designer, #designer .pane', _.bind(this._onMouseOutPane, this));
+                .on('mouseenter.designerdrag', '.working-area, .working-area .pane', _.bind(this._onMouseOverPane, this))
+                .on('mouseleave.designerdrag', '.working-area, .working-area .pane', _.bind(this._onMouseOutPane, this));
         },
         
         _onDrop: function (evt, ui) {
@@ -138,11 +141,11 @@ function(View, Box, Pane, WorkingArea, $, _) {
                 },
                 options = data.type === 'vertical' ? hBoxOptions : vBoxOptions;
 
-            // can be either working area or a pane
             var view = this._$mouseOverPane.data().view;
             view.nest( options );
 
             this._$mouseOverPane.removeClass( HIGHLIGHTCLASS );
+            this.enableReset();
         },
 
         _onDragStop: function(evt, ui) {

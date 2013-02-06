@@ -9,13 +9,23 @@ define([
     'use strict';
 
     return View.extend({
-        vtype: 'working.area',
+        vtype: 'workingArea',
 
         id: 'designer',
         className: 'working-area',
 
         viewOptions: function () {
-            return this.model && this.model.get('layoutConfig');
+            var layoutConfig = this.model.get('layoutConfig');
+
+            if(!layoutConfig) {
+                layoutConfig = {
+                    vtype: 'pane',
+                    paneType: 'tabbed',
+                    htmlText: '100%'
+                };
+                this.model.set('layoutConfig', layoutConfig);
+            }
+            return layoutConfig;
         },
 
         views: function() {
@@ -23,20 +33,31 @@ define([
         },
 
         initialize: function () {
-            this.$el.data( 'layoutConfig', this.viewOptions() );
+            this.layoutConfig = this.viewOptions();
+
+            this.$el.data( 'layoutConfig', this.layoutConfig );
             View.prototype.initialize.apply( this, arguments );
         },
 
-        nest: function (options) {
-            this.box = new Box(options);
-            this.$el.append( this.box.render().el );
-            this.$el.data( 'layoutConfig', options );
-            return this;
+        getLayoutConfig: function () {
+            return this.layoutConfig;
         },
 
-        remove: function () {
-            this.box && this.box.remove();
-            View.prototype.remove.apply( this, arguments );
+        reset: function () {
+            var pane = this.views[0];
+            var box = pane && pane.views[0];
+
+            // remove sub view if found
+            if( box ) {
+                pane.removeView(box);
+                delete this.layoutConfig.box;
+            }
+            // fall back to DOM retrieval
+            else {
+                pane = this.$el.find('.pane').data('view');
+                box = pane && pane.$el.find('.box');
+                box.remove();
+            }
         }
     });
 

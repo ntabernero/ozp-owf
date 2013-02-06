@@ -140,7 +140,9 @@ require([
            
             cd.create().then(function( dashboardModel ) {
                 var me =this,
-                    dd = new DashboardDesigner();
+                    dd = new DashboardDesigner({
+                        model: dashboardModel
+                    });
 
                 dd.render();
                 $(document.body).append(dd.$el);
@@ -164,49 +166,53 @@ require([
             var me = this,
                 dashboardModel = new PersonalDashboardModel({
                     layoutConfig: {
-                        vtype: 'box',
-                        orientation: "vertical",
-                        panes: [{
-                            vtype: 'pane',
-                            collapsible: false,
-                            htmlText: '50%',
-                            width: '50%'
-                        }, {
-                            vtype: 'pane',
-                            collapsible: false,
-                            htmlText: '50%',
-                            width: '50%',
-                            box: {
-                                vtype: 'box',
-                                orientation: "horizontal",
-                                panes: [{
-                                    vtype: 'pane',
-                                    collapsible: false,
-                                    htmlText: '50%',
-                                    height: '50%'
-                                }, {
-                                    vtype: 'pane',
-                                    collapsible: false,
-                                    htmlText: '50%',
-                                    height: '50%',
-                                    box: {
-                                        vtype: 'box',
-                                        orientation: "horizontal",
-                                        panes: [{
-                                            vtype: 'pane',
-                                            collapsible: false,
-                                            htmlText: '50%',
-                                            height: '50%'
-                                        }, {
-                                            vtype: 'pane',
-                                            collapsible: false,
-                                            htmlText: '50%',
-                                            height: '50%'
-                                        }]
-                                    }
-                                }]
-                            }
-                        }]
+                        vtype: 'pane',
+                        paneType: 'tabbed',
+                        box: {
+                            vtype: 'box',
+                            orientation: "vertical",
+                            panes: [{
+                                vtype: 'pane',
+                                collapsible: false,
+                                htmlText: '50%',
+                                width: '50%'
+                            }, {
+                                vtype: 'pane',
+                                collapsible: false,
+                                htmlText: '50%',
+                                width: '50%',
+                                box: {
+                                    vtype: 'box',
+                                    orientation: "horizontal",
+                                    panes: [{
+                                        vtype: 'pane',
+                                        collapsible: false,
+                                        htmlText: '50%',
+                                        height: '50%'
+                                    }, {
+                                        vtype: 'pane',
+                                        collapsible: false,
+                                        htmlText: '50%',
+                                        height: '50%',
+                                        box: {
+                                            vtype: 'box',
+                                            orientation: "horizontal",
+                                            panes: [{
+                                                vtype: 'pane',
+                                                collapsible: false,
+                                                htmlText: '50%',
+                                                height: '50%'
+                                            }, {
+                                                vtype: 'pane',
+                                                collapsible: false,
+                                                htmlText: '50%',
+                                                height: '50%'
+                                            }]
+                                        }
+                                    }]
+                                }
+                            }]
+                        }
                     }
                 });
             
