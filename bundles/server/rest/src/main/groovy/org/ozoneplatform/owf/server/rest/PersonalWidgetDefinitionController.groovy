@@ -31,10 +31,12 @@ import javax.ws.rs.DELETE
 import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
 import org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService
 import javax.ws.rs.core.Response
+import javax.ws.rs.core.Context
+import javax.ws.rs.core.UriInfo
 
 @Path("/persons/{personId}/widget-defs")
 @Produces("application/json")
-class PersonalWidgetDefinitionController {
+class PersonalWidgetDefinitionController extends OwfRestController {
     PersonalWidgetDefinitionService personalWidgetDefinitionService
     Logger logger = LoggerFactory.getLogger(PersonalWidgetDefinitionController.class)
 
@@ -52,9 +54,11 @@ class PersonalWidgetDefinitionController {
 
     @POST
     @Consumes("application/json")
-    PersonalWidgetDefinition create(@PathParam("personId") String personId, PersonalWidgetDefinition personalWidgetDefinition) {
+    Response create(@PathParam("personId") String personId, PersonalWidgetDefinition personalWidgetDefinition, @Context UriInfo uriInfo) {
         logger.debug "In create() for person $personId"
-        personalWidgetDefinitionService.create(personId, personalWidgetDefinition)
+        personalWidgetDefinition = personalWidgetDefinitionService.create(personId, personalWidgetDefinition)
+        URI personalWidgetDefinitionUri = buildEntityURI(uriInfo, personalWidgetDefinition, "get", personId)
+        Response.created(personalWidgetDefinitionUri).entity(personalWidgetDefinition).build();
     }
 
     @PUT
