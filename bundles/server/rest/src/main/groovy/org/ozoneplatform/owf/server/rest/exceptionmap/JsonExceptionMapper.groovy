@@ -14,9 +14,17 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.service.api.model
+package org.ozoneplatform.owf.server.rest.exceptionmap
 
-abstract class Entity {
-    Long id;
+import groovy.json.JsonException
+import javax.ws.rs.core.Response
+import javax.ws.rs.ext.ExceptionMapper
+import javax.ws.rs.ext.Provider
+
+@Provider
+class JsonExceptionMapper implements ExceptionMapper<JsonException> {
+    @Override
+    Response toResponse(JsonException e) {
+        return Response.status(400).entity(e.message).build()
+    }
 }
-

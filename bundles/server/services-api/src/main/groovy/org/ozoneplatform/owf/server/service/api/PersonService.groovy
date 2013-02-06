@@ -16,9 +16,9 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.owf.server.service.api.model.Person
+import org.ozoneplatform.commons.server.domain.model.Person
 
-interface PersonService {
+interface PersonService extends PrincipalService {
     
     List<Person> list();
     Person fetch(Long id);

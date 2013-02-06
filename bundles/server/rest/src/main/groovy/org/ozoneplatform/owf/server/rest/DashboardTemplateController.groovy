@@ -16,18 +16,18 @@
 
 package org.ozoneplatform.owf.server.rest
 
-import org.ozoneplatform.owf.server.service.api.GroupDashboardService
-import org.ozoneplatform.owf.server.service.api.model.Dashboard
+import org.ozoneplatform.owf.server.service.api.DashboardTemplateService
+import org.ozoneplatform.commons.server.domain.model.Dashboard
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Response
-import org.ozoneplatform.owf.server.service.api.model.GroupDashboard
+import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 
-@Path("/group-dashboards")
+@Path("/dashboard-templates")
 @Produces("application/json")
-class GroupDashboardController {
+class DashboardTemplateController {
 
-    GroupDashboardService groupDashboardService
+    DashboardTemplateService groupDashboardService
 
     @GET
     List<Dashboard> list() {
@@ -36,7 +36,7 @@ class GroupDashboardController {
 
     @POST
     @Consumes("application/json")
-    Response create(GroupDashboard dashboardInfo) {
+    Response create(DashboardTemplate dashboardInfo) {
         println "In create(): ${dashboardInfo?.guid}"
         groupDashboardService.create(dashboardInfo)
         Response.ok(dashboardInfo).build()
@@ -51,7 +51,7 @@ class GroupDashboardController {
 
     @PUT
     @Consumes("application/json")
-    Response update(GroupDashboard dashboardInfo) {
+    Response update(DashboardTemplate dashboardInfo) {
         groupDashboardService.update(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }

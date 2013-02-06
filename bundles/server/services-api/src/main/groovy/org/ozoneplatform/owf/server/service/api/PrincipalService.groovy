@@ -14,13 +14,13 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.service.api.model
+package org.ozoneplatform.owf.server.service.api
 
-class Preference extends Entity {
-    
-    String namespace;
-    String path;
-    String value;
-    
+import org.ozoneplatform.commons.server.domain.model.Preference
+
+interface PrincipalService {
+    Set<Preference> listPreferences(Long id);
+    Set<Preference> listPreferences(Long id, String namespace);
+    Preference fetchPreference(Long id, String namespace, String name);
 }
 

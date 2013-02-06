@@ -14,14 +14,21 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.service.api.model
+package org.ozoneplatform.owf.server.service.api
 
-class PersonalDashboard extends Dashboard {
+import org.ozoneplatform.commons.server.domain.model.DashboardInstance
 
-    boolean defaultDashboard = false
+interface DashboardInstanceService {
 
-    boolean isDefaultDashboard() {
-        return defaultDashboard
-    }
+    List<DashboardInstance> list()
 
+    DashboardInstance create(DashboardInstance dashboardInfo)
+
+    DashboardInstance get(String id)
+
+    void update(DashboardInstance dashboardInfo)
+
+    DashboardInstance delete(String id)
+
+    DashboardInstance restore(String id)
 }

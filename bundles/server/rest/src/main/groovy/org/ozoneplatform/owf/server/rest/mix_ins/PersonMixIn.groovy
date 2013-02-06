@@ -14,18 +14,16 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.service.api
+package org.ozoneplatform.owf.server.rest.mix_ins
 
-import org.ozoneplatform.owf.server.service.api.model.Intent
+import com.fasterxml.jackson.annotation.*
+import org.ozoneplatform.commons.server.domain.model.*
 
-interface IntentService {
-    
-    List<Intent> list();
-    List<Intent> list(String action);
-    List<Intent> list(String action, String dataType);
-    Intent fetch(Long id);
-    Intent update(Long id, Intent intent);
-    Intent create(Intent intent);
-    void delete(Long id);
-    
+abstract class PersonMixIn {
+    PersonMixIn(@JsonProperty("username") String username, @JsonProperty("fullName") String fullName) {}
+    @JsonIgnore abstract Iterable<Group> getGroups()
+    @JsonIgnore abstract Iterable<DashboardInstance> getDashboards()
+    @JsonIgnore abstract Iterable<PersonalWidgetDefinition> getPersonalWidgetDefinitions()
+    @JsonIgnore abstract Iterable<Stack> getStacks()
 }
+

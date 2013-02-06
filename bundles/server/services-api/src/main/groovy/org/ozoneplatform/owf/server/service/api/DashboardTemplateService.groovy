@@ -14,7 +14,21 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.service.api.model
+package org.ozoneplatform.owf.server.service.api
 
-class GroupDashboard extends Dashboard {
+import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
+
+interface DashboardTemplateService {
+    List<DashboardTemplate> list()
+
+    DashboardTemplate create(DashboardTemplate dashboardInfo)
+
+    DashboardTemplate get(String id)
+
+    void update(DashboardTemplate dashboardInfo)
+
+    DashboardTemplate delete(String id)
+
+    DashboardTemplate copy(String id)
+
 }

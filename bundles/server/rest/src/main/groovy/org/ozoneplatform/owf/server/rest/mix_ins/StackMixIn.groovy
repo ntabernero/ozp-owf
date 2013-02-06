@@ -14,20 +14,13 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.service.api
+package org.ozoneplatform.owf.server.rest.mix_ins
 
-import org.ozoneplatform.owf.server.service.api.model.Preference
+import com.fasterxml.jackson.annotation.*
+import org.ozoneplatform.commons.server.domain.model.*
 
-interface PreferenceService {
-    
-    List<Preference> list();
-    List<Preference> list(String namespace);
-    Preference fetch(String namespace, String path);
-    void delete(String namespace);
-    void delete(String namespace, String path);
-    Preference create(String namespace, String path, Preference preference);
-    Preference update(String namespace, String path, Preference preference);
-    boolean exists(String namespace, String path);
-    
+abstract class StackMixIn {
+    StackMixIn(@JsonProperty("name") String name, @JsonProperty("urlName") String urlName){}
+    @JsonIgnore abstract Iterable<DashboardTemplate> getDashboardTemplates()
 }
 

@@ -16,27 +16,27 @@
 
 package org.ozoneplatform.owf.server.rest
 
-import org.ozoneplatform.owf.server.service.api.PersonalDashboardService
-import org.ozoneplatform.owf.server.service.api.model.Dashboard
+import org.ozoneplatform.owf.server.service.api.DashboardInstanceService
+import org.ozoneplatform.commons.server.domain.model.Dashboard
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Response
-import org.ozoneplatform.owf.server.service.api.model.PersonalDashboard
+import org.ozoneplatform.commons.server.domain.model.DashboardInstance
 
-@Path("/personal-dashboards")
+@Path("/dashboard-instances")
 @Produces("application/json")
-class PersonalDashboardController {
+class DashboardInstanceController {
 
-    PersonalDashboardService personalDashboardService
+    DashboardInstanceService personalDashboardService
 
     @GET
-    List<PersonalDashboard> list() {
+    List<DashboardInstance> list() {
         personalDashboardService.list()
     }
 
     @POST
     @Consumes("application/json")
-    Response create(PersonalDashboard dashboardInfo) {
+    Response create(DashboardInstance dashboardInfo) {
         println "In create(): ${dashboardInfo?.guid}"
         personalDashboardService.create(dashboardInfo)
         Response.ok(dashboardInfo).build()
@@ -44,14 +44,14 @@ class PersonalDashboardController {
 
     @GET
     @Path("/{id}")
-    PersonalDashboard get(@PathParam("id") String id) {
+    DashboardInstance get(@PathParam("id") String id) {
         println "In get(): $id"
         personalDashboardService.get(id)
     }
 
     @PUT
     @Consumes("application/json")
-    Response update(PersonalDashboard dashboardInfo) {
+    Response update(DashboardInstance dashboardInfo) {
         personalDashboardService.update(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }

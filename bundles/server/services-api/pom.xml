@@ -13,6 +13,20 @@
     <packaging>bundle</packaging>
 
     <name>Ozone Platform :: OWF Server Bundles :: OWF Services API</name>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.ozoneplatform.commons.bundles</groupId>
+            <artifactId>domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -43,8 +57,6 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Export-Package>
                             org.ozoneplatform.owf.server.service.api;
-                            version=${project.version},
-                            org.ozoneplatform.owf.server.service.api.model;
                             version=${project.version},
                             org.ozoneplatform.owf.server.service.api.exception;
                             version=${project.version}

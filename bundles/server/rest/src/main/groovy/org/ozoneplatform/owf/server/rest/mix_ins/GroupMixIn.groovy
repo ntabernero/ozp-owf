@@ -14,22 +14,18 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.service.api
+package org.ozoneplatform.owf.server.rest.mix_ins
 
-import org.ozoneplatform.owf.server.service.api.model.Dashboard
-import org.ozoneplatform.owf.server.service.api.model.GroupDashboard
+import com.fasterxml.jackson.annotation.*
+import org.ozoneplatform.commons.server.domain.model.*
 
-interface GroupDashboardService {
-    List<GroupDashboard> list()
-
-    GroupDashboard create(GroupDashboard dashboardInfo)
-
-    GroupDashboard get(String id)
-
-    void update(GroupDashboard dashboardInfo)
-
-    GroupDashboard delete(String id)
-
-    GroupDashboard copy(String id)
-
+abstract class GroupMixIn {
+    GroupMixIn(@JsonProperty("name") String name) {}
+    @JsonIgnore abstract boolean getActive()
+    @JsonProperty abstract boolean isIsPermissionsActive()
+    @JsonIgnore abstract boolean getAutomatic()
+    @JsonProperty abstract boolean isIsAutomatic()
+    @JsonIgnore abstract Iterable<Stack> getStacks()
+    @JsonIgnore abstract Iterable<Person> getPersons()
 }
+
