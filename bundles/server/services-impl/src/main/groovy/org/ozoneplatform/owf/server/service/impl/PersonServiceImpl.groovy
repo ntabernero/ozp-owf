@@ -23,6 +23,11 @@ import org.ozoneplatform.owf.server.service.api.exception.ValidationException
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.util.Calendar
+import org.ozoneplatform.owf.server.service.api.PersonService
+import org.ozoneplatform.owf.server.service.api.exception.*
+import ozone.platform.server.model.Person
+import ozone.platform.server.model.Preference
 
 class PersonServiceImpl implements PersonService {
     
@@ -41,6 +46,8 @@ class PersonServiceImpl implements PersonService {
         person.prevLogin = (Calendar)cal.clone();
         cal.time = fmt.parse("07/14/2012 14:03:31");
         person.lastLogin = (Calendar)cal.clone();
+        person.createPreference("fooone", "foo.namespace", "foooneval");
+        person.createPreference("footwo", "foo.namespace", "footwoval");
         theList.add(person);
         
         person = new Person("testUser2", "Test User 2");
@@ -50,6 +57,7 @@ class PersonServiceImpl implements PersonService {
         person.prevLogin = (Calendar)cal.clone();
         cal.time = fmt.parse("11/08/2012 16:58:05");
         person.lastLogin = (Calendar)cal.clone();
+        person.createPreference("bartwo", "bar.namespace", "bartwoval");
         theList.add(person);
         
         person = new Person("testAdmin1", "Test Administrator 1");
@@ -59,6 +67,7 @@ class PersonServiceImpl implements PersonService {
         person.prevLogin = (Calendar)cal.clone();
         cal.time = fmt.parse("09/26/2012 14:03:31");
         person.lastLogin = (Calendar)cal.clone();
+        person.createPreference("bartwo", "bar.namespace", "bartwoval");
         theList.add(person);
 
     }
@@ -108,6 +117,21 @@ class PersonServiceImpl implements PersonService {
             throw new ValidationException("Full Name is required");
         }
         return;
+    }
+    
+    Set<Preference> listPreferences(Long id) {
+        Person thePerson = this.fetch(id);
+        return thePerson.preferences;
+    }
+    
+    Set<Preference> listPreferences(Long id, String namespace) {
+        Person thePerson = this.fetch(id);
+        return thePerson.preferences.findAll{ it.namespace == namespace; };
+    }
+    
+    Preference fetchPreference(Long id, String namespace, String name) {
+        Person thePerson = this.fetch(id);
+        return thePerson.preferences.find{ it.namespace == namespace && it.name == name; };
     }
     
 }

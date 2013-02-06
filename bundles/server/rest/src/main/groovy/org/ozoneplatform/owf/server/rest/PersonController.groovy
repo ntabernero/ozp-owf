@@ -87,5 +87,23 @@ class PersonController {
     Response listWidgets(@PathParam("id") Long id) {
         Response.ok().build();
     }
+    
+    @GET
+    @Path("/{id}/preferences")
+    Response listGroupPreferences(@PathParam("id") Long id) {
+        Response.ok(personService.listPreferences(id)).build();
+    }
+    
+    @GET
+    @Path("/{id}/preferences/{namespace}")
+    Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace) {
+        Response.ok(personService.listPreferences(id, namespace)).build();
+    }
+    
+    @GET
+    @Path("/{id}/preferences/{namespace}/{name}")
+    Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace, @PathParam("name") String name) {
+        Response.ok(personService.fetchPreference(id, namespace, name)).build();
+    }
 
 }

@@ -23,11 +23,11 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
         mapper.dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         mapper.addMixInAnnotations(PersonalWidgetDefinition.class, PersonalWidgetDefinitionMixIn.class);
         mapper.addMixInAnnotations(WidgetDefinition.class, WidgetDefinitionMixIn.class);
-        mapper.addMixInAnnotations(Person.class, ConnectedPersonMixIn.class);
+        mapper.addMixInAnnotations(Person.class, PersonMixin.class);
         mapper.addMixInAnnotations(DashboardInstance.class, DashboardInstanceMixIn.class);
         mapper.addMixInAnnotations(DashboardTemplate.class, DashboardTemplateMixIn.class);
-        mapper.addMixInAnnotations(Group.class, DisconnectedGroupMixin.class);
-        mapper.addMixInAnnotations(Stack.class, DisconnectedStackMixin.class);
+        mapper.addMixInAnnotations(Group.class, GroupMixin.class);
+        mapper.addMixInAnnotations(Stack.class, StackMixin.class);
     }
 
     public ObjectMapper getContext(Class<?> type) { return mapper; }

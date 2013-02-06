@@ -14,21 +14,18 @@
    limitations under the License.
 */
 
-package org.ozoneplatform.owf.server.service.api
+package org.ozoneplatform.owf.server.rest.mix_ins
 
-import org.ozoneplatform.commons.server.domain.model.Person
-import org.ozoneplatform.commons.server.domain.model.Preference
+import com.fasterxml.jackson.annotation.*
+import ozone.platform.server.model.*
 
-interface PersonService {
-    
-    List<Person> list();
-    Person fetch(Long id);
-    Person create(Person person);
-    Person update(Long id, Person person);
-    void delete(Long id);
-    Set<Preference> listPreferences(Long id);
-    Set<Preference> listPreferences(Long id, String namespace);
-    Preference fetchPreference(Long id, String namespace, String name);
-    
+class GroupMixin {
+    GroupMixin(@JsonProperty("name") String name){}
+    @JsonIgnore boolean getActive(){}
+    @JsonProperty boolean isIsActive(){}
+    @JsonIgnore boolean getAutomatic(){}
+    @JsonProperty boolean isIsAutomatic(){}
+    @JsonIgnore Set<Stack> stacks
+    @JsonIgnore Set<Person> people
 }
 
