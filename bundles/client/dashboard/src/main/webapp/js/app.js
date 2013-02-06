@@ -95,9 +95,10 @@ require([
     
     // Create a test dashboard.
     var layout = {
+        paneType: 'tabbedpane',
         widgets: [{
             name: 'Widget One',
-            url: 'widgets.html',
+            url: 'widget.html',
             x: 50,
             y: 50,
             width: 400,

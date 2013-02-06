@@ -1,3 +1,18 @@
+/*
+ * Copyright 2013 Next Century Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 var initialWidgetDefinitions = [
     {
         guid: "eb5435cf-4021-4f2a-ba69-dde451d12551",
@@ -180,8 +195,8 @@ var initialDashboards = [
         description: '',
         layoutConfig: "{\"defaultSettings\":{\"widgetStates\":{\"eb5435cf-4021-4f2a-ba69-dde451d12551\":{\"x\":549,\"y\":7,\"height\":250,\"width\":295,\"timestamp\":1359571762980},\"ec5435cf-4021-4f2a-ba69-dde451d12551\":{\"x\":4,\"y\":5,\"height\":383,\"width\":540,\"timestamp\":1359571762981}}}," +
                 "\"widgets\":[" +
-                    "{\"universalName\":null,\"widgetGuid\":\"eb5435cf-4021-4f2a-ba69-dde451d12551\",\"uniqueId\":\"f25ac11a-8401-4ec3-abd4-7ed5d66423d2\",\"dashboardGuid\":\"dba76cba-52b1-4da0-82c5-5a066f6720e7\",\"paneGuid\":\"e4894cef-e085-3903-903b-f2a509e6c224\",\"name\":\"Channel Shouter\",\"active\":false,\"x\":549,\"y\":7,\"minimized\":false,\"maximized\":false,\"pinned\":false,\"collapsed\":false,\"columnPos\":0,\"buttonId\":null,\"buttonOpened\":false,\"region\":\"none\",\"statePosition\":2,\"intentConfig\":null,\"launchData\":null,\"singleton\":false,\"floatingWidget\":false,\"background\":false,\"zIndex\":19000,\"height\":250,\"width\":295}," +
-                    "{\"universalName\":null,\"widgetGuid\":\"ec5435cf-4021-4f2a-ba69-dde451d12551\",\"uniqueId\":\"9c30452d-5f38-4d20-8972-6f9fc3232d44\",\"dashboardGuid\":\"dba76cba-52b1-4da0-82c5-5a066f6720e7\",\"paneGuid\":\"e4894cef-e085-3903-903b-f2a509e6c224\",\"name\":\"Channel Listener\",\"active\":true,\"x\":4,\"y\":5,\"minimized\":false,\"maximized\":false,\"pinned\":false,\"collapsed\":false,\"columnPos\":0,\"buttonId\":null,\"buttonOpened\":false,\"region\":\"none\",\"statePosition\":1,\"intentConfig\":null,\"launchData\":null,\"singleton\":false,\"floatingWidget\":false,\"background\":false,\"zIndex\":19010,\"height\":383,\"width\":540}" +
+                "{\"universalName\":null,\"widgetGuid\":\"eb5435cf-4021-4f2a-ba69-dde451d12551\",\"uniqueId\":\"f25ac11a-8401-4ec3-abd4-7ed5d66423d2\",\"dashboardGuid\":\"dba76cba-52b1-4da0-82c5-5a066f6720e7\",\"paneGuid\":\"e4894cef-e085-3903-903b-f2a509e6c224\",\"name\":\"Channel Shouter\",\"active\":false,\"x\":549,\"y\":7,\"minimized\":false,\"maximized\":false,\"pinned\":false,\"collapsed\":false,\"columnPos\":0,\"buttonId\":null,\"buttonOpened\":false,\"region\":\"none\",\"statePosition\":2,\"intentConfig\":null,\"launchData\":null,\"singleton\":false,\"floatingWidget\":false,\"background\":false,\"zIndex\":19000,\"height\":250,\"width\":295}," +
+                "{\"universalName\":null,\"widgetGuid\":\"ec5435cf-4021-4f2a-ba69-dde451d12551\",\"uniqueId\":\"9c30452d-5f38-4d20-8972-6f9fc3232d44\",\"dashboardGuid\":\"dba76cba-52b1-4da0-82c5-5a066f6720e7\",\"paneGuid\":\"e4894cef-e085-3903-903b-f2a509e6c224\",\"name\":\"Channel Listener\",\"active\":true,\"x\":4,\"y\":5,\"minimized\":false,\"maximized\":false,\"pinned\":false,\"collapsed\":false,\"columnPos\":0,\"buttonId\":null,\"buttonOpened\":false,\"region\":\"none\",\"statePosition\":1,\"intentConfig\":null,\"launchData\":null,\"singleton\":false,\"floatingWidget\":false,\"background\":false,\"zIndex\":19010,\"height\":383,\"width\":540}" +
                 "],\"height\":\"100%\",\"items\":[],\"xtype\":\"desktoppane\",\"flex\":1,\"paneType\":\"desktoppane\"}",
         locked: false,
         defaultDashboard: false
