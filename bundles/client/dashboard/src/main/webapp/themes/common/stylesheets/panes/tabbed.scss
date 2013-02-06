@@ -1,0 +1,26 @@
+.tabbedpane {
+    position: relative;
+
+    > .taskbar {
+    }
+
+    > .body {
+        position: absolute;
+        width: 100%;
+
+        top: $headerLineHeight;
+        bottom: 0;
+
+        > iframe {
+            position: absolute;
+            z-index: 0;
+
+            height: 100%;
+            width: 100%;
+
+            &.active {
+                z-index: 1;
+            }
+        }
+    }
+}

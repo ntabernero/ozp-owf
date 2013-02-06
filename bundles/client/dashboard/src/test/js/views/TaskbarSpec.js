@@ -16,9 +16,10 @@
 
 define([
     'views/Taskbar',
+    'views/widgets/Header',
     'collections/WidgetStatesCollection',
     'models/WidgetStateModel'
-], function(Taskbar, WidgetStatesCollection, WidgetStateModel) {
+], function(Taskbar, Header, WidgetStatesCollection, WidgetStateModel) {
     describe('Taskbar', function() {
         var taskbar, collection,
             widget3 = {
@@ -63,7 +64,8 @@ define([
             }]);
 
             taskbar = new Taskbar({
-                collection: collection
+                collection: collection,
+                HeaderClass: Header
             }).render();
 
             done();
@@ -135,6 +137,24 @@ define([
             });
 
             expect(taskbar.$el.width()).to.equal(contentWidth);
+        });
+
+        it('uses the provided Header constructor to create headers', function() {
+            var fn = sinon.spy();
+
+            var MyHeader = Header.extend({
+                initialize: function() {
+                    Header.prototype.initialize.apply(this, arguments);
+                    fn();
+                }
+            });
+
+            var taskbar = new Taskbar({
+                collection: collection,
+                HeaderClass: MyHeader
+            }).render();
+
+            expect(fn.called).to.be.ok();
         });
     });
 });

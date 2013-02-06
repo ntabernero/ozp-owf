@@ -1,27 +1,37 @@
 define([
     'views/View',
-    'views/widgets/WindowHeader',
     'mixins/widgets/WidgetControl',
     'jquery',
     'backbone',
-    'lodash'
-], function (View, WindowHeader, WidgetControl, $, Backbone, _) {
+    'lodash',
+    'jqueryui/jquery-ui.custom'
+], function (View, WidgetControl, $, Backbone, _) {
     'use strict';
-    
-    //subclass of header with extra logic 
-    //for being in the taskbar
-    var TaskbarHeader = WindowHeader.extend(_.extend({}, WidgetControl, {
-        events: function() {
-            return _.extend({}, WidgetControl.events, WindowHeader.prototype.events);
-        },
+ 
+    /**
+     * Creates a subclass of a Header class which has extra logic.
+     * @param SuperClass The constructor for the immediate superclass
+     * of the class to create.  Should Header or a subclass thereof.
+     * @return The constructor for the new class
+     */
+    function createTaskbarHeaderClass(SuperClass) {
+        return SuperClass.extend(_.extend({}, WidgetControl, {
+            tagName: 'li',
 
-        initialize: function() {
-            WindowHeader.prototype.initialize.apply(this, arguments);
-            WidgetControl.initialize.apply(this, arguments);
-        }
-    }));
+            events: function() {
+                return _.extend({}, WidgetControl.events, SuperClass.prototype.events);
+            },
+
+            initialize: function() {
+                SuperClass.prototype.initialize.apply(this, arguments);
+                WidgetControl.initialize.apply(this, arguments);
+            }
+        }));
+    }   
 
     return View.extend({
+        tagName: 'ol',
+
         className: 'taskbar', 
 
         modelEvents: {
@@ -33,18 +43,24 @@ define([
 
             this.collection = options.collection;
 
+            this.TaskbarHeader = createTaskbarHeaderClass(options.HeaderClass);
+
             //TODO: This is temporary, take it out once dashboards
             //have code to call pane resize
             $(window).on('resize', _.bind(this.resize, this));
         },
 
         render: function() {
+            this.$el.sortable({
+                update: _.bind(this.handleReorder, this)
+            });
+
             this.collection.each(_.bind(this.addWidget, this));
             return this;
         },
 
         addWidget: function(widget) {
-            var header = new TaskbarHeader({
+            var header = new this.TaskbarHeader({
                 model: widget
             });
 
@@ -88,6 +104,13 @@ define([
                     $header.width($header.width() * ratio);
                 });
             }
+        },
+
+        handleReorder: function(event, ui) {
+            var $item = $(ui.item),
+                header = $item.data('view');
+
+            this.collection.updateIndex(header.model, $item.index());
         }
     });
 });
