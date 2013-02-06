@@ -19,13 +19,13 @@ package org.ozoneplatform.owf.server.rest.mix_ins
 import com.fasterxml.jackson.annotation.*
 import org.ozoneplatform.commons.server.domain.model.*
 
-class GroupMixin {
-    GroupMixin(@JsonProperty("name") String name){}
-    @JsonIgnore boolean getActive(){}
-    @JsonProperty boolean isIsPermissionsActive(){}
-    @JsonIgnore boolean getAutomatic(){}
-    @JsonProperty boolean isIsAutomatic(){}
-    @JsonIgnore Iterable<Stack> getStacks(){}
-    @JsonIgnore Iterable<Person> getPersons(){}
+abstract class GroupMixIn {
+    GroupMixIn(@JsonProperty("name") String name) {}
+    @JsonIgnore abstract boolean getActive()
+    @JsonProperty abstract boolean isIsPermissionsActive()
+    @JsonIgnore abstract boolean getAutomatic()
+    @JsonProperty abstract boolean isIsAutomatic()
+    @JsonIgnore abstract Iterable<Stack> getStacks()
+    @JsonIgnore abstract Iterable<Person> getPersons()
 }
 

@@ -7,7 +7,7 @@ import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
 import org.ozoneplatform.owf.server.rest.mix_ins.*
 import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
 import org.ozoneplatform.commons.server.domain.model.Person
-import org.ozoneplatform.commons.server.domain.model.Dashboard
+
 import org.ozoneplatform.commons.server.domain.model.DashboardInstance
 import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Stack
@@ -23,11 +23,11 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
         mapper.dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         mapper.addMixInAnnotations(PersonalWidgetDefinition.class, PersonalWidgetDefinitionMixIn.class);
         mapper.addMixInAnnotations(WidgetDefinition.class, WidgetDefinitionMixIn.class);
-        mapper.addMixInAnnotations(Person.class, PersonMixin.class);
+        mapper.addMixInAnnotations(Person.class, PersonMixIn.class);
         mapper.addMixInAnnotations(DashboardInstance.class, DashboardInstanceMixIn.class);
         mapper.addMixInAnnotations(DashboardTemplate.class, DashboardTemplateMixIn.class);
-        mapper.addMixInAnnotations(Group.class, GroupMixin.class);
-        mapper.addMixInAnnotations(Stack.class, StackMixin.class);
+        mapper.addMixInAnnotations(Group.class, GroupMixIn.class);
+        mapper.addMixInAnnotations(Stack.class, StackMixIn.class);
     }
 
     public ObjectMapper getContext(Class<?> type) { return mapper; }

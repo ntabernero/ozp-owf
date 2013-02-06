@@ -19,11 +19,8 @@ package org.ozoneplatform.owf.server.rest.mix_ins
 import com.fasterxml.jackson.annotation.*
 import org.ozoneplatform.commons.server.domain.model.*
 
-class PersonMixin {
-    PersonMixin(@JsonProperty("username") String username, @JsonProperty("fullName") String fullName){}
-    @JsonIgnore Iterable<Group> getGroups(){}
-    @JsonIgnore Iterable<DashboardInstance> getDashboards(){}
-    @JsonIgnore Iterable<PersonalWidgetDefinition> getPersonalWidgetDefinitions(){}
-    @JsonIgnore Iterable<Stack> getStacks(){}
+abstract class StackMixIn {
+    StackMixIn(@JsonProperty("name") String name, @JsonProperty("urlName") String urlName){}
+    @JsonIgnore abstract Iterable<DashboardTemplate> getDashboardTemplates()
 }
 
