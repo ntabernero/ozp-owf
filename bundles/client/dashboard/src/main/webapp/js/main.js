@@ -13,7 +13,9 @@ require.config({
         backbone: '../libs/js/backbone',
         handlebars: '../libs/js/handlebars',
         'jquery-splitter': '../libs/js/jquery-splitter',
-        'bootstrap-editable': '../libs/js/bootstrap-editable'
+        'bootstrap-editable': '../libs/js/bootstrap-editable',
+        'backbone.declarative.views': '../libs/js/backbone.declarative.views'
+
         // modernizr: '../libs/js/modernizr'
         // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
         // hbs: 'js/handlebars/handlebars-plugin-0.2.1',
@@ -31,6 +33,10 @@ require.config({
         },
         backbone: {
             deps: ['lodash', 'jquery'],
+            exports: 'Backbone'
+        },
+        'backbone.declarative.views': {
+            deps: ['lodash', 'backbone'],
             exports: 'Backbone'
         },
 

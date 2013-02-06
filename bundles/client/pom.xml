@@ -147,6 +147,15 @@
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.vendor</groupId>
+                                        <artifactId>backbone.declarative.views</artifactId>
+                                        <version>0.2</version>
+                                        <type>zip</type>
+                                        <classifier>js</classifier>
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
+                                    </artifactItem>
+                                    <artifactItem>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>require</artifactId>
                                         <version>2.1.1</version>
                                         <type>zip</type>

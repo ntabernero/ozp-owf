@@ -166,44 +166,44 @@ require([
             var me = this,
                 dashboardModel = new PersonalDashboardModel({
                     layoutConfig: {
-                        vtype: 'pane',
+                        vtype: 'designerpane',
                         paneType: 'tabbed',
                         box: {
-                            vtype: 'box',
+                            vtype: 'designerbox',
                             orientation: "vertical",
                             panes: [{
-                                vtype: 'pane',
+                                vtype: 'designerpane',
                                 collapsible: false,
                                 htmlText: '50%',
                                 width: '50%'
                             }, {
-                                vtype: 'pane',
+                                vtype: 'designerpane',
                                 collapsible: false,
                                 htmlText: '50%',
                                 width: '50%',
                                 box: {
-                                    vtype: 'box',
+                                    vtype: 'designerbox',
                                     orientation: "horizontal",
                                     panes: [{
-                                        vtype: 'pane',
+                                        vtype: 'designerpane',
                                         collapsible: false,
                                         htmlText: '50%',
                                         height: '50%'
                                     }, {
-                                        vtype: 'pane',
+                                        vtype: 'designerpane',
                                         collapsible: false,
                                         htmlText: '50%',
                                         height: '50%',
                                         box: {
-                                            vtype: 'box',
+                                            vtype: 'designerbox',
                                             orientation: "horizontal",
                                             panes: [{
-                                                vtype: 'pane',
+                                                vtype: 'designerpane',
                                                 collapsible: false,
                                                 htmlText: '50%',
                                                 height: '50%'
                                             }, {
-                                                vtype: 'pane',
+                                                vtype: 'designerpane',
                                                 collapsible: false,
                                                 htmlText: '50%',
                                                 height: '50%'
@@ -223,8 +223,6 @@ require([
             dd.design().then(function(config) {
                 dd.remove();
                 dashboardModel.set( 'layoutConfig', config );
-
-                console.log(config);
             });
         
             $(document.body).append(dd.$el);

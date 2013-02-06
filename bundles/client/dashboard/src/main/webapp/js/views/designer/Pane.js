@@ -1,11 +1,11 @@
 define([
     'require',
-    'views/View',
+    'views/box/Pane',
     'views/designer/Box',
     'jquery',
     'lodash',
     'bootstrap-editable'
-], function (require, View, Box, $, _) {
+], function (require, Pane, Box, $, _) {
 
     'use strict';
 
@@ -18,10 +18,8 @@ define([
             return size && pxUnitsRegex.test(size);
         };
 
-    return View.extend({
-        vtype: 'pane',
-
-        className: 'pane',
+    return Pane.extend({
+        vtype: 'designerpane',
 
         paneType: null,
         htmlText: null,
@@ -30,16 +28,12 @@ define([
             tabindex: 0
         },
 
-        views: function () {
-            return (this.options.box || null);
-        },
-
         initialize: function () {
             if(!Box) {
                 Box = require('views/designer/Box');
             }
             this.$el.addClass( this.options.paneType );
-            View.prototype.initialize.apply( this, arguments );
+            Pane.prototype.initialize.apply( this, arguments );
         },
 
         afterRender: function () {
@@ -103,23 +97,11 @@ define([
         },
 
         updateSize: function (options) {
-            var size = options.width || options.height,
-                value = size ? size : 'Variable';
+            Pane.prototype.updateSize.apply( this, arguments );
 
-            if(options.width || options.height) {
-                this.options[ options.width ? 'width' : 'height' ] = size;
-                this.options.htmlText = size;
-                delete this.options.flex;
-            }
-            else {
-                delete this.options.width;
-                delete this.options.height;
-                this.options.flex = 1;
-                this.options.htmlText = 'Variable';
-            }
             this.$el.children('h3')
                 .editable( 'destroy' )
-                .html( value );
+                .html( this.options.htmlText );
 
             this.initEditable();
         },
@@ -131,7 +113,7 @@ define([
             else {
                 this.$el.children('h3').editable( 'destroy' );
             }
-            View.prototype.remove.apply( this, arguments );
+            Pane.prototype.remove.apply( this, arguments );
         }
 
     });

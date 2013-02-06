@@ -1,8 +1,10 @@
 define([
     'views/panes/DesktopPane',
     'backbone',
-    'views/View'
-], function (DesktopPane, Backbone, View) {
+    'views/View',
+    'views/box/Box',
+    'views/box/Pane'
+], function (DesktopPane, Backbone, View, Box, Pane) {
     
     'use strict';
 
