@@ -16,15 +16,11 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.commons.server.domain.model.Preference
 
-interface PersonService extends PrincipalService {
-    
-    List<Person> list();
-    Person fetch(Long id);
-    Person create(Person person);
-    Person update(Long id, Person person);
-    void delete(Long id);
-    
+interface PrincipalService {
+    Set<Preference> listPreferences(Long id);
+    Set<Preference> listPreferences(Long id, String namespace);
+    Preference fetchPreference(Long id, String namespace, String name);
 }
 

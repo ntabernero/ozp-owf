@@ -17,18 +17,14 @@
 package org.ozoneplatform.owf.server.service.api
 
 import org.ozoneplatform.commons.server.domain.model.Group
-import org.ozoneplatform.commons.server.domain.model.Preference
 
-interface GroupService {
+interface GroupService extends PrincipalService {
     
     List<Group> list();
     Group fetch(Long id);
     Group update(Long id, Group group);
     Group create(Group group);
     void delete(Long id);
-    Set<Preference> listPreferences(Long id);
-    Set<Preference> listPreferences(Long id, String namespace);
-    Preference fetchPreference(Long id, String namespace, String name);
     
 }
 
