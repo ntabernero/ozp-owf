@@ -25,7 +25,7 @@ class GroupMixin {
     @JsonProperty boolean isIsPermissionsActive(){}
     @JsonIgnore boolean getAutomatic(){}
     @JsonProperty boolean isIsAutomatic(){}
-    @JsonIgnore Set<Stack> stacks
-    @JsonIgnore Set<Person> people
+    @JsonIgnore Iterable<Stack> getStacks(){}
+    @JsonIgnore Iterable<Person> getPersons(){}
 }
 

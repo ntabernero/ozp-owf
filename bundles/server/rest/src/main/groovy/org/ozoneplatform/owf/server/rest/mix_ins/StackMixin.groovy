@@ -21,7 +21,6 @@ import org.ozoneplatform.commons.server.domain.model.*
 
 class StackMixin {
     StackMixin(@JsonProperty("name") String name, @JsonProperty("urlName") String urlName){}
-    @JsonIgnore Set<Principal> principals
-    @JsonIgnore Set<DashboardTemplate> dashboardTemplates
+    @JsonIgnore Iterable<DashboardTemplate> getDashboardTemplates(){}
 }
 

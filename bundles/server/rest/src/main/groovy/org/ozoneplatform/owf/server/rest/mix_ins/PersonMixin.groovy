@@ -21,9 +21,9 @@ import org.ozoneplatform.commons.server.domain.model.*
 
 class PersonMixin {
     PersonMixin(@JsonProperty("username") String username, @JsonProperty("fullName") String fullName){}
-    @JsonIgnore Set<Group> groups
-    @JsonIgnore Set<DashboardInstance> dashboards
-    @JsonIgnore Set<PersonalWidgetDefinition> personalWidgetDefinitions
-    @JsonIgnore Set<Stack> stacks
+    @JsonIgnore Iterable<Group> getGroups(){}
+    @JsonIgnore Iterable<DashboardInstance> getDashboards(){}
+    @JsonIgnore Iterable<PersonalWidgetDefinition> getPersonalWidgetDefinitions(){}
+    @JsonIgnore Iterable<Stack> getStacks(){}
 }
 
