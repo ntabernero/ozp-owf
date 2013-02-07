@@ -17,14 +17,15 @@
 define([
     'views/widgets/Panel',
     'views/widgets/WindowHeader',
+    'mixins/widgets/ResizableWidget',
     'backbone',
     'lodash',
     'jqueryui/jquery-ui.custom'
-], function (Panel, WindowHeader, Backbone, _, $) {
+], function (Panel, WindowHeader, ResizableWidget, Backbone, _, $) {
     
     'use strict';
 
-    return Panel.extend({
+    return Panel.extend(_.extend({}, ResizableWidget, {
 
         model: null,
         className: 'widget window',
@@ -56,14 +57,9 @@ define([
                             }
                         })
                         .trigger(evt);
-                })
-                .resizable({
-                    minHeight: 50,
-                    minWidth: 50,
-                    start: me._mask,
-                    resize: _.bind(me._onResize, me),
-                    stop: me._unmask
                 });
+    
+            ResizableWidget.render.call(this, undefined, true, true);
 
             return me;
         },
@@ -86,11 +82,12 @@ define([
 
         updateActive: function() {
             Panel.prototype.updateActive.apply(this, arguments);
-            if (this.model.get('active') && this.zIndexManager != null) {
-                this.zIndexManager.bringToFront(this);
-            }
 
             if (this.zIndexManager) {
+                if (this.model.get('active')) {
+                    this.zIndexManager.bringToFront(this);
+                }
+
                 this.model.set('zIndex', this.zIndexManager.getLogicalIndex(this));
             }
         },
@@ -99,32 +96,17 @@ define([
             var model = this.model;
             return {
                 'style':    'left:' + model.get('x') + 'px;' +
-                            'top:' + model.get('y') + 'px;' + 
-                            'width:' + model.get('width') + 'px;' +
-                            'height:' + model.get('height') + 'px;'
+                            'top:' + model.get('y') + 'px;'
             };
         },
 
         //TODO: refactor
-        _mask: function () {
-            $('#mask').removeClass('hide');
-        },
-
-        //TODO: refactor 
-        _unmask: function () {
-            $('#mask').addClass('hide');
-        },
-
-        _onResize: function (evt, ui) {
-            this.model.set('height', ui.size.height);
-            this.model.set('width', ui.size.width);
-        },
 
         _onMove: function(evt, ui) {
             this.model.set('x', ui.position.left);
             this.model.set('y', ui.position.top);
         }
 
-    });
+    }));
 
 });
