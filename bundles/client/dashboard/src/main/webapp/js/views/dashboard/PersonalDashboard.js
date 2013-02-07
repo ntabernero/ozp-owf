@@ -2,11 +2,12 @@ define([
     'views/panes/DesktopPane',
     'backbone',
     'views/View',
-    'views/box/Box',
-    'views/box/Pane',
+    'views/box/HBox',
+    'views/box/VBox',
+    'views/panes/Pane',
     'views/panes/BoxPane',
     'lodash'
-], function (DesktopPane, Backbone, View, Box, Pane, BoxPane, _) {
+], function (DesktopPane, Backbone, View, HBox, VBox, Pane, BoxPane, _) {
     
     'use strict';
 

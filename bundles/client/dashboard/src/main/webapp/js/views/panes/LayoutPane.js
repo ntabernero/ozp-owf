@@ -1,5 +1,5 @@
 define([
-    'views/box/Pane',
+    'views/panes/Pane',
     'collections/WidgetStatesCollection',
     'backbone',
     'jquery',

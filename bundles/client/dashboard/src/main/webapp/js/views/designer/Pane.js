@@ -1,11 +1,25 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 define([
-    'require',
-    'views/box/Pane',
-    'views/designer/Box',
+    'views/panes/Pane',
     'jquery',
     'lodash',
     'bootstrap-editable'
-], function (require, Pane, Box, $, _) {
+], function (Pane, $, _) {
 
     'use strict';
 
@@ -29,9 +43,6 @@ define([
         },
 
         initialize: function () {
-            if(!Box) {
-                Box = require('views/designer/Box');
-            }
             this.$el.addClass( this.options.paneType );
             Pane.prototype.initialize.apply( this, arguments );
         },
@@ -49,21 +60,27 @@ define([
         },
 
         nest: function (options) {
-            this.box = new Box(options);
-            this.$el.empty().append( this.box.render().el );
+            this.removeEditable();
+            this.$el.empty();
+            this.box = this.addView( options );
             this.options.box = options;
             return this;
         },
 
         initEditable: function () {
-            var $size = this.$el.children('h3');
-            $size.editable({
+            this.$editable = this.$el.children('h3');
+            this.$editable.editable({
                 mode: 'inline',
                 onblur : 'submit',
                 showbuttons: false,
                 validate: _.bind( this.validate, this ),
-                display: _.bind( this.editComplete, this, $size )
+                display: _.bind( this.editComplete, this )
             });
+        },
+
+        removeEditable: function () {
+            this.$editable && this.$editable.editable( 'destroy' );
+            this.$editable = null;
         },
 
         validate: function (value) {
@@ -87,11 +104,11 @@ define([
             }
         },
 
-        editComplete: function ($editable, value) {
+        editComplete: function (value) {
             if( !isPixelSize( value ) && !isPercentageSize( value ) ) {
                 value = parseFloat( value ) + 'px';
             }
-            $editable.html( value );
+            this.$editable.html( value );
 
             this.trigger( 'sizeChange', value );
         },
@@ -110,9 +127,7 @@ define([
             if(this.box) {
                 this.box.remove();
             }
-            else {
-                this.$el.children('h3').editable( 'destroy' );
-            }
+            this.removeEditable();
             Pane.prototype.remove.apply( this, arguments );
         }
 

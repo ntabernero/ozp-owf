@@ -1,5 +1,5 @@
 define([
-    'views/box/Pane'
+    'views/panes/Pane'
 ], function (Pane) {
     
     'use strict';
@@ -13,7 +13,6 @@ define([
         
         initialize: function () {
             this.$el.addClass('boxpane');
-            
             Pane.prototype.initialize.apply(this, arguments);
         }
 

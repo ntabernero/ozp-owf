@@ -172,8 +172,7 @@ require([
                         vtype: 'designerpane',
                         paneType: 'tabbed',
                         box: {
-                            vtype: 'designerbox',
-                            orientation: "vertical",
+                            vtype: 'hbox',
                             panes: [{
                                 vtype: 'designerpane',
                                 collapsible: false,
@@ -185,8 +184,7 @@ require([
                                 htmlText: '50%',
                                 width: '50%',
                                 box: {
-                                    vtype: 'designerbox',
-                                    orientation: "horizontal",
+                                    vtype: 'vbox',
                                     panes: [{
                                         vtype: 'designerpane',
                                         collapsible: false,
@@ -198,8 +196,7 @@ require([
                                         htmlText: '50%',
                                         height: '50%',
                                         box: {
-                                            vtype: 'designerbox',
-                                            orientation: "horizontal",
+                                            vtype: 'vbox',
                                             panes: [{
                                                 vtype: 'designerpane',
                                                 collapsible: false,
@@ -227,6 +224,8 @@ require([
                 dd.remove();
                 config = DashboardService.convertForDashboard( config );
                 dashboardModel.set( 'layoutConfig', config );
+
+                console.log( config );
 
                 $('.dashboard').data('view').remove();
 
