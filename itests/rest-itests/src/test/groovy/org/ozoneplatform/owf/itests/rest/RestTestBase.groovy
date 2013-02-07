@@ -35,11 +35,12 @@ abstract class RestTestBase extends OzoneTestSupport {
     @Before
     void setup() {
         executeCommands('features:addurl mvn:org.apache.cxf.karaf/apache-cxf/2.7.2/xml/features', 'features:install http', 'features:install cxf')
-        executeCommands('features:addurl mvn:org.ozoneplatform.owf/features/1.0.0-SNAPSHOT/xml/features', 'features:install owf-services', 'features:install owf-rest')
+        // TODO: Get current project version from MVN
+        executeCommands('features:addurl mvn:org.ozoneplatform.owf/features/8.0.0-ALPHA-SPRINT3-SNAPSHOT/xml/features', 'features:install owf-rest')
 
-        System.err.println executeCommand('osgi:list | grep OWF')
+        System.err.println executeCommand('osgi:list | grep Ozone')
         waitForServices()
-        System.err.println executeCommand('osgi:list | grep OWF')
+        System.err.println executeCommand('osgi:list | grep Ozone')
     }
 
     /**
@@ -50,13 +51,16 @@ abstract class RestTestBase extends OzoneTestSupport {
      * CXF will return an HTML document with "No service have been found" until the services are available
      */
     private void waitForServices() {
-        int attempts = 3
+        int attempts = 10
         boolean ready = false
         while(!ready && attempts > 0) {
             Thread.sleep(1000)
             def response = Request.Get('http://localhost:8181/cxf').execute().returnContent().asString()
             ready = !response.contains('No services have been found')
+            attempts--
+            if (attempts % 2 == 0) System.err.println executeCommand('osgi:list | grep Ozone')
         }
+        if (!ready) throw new Exception("OWF REST never started!")
     }
 
     def getJson(GString uri) {

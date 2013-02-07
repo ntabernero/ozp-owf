@@ -1,49 +1,69 @@
+/* 
+   Copyright 2013 Next Century Corporation 
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 package org.ozoneplatform.owf.server.service.impl
 
-import org.ozoneplatform.owf.server.service.api.PersonalDashboardService
-import org.ozoneplatform.owf.server.service.api.model.Dashboard
+import org.ozoneplatform.owf.server.service.api.DashboardInstanceService
+import org.ozoneplatform.commons.server.domain.model.Dashboard
+import org.ozoneplatform.commons.server.domain.model.DashboardInstance
+import org.ozoneplatform.commons.server.domain.model.Person
 
-class PersonalDashboardServiceImpl implements PersonalDashboardService {
+class DashboardInstanceServiceImpl implements DashboardInstanceService {
 
-    List<Dashboard> list() {
+    List<DashboardInstance> list() {
         dashboardMap.values().toList()
     }
 
-    Dashboard create(Dashboard dashboardInfo) {
+    DashboardInstance create(DashboardInstance dashboardInfo) {
         println "In create(): ${dashboardInfo?.guid}"
         dashboardMap[(dashboardInfo.guid)] = dashboardInfo
         dashboardInfo
     }
 
-    Dashboard get(String id) {
+    DashboardInstance get(String id) {
         println "In get(): $id"
         dashboardMap[id]
     }
 
-    void update(Dashboard dashboardInfo) {
+    void update(DashboardInstance dashboardInfo) {
         dashboardMap[(dashboardInfo.guid)] = dashboardInfo
     }
 
-    Dashboard delete(String id) {
+    DashboardInstance delete(String id) {
         def dashboard =  dashboardMap[id]
         dashboardMap[id] = null
         dashboard
     }
 
-    Dashboard restore(String id) {
+    DashboardInstance restore(String id) {
         println "Restored $id"
         dashboardMap[id]
     }
 
-    Map<String, Dashboard> dashboardMap;
+    Map<String, DashboardInstance> dashboardMap;
 
-    PersonalDashboardServiceImpl() {
-        dashboardMap = new HashMap<String, Dashboard>()
-        Dashboard userDashboard = createExampleDashboard()
-        dashboardMap[userDashboard.guid] = userDashboard
+    DashboardInstanceServiceImpl() {
+        dashboardMap = new HashMap<String, DashboardInstance>()
+        DashboardInstance dashboardInstance = createExampleDashboard()
+        dashboardMap[dashboardInstance.id] = dashboardInstance
     }
 
-    Dashboard createExampleDashboard() {
-        new Dashboard([name: "Dashboard1", guid: "12345", defaultDashboard: false, dashboardPosition: 0, alteredByAdmin: true])
+    DashboardInstance createExampleDashboard() {
+        DashboardInstance personalDashboard = (DashboardInstance)new Person('user1', 'User One').createDashboardInstance("Dashboard1", 1, )
+        personalDashboard.id = 12345
+        personalDashboard
     }
 }

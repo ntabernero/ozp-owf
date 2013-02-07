@@ -1,11 +1,13 @@
 package org.ozoneplatform.owf.itests.rest
 
+import org.junit.Test
+
 /**
  * Don't run test for now until we know more about the REST and Service layer
  */
 class DescribePersonController extends RestTestBase {
 
-    //@Test
+    @Test
     void itReturnsListOfPersons() {
         def persons = getJson("${uriBase}/persons")
         assert persons.size() == 3

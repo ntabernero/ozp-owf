@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.ozoneplatform.owf.bundles.client.container</groupId>
         <artifactId>container</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
     </parent>
 
     <groupId>org.ozoneplatform.owf.bundles.client.container</groupId>
@@ -15,10 +14,39 @@
 
     <name>Ozone Platform :: OWF Client Bundles :: Client OWF Container JavaScripts :: BASE Container</name>
 
-
     <properties>
         <jslintVersion>1.0.1</jslintVersion>
+        <jetty.defaults.descriptor>${project.parent.parent.basedir}/webdefault.xml</jetty.defaults.descriptor>
     </properties>
+
+    <!-- Identify the platform to set the appropriate OS extension (.bat or .sh) -->
+    <profiles>
+        <profile>
+            <id>platform-windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+
+            <properties>
+                <os.extension>.bat</os.extension>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>platform-unix</id>
+            <activation>
+                <os>
+                    <family>!windows</family>
+                </os>
+            </activation>
+
+            <properties>
+                <os.extension>.sh</os.extension>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
 
@@ -38,62 +66,56 @@
 
     </dependencies>
 
-
     <build>
-
         <plugins>
-
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>8.1.7.v20120910</version>
-                <configuration>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
-                    <webAppConfig>
-                        <defaultsDescriptor>src/jetty/webdefault.xml</defaultsDescriptor>
-                        <contextPath>/</contextPath>
-                        <resourceBases>
-                            <resourceBase>src/main/</resourceBase>
-                            <resourceBase>${project.build.outputDirectory}</resourceBase>
-                            <resourceBase>${project.build.directory}/plugins/</resourceBase>
-                            <!--<resourceBase>src/main/resources</resourceBase>-->
-                        </resourceBases>
-                    </webAppConfig>
-                </configuration>
             </plugin>
 
-            <!--<plugin>-->
-            <!--<groupId>org.codehaus.mojo</groupId>-->
-            <!--<artifactId>jslint-maven-plugin</artifactId>-->
-            <!--<version>${jslintVersion}</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<goals>-->
-            <!--<goal>jslint</goal>-->
-            <!--<goal>test-jslint</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
-
+            <!-- copy any dependencies into the target dir -->
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>prepare-package</phase>
+                        <id>copy-dashboard</id>
+                        <phase>generate-sources</phase>
                         <goals>
-                            <goal>resources</goal>
+                            <goal>unpack</goal>
                         </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.ozoneplatform.owf.bundles.client.dashboard</groupId>
+                                    <artifactId>dashboard</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>war</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/minified-output/</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                        </configuration>
                     </execution>
+                </executions>
+            </plugin>
+
+            <!-- copy src/main/webapp into target directory, overwrite any files already there -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
                     <execution>
                         <id>copy-resources</id>
-                        <phase>validate</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
                             <outputDirectory>${basedir}/target/minified-output</outputDirectory>
+                            <overwrite>true</overwrite>
                             <resources>
                                 <resource>
                                     <directory>src/main/webapp</directory>
@@ -103,63 +125,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.2.1</version>
-            </plugin>
-
-            <!--<plugin>-->
-            <!--<groupId>org.codehaus.mojo</groupId>-->
-            <!--<artifactId>build-helper-maven-plugin</artifactId>-->
-            <!--<version>1.7</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>attach-artifacts</id>-->
-            <!--<phase>package</phase>-->
-            <!--<goals>-->
-            <!--<goal>attach-artifact</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-            <!--<artifacts>-->
-            <!--<artifact>-->
-            <!--<file>target/min/classes/1.js</file>-->
-            <!--<type>js</type>-->
-            <!--</artifact>-->
-            <!--</artifacts>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
-
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <!--there's no java in this project-->
-                    <packagingExcludes>WEB-INF/lib/**, WEB-INF/classes/**</packagingExcludes>
-                    <webResources>
-                        <resource>
-                            <!-- this is relative to the pom.xml directory -->
-                            <directory>${project.build.directory}/minified-output</directory>
-                        </resource>
-                    </webResources>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-artifacts</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>war</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>com.github.mcheely</groupId>
@@ -188,6 +153,10 @@
                         <goals>
                             <goal>optimize</goal>
                         </goals>
+                        <!--
+                          The default phase is process-classes.
+                        -->
+                        <!--<phase>process-classes</phase>-->
                         <configuration>
                             <configFile>
                                 ${basedir}/src/build/buildconfig-minify-javascript.js
@@ -200,7 +169,79 @@
                             </filterConfig>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>debug-javascript</id>
+                        <goals>
+                            <goal>optimize</goal>
+                        </goals>
+                        <!--
+                          The default phase is process-classes
+                        -->
+                        <!--<phase>process-classes</phase>-->
+                        <configuration>
+                            <configFile>
+                                ${basedir}/src/build/buildconfig-debug-javascript.js
+                            </configFile>
+                            <optimizerFile>
+                                ${basedir}/src/build/r-2.0.6-plus.js
+                            </optimizerFile>
+                            <filterConfig>
+                                false
+                            </filterConfig>
+                        </configuration>
+                    </execution>
                 </executions>
+            </plugin>
+
+            <!-- this executes jshint ant plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+
+            <!-- Run compile_all_themes (.bat/.sh) to generate css from the scss files -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>Compile themes</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/minified-output/themes</workingDirectory>
+                            <executable>${project.build.directory}/minified-output/themes/compile_all_themes${os.extension}</executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <!--there's no java in this project-->
+                    <packagingExcludes>WEB-INF/lib/**, WEB-INF/classes/**</packagingExcludes>
+                    <webResources>
+                        <resource>
+                            <!-- this is relative to the pom.xml directory -->
+                            <directory>${project.build.directory}/minified-output</directory>
+                        </resource>
+                    </webResources>
+                </configuration>
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>attach-artifacts</id>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>war</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
             </plugin>
 
         </plugins>

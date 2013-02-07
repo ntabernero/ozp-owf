@@ -1,0 +1,18 @@
+$widgetInactiveBackground: white !default;
+$widgetInactiveColor: #777 !default;
+$widgetInactiveColorHover: $grayDark !default;
+$widgetInactiveBorder: 1px solid #ccc !default;
+
+$widgetActiveBackground: $linkColor !default;
+$widgetActiveColor: white !default;
+$widgetActiveColorHover: $grayDark !default;
+$widgetActiveBorder: 1px solid #ccc !default;
+
+
+.widget {
+    
+}
+
+.widgetframe {
+    background-color: white;
+}

@@ -1,7 +1,6 @@
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.owf.server.service.api.model.Dashboard
-
+import org.ozoneplatform.commons.server.domain.model.Dashboard
 
 interface PersonalDashboardService {
 

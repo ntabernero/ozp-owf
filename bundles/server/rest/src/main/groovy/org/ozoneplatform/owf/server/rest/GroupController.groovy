@@ -1,15 +1,31 @@
+/* 
+   Copyright 2013 Next Century Corporation 
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 package org.ozoneplatform.owf.server.rest
 
-import org.ozoneplatform.owf.server.service.api.GroupService
-import org.ozoneplatform.owf.server.service.api.model.Group
-
+//import javax.annotation.security.*
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
+import org.ozoneplatform.owf.server.service.api.GroupService
+import org.ozoneplatform.commons.server.domain.model.Group
 
-@Path("/groups")
+@Path("/")
 @Produces("application/json")
 class GroupController {
 
@@ -31,6 +47,7 @@ class GroupController {
 
     @POST
     @Consumes("application/json")
+    //@RolesAllowed("ROLE_ADMIN")
     Response create(Group group) {
         Group theGroup = groupService.create(group);
         URI groupUri;
@@ -51,12 +68,14 @@ class GroupController {
     @PUT
     @Path("/{id}")
     @Consumes("application/json")
+    //@RolesAllowed("ROLE_ADMIN")
     Response update(@PathParam("id") Long id, Group group) {
         Response.ok(groupService.update(id, group)).build();
     }
 
     @DELETE
     @Path("/{id}")
+    //@RolesAllowed("ROLE_ADMIN")
     Response delete(@PathParam("id") Long id) {
         groupService.delete(id);
         Response.ok().build();
@@ -67,4 +86,23 @@ class GroupController {
     Response listGroupDashboards(@PathParam("id") Long id) {
         Response.ok().build();
     }
+    
+    @GET
+    @Path("/{id}/preferences")
+    Response listGroupPreferences(@PathParam("id") Long id) {
+        Response.ok(groupService.listPreferences(id)).build();
+    }
+    
+    @GET
+    @Path("/{id}/preferences/{namespace}")
+    Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace) {
+        Response.ok(groupService.listPreferences(id, namespace)).build();
+    }
+    
+    @GET
+    @Path("/{id}/preferences/{namespace}/{name}")
+    Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace, @PathParam("name") String name) {
+        Response.ok(groupService.fetchPreference(id, namespace, name)).build();
+    }
+    
 }
