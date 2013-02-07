@@ -34,7 +34,7 @@ define([
         $body: null, //jquery element for the dashboard body
         taskbar: null, //taskbar View
 
-        className: 'pane desktoppane',
+        className: LayoutPane.prototype.className + ' desktoppane',
 
         initialize: function() {
             LayoutPane.prototype.initialize.apply(this, arguments);
@@ -45,16 +45,11 @@ define([
         },
 
         render: function () {
-            var me = this;
-
-            //console.time('pane');
             this.renderTaskbar();
             this.renderWidgets();
             
-            this.constructor.__super__.render.call(this);
+            return LayoutPane.prototype.render.apply(this, arguments);
 
-            //console.timeEnd('pane');
-            return this;
         },
 
         renderTaskbar: function() {

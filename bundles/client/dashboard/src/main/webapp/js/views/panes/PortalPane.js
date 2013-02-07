@@ -18,9 +18,10 @@ define([
     'views/panes/PanelPane',
     'views/widgets/Panel',
     'mixins/widgets/ResizableWidget',
+    'mixins/containers/SortableCollectionView',
     'backbone',
     'lodash'
-], function (PanelPane, Panel, ResizableWidget, Backbone, _) {
+], function (PanelPane, Panel, ResizableWidget, SortableCollectionView, Backbone, _) {
     
     'use strict';
 
@@ -35,20 +36,21 @@ define([
             return this;
         },
 
-        onResize: function() {
+        //override onResize to unset width, and only record changes in height
+        onResize: function(evt, ui) {
             this.$el.css('width', '');
 
-            ResizableWidget.onResize.apply(this, arguments);
+            this.model.set('height', ui.size.height);
         }
     }));
 
-    return PanelPane.extend({
-        className: 'pane panelpane portalpane',
+    return PanelPane.extend(_.extend({}, SortableCollectionView, {
+        className: PanelPane.prototype.className + ' portalpane',
 
-        render: function() {
-            PanelPane.prototype.render.apply(this, arguments);
+        initialize: function() {
+            PanelPane.prototype.initialize.apply(this, arguments);
 
-            return this;
+            this.initSortable();
         },
 
         addWidget: function(widget) {
@@ -59,6 +61,6 @@ define([
             this.$el.append(portlet.render().$el);
         }
         
-    });
+    }));
 
 });

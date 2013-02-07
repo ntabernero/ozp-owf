@@ -52,7 +52,13 @@ define([
 
         afterRender: function () {
             this.$el.append( '<div class="paneshim hide"></div>' );
+
+            //if no widget is active, activate first widget
+            if (!this.$('.active').length && this.collection.length) {
+                this.collection.at(0).set('active', true);
+            }
         },
+
 
         //abstract method, override to provide widget activation semantics
         changeActivation: function (widget) {

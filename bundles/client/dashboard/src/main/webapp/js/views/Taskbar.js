@@ -17,11 +17,11 @@
 define([
     'views/View',
     'mixins/widgets/WidgetControl',
+    'mixins/containers/SortableCollectionView',
     'jquery',
     'backbone',
-    'lodash',
-    'jqueryui/jquery-ui.custom'
-], function (View, WidgetControl, $, Backbone, _) {
+    'lodash'
+], function (View, WidgetControl, SortableCollectionView, $, Backbone, _) {
     'use strict';
  
     /**
@@ -45,7 +45,7 @@ define([
         }));
     }   
 
-    return View.extend({
+    return View.extend(_.extend({}, SortableCollectionView, {
         tagName: 'ol',
 
         className: 'taskbar', 
@@ -61,16 +61,14 @@ define([
 
             this.TaskbarHeader = createTaskbarHeaderClass(options.HeaderClass);
 
+            this.initSortable();
+
             //TODO: This is temporary, take it out once dashboards
             //have code to call pane resize
             $(window).on('resize', _.bind(this.resize, this));
         },
 
         render: function() {
-            this.$el.sortable({
-                update: _.bind(this.handleReorder, this)
-            });
-
             this.collection.each(_.bind(this.addWidget, this));
             return this;
         },
@@ -120,13 +118,6 @@ define([
                     $header.width($header.width() * ratio);
                 });
             }
-        },
-
-        handleReorder: function(event, ui) {
-            var $item = $(ui.item),
-                header = $item.data('view');
-
-            this.collection.updateIndex(header.model, $item.index());
         }
     });
 });
