@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
- /*global require, initialWidgetDefinitions, initialDashboards*/
+
+/*global require, initialWidgetDefinitions, initialDashboards*/
 define([
     'router',
     'views/DashboardContainer',
@@ -37,9 +37,7 @@ define([
         personalDashboardsCollection: personalDashboardsCollection
     });
 
-    var router = new Router({
-        dashboardContainer: dashboardContainer
-    });
+    var router = new Router();
 
     // Trigger the initial route and enable HTML5 History API support, set the
     // root folder to '/' by default.  Change in app.js.
@@ -48,7 +46,7 @@ define([
     // All navigation that is relative should be passed through the navigate
     // method, to be processed by the router. If the link has a `data-bypass`
     // attribute, bypass the delegation completely.
-    $(document).on("click", "a:not([data-bypass])", function(evt) {
+    $(document).on("click", "a:not([data-bypass])", function (evt) {
         // Get the absolute anchor href.
         var href = $(this).attr("href");
 

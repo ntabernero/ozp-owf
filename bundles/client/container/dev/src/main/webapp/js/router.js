@@ -1,14 +1,26 @@
+/*
+ * Copyright 2013 Next Century Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 define([
     'events/EventBus',
 
-    //views
-    'views/Banner',
-    'views/DashboardContainer',
-
+    //libs
     'backbone',
     'lodash',
     'jquery'
-], function(EventBus, Banner, DashboardContainer, Backbone, _, $) {
+], function (EventBus, Backbone, _, $) {
     var pluses = /\+/g;
 
     function raw(s) {
@@ -79,21 +91,21 @@ define([
             'perf/:count': 'measurePerformance'
         },
 
-        initialize: function(options) {
+        initialize: function (options) {
             this.options = options;
+
+            //anytime a dashboard is switched update the url so it has the dashboard's guid
+            EventBus.on('dashboard:switched', function (model) {
+              if (model != null && model.get('guid') != null) {
+                  this.navigate(model.get('guid'));
+              }
+            }, this);
         },
 
-        index: function(guid) {
-            var dashboardContainer = this.options.dashboardContainer;
-            if (dashboardContainer != null && !dashboardContainer.rendered) {
-                dashboardContainer.render({
-                    guid:guid
-                });
-            }
-//            else {
-                //container already rendered, use guid to switch dashboards
-//            }
-
+        index: function (guid) {
+            EventBus.trigger('dashboard:switch', new Backbone.Model({
+                guid:guid
+            }));
         },
 
         measurePerformance: function (count) {
@@ -107,7 +119,7 @@ define([
                 $.cookie('renderTimes', renderTimes, { expires: 7, path: '/' });
 
                 if (renderTimes.length >= count) {
-                    var sum = _.reduce(renderTimes, function(memo, num) {
+                    var sum = _.reduce(renderTimes, function (memo, num) {
                         return memo + num;
                     }, 0);
                     console.log('Average render time ', sum / (renderTimes.length), renderTimes);

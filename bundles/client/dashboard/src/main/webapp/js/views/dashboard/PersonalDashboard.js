@@ -50,8 +50,6 @@ define([
 
             this.$el.html(pane.render().el);
 
-            // Set the browser title to the dashboard name.
-            document.title = this.model.get('name');
             return this;
         }
 
