@@ -1,12 +1,12 @@
 define([
-    'views/panes/Pane',
+    'views/panes/LayoutPane',
 
     'backbone'
-], function (Pane, Backbone) {
+], function (LayoutPane, Backbone) {
     
     'use strict';
 
-    return Pane.extend({
+    return LayoutPane.extend({
 
         model: null,
 

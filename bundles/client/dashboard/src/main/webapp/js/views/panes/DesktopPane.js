@@ -1,26 +1,26 @@
 define([
-    'views/panes/Pane',
+    'views/panes/LayoutPane',
     'views/widgets/Window',
     'views/Taskbar',
     'services/ZIndexManager',
     'jquery',
     'backbone'
-], function (Pane, WidgetWindow, Taskbar, ZIndexManager, $, Backbone) {
+], function (LayoutPane, WidgetWindow, Taskbar, ZIndexManager, $, Backbone) {
     
     'use strict';
 
-    return Pane.extend({
+    return LayoutPane.extend({
+        vtype: 'desktoppane',
 
         model: null,
-   
-        
+
         $body: null, //jquery element for the dashboard body
         taskbar: null, //taskbar View
 
         className: 'pane desktoppane',
 
         initialize: function() {
-            Pane.prototype.initialize.apply(this, arguments);
+            LayoutPane.prototype.initialize.apply(this, arguments);
 
             this.windows = [];
 
@@ -30,13 +30,13 @@ define([
         render: function () {
             var me = this;
 
-//            console.time('pane');
-            this.constructor.__super__.render.call(this);
-
+            console.time('pane');
             this.renderTaskbar();
             this.renderWidgets();
+            
+            this.constructor.__super__.render.call(this);
 
-//            console.timeEnd('pane');
+           console.timeEnd('pane');
             return this;
         },
 

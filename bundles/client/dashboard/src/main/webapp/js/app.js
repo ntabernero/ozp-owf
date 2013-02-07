@@ -7,10 +7,11 @@ require([
     'collections/PreferencesCollection',
     'collections/PeopleCollection',
     'collections/GroupsCollection',
+    'services/Dashboard',
 	'jquery'
 ], function (PersonalDashboardModel, PersonalDashboardsCollection, Dashboard, 
              StacksCollection, WidgetDefinitionsCollection, PreferencesCollection,
-             PeopleCollection, GroupsCollection, $) {
+             PeopleCollection, GroupsCollection, DashboardService, $) {
 	// Pull in a collection of dashboards.
     var personalDashboardsCollection = new PersonalDashboardsCollection();
     personalDashboardsCollection.fetch({
@@ -79,6 +80,8 @@ require([
     
     // Create a test dashboard.
     var layout = {
+        vtype: 'desktoppane',
+        paneType: 'desktoppane',
         widgets: [{
             name: 'Widget One',
             url: 'widget.html',
@@ -222,7 +225,15 @@ require([
 
             dd.design().then(function(config) {
                 dd.remove();
+                config = DashboardService.convertForDashboard( config );
                 dashboardModel.set( 'layoutConfig', config );
+
+                $('.dashboard').data('view').remove();
+
+                var dashboard = new Dashboard({
+                    model: dashboardModel
+                });
+                $('body').append(dashboard.render().el);
             });
         
             $(document.body).append(dd.$el);
