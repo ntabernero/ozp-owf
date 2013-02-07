@@ -45,8 +45,18 @@ define([
             this.collection.on('change:active', _.bind(this.changeActivation, this));
         },
 
+        /*
+         * Subclasses should call this AFTER their specific render logic
+         */
         render: function () {
             this.$el.append( '<div class="paneshim hide"></div>' );
+
+            //if no widget is active, activate first widget
+            if (!this.$('.active').length && this.collection.length) {
+                this.collection.at(0).set('active', true);
+            }
+
+            return this;
         },
 
         //abstract method, override to provide widget activation semantics

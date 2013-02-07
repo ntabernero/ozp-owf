@@ -25,18 +25,16 @@ define([
     'use strict';
 
     return Pane.extend({
-        className: 'pane panelpane',
+        className: Pane.prototype.className + ' panelpane',
 
         render: function() {
             var me = this;
-
-            Pane.prototype.render.apply(this, arguments);
 
             me.collection.each(function(widget) {
                 me.addWidget(widget);
             });
 
-            return this;
+            return Pane.prototype.render.apply(me, arguments);
         },
 
         addWidget: function(widget) {
@@ -48,4 +46,3 @@ define([
         }
      });
 });
-

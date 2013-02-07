@@ -110,7 +110,8 @@ require([
             y: 300,
             width: 200,
             height: 200,
-            zIndex: 1
+            zIndex: 1,
+            active: true
         }]
     };
     
