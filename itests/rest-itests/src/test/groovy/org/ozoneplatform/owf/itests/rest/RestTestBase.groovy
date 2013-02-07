@@ -51,14 +51,13 @@ abstract class RestTestBase extends OzoneTestSupport {
      * CXF will return an HTML document with "No service have been found" until the services are available
      */
     private void waitForServices() {
-        int attempts = 10
+        int attempts = 5
         boolean ready = false
         while(!ready && attempts > 0) {
             Thread.sleep(1000)
             def response = Request.Get('http://localhost:8181/cxf').execute().returnContent().asString()
             ready = !response.contains('No services have been found')
             attempts--
-            if (attempts % 2 == 0) System.err.println executeCommand('osgi:list | grep Ozone')
         }
         if (!ready) throw new Exception("OWF REST never started!")
     }

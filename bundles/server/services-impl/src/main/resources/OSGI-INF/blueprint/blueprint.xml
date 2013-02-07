@@ -25,6 +25,7 @@
     <bean id="personalDashboardService" class="org.ozoneplatform.owf.server.service.impl.DashboardInstanceServiceImpl"/>
     <bean id="groupDashboardService" class="org.ozoneplatform.owf.server.service.impl.DashboardTemplateServiceImpl"/>
     <bean id="personalWidgetDefinitionService" class="org.ozoneplatform.owf.server.service.impl.PersonalWidgetDefinitionServiceImpl"/>
+    <bean id="widgetDefinitionService" class="org.ozoneplatform.owf.server.service.impl.WidgetDefinitionServiceImpl" />
 
     <service ref="groupService" interface="org.ozoneplatform.owf.server.service.api.GroupService"/>
     <service ref="personService" interface="org.ozoneplatform.owf.server.service.api.PersonService"/>
@@ -32,5 +33,6 @@
     <service ref="personalDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardInstanceService"/>
     <service ref="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
     <service ref="personalWidgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService"/>
+    <service ref="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService" />
 
 </blueprint>
