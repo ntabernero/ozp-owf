@@ -1,0 +1,11 @@
+.portalpane {
+    position: relative;
+
+    overflow-y: auto;
+
+    > .widget {
+        width: 100%;
+
+        position: relative;
+    }
+}

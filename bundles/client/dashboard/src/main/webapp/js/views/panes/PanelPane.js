@@ -14,30 +14,38 @@
  * limitations under the License.
  */
 
+/**
+ * This class is the superclass of AccordionPane and PortalPane
+ */
 define([
-    'views/panes/PortalPane',
-    'backbone',
-    'views/View'
-], function (PortalPane, Backbone, View) {
-    
+    'views/panes/Pane',
+    'views/widgets/Panel',
+    'backbone'
+], function (Pane, Panel, Backbone) {
     'use strict';
 
-    return View.extend({
-
-        className: 'dashboard',
+    return Pane.extend({
+        className: 'pane panelpane',
 
         render: function() {
-            // Get the dashboard.
-            
-            // Create a desktop pane for it.
-            var pane = new PortalPane(JSON.parse(this.model.get('layoutConfig')));
-            this.$el.html(pane.render().el);
-            
-            // Set the browser title to the dashboard name.
-            document.title = this.model.get('name');
-            return this; 
-        }
-        
-    });
+            var me = this;
 
+            Pane.prototype.render.apply(this, arguments);
+
+            me.collection.each(function(widget) {
+                me.addWidget(widget);
+            });
+
+            return this;
+        },
+
+        addWidget: function(widget) {
+            var panel = new Panel({
+                model: widget
+            });
+
+            this.$el.append(panel.render().$el);
+        }
+     });
 });
+
