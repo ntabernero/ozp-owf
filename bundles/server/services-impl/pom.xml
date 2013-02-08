@@ -5,6 +5,7 @@
         <artifactId>server</artifactId>
         <groupId>org.ozoneplatform.owf.server</groupId>
         <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <name>Ozone Platform :: OWF Server Bundles :: OWF Services Implementation</name>
@@ -15,10 +16,17 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.ozoneplatform.commons.bundles</groupId>
+            <artifactId>domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>services-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
@@ -82,7 +90,7 @@
                             version=${project.version},
                             org.ozoneplatform.owf.server.service.api.exception;
                             version=${project.version},
-                            org.ozoneplatform.owf.server.service.api.model;
+                            org.ozoneplatform.commons.server.domain.model;
                             version=${project.version},*
                         </Import-Package>
                         <Private-Package>org.ozoneplatform.owf.server.service.impl</Private-Package>
@@ -100,7 +108,7 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.ozoneplatform.commons.vendor</groupId>
                 <artifactId>codenarc-maven-plugin</artifactId>
             </plugin>
         </plugins>

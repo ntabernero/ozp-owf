@@ -16,9 +16,9 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.owf.server.service.api.model.Group
+import org.ozoneplatform.commons.server.domain.model.Group
 
-interface GroupService {
+interface GroupService extends PrincipalService {
     
     List<Group> list();
     Group fetch(Long id);

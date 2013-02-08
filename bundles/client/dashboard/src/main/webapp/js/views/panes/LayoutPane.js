@@ -39,7 +39,18 @@ define([
         },
 
         //abstract method, override to provide widget activation semantics
-        changeActivation: $.noop,
+        changeActivation: function (widget) {
+            var active = widget.get('active');
+
+            if (active) {
+                //deactivate all other widgets
+                this.collection.each(function (widg) {
+                    if (widget !== widg) {
+                        widg.set('active', false);
+                    }
+                });
+            }
+        },
 
         addWidget: $.noop, //abstract
 

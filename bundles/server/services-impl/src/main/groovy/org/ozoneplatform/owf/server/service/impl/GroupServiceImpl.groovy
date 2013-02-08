@@ -18,15 +18,33 @@ package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.GroupService
 import org.ozoneplatform.owf.server.service.api.exception.*
-import org.ozoneplatform.owf.server.service.api.model.Group
+import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.commons.server.domain.model.Preference
 
 class GroupServiceImpl implements GroupService {
     
     def theList = [];
     
     GroupServiceImpl() {
-        theList.add(new Group(id: 1L, name: "admins", displayName: "Administrators", description: "The administrators group"));
-        theList.add(new Group(id: 2L, name: "users", displayName: "Users", description: "The users group"));
+
+        def group;
+        
+        group = new Group("admins");
+        group.id = 1L;
+        group.displayName = "Administrators";
+        group.description = "The administrators group";
+        group.setPreference("fooone", "foo.namespace", "foooneval");
+        group.setPreference("footwo", "foo.namespace", "footwoval");
+        theList.add(group);
+        
+        group = new Group("users");
+        group.id = 2L;
+        group.displayName = "Users";
+        group.description = "The users group";
+        group.setPreference("barone", "bar.namespace", "baroneval");
+        group.setPreference("bartwo", "bar.namespace", "bartwoval");
+        theList.add(group);
+
     }
     
     List<Group> list() {
@@ -49,12 +67,10 @@ class GroupServiceImpl implements GroupService {
         theGroup.description = group?.description ?: theGroup.description;
         theGroup.active = group?.active;
         theGroup.automatic = group?.automatic;
-        this.validate(theGroup);
         theGroup;
     }
 
     Group create(Group group) {
-        this.validate(group);
         def max = theList.max{ it.id }
         group?.id = max.id + 1L;
         theList.add(group);
@@ -66,12 +82,19 @@ class GroupServiceImpl implements GroupService {
         return;
     }
     
-    private void validate(Group group) {
-        boolean validName = group?.name?.trim()?.length() > 0;
-        if (!validName) {
-            throw new ValidationException("Name is required");
-        }
-        return;
+    Set<Preference> listPreferences(Long id) {
+        Group theGroup = this.fetch(id);
+        return theGroup.preferences;
+    }
+    
+    Set<Preference> listPreferences(Long id, String namespace) {
+        Group theGroup = this.fetch(id);
+        return theGroup.preferences.findAll{ it.namespace == namespace; };
+    }
+    
+    Preference fetchPreference(Long id, String namespace, String name) {
+        Group theGroup = this.fetch(id);
+        return theGroup.preferences.find{ it.namespace == namespace && it.name == name; };
     }
     
 }

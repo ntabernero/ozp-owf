@@ -31,10 +31,8 @@
     <reference id="groupService" interface="org.ozoneplatform.owf.server.service.api.GroupService"/>
     <reference id="personService" interface="org.ozoneplatform.owf.server.service.api.PersonService"/>
     <reference id="stackService" interface="org.ozoneplatform.owf.server.service.api.StackService"/>
-    <reference id="preferenceService" interface="org.ozoneplatform.owf.server.service.api.PreferenceService"/>
-    <reference id="personalDashboardService" interface="org.ozoneplatform.owf.server.service.api.PersonalDashboardService"/>
-    <reference id="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.GroupDashboardService"/>
-    <reference id="intentService" interface="org.ozoneplatform.owf.server.service.api.IntentService"/>
+    <reference id="personalDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardInstanceService"/>
+    <reference id="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
     <reference id="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService"/>
     <reference id="personalWidgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService"/>
 
@@ -42,14 +40,11 @@
         We are using the OSGi Blueprint XML syntax to define a bean that we referred to in our JAX-RS server setup.
         This bean carries a set of JAX-RS annotations that allow its methods to be mapped to incoming requests.
     -->
-    <bean id="personalDashboards" class="org.ozoneplatform.owf.server.rest.PersonalDashboardController">
+    <bean id="personalDashboards" class="org.ozoneplatform.owf.server.rest.DashboardInstanceController">
         <property name="personalDashboardService" ref="personalDashboardService"/>
     </bean>
-    <bean id="groupDashboards" class="org.ozoneplatform.owf.server.rest.GroupDashboardController">
+    <bean id="groupDashboards" class="org.ozoneplatform.owf.server.rest.DashboardTemplateController">
         <property name="groupDashboardService" ref="groupDashboardService"/>
-    </bean>
-    <bean id="preferences" class="org.ozoneplatform.owf.server.rest.PreferenceController">
-        <property name="preferenceService" ref="preferenceService"/>
     </bean>
     <bean id="persons" class="org.ozoneplatform.owf.server.rest.PersonController">
         <property name="personService" ref="personService"/>
@@ -59,9 +54,6 @@
     </bean>
     <bean id="stacks" class="org.ozoneplatform.owf.server.rest.StackController">
         <property name="stackService" ref="stackService"/>
-    </bean>
-    <bean id="intents" class="org.ozoneplatform.owf.server.rest.IntentController">
-        <property name="intentService" ref="intentService"/>
     </bean>
     <bean id="widgetDefinitions" class="org.ozoneplatform.owf.server.rest.WidgetDefinitionController">
         <property name="widgetDefinitionService" ref="widgetDefinitionService"/>
@@ -74,8 +66,9 @@
         JAX-RS Providers
     -->
 
-    <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
-    
+    <!--<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />-->
+    <bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider" />
+
     <!--
         Simple Authorization Provider
         Note: Here just for example reference
@@ -110,7 +103,7 @@
     <bean id="prefsAuthInterceptor" class="org.apache.cxf.interceptor.security.SecureAnnotationsInterceptor">
         <property name="securedObject" ref="preferences"/>
     </bean>
-    
+
     <bean id="prefsAuthFilter" class="org.apache.cxf.jaxrs.security.SimpleAuthorizingFilter">
         <property name="interceptor" ref="prefsAuthInterceptor"/>
     </bean>
@@ -127,30 +120,19 @@
         <jaxrs:serviceBeans>
             <ref component-id="personalDashboards" />
             <ref component-id="groupDashboards" />
-            <!--ref component-id="preferences"/-->
             <ref component-id="persons"/>
             <!--ref component-id="groups"/-->
             <ref component-id="stacks"/>
-            <ref component-id="intents"/>
             <ref component-id="widgetDefinitions"/>
             <ref component-id="personalWidgetDefinitions"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
             <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
+            <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
+            <bean id="objectMapperProvider" class="org.ozoneplatform.owf.server.rest.ObjectMapperProvider"/>
             <ref component-id="jsonProvider" />
-        </jaxrs:providers>
-    </jaxrs:server>
-    
-    <jaxrs:server id="ozoneplatform_cxf_prefs_endpoint"  address="/owf/preferences">
-        <jaxrs:serviceBeans>
-            <ref component-id="preferences"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:providers>
-            <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
-            <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
-            <!--ref component-id="prefsAuthFilter"/-->
-            <ref component-id="jsonProvider" />
+            
         </jaxrs:providers>
     </jaxrs:server>
     
@@ -161,7 +143,9 @@
         <jaxrs:providers>
             <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
             <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
+            <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
             <!--ref component-id="groupsAuthFilter"/-->
+            <bean id="objectMapperProvider" class="org.ozoneplatform.owf.server.rest.ObjectMapperProvider"/>
             <ref component-id="jsonProvider" />
         </jaxrs:providers>
     </jaxrs:server>

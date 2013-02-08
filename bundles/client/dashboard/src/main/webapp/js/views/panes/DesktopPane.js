@@ -2,10 +2,11 @@ define([
     'views/panes/LayoutPane',
     'views/widgets/Window',
     'views/Taskbar',
+    'views/widgets/WindowHeader',
     'services/ZIndexManager',
     'jquery',
     'backbone'
-], function (LayoutPane, WidgetWindow, Taskbar, ZIndexManager, $, Backbone) {
+], function (LayoutPane, WidgetWindow, Taskbar, WindowHeader, ZIndexManager, $, Backbone) {
     
     'use strict';
 
@@ -30,19 +31,20 @@ define([
         render: function () {
             var me = this;
 
-            console.time('pane');
+            //console.time('pane');
             this.renderTaskbar();
             this.renderWidgets();
             
             this.constructor.__super__.render.call(this);
 
-           console.timeEnd('pane');
+            //console.timeEnd('pane');
             return this;
         },
 
         renderTaskbar: function() {
             this.taskbar = new Taskbar({
-                collection: this.collection
+                collection: this.collection,
+                HeaderClass: WindowHeader
             });
 
             this.taskbar.render();
@@ -74,8 +76,6 @@ define([
 
 //            console.timeEnd('widget');
 
-            this.windows.push(ww);
-
             return ww;
         },
 
@@ -86,21 +86,6 @@ define([
         launchWidget: function (evt, model) {
             var ww = this.renderWidget(model);
             return ww;
-        },
-
-        changeActivation: function(widget) {
-            var active = widget.get('active');
-
-            if (active) {
-                //deactivate all other widgets
-                this.collection.each(function(widg) {
-                    if (widget !== widg) {
-                        widg.set('active', false);
-                    }
-                });
-            }
         }
-        
     });
-
 });

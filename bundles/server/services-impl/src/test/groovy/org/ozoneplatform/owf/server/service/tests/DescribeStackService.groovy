@@ -19,7 +19,7 @@ package org.ozoneplatform.owf.server.service.tests
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
 import org.ozoneplatform.owf.server.service.impl.StackServiceImpl
-import org.ozoneplatform.owf.server.service.api.model.Stack
+import org.ozoneplatform.commons.server.domain.model.Stack
 import spock.lang.Specification
 
 class DescribeStackService extends Specification {
@@ -31,7 +31,7 @@ class DescribeStackService extends Specification {
         stackService.create(new Stack())
 
         then: "throws"
-        thrown(ValidationException)
+        thrown(Exception)
     }
     
     def "fetch must receive an exisiting id"() {
@@ -52,7 +52,7 @@ class DescribeStackService extends Specification {
     
     def "update must receive an exisiting id"() {
         when: "updating a stack by invalid id"
-        stackService.update(100L, new Stack())
+        stackService.update(100L, new Stack("Stack Foo", "stackfoo"))
 
         then: "throws"
         thrown(NotFoundException)
@@ -63,7 +63,7 @@ class DescribeStackService extends Specification {
         stackService.doImport(new Stack())
 
         then: "throws"
-        thrown(ValidationException)
+        thrown(Exception)
     }
     
     def "export must receive an exisiting id"() {
@@ -84,11 +84,11 @@ class DescribeStackService extends Specification {
     
     def "update must receive a valid stack"() {
         when: "updating a stack without a name"
-        Stack stack = stackService.create(new Stack(name: "foo"))
-        stackService.update(stack.id, new Stack(name: "    "))
+        Stack stack = stackService.create(new Stack("Stack Foo", "stackfoo"))
+        stackService.update(stack.id, new Stack())
 
         then: "throws"
-        thrown(ValidationException)
+        thrown(Exception)
     }
     
 }

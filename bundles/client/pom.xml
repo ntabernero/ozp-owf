@@ -208,6 +208,15 @@
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
+                                    <artifactItem>
+							            <groupId>org.ozoneplatform.commons.vendor</groupId>
+							            <artifactId>backbone.declarative.views</artifactId>
+							            <version>0.2</version>
+							            <type>zip</type>
+							            <classifier>js</classifier>
+							            <overWrite>true</overWrite>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
+							        </artifactItem>
                                 </artifactItems>
                                 <overWriteReleases>false</overWriteReleases>
                                 <overWriteSnapshots>true</overWriteSnapshots>

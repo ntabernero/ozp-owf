@@ -17,10 +17,10 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.WidgetDefinitionService
-import org.ozoneplatform.owf.server.service.api.model.WidgetDefinition
-import org.ozoneplatform.owf.server.service.api.model.Intent
-import org.ozoneplatform.owf.server.service.api.model.Person
-import org.ozoneplatform.owf.server.service.api.model.Group
+import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.Intent
+import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.commons.server.domain.model.Group
 
 class WidgetDefinitionServiceImpl implements WidgetDefinitionService {
     @Override
@@ -102,11 +102,16 @@ class WidgetDefinitionServiceImpl implements WidgetDefinitionService {
     WidgetDefinitionServiceImpl() {
         widgetDefinitionMap = new HashMap<String, WidgetDefinition>()
         WidgetDefinition widgetDefinition = createExampleWidgetDefinition()
-        widgetDefinitionMap[widgetDefinition.guid] = widgetDefinition
+        widgetDefinitionMap[widgetDefinition.id] = widgetDefinition
     }
 
     WidgetDefinition createExampleWidgetDefinition() {
-        new WidgetDefinition([guid:"12345", displayName: "Example Widget Definition", widgetUrl: "http://www.example.com",
-                imageUrlLarge: "http://large.image.com", imageUrlSmall: "http://small.image.com", widgetType:"standard"])
+        WidgetDefinition widgetDefinition = WidgetDefinition.builder().withDisplayName('Example Widget Definition').
+                withImageUrlLarge('http://large.image.com').withImageUrlSmall('http://small.image.com').
+                withUrl('http://www.example.com').withWidgetType('standard').build()
+        widgetDefinition.id = 12345
+        widgetDefinition.receivableIntents << new Intent('plot', 'lat/long')
+        widgetDefinition.receivableIntents << new Intent('render', 'html')
+        widgetDefinition
     }
 }

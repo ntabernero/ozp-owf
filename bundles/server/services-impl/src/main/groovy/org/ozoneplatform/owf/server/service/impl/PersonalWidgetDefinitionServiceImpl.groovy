@@ -17,8 +17,9 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService
-import org.ozoneplatform.owf.server.service.api.model.PersonalWidgetDefinition
-import org.ozoneplatform.owf.server.service.api.model.WidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.Person
 
 class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionService {
     @Override
@@ -33,7 +34,7 @@ class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionSer
 
     @Override
     PersonalWidgetDefinition create(String personId, PersonalWidgetDefinition personalWidgetDefinition) {
-        personalWidgetDefinitionMap[personalWidgetDefinition.id] = personalWidgetDefinition
+        personalWidgetDefinitionMap[personalWidgetDefinition] = personalWidgetDefinition
         personalWidgetDefinition
     }
 
@@ -78,9 +79,10 @@ class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionSer
     }
 
     PersonalWidgetDefinition createExamplePersonalWidgetDefinition() {
-        new PersonalWidgetDefinition([id: 12345, position: 1, tags: ["one", "two", "three"] as Set ,
-                widgetDefinition: new WidgetDefinition([guid:"12345", displayName: "Example Widget Definition", widgetUrl: "http://www.example.com",
-                        imageUrlLarge: "http://large.image.com", imageUrlSmall: "http://small.image.com", widgetType:"standard"])
-        ])
+        PersonalWidgetDefinition personalWidgetDefinition = new Person('user2', 'User Two').createPersonalWidgetDefinition(WidgetDefinition.builder().withDisplayName('Example Widget Definition').
+                withImageUrlLarge('http://large.image.com').withImageUrlSmall('http://small.image.com').
+                withUrl('http://www.example.com').withWidgetType('standard').build())
+        personalWidgetDefinition.id = 12345
+        personalWidgetDefinition
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,15 +19,10 @@
     <name>Ozone Widget Framework Parent Project</name>
     <description>see README.md</description>
 
-    <properties>
-        <groovy.version>2.0.6</groovy.version>
-        <jackson.version>2.1.2</jackson.version>
-    </properties>
-
     <scm>
-        <connection>scm:git:https://www.owfgoss.org/git/repos/owf8.git</connection>
-        <developerConnection>scm:git:https://www.owfgoss.org/git/repos/owf8.git</developerConnection>
-        <url>https://www.owfgoss.org/crucible/browse/owf8/</url>
+        <connection>scm:git:https://www.owfgoss.org/git/repos/ozp-owf.git</connection>
+        <developerConnection>scm:git:https://www.owfgoss.org/git/repos/ozp-owf.git</developerConnection>
+        <url>https://www.owfgoss.org/crucible/browse/ozp-owf/</url>
     </scm>
 
     <modules>
@@ -37,24 +33,52 @@
     <build>
         <pluginManagement>
             <plugins>
-                <!--JsHint Plugin-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
                     <version>1.7</version>
                     <executions>
+                        <!--JsHint Plugin-->
                         <execution>
                             <id>jshint</id>
                             <phase>validate</phase>
                             <configuration>
                                 <target>
-                                    <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask" classpathref="maven.plugin.classpath" />
+                                    <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask"
+                                             classpathref="maven.plugin.classpath"/>
 
-                                    <jshint dir="${project.basedir}/src/main/webapp/js" options="strict=false, devel=true, expr=true" globals="define:true, require:true">
-                                        <include name="**/*.js" />
-                                        <exclude name="**/*.min.js" />
-                                        <report type="jslint-xml" destFile="${project.build.directory}/jslint-reports/jslint.xml" />
+                                    <jshint dir="${project.basedir}/src/main/webapp/js"
+                                            options="strict=false, devel=true, expr=true, eqnull=true"
+                                            globals="define:true, require:true">
+                                        <include name="**/*.js"/>
+                                        <exclude name="**/*.min.js"/>
+                                        <report type="jslint-xml"
+                                                destFile="${project.build.directory}/jslint-reports/jslint.xml"/>
                                     </jshint>
+                                </target>
+                            </configuration>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                        </execution>
+
+                        <!--set exec permissions for compass scripts-->
+                        <execution>
+                            <id>Set permissions for compass sh files</id>
+                            <phase>process-resources</phase>
+                            <configuration>
+                                <target>
+                                    <chmod perm="u+x">
+                                        <fileset dir="${project.build.directory}/minified-output/">
+                                            <include name="themes/*.sh"/>
+                                        </fileset>
+                                    </chmod>
                                 </target>
                             </configuration>
                             <goals>

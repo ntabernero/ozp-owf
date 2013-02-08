@@ -16,12 +16,13 @@
 
 package org.ozoneplatform.owf.server.service.impl
 
+import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.commons.server.domain.model.Preference
 import org.ozoneplatform.owf.server.service.api.PersonService
-import org.ozoneplatform.owf.server.service.api.model.Person
-import org.ozoneplatform.owf.server.service.api.exception.*
+import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
+import org.ozoneplatform.owf.server.service.api.exception.ValidationException
 
 import java.text.DateFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
 
 class PersonServiceImpl implements PersonService {
@@ -29,9 +30,42 @@ class PersonServiceImpl implements PersonService {
     def theList = [];
     
     PersonServiceImpl() {
-        theList.add(new Person(id: 1L, username: "testUser1", fullName: "Test User 1", email: "testuser1@blah.blah", prevLogin: "07/10/2012 10:30:00", lastLogin: "07/14/2012 14:03:31"));
-        theList.add(new Person(id: 2L, username: "testUser2", fullName: "Test User 2", email: "testuser2@blah.blah", prevLogin: "11/06/2012 12:36:21", lastLogin: "11/08/2012 16:58:05"));
-        theList.add(new Person(id: 3L, username: "testAdmin1", fullName: "Test Administrator 1", email: "testadmin1@blah.blah", prevLogin: "09/25/2012 10:30:00", lastLogin: "09/26/2012 14:03:31"));
+
+        DateFormat fmt = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        Calendar cal = Calendar.instance
+        def person
+        
+        person = new Person("testUser1", "Test User 1");
+        person.id = 1L;
+        person.email = "testuser1@blah.blah";
+        cal.time = fmt.parse("07/10/2012 10:30:00");
+        person.prevLogin = (Calendar)cal.clone();
+        cal.time = fmt.parse("07/14/2012 14:03:31");
+        person.lastLogin = (Calendar)cal.clone();
+        person.setPreference("fooone", "foo.namespace", "foooneval");
+        person.setPreference("footwo", "foo.namespace", "footwoval");
+        theList.add(person);
+        
+        person = new Person("testUser2", "Test User 2");
+        person.id = 2L;
+        person.email = "testuser2@blah.blah";
+        cal.time = fmt.parse("11/06/2012 12:36:21");
+        person.prevLogin = (Calendar)cal.clone();
+        cal.time = fmt.parse("11/08/2012 16:58:05");
+        person.lastLogin = (Calendar)cal.clone();
+        person.setPreference("bartwo", "bar.namespace", "bartwoval");
+        theList.add(person);
+        
+        person = new Person("testAdmin1", "Test Administrator 1");
+        person.id = 3L;
+        person.email = "testadmin1@blah.blah";
+        cal.time = fmt.parse("09/25/2012 10:30:00");
+        person.prevLogin = (Calendar)cal.clone();
+        cal.time = fmt.parse("09/26/2012 14:03:31");
+        person.lastLogin = (Calendar)cal.clone();
+        person.setPreference("bartwo", "bar.namespace", "bartwoval");
+        theList.add(person);
+
     }
     
     List<Person> list() {
@@ -72,28 +106,28 @@ class PersonServiceImpl implements PersonService {
     private void validate(Person person) {
         boolean validUsername = person?.username?.trim()?.length() > 0;
         boolean validFullName = person?.fullName?.trim()?.length() > 0;
-        DateFormat fmt = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         if (!validUsername) {
             throw new ValidationException("Username is required");
         }
         if (!validFullName) {
             throw new ValidationException("Full Name is required");
         }
-        if (person?.prevLogin) {
-            try {
-                fmt.parse(person.prevLogin)
-            } catch(ParseException e) {
-                throw new ValidationException("Previous login date is invalid");
-            }
-        }
-        if (person?.lastLogin) {
-            try {
-                fmt.parse(person.lastLogin)
-            } catch(ParseException e) {
-                throw new ValidationException("Last login date is invalid");
-            }
-        }
         return;
+    }
+    
+    Set<Preference> listPreferences(Long id) {
+        Person thePerson = this.fetch(id);
+        return thePerson.preferences;
+    }
+    
+    Set<Preference> listPreferences(Long id, String namespace) {
+        Person thePerson = this.fetch(id);
+        return thePerson.preferences.findAll{ it.namespace == namespace; };
+    }
+    
+    Preference fetchPreference(Long id, String namespace, String name) {
+        Person thePerson = this.fetch(id);
+        return thePerson.preferences.find{ it.namespace == namespace && it.name == name; };
     }
     
 }
