@@ -32,6 +32,7 @@ define([
             'change:active': 'updateActive',
             'change:maximized': 'updateMaximize',
             'change:minimized': 'updateMinimize',
+            'change:collapsed': 'updateCollapse',
             'destroy': 'remove'
         },
 
@@ -45,6 +46,10 @@ define([
 
         updateMaximize: function() {
             this.$el[this.model.get('maximized') ? 'addClass' : 'removeClass']('maximized');
+        },
+
+        updateCollapse: function() {
+            this.$el[this.model.get('collapsed') ? 'addClass' : 'removeClass']('collapsed');
         },
 
         updateActive: function() {
