@@ -5,15 +5,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference
 import org.ozoneplatform.commons.server.domain.model.Person
 import com.fasterxml.jackson.annotation.JsonProperty
 
-public interface DashboardInstanceMixIn extends DashboardMixIn {
+public abstract class DashboardInstanceMixIn extends DashboardMixIn {
+
+    protected DashboardInstanceMixIn(@JsonProperty("name") String name, @JsonProperty("position") int position) {}
 
     @JsonIgnore
-    boolean isIsDefault()
+    abstract boolean isIsDefault()
 
     @JsonProperty
-    boolean getIsDefault()
+    abstract boolean getIsDefault()
 
     @JsonManagedReference
-    Person getPerson()
+    abstract Person getPerson()
 
 }
