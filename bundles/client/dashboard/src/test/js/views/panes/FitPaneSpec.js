@@ -53,24 +53,23 @@ define([
             expect(fitPane.$el.children('iframe').length).to.equal(0);
         });
 
-//commenting out because this test is breaking the build
-//        it('renders a single widget when its collection contains that widget', function() {
-//            fitPane = new FitPane({
-//                collection: collection
-//            }).render();
-//
-//            expect(fitPane.$el.children('iframe').length).to.equal(1);
-//            fitPane.remove();
-//
-//            var newCollection = new WidgetStatesCollection();
-//            fitPane = new FitPane({
-//                collection: newCollection
-//            }).render();
-//
-//            newCollection.add(widget2);
-//
-//            expect(fitPane.$el.children('iframe').length).to.equal(1);
-//        });
+        it('renders a single widget when its collection contains that widget', function() {
+            fitPane = new FitPane({
+                collection: collection
+            }).render();
+
+            expect(fitPane.$el.children('iframe').length).to.equal(1);
+            fitPane.remove();
+
+            var newCollection = new WidgetStatesCollection();
+            fitPane = new FitPane({
+                collection: newCollection
+            }).render();
+
+            newCollection.add(widget2);
+
+            expect(fitPane.$el.children('iframe').length).to.equal(1);
+        });
 
         it('throws an exception if created with more than one widget', function() {
             collection.add(widget2);
@@ -82,16 +81,15 @@ define([
             }).to.throwException();
         });
 
-//commenting out because this test is breaking the build
-//        it('throws an exception if an additional widget is added after creation', function() {
-//            fitPane = new FitPane({
-//                collection: collection
-//            });
-//
-//            expect(function() {
-//                collection.add(widget2);
-//            }).to.throwException();
-//        });
+        it('throws an exception if an additional widget is added after creation', function() {
+            fitPane = new FitPane({
+                collection: collection
+            });
+
+            expect(function() {
+                collection.add(widget2);
+            }).to.throwException();
+        });
 
         it('deletes a widget iframe if the widget model is destroyed', function() {
             fitPane = new FitPane({

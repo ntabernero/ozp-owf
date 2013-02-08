@@ -59,49 +59,46 @@ define([
             done();
         });
 
-//commenting out because this test is breaking the build
-//        it('renders a widget window for each widget in the collection', function() {
-//            collection.add(widget3);
-//
-//            expect(desktopPane.$el.find('.widget.window').length).to.equal(3);
-//        });
+        it('renders a widget window for each widget in the collection', function() {
+            collection.add(widget3);
+
+            expect(desktopPane.$el.find('.widget.window').length).to.equal(3);
+        });
 
         it('renders a taskbar with the same collection', function() {
             expect(desktopPane.taskbar.collection).to.be(desktopPane.collection);
         });
 
-//commenting out because this test is breaking the build
-//        it('deactivates other widgets when a widget is activated', function() {
-//            collection.add(widget3);
-//
-//            collection.at(0).set('active', true);
-//            expect(collection.where({active: true}).length).to.equal(1);
-//            expect(collection.where({active: true})[0].get('title')).to.equal('Widget One');
-//
-//            collection.at(1).set('active', true);
-//            expect(collection.where({active: true}).length).to.equal(1);
-//            expect(collection.where({active: true})[0].get('title')).to.equal('Widget Two');
-//
-//            collection.at(2).set('active', true);
-//            expect(collection.where({active: true}).length).to.equal(1);
-//            expect(collection.where({active: true})[0].get('title')).to.equal('Widget Three');
-//
-//            collection.at(0).set('active', true);
-//            expect(collection.where({active: true}).length).to.equal(1);
-//            expect(collection.where({active: true})[0].get('title')).to.equal('Widget One');
-//
-//            collection.at(2).set('active', true);
-//            expect(collection.where({active: true}).length).to.equal(1);
-//            expect(collection.where({active: true})[0].get('title')).to.equal('Widget Three');
-//        });
+        it('deactivates other widgets when a widget is activated', function() {
+            collection.add(widget3);
 
-//commenting out because this test is breaking the build
-//        it('registers each widget with the ZIndexManager', function() {
-//            sinon.spy(desktopPane.zIndexManager, 'register');
-//
-//            collection.add(widget3);
-//
-//            expect(desktopPane.zIndexManager.register.calledOnce).to.be.ok();
-//        });
+            collection.at(0).set('active', true);
+            expect(collection.where({active: true}).length).to.equal(1);
+            expect(collection.where({active: true})[0].get('title')).to.equal('Widget One');
+
+            collection.at(1).set('active', true);
+            expect(collection.where({active: true}).length).to.equal(1);
+            expect(collection.where({active: true})[0].get('title')).to.equal('Widget Two');
+
+            collection.at(2).set('active', true);
+            expect(collection.where({active: true}).length).to.equal(1);
+            expect(collection.where({active: true})[0].get('title')).to.equal('Widget Three');
+
+            collection.at(0).set('active', true);
+            expect(collection.where({active: true}).length).to.equal(1);
+            expect(collection.where({active: true})[0].get('title')).to.equal('Widget One');
+
+            collection.at(2).set('active', true);
+            expect(collection.where({active: true}).length).to.equal(1);
+            expect(collection.where({active: true})[0].get('title')).to.equal('Widget Three');
+        });
+
+        it('registers each widget with the ZIndexManager', function() {
+            sinon.spy(desktopPane.zIndexManager, 'register');
+
+            collection.add(widget3);
+
+            expect(desktopPane.zIndexManager.register.calledOnce).to.be.ok();
+        });
     });
 });
