@@ -34,9 +34,9 @@ define([
             this.$el.resizable(_.extend({}, resizableOpts, {
                 minHeight: 50,
                 minWidth: 50,
-                start: this.onResizeStart,
+                start: _.bind(this.onResizeStart, this),
                 resize: _.bind(this.onResize, this),
-                stop: this.onResizeStop
+                stop: _.bind(this.onResizeStop, this)
             }));
 
             if (widthResizable) {

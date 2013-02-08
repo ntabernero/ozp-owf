@@ -37,8 +37,12 @@
         top: -10000px !important;
         left: -10000px !important;
     }
-}
 
-.widget.window .header {
-    cursor: move;
+    &.window {
+        position: absolute;
+
+        .header {
+            cursor: move;
+        }
+    }
 }
