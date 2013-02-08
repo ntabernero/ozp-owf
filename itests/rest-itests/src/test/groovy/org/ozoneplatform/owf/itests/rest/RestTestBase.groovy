@@ -1,6 +1,7 @@
 package org.ozoneplatform.owf.itests.rest
 import groovy.json.JsonSlurper
 import org.apache.http.client.fluent.Request
+import org.apache.http.entity.ContentType
 import org.junit.Before
 import org.junit.runner.RunWith
 import org.ops4j.pax.exam.Option
@@ -67,4 +68,12 @@ abstract class RestTestBase extends OzoneTestSupport {
         def json = Request.Get(uri).addHeader('Accept','application/json').execute().returnContent().asString()
         jsonSlurper.parseText(json)
     }
+
+    def postJson(GString uri, String json) {
+        def jsonSlurper = new JsonSlurper()
+        def responseJson = Request.Post(uri).bodyString(json, ContentType.APPLICATION_JSON).addHeader('Accept','application/json').
+                execute().returnContent().asString()
+        jsonSlurper.parseText(responseJson)
+    }
+
 }

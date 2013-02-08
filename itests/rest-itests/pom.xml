@@ -106,6 +106,7 @@
                 <configuration>
                     <includes>
                         <include>**/Describe*</include>
+                        <include>**/*Tests*</include>
                     </includes>
                 </configuration>
             </plugin>
