@@ -22,18 +22,18 @@ define([
     'services/ZIndexManager',
     'jquery',
     'backbone'
-], function (Pane, WidgetWindow, Taskbar, WindowHeader, ZIndexManager, $, Backbone) {
+], function (LayoutPane, WidgetWindow, Taskbar, WindowHeader, ZIndexManager, $, Backbone) {
     
     'use strict';
 
-    return Pane.extend({
+    return LayoutPane.extend({
         $body: null, //jquery element for the dashboard body
         taskbar: null, //taskbar View
 
-        className: Pane.prototype.className + ' desktoppane',
+        className: LayoutPane.prototype.className + ' desktoppane',
 
         initialize: function() {
-            Pane.prototype.initialize.apply(this, arguments);
+            LayoutPane.prototype.initialize.apply(this, arguments);
 
             this.zIndexManager = new ZIndexManager();
         },
@@ -42,7 +42,7 @@ define([
             this.renderTaskbar();
             this.renderWidgets();
 
-            return Pane.prototype.render.apply(this, arguments);
+            return LayoutPane.prototype.render.apply(this, arguments);
         },
 
         renderTaskbar: function() {

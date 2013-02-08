@@ -19,15 +19,15 @@ define([
     'views/widgets/WidgetControlIframe',
     'lodash',
     'backbone'
-], function (Pane, WidgetControlIframe, _, Backbone) {
+], function (LayoutPane, WidgetControlIframe, _, Backbone) {
     
     'use strict';
 
-    return Pane.extend({
+    return LayoutPane.extend({
         className: 'pane fitpane',
 
         initialize: function() {
-            Pane.prototype.initialize.apply(this, arguments);
+            LayoutPane.prototype.initialize.apply(this, arguments);
 
             if (this.collection.length > 1) {
                 throw "Fit Panes cannot contain more than one widget";
@@ -35,7 +35,7 @@ define([
         },
 
         render: function() {
-            Pane.prototype.render.apply(this, arguments);
+            LayoutPane.prototype.render.apply(this, arguments);
             this.addWidget();
             return this;
         },

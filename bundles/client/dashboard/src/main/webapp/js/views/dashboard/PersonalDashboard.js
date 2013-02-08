@@ -15,6 +15,7 @@
  */
 define([
     'views/panes/AccordionPane',
+    'views/panes/PortalPane',
     'views/panes/DesktopPane',
     'views/panes/FitPane',
     'views/panes/TabbedPane',
@@ -22,7 +23,7 @@ define([
 
     'backbone',
     'lodash'
-], function (AccordionPane, DesktopPane, FitPane, TabbedPane, View, Backbone, _) {
+], function (AccordionPane, PortalPane, DesktopPane, FitPane, TabbedPane, View, Backbone, _) {
 
     'use strict';
 
@@ -41,6 +42,9 @@ define([
 
             if (layoutConfig.paneType === 'accordionpane') {
                 pane = new AccordionPane(layoutConfig);
+            }
+            if (layoutConfig.paneType === 'portalpane') {
+                pane = new PortalPane(layoutConfig);
             }
             else if (layoutConfig.paneType === 'desktoppane') {
                 pane = new DesktopPane(layoutConfig);

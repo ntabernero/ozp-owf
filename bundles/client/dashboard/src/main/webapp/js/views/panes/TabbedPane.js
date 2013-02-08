@@ -21,11 +21,11 @@ define([
     'views/Taskbar',
     'backbone',
     'jquery'
-], function (Pane, Header, WidgetControlIframe, Taskbar, Backbone, $) {
+], function (LayoutPane, Header, WidgetControlIframe, Taskbar, Backbone, $) {
     'use strict';
 
-    return Pane.extend({
-        className: Pane.prototype.className + ' tabbedpane',
+    return LayoutPane.extend({
+        className: LayoutPane.prototype.className + ' tabbedpane',
 
         $body: null,
         tabbar: null,
@@ -47,7 +47,7 @@ define([
                   me.addWidget(widgetState);             
             });
 
-            return Pane.prototype.render.apply(me, arguments);
+            return LayoutPane.prototype.render.apply(me, arguments);
         },
 
         addWidget: function(widget) {
