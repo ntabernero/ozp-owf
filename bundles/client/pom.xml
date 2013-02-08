@@ -19,7 +19,7 @@
     </modules>
 
     <properties>
-        <jetty.defaults.descriptor>${project.parent.parent.basedir}/webdefault.xml</jetty.defaults.descriptor>
+        <jetty.defaults.descriptor>${project.parent.basedir}/webdefault.xml</jetty.defaults.descriptor>
     </properties>
 
     <build>
@@ -181,6 +181,15 @@
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
                                     </artifactItem>
+                                    <artifactItem>
+							            <groupId>org.ozoneplatform.commons.vendor</groupId>
+							            <artifactId>backbone.declarative.views</artifactId>
+							            <version>0.2</version>
+							            <type>zip</type>
+							            <classifier>js</classifier>
+							            <overWrite>true</overWrite>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
+							        </artifactItem>
                                 </artifactItems>
                                 <overWriteReleases>false</overWriteReleases>
                                 <overWriteSnapshots>true</overWriteSnapshots>

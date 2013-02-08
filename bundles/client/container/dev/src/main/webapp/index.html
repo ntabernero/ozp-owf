@@ -14,7 +14,8 @@
         <link rel="stylesheet" href="styles/font-awesome.css">
     <![endif]-->
 
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="libs/development-bundle/themes/base/minified/jquery-ui.min.css">
+    <link rel="stylesheet" href="themes/a_default.theme/css/a_default.css">
 </head>
 <body>
     <noscript>This application requires javascript to be enabled.</noscript>
@@ -34,12 +35,11 @@
             for (var i = 0; i < m.length; i++) {
                 if (!window.console[m[i]]) {
                     window.console[m[i]] = function() {};
-                }    
+                }
             }
         })();
     </script>
     <div id="mask" class="hide"></div>
-    <script src="libs/js/json2.js"></script>
     <div id="main" style="height:100%; width:100%">
 
         <div id="banner" class="navbar navbar-static-top">
@@ -73,7 +73,8 @@
 
     </div>
 
-
+    <script src="libs/js/json2.js"></script>
+    <script src="js/serverConfig.js"></script>
     <script data-main="js/main" src="js/production.js"></script>
     <script type="text/template" id="dashboard-template">
         <h1><%- name %></h1>

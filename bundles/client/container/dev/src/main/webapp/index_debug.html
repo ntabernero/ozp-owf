@@ -13,10 +13,9 @@
     <!--[if IE 7]>
         <link rel="stylesheet" href="styles/font-awesome.css">
     <![endif]-->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap-responsive.css">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="css/main.css">
+
+    <link rel="stylesheet" href="libs/development-bundle/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="themes/a_default.theme/css/a_default.css">
 </head>
 <body>
     <noscript>This application requires javascript to be enabled.</noscript>
@@ -41,9 +40,6 @@
         })();
     </script>
     <div id="mask" class="hide"></div>
-    <script src="libs/js/json2.js"></script>
-    <script data-main="js/main" src="libs/js/require.js"></script>
-
     <div id="main" style="height:100%; width:100%">
 
         <div id="banner" class="navbar navbar-static-top">
@@ -77,6 +73,9 @@
 
     </div>
 
+    <script src="libs/js/json2.js"></script>
+    <script src="js/serverConfig.js"></script>
+    <script data-main="js/main" src="libs/js/require.js"></script>
     <script type="text/template" id="dashboard-template">
         <h1><%- name %></h1>
         <%- layoutConfig %>
