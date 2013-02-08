@@ -50,9 +50,9 @@ define([
                     me.$el
                         .draggable({
                             containment: me.containment,
-                            start: me._mask,
+                            start: me.mask,
                             stop: function(evt, ui) {
-                                me._unmask();
+                                me.unmask();
                                 me._onMove(evt, ui);
                             }
                         })

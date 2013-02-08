@@ -79,6 +79,10 @@ define([
             done();
         });
 
+        it('uses the SortableCollectionView mixin', function() {
+            expect(panelPane.initSortable).to.be.ok();
+        });
+
         it('renders a widget Panel for each widget in the collection', function() {
             collection.add(widget3);
 

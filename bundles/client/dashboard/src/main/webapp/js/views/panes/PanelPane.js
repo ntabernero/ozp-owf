@@ -20,12 +20,27 @@
 define([
     'views/panes/LayoutPane',
     'views/widgets/Panel',
-    'backbone'
-], function (LayoutPane, Panel, Backbone) {
+    'mixins/containers/SortableCollectionView',
+    'backbone',
+    'lodash'
+], function (LayoutPane, Panel, SortableCollectionView, Backbone, _) {
     'use strict';
 
-    return LayoutPane.extend({
+    return LayoutPane.extend(_.extend({}, SortableCollectionView, {
         className: LayoutPane.prototype.className + ' panelpane',
+
+        initialize: function() {
+            LayoutPane.prototype.initialize.apply(this, arguments);
+
+            this.initSortable({
+                start: function(evt, ui) {
+                    ui.item.data('view').mask();
+                },
+                stop: function(evt, ui) {
+                    ui.item.data('view').unmask();
+                }
+            });
+        },
 
         render: function() {
             var me = this;
@@ -44,5 +59,5 @@ define([
 
             this.$el.append(panel.render().$el);
         }
-     });
+     }));
 });

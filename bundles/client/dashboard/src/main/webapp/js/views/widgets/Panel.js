@@ -53,18 +53,15 @@ define([
                 .append( this.$body );
 
             return this;
-        }
+        },
 
-//        getBox: function () {
-//            var $el = this.$el;
-//
-//            return {
-//                width: $el.width(),
-//                height: $el.height(),
-//                top: $el.css('top'),
-//                left: $el.css('left')
-//            };
-//        }
+        mask: function() {
+            $('#mask').removeClass('hide');
+        },
+
+        unmask: function() {
+            $('#mask').addClass('hide');
+        }
     }));
 
 });

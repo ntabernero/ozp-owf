@@ -79,10 +79,6 @@ define([
             done();
         });
 
-        it('uses the SortableCollectionView mixin', function() {
-            expect(portalPane.initSortable).to.be.ok();
-        });
-
         it('does not record changes in the widgets horizontal size', function() {
             var view = portalPane.$('.widget').data('view');
 
