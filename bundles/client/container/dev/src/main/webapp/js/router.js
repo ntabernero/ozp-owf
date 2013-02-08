@@ -87,8 +87,9 @@ define([
     var Router = Backbone.Router.extend({
         routes: {
             '': 'index',
-            ':guid': 'index',
-            'perf/:count': 'measurePerformance'
+            'guid=:guid': 'index',
+            'perf/:count': 'measurePerformance',
+            ':guid': 'index'
         },
 
         initialize: function (options) {
@@ -97,7 +98,7 @@ define([
             //anytime a dashboard is switched update the url so it has the dashboard's guid
             EventBus.on('dashboard:switched', function (model) {
               if (model != null && model.get('guid') != null) {
-                  this.navigate(model.get('guid'));
+                  this.navigate('guid='+model.get('guid'));
               }
             }, this);
         },

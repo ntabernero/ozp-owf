@@ -18,9 +18,11 @@ define([
     'views/panes/DesktopPane',
     'views/panes/FitPane',
     'views/panes/TabbedPane',
+    'views/View',
+
     'backbone',
-    'views/View'
-], function (AccordionPane, DesktopPane, FitPane, TabbedPane, Backbone, View) {
+    'lodash'
+], function (AccordionPane, DesktopPane, FitPane, TabbedPane, View, Backbone, _) {
 
     'use strict';
 
@@ -30,7 +32,12 @@ define([
 
         render: function() {
             // Get the layoutConfig
-            var pane = null, layoutConfig = JSON.parse(this.model.get('layoutConfig'));
+            var pane = null, layoutConfig = this.model.get('layoutConfig');
+
+            //if layoutConfig is a string parse it into an object
+            if (_.isString(layoutConfig)) {
+                layoutConfig = JSON.parse(layoutConfig);
+            }
 
             if (layoutConfig.paneType === 'accordionpane') {
                 pane = new AccordionPane(layoutConfig);

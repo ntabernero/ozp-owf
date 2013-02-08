@@ -16,7 +16,6 @@
     <packaging>war</packaging>
 
     <properties>
-        <jslintVersion>1.0.1</jslintVersion>
         <browsers>PhantomJS</browsers>
     </properties>
 
