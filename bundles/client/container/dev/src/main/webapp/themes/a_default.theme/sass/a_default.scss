@@ -17,9 +17,13 @@ $baseBorderRadius:      0;
 $borderRadiusLarge:     0;
 $borderRadiusSmall:     0;
 
-//need to offset the taskbar in the desktop pane relative to the height of the banner
-//or the taskbar will be pushed off the page
-$desktopTaskbarBottom: 2.5em;
+#dashboard-container {
+    position: absolute;
+
+    width: 100%;
+    bottom: 0;
+    top: 2.5em; //make space for the banner
+}
 
 // Put your theme customizations here. If you have many customizations,
 // you may want to put them in a separate file which you import here. 
