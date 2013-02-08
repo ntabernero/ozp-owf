@@ -18,6 +18,8 @@ package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.owf.server.service.api.DashboardTemplateService
 import org.ozoneplatform.commons.server.domain.model.Dashboard
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Response
@@ -26,6 +28,8 @@ import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 @Path("/dashboard-templates")
 @Produces("application/json")
 class DashboardTemplateController {
+
+    Logger logger = LoggerFactory.getLogger(DashboardTemplateController.class)
 
     DashboardTemplateService groupDashboardService
 
@@ -37,8 +41,8 @@ class DashboardTemplateController {
     @POST
     @Consumes("application/json")
     Response create(DashboardTemplate dashboardInfo) {
-        println "In create(): ${dashboardInfo?.guid}"
-        groupDashboardService.create(dashboardInfo)
+        logger.info "In create(): ${dashboardInfo}"
+        dashboardInfo = groupDashboardService.create(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }
 

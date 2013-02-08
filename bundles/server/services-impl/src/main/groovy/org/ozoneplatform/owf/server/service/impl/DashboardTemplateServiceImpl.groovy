@@ -20,14 +20,20 @@ import org.ozoneplatform.owf.server.service.api.DashboardTemplateService
 import org.ozoneplatform.commons.server.domain.model.Dashboard
 import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 class DashboardTemplateServiceImpl implements DashboardTemplateService {
+
+    Logger logger = LoggerFactory.getLogger(DashboardTemplateServiceImpl.class)
 
     List<DashboardTemplate> list() {
         dashboardMap.values().toList()
     }
 
     DashboardTemplate create(DashboardTemplate dashboardInfo) {
-        dashboardMap[(dashboardInfo.guid)] = dashboardInfo
+        dashboardInfo.id = UUID.randomUUID().toString()
+        dashboardMap[(dashboardInfo.id)] = dashboardInfo
         dashboardInfo
     }
 
@@ -36,8 +42,8 @@ class DashboardTemplateServiceImpl implements DashboardTemplateService {
     }
 
     void update(DashboardTemplate dashboardInfo) {
-        if (dashboardMap[(dashboardInfo.guid)]) {
-            dashboardMap[(dashboardInfo.guid)] = dashboardInfo
+        if (dashboardMap[(dashboardInfo.id)]) {
+            dashboardMap[(dashboardInfo.id)] = dashboardInfo
         }
     }
 
@@ -55,7 +61,7 @@ class DashboardTemplateServiceImpl implements DashboardTemplateService {
         if (dashboardMap[id]) {
             println "Copied $id"
             Dashboard copy = copyDashboard(dashboardMap[id])
-            dashboardMap[copy.guid] = copy
+            dashboardMap[copy.id] = copy
             copy
         }
         else {
@@ -73,7 +79,8 @@ class DashboardTemplateServiceImpl implements DashboardTemplateService {
 
     DashboardTemplate createExampleDashboard() {
         DashboardTemplate dashboardTemplate = new DashboardTemplate("Dashboard1", 0)
-        dashboardTemplate.id = 12345
+        dashboardTemplate.id = UUID.randomUUID().toString()
+        dashboardTemplate.layoutConfig = '{"prop": "test"}'
         dashboardTemplate
     }
 
