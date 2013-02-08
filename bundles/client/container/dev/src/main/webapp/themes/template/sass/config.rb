@@ -12,6 +12,10 @@ css_path = File.join(sass_path, "..", "css")
 # images_dir: Explicitly set to an empty string for proper functioning of theme_image() in lib/owf_utils.rb
 images_dir = ""
 
+# fonts_dir
+relative_assets=true
+fonts_dir = "../../../libs/fonts"
+
 # output_style: The output style for your compiled CSS
 # nested, expanded, compact, compressed
 # More information can be found here http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#output_style

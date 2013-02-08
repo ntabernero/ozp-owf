@@ -35,14 +35,15 @@ class WidgetDefinitionServiceImpl implements WidgetDefinitionService {
 
     @Override
     WidgetDefinition create(WidgetDefinition widgetDefinition) {
-        widgetDefinitionMap[widgetDefinition.guid] = widgetDefinition
+        widgetDefinition.id = UUID.randomUUID().toString()
+        widgetDefinitionMap[widgetDefinition.id] = widgetDefinition
         widgetDefinition
     }
 
     @Override
     WidgetDefinition update(String widgetId, WidgetDefinition widgetDefinition) {
-        if (widgetDefinitionMap[(widgetDefinition.guid)]) {
-            widgetDefinitionMap[(widgetDefinition.guid)] = widgetDefinition
+        if (widgetDefinitionMap[(widgetDefinition.id)]) {
+            widgetDefinitionMap[(widgetDefinition.id)] = widgetDefinition
         }
     }
 
@@ -109,7 +110,7 @@ class WidgetDefinitionServiceImpl implements WidgetDefinitionService {
         WidgetDefinition widgetDefinition = WidgetDefinition.builder().withDisplayName('Example Widget Definition').
                 withImageUrlLarge('http://large.image.com').withImageUrlSmall('http://small.image.com').
                 withUrl('http://www.example.com').withWidgetType('standard').build()
-        widgetDefinition.id = 12345
+        widgetDefinition.id = UUID.randomUUID().toString()
         widgetDefinition.receivableIntents << new Intent('plot', 'lat/long')
         widgetDefinition.receivableIntents << new Intent('render', 'html')
         widgetDefinition

@@ -13,13 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 define([
+    'views/panes/AccordionPane',
+    'views/panes/DesktopPane',
+    'views/panes/FitPane',
     'views/panes/TabbedPane',
+    'views/View',
+
     'backbone',
-    'views/View'
-], function (TabbedPane, Backbone, View) {
-    
+    'lodash'
+], function (AccordionPane, DesktopPane, FitPane, TabbedPane, View, Backbone, _) {
+
     'use strict';
 
     return View.extend({
@@ -27,17 +31,35 @@ define([
         className: 'dashboard',
 
         render: function() {
-            // Get the dashboard.
-            
-            // Create a desktop pane for it.
-            var pane = new TabbedPane(JSON.parse(this.model.get('layoutConfig')));
+            // Get the layoutConfig
+            var pane = null, layoutConfig = this.model.get('layoutConfig');
+
+            //if layoutConfig is a string parse it into an object
+            if (_.isString(layoutConfig)) {
+                layoutConfig = JSON.parse(layoutConfig);
+            }
+
+            if (layoutConfig.paneType === 'accordionpane') {
+                pane = new AccordionPane(layoutConfig);
+            }
+            else if (layoutConfig.paneType === 'desktoppane') {
+                pane = new DesktopPane(layoutConfig);
+            }
+            else if (layoutConfig.paneType === 'fitpane') {
+                pane = new FitPane(layoutConfig);
+            }
+            else if (layoutConfig.paneType === 'tabbedpane') {
+                pane = new TabbedPane(layoutConfig);
+            }
+            else {
+                pane = new DesktopPane(layoutConfig);
+            }
+
             this.$el.html(pane.render().el);
-            
-            // Set the browser title to the dashboard name.
-            document.title = this.model.get('name');
-            return this; 
+
+            return this;
         }
-        
+
     });
 
 });

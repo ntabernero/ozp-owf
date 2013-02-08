@@ -1,3 +1,18 @@
+/*
+ * Copyright 2013 Next Century Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 /*global define*/
 define([
     'views/dashboard/PersonalDashboard',
@@ -14,7 +29,7 @@ define([
         rendered: false,
         el: $('#dashboard-container'),
 
-        initialize: function() {
+        initialize: function () {
             this.activeDashboard = null;
             this.activatedDashboards = {};
 
@@ -23,52 +38,80 @@ define([
             EventBus.on('dashboard:create', this.createDashboard, this);
         },
 
-        render: function() {
-
-            var dashboardModel = this.options.personalDashboardsCollection.at(0);
-
-            var dashboard = new PersonalDashboard({
-                model: dashboardModel
-            });
-            this.activeDashboard = dashboard;
-
-            this.$el.append(dashboard.render().el);
-
-            this.rendered = true;
-
+        render: function (model) {
+            this.activateDashboard(model);
             return this;
         },
 
         activateDashboard: function (model, animate) {
-            var guid = model.get('guid'),
-                dashboardName = model.get('name'),
-                dashboardModel = this.options.personalDashboardsCollection.get(model.get('guid'));
+            var guid = null,
+                dashboardName = null,
+                dashboardModel = null;
 
-            console.time(dashboardName);
-            if( this.activeDashboard ) {
-                if( this.activeDashboard.model.get('guid') === guid ) {
-                    return;
+
+            //console.time(dashboardName);
+
+            if (model != null) {
+                dashboardModel = this.options.personalDashboardsCollection.get(model.get('guid'));
+            }
+
+            //if dashboardcontainer has not rendered yet and the dashboard to switch doesn't exist
+            //choose a dashboard to render
+            if (!this.rendered && dashboardModel == null) {
+
+                //todo make this the default dashboard
+                dashboardModel = this.options.personalDashboardsCollection.at(0);
+            }
+
+            //check if a dashboardModel was found
+            if (dashboardModel != null) {
+                guid = dashboardModel.get('guid');
+                dashboardName = dashboardModel.get('name');
+
+                if (this.activeDashboard) {
+                    //on the same dashboard just return
+                    if (this.activeDashboard.model.get('guid') === guid) {
+                        return this.activeDashboard;
+                    }
+
+                    //hide the previous dash
+                    this.activeDashboard.hide();
+
+                    //todo save state of the previous dashboard here
                 }
 
-                this.activeDashboard.hide();
-            }
+                //have we seen this dash before?
+                if (this.activatedDashboards[ guid ]) {
+                    //save ref as the activeDashboard
+                    this.activeDashboard = this.activatedDashboards[ guid ];
 
-            if( this.activatedDashboards[ guid ] ) {
-                this.activeDashboard = this.activatedDashboards[ guid ];
-                this.activeDashboard.show();
-            }
-            else {
-                this.activeDashboard = new PersonalDashboard({
-                    model: dashboardModel
-                }).render();
+                    //show dash
+                    this.activeDashboard.show(animate);
+                }
+                else {
+                    //else we haven't rendered this dash - create it, save a ref to it, and render it
+                    this.activeDashboard = new PersonalDashboard({
+                        model: dashboardModel
+                    });
 
-                this.activatedDashboards[ guid ] = this.activeDashboard;
-                this.$el.append(this.activeDashboard.$el);
+                    this.activatedDashboards[ guid ] = this.activeDashboard;
+                    this.$el.append(this.activeDashboard.render().el);
+                }
 
-                // layout after dom write
-                this.activeDashboard.layout().show(animate);
+                // Set the browser title to the dashboard name.
+                document.title = dashboardModel.get('name');
+
+                EventBus.trigger('dashboard:switched', dashboardModel);
             }
-            console.timeEnd(dashboardName);
+//            else {
+//                //trying to activate a dashboard that does not exist - do nothing stay on same dash
+//            }
+
+            this.rendered = true;
+
+            //console.timeEnd(dashboardName);
+
+            return this.activeDashboard;
         },
 
         createDashboard: function () {
@@ -83,7 +126,7 @@ define([
 //            });
         },
 
-        designDashboard: function ( model ) {
+        designDashboard: function (model) {
 //            var me =this,
 //                dd = new DashboardDesigner();
 //
@@ -102,14 +145,14 @@ define([
 
         launchWidget: function (model) {
             return this.activeDashboard.launchWidget(model).then(
-                function (model, view) {
-                    EventBus.trigger('afterwidgetlaunch');
-                }, function  (model) {
+                    function (model, view) {
+                        EventBus.trigger('afterwidgetlaunch');
+                    },function (model) {
 
-                }).
-                always(function (model) {
-                    EventBus.trigger('launchend');
-                });
+                    }).
+                    always(function (model) {
+                        EventBus.trigger('launchend');
+                    });
         }
 
 

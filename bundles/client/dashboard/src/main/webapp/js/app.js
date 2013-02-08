@@ -14,19 +14,24 @@
  * limitations under the License.
  */
 
-require([
+/*global require, initialWidgetDefinitions, initialDashboards*/
+define([
     'models/PersonalDashboardModel',
-    'collections/PersonalDashboardsCollection',
 	'views/dashboard/PersonalDashboard',
 	'collections/StacksCollection',
     'collections/WidgetDefinitionsCollection',
     'collections/PreferencesCollection',
     'collections/PeopleCollection',
     'collections/GroupsCollection',
+    'collections/PersonalWidgetDefinitionsCollection',
+    'collections/PersonalDashboardsCollection',
+    'models/WidgetStateModel',
+
 	'jquery'
-], function (PersonalDashboardModel, PersonalDashboardsCollection, Dashboard, 
+], function (PersonalDashboardModel, Dashboard,
              StacksCollection, WidgetDefinitionsCollection, PreferencesCollection,
-             PeopleCollection, GroupsCollection, $) {
+             PeopleCollection, GroupsCollection, PersonalWidgetDefinitionsCollection,
+             PersonalDashboardsCollection, WidgetStateModel, $) {
 	// Pull in a collection of dashboards.
     var personalDashboardsCollection = new PersonalDashboardsCollection();
     personalDashboardsCollection.fetch({
@@ -92,31 +97,34 @@ require([
             console.log("Failed to load any groups");
         }
     });
-    
-    // Create a test dashboard.
-    var layout = {
-        widgets: [{
-            name: 'Widget One',
-            url: 'widgets.html',
-            x: 50,
-            y: 50,
-            width: 400,
-            height: 500,
-            zIndex: 2
-        }, {
-            name: 'Widget Two',
-            url: 'widget.html',
-            x: 400,
-            y: 300,
-            width: 200,
-            height: 200,
-            zIndex: 1
-        }]
+
+    // create a collection of dashboards from initial data
+    var personalWidgetDefinitionsCollection = new PersonalWidgetDefinitionsCollection(initialWidgetDefinitions);
+
+    // create a collection of dashboards from initial data
+    var pdc = new PersonalDashboardsCollection(initialDashboards);
+
+    //alter widgetstatemodel so the get function will lookup any properties it doesn't have on the corresponding widgetdef
+    WidgetStateModel.prototype.get = function(attr) {
+        var returnValue;
+        if (this.attributes[attr] !== undefined) {
+            returnValue = this.attributes[attr];
+        }
+        else if (this.get('widgetGuid') != null){
+            var widgetDef = personalWidgetDefinitionsCollection.find(function(pwd) {
+                return pwd.get('guid') === this.get('widgetGuid');
+            },this);
+            if (widgetDef != null) {
+                returnValue = widgetDef.get(attr);
+            }
+        }
+        return returnValue;
     };
-    
+
+    // Create a test dashboard.
     var testDashboard = new PersonalDashboardModel({
         name: 'Test Dashboard',
-        layoutConfig: JSON.stringify(layout)
+        layoutConfig: pdc.at(0).get('layoutConfig')
     });
     
     // Save the dashboard to the server.

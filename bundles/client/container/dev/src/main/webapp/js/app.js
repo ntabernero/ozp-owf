@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
- /*global require, initialWidgetDefinitions, initialDashboards*/
+
+/*global require, initialWidgetDefinitions, initialDashboards*/
 define([
     'router',
     'views/DashboardContainer',
     'collections/PersonalWidgetDefinitionsCollection',
     'collections/PersonalDashboardsCollection',
+    'models/WidgetStateModel',
 
     'backbone',
     'jquery'
-], function (Router, DashboardContainer, PersonalWidgetDefinitionsCollection, PersonalDashboardsCollection, Backbone, $) {
-
+], function (Router, DashboardContainer, PersonalWidgetDefinitionsCollection, PersonalDashboardsCollection,
+             WidgetStateModel, Backbone, $) {
 
     // create a collection of dashboards from initial data
     var personalWidgetDefinitionsCollection = new PersonalWidgetDefinitionsCollection(initialWidgetDefinitions);
@@ -32,14 +33,29 @@ define([
     // create a collection of dashboards from initial data
     var personalDashboardsCollection = new PersonalDashboardsCollection(initialDashboards);
 
+    //alter widgetstatemodel so the get function will lookup any properties it doesn't have on the corresponding widgetdef
+    WidgetStateModel.prototype.get = function(attr) {
+        var returnValue;
+        if (this.attributes[attr] !== undefined) {
+            returnValue = this.attributes[attr];
+        }
+        else if (this.get('widgetGuid') != null){
+            var widgetDef = personalWidgetDefinitionsCollection.find(function(pwd) {
+                return pwd.get('guid') === this.get('widgetGuid');
+            },this);
+            if (widgetDef != null) {
+                returnValue = widgetDef.get(attr);
+            }
+        }
+        return returnValue;
+    };
+
     var dashboardContainer = new DashboardContainer({
         personalWidgetDefinitionsCollection: personalWidgetDefinitionsCollection,
         personalDashboardsCollection: personalDashboardsCollection
     });
 
-    var router = new Router({
-        dashboardContainer: dashboardContainer
-    });
+    var router = new Router();
 
     // Trigger the initial route and enable HTML5 History API support, set the
     // root folder to '/' by default.  Change in app.js.
@@ -48,7 +64,7 @@ define([
     // All navigation that is relative should be passed through the navigate
     // method, to be processed by the router. If the link has a `data-bypass`
     // attribute, bypass the delegation completely.
-    $(document).on("click", "a:not([data-bypass])", function(evt) {
+    $(document).on("click", "a:not([data-bypass])", function (evt) {
         // Get the absolute anchor href.
         var href = $(this).attr("href");
 
@@ -67,6 +83,8 @@ define([
 
     return {
         router: router,
-        dashboardContainer: dashboardContainer
+        dashboardContainer: dashboardContainer,
+        personalWidgetDefinitionsCollection: personalWidgetDefinitionsCollection,
+        personalDashboardsCollection: personalDashboardsCollection
     };
 });

@@ -4,23 +4,27 @@ import com.fasterxml.jackson.annotation.JsonManagedReference
 import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
 import org.ozoneplatform.commons.server.domain.model.Person
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
 
-interface PersonalWidgetDefinitionMixIn {
+abstract class PersonalWidgetDefinitionMixIn {
+
+    PersonalWidgetDefinitionMixIn(@JsonProperty("widgetDefinition") WidgetDefinition widgetDefinition) {}
+
     @JsonManagedReference
-    WidgetDefinition getWidgetDefinition()
+    abstract WidgetDefinition getWidgetDefinition()
 
     @JsonManagedReference
-    Person getPerson()
+    abstract Person getPerson()
 
     @JsonIgnore
-    boolean isIsAssignedToPerson()
+    abstract boolean isIsAssignedToPerson()
 
     @JsonIgnore
-    boolean isIsFavorite()
+    abstract boolean isIsFavorite()
 
     @JsonIgnore
-    boolean isIsLaunchDisabled()
+    abstract boolean isIsLaunchDisabled()
 
     @JsonIgnore
-    boolean isIsVisibleForLaunch()
+    abstract boolean isIsVisibleForLaunch()
 }

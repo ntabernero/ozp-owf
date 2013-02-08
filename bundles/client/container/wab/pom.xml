@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.ozoneplatform.owf.bundles.client.container</groupId>
         <artifactId>container</artifactId>
@@ -15,10 +16,16 @@
     <description>Creates a Container Web Application Bundle for the Ozone Platform application</description>
     <packaging>bundle</packaging>
 
+    <properties>
+        <jetty.defaults.descriptor>${project.parent.parent.basedir}/webdefault.xml</jetty.defaults.descriptor>
+    </properties>
+
     <dependencies>
         <dependency>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-servlet_2.5_spec</artifactId>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+          <version>2.5</version>
+          <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -44,12 +51,37 @@
                                     <type>war</type>
                                     <!--<classifier>min</classifier>-->
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/includeIntoWar</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                             <outputDirectory>${project.build.directory}/wars</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- copy src/main/webapp into target directory, overwrite any files already there -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/minified-output</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/webapp</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>
@@ -83,11 +115,12 @@
                         <Export-Package>!org.ozoneplatform.owf.bundles.client.container.*</Export-Package>
                         <!--<Meta-Persistence></Meta-Persistence>-->
                         <Import-Package>
-                            javax.servlet*;version=2.5,
+                            javax.servlet;version=2.5,
+                            javax.servlet.http;version=2.5,
                             *
                         </Import-Package>
-                        <!--give files in this project precedence by listing src/main/webapp last-->
-                        <_wab>${project.build.directory}/includeIntoWar/,src/main/webapp/</_wab>
+                        <_wab>${project.build.directory}/minified-output</_wab>
+
                     </instructions>
                 </configuration>
             </plugin>

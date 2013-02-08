@@ -19,14 +19,6 @@
     <name>Ozone Widget Framework Parent Project</name>
     <description>see README.md</description>
 
-    <properties>
-        <groovy.version>2.0.6</groovy.version>
-        <jackson.version>2.1.2</jackson.version>
-        <junitVersion>4.8.1</junitVersion>
-        <cxf.version>2.6.0</cxf.version>
-        <aries.version>0.3</aries.version>
-    </properties>
-
     <scm>
         <connection>scm:git:https://www.owfgoss.org/git/repos/ozp-owf.git</connection>
         <developerConnection>scm:git:https://www.owfgoss.org/git/repos/ozp-owf.git</developerConnection>
@@ -101,27 +93,6 @@
                             <version>0.3.3</version>
                         </dependency>
                     </dependencies>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>codenarc-maven-plugin</artifactId>
-                    <version>0.18-1</version>
-                    <configuration>
-                        <codeNarcVersion>0.18</codeNarcVersion>
-                        <sourceDirectory>src/main/groovy</sourceDirectory>
-                        <groovyVersion>${groovy.version}</groovyVersion>
-                        <maxPriority1Violations>0</maxPriority1Violations>
-                        <maxPriority2Violations>0</maxPriority2Violations>
-                        <maxPriority3Violations>0</maxPriority3Violations>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>codenarc</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

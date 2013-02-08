@@ -34,7 +34,8 @@ class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionSer
 
     @Override
     PersonalWidgetDefinition create(String personId, PersonalWidgetDefinition personalWidgetDefinition) {
-        personalWidgetDefinitionMap[personalWidgetDefinition] = personalWidgetDefinition
+        personalWidgetDefinition.id = UUID.randomUUID().toString()
+        personalWidgetDefinitionMap[personalWidgetDefinition.id] = personalWidgetDefinition
         personalWidgetDefinition
     }
 
@@ -79,10 +80,13 @@ class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionSer
     }
 
     PersonalWidgetDefinition createExamplePersonalWidgetDefinition() {
-        PersonalWidgetDefinition personalWidgetDefinition = new Person('user2', 'User Two').createPersonalWidgetDefinition(WidgetDefinition.builder().withDisplayName('Example Widget Definition').
+        def widgetDefinition = WidgetDefinition.builder().withDisplayName('Example Widget Definition').
                 withImageUrlLarge('http://large.image.com').withImageUrlSmall('http://small.image.com').
-                withUrl('http://www.example.com').withWidgetType('standard').build())
-        personalWidgetDefinition.id = 12345
+                withUrl('http://www.example.com').withWidgetType('standard').build()
+        widgetDefinition.id = UUID.randomUUID().toString()
+        PersonalWidgetDefinition personalWidgetDefinition = new Person('user2', 'User Two').createPersonalWidgetDefinition(widgetDefinition)
+        personalWidgetDefinition.displayName = widgetDefinition.displayName + " (Personal)"
+        personalWidgetDefinition.id = UUID.randomUUID().toString()
         personalWidgetDefinition
     }
 }
