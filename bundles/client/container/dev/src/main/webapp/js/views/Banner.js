@@ -1,5 +1,6 @@
 define([
     'app',
+    'events/EventBus',
 
 //    'views/launchmenu/LaunchMenu',
 //    'views/dashboardswitcher/DashboardSwitcher',
@@ -11,7 +12,7 @@ define([
     'jquery'
 ],
 
-function(app,
+function(app, EventBus,
 //         LaunchMenu, DashboardSwitcher, UserProfileWindow, AboutWindow,
          Backbone, $) {
 
@@ -24,6 +25,7 @@ function(app,
 
         events: {
             'click .launchmenu-btn': 'showLaunchMenu',
+            'click .create-dashboard-btn': 'createDashboard',
             'click .dashboards-btn': 'showDashboardsWindow',
             'click .admin-btn': 'showAdminWindow',
             'click .user-profile-btn': 'showProfileWindow',
@@ -43,6 +45,12 @@ function(app,
 //            LaunchMenu.show();
             launchmenuShown = true;
             return false;
+        },
+
+        createDashboard: function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            EventBus.trigger('dashboard:create');
         },
 
         showDashboardsWindow: function(evt) {

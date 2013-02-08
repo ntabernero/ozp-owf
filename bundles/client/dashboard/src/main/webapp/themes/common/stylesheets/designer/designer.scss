@@ -53,8 +53,8 @@
     }
 
     &.highlight, .pane.highlight {
-        background-color: $linkColor;
-        background-color: rgba($linkColor,0.1);
+        background-color: $gray;
+        background-color: rgba($gray,0.1);
     }
 }
 

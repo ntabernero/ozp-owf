@@ -63,7 +63,7 @@ define([
                 });
             }
             else {
-                layoutConfig.vtype = layoutConfig.paneType || 'pane';
+                layoutConfig.vtype = layoutConfig.paneType || 'tabbedpane';
             }
 
             return layoutConfig;

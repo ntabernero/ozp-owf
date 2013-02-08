@@ -32,10 +32,8 @@ define([
         $body: null,
         tabbar: null,
 
-        render: function() {
-            var me = this; 
-
-            LayoutPane.prototype.render.apply(me, arguments);
+        afterRender: function() {
+            var me = this;
 
             me.tabbar = new Taskbar({
                 collection: me.collection,

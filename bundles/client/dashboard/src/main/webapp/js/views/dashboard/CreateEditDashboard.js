@@ -1,3 +1,4 @@
+/*jshint bitwise:false*/
 define([
     'models/PersonalDashboardModel',
     'views/Modal',
@@ -8,6 +9,14 @@ define([
 ],
 
 function(DashboardModel, Modal, $) {
+
+    // TODO move this out of there
+    function S4() {
+        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    }
+    function guid () {
+        return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+    }
 
     var CreateEditDashboard = Modal.extend({
 
@@ -51,7 +60,10 @@ function(DashboardModel, Modal, $) {
             return this;
         },
 
-        ok: function () {
+        ok: function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            
             var me = this,
                 name = $('.name', me.$el).val(),
                 description = $('.description', me.$el).val();
@@ -59,7 +71,8 @@ function(DashboardModel, Modal, $) {
             if( me._createDeferred ) {
                 var dashboard = new DashboardModel({
                     name: name,
-                    description: description
+                    description: description,
+                    guid: guid()
                 });
                 
                 me.hide().then(function () {

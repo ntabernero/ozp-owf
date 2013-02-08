@@ -17,6 +17,8 @@
 /*global require, initialWidgetDefinitions, initialDashboards*/
 define([
     'router',
+    'events/EventBus',
+    'views/Banner',
     'views/DashboardContainer',
     'collections/PersonalWidgetDefinitionsCollection',
     'collections/PersonalDashboardsCollection',
@@ -24,7 +26,7 @@ define([
 
     'backbone',
     'jquery'
-], function (Router, DashboardContainer, PersonalWidgetDefinitionsCollection, PersonalDashboardsCollection,
+], function (Router, EventBus, Banner, DashboardContainer, PersonalWidgetDefinitionsCollection, PersonalDashboardsCollection,
              WidgetStateModel, Backbone, $) {
 
     // create a collection of dashboards from initial data
@@ -50,6 +52,7 @@ define([
         return returnValue;
     };
 
+    var banner = new Banner({});
     var dashboardContainer = new DashboardContainer({
         personalWidgetDefinitionsCollection: personalWidgetDefinitionsCollection,
         personalDashboardsCollection: personalDashboardsCollection
@@ -79,6 +82,40 @@ define([
             // calls this anyways.  The fragment is sliced from the root.
             Backbone.history.navigate(href, true);
         }
+    });
+
+    EventBus.on('dashboard:create', function() {
+        require([
+            'views/dashboard/CreateEditDashboard',
+            'views/designer/Designer',
+            'services/Dashboard'
+        ], function(CreateEditDashboard, DashboardDesigner, DashboardService) {
+            
+            var cd = new CreateEditDashboard({
+                title: 'Create Dashboard',
+                removeOnClose: true
+            });
+
+            cd.show();
+           
+            cd.create().then(function( dashboardModel ) {
+                var me =this,
+                    dd = new DashboardDesigner({
+                        model: dashboardModel
+                    });
+
+                dd.render();
+                $(document.body).append(dd.$el);
+
+                dd.design().then(function(config) {
+                    dd.remove();
+
+                    dashboardModel.set( 'layoutConfig', DashboardService.convertForDashboard( config ) );
+
+                    personalDashboardsCollection.add( dashboardModel );
+                });
+            });
+        });
     });
 
     return {

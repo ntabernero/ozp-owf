@@ -34,35 +34,39 @@ define([
 
         className: 'dashboard',
 
-        render: function() {
-            // Get the layoutConfig
-            var pane = null, layoutConfig = this.model.get('layoutConfig');
-
-            //if layoutConfig is a string parse it into an object
-            if (_.isString(layoutConfig)) {
-                layoutConfig = JSON.parse(layoutConfig);
-            }
-
-            if (layoutConfig.paneType === 'accordionpane') {
-                pane = new AccordionPane(layoutConfig);
-            }
-            else if (layoutConfig.paneType === 'desktoppane') {
-                pane = new DesktopPane(layoutConfig);
-            }
-            else if (layoutConfig.paneType === 'fitpane') {
-                pane = new FitPane(layoutConfig);
-            }
-            else if (layoutConfig.paneType === 'tabbedpane') {
-                pane = new TabbedPane(layoutConfig);
-            }
-            else {
-                pane = new DesktopPane(layoutConfig);
-            }
-
-            this.$el.html(pane.render().el);
-
-            return this;
+        views: function () {
+            return this.model && this.model.get('layoutConfig');
         }
+
+        // render: function() {
+        //     // Get the layoutConfig
+        //     var pane = null, layoutConfig = this.model.get('layoutConfig');
+
+        //     //if layoutConfig is a string parse it into an object
+        //     if (_.isString(layoutConfig)) {
+        //         layoutConfig = JSON.parse(layoutConfig);
+        //     }
+
+        //     if (layoutConfig.paneType === 'accordionpane') {
+        //         pane = new AccordionPane(layoutConfig);
+        //     }
+        //     else if (layoutConfig.paneType === 'desktoppane') {
+        //         pane = new DesktopPane(layoutConfig);
+        //     }
+        //     else if (layoutConfig.paneType === 'fitpane') {
+        //         pane = new FitPane(layoutConfig);
+        //     }
+        //     else if (layoutConfig.paneType === 'tabbedpane') {
+        //         pane = new TabbedPane(layoutConfig);
+        //     }
+        //     else {
+        //         pane = new DesktopPane(layoutConfig);
+        //     }
+
+        //     this.$el.html(pane.render().el);
+
+        //     return this;
+        // }
 
     });
 

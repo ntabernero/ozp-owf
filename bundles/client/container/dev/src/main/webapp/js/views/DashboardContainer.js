@@ -30,12 +30,15 @@ define([
         el: $('#dashboard-container'),
 
         initialize: function () {
+            var me = this;
             this.activeDashboard = null;
             this.activatedDashboards = {};
 
             EventBus.on('launch-widget', this.launchWidget, this);
             EventBus.on('dashboard:switch', this.activateDashboard, this);
-            EventBus.on('dashboard:create', this.createDashboard, this);
+            //EventBus.on('dashboard:create', this.createDashboard, this);
+
+            this.options.personalDashboardsCollection.on('add', this.activateDashboard, this);
         },
 
         render: function (model) {
