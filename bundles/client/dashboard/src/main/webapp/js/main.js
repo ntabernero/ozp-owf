@@ -68,7 +68,7 @@ require.config({
             deps: ['jquery'],
             exports: '$'
         },
-        'splitter': {
+        'jquery-splitter': {
             deps: ['jquery'],
             exports: '$'
         }

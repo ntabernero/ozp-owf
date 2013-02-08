@@ -175,36 +175,42 @@ require([
                             vtype: 'hbox',
                             panes: [{
                                 vtype: 'designerpane',
-                                collapsible: false,
                                 htmlText: '50%',
                                 width: '50%'
                             }, {
                                 vtype: 'designerpane',
-                                collapsible: false,
                                 htmlText: '50%',
                                 width: '50%',
                                 box: {
                                     vtype: 'vbox',
                                     panes: [{
                                         vtype: 'designerpane',
-                                        collapsible: false,
-                                        htmlText: '50%',
-                                        height: '50%'
-                                    }, {
-                                        vtype: 'designerpane',
-                                        collapsible: false,
                                         htmlText: '50%',
                                         height: '50%',
                                         box: {
                                             vtype: 'vbox',
                                             panes: [{
                                                 vtype: 'designerpane',
-                                                collapsible: false,
                                                 htmlText: '50%',
                                                 height: '50%'
                                             }, {
                                                 vtype: 'designerpane',
-                                                collapsible: false,
+                                                htmlText: '50%',
+                                                height: '50%'
+                                            }]
+                                        }
+                                    }, {
+                                        vtype: 'designerpane',
+                                        htmlText: '50%',
+                                        height: '50%',
+                                        box: {
+                                            vtype: 'vbox',
+                                            panes: [{
+                                                vtype: 'designerpane',
+                                                htmlText: '50%',
+                                                height: '50%'
+                                            }, {
+                                                vtype: 'designerpane',
                                                 htmlText: '50%',
                                                 height: '50%'
                                             }]

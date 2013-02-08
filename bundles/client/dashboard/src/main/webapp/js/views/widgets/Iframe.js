@@ -19,6 +19,10 @@ define([
                 // name: ...,
                 'role': 'presentation'
             };
+        },
+        
+        render: function () {
+            return this;
         }
         
     });

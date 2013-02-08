@@ -47,6 +47,7 @@
     background: $baseColor;
 
     > .pane {
+        position: absolute;
         width: 100%;
         height: 100%;
     }
@@ -159,5 +160,8 @@ $active-pane-border-color: red !default;
     } 
 }
 
+.box {
+    position: absolute;
+}
 
 
