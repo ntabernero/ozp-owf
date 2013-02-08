@@ -6,14 +6,14 @@ define([
     'use strict';
 
     var btnTpl = 
-        '<li class="collapse" style="display:none" >' +
+        '<li class="collapse">' +
             '<a title="Collapse" class="collapse-btn">' +
-                '<i class="icon-chevron-up"></i>' +
+                '<i class="icon-double-angle-up"></i>' +
             '</a>' +
         '</li>' +
-        '<li class="expand" style="display:none" >' +
+        '<li class="expand">' +
             '<a title="Expand" class="expand-btn">' +
-                '<i class="icon-chevron-down"></i>' +
+                '<i class="icon-double-angle-down"></i>' +
             '</a>' +
         '</li>';
 

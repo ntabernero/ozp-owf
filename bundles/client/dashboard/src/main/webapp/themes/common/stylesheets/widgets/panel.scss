@@ -33,6 +33,10 @@ $widgetActiveBorder: 1px solid #ccc !default;
     .show-all-tools-btn {
         margin-bottom: 0px; // IE7
     }
+
+    &.collapsed {
+        height: $headerLineHeight !important;
+    }
 }
 
 
@@ -48,7 +52,7 @@ $widgetActiveBorder: 1px solid #ccc !default;
     bottom: 0;
     width: auto;
     height: auto;
-    margin-top: 2.5em;
+    margin-top: $headerLineHeight;
     z-index: -1;
 
     .widgetframe {

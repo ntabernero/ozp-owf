@@ -37,7 +37,7 @@ $headerLineHeight: 2.5em;
             }
         }
 
-        > .restore {
+        > .restore, > .expand {
             display: none;
         }
         
@@ -84,6 +84,16 @@ $headerLineHeight: 2.5em;
     }
 
     > .actions > .restore {
+        display: inline-block;
+    }
+}
+
+.collapsed .header, .collapsed.header {
+    > .actions > .collapse {
+        display: none;
+    }
+
+    > .actions > .expand {
         display: inline-block;
     }
 }
