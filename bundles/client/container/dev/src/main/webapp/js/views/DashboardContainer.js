@@ -49,7 +49,7 @@ define([
                 dashboardModel = null;
 
 
-            console.time(dashboardName);
+            //console.time(dashboardName);
 
             if (model != null) {
                 dashboardModel = this.options.personalDashboardsCollection.get(model.get('guid'));
@@ -109,7 +109,7 @@ define([
 
             this.rendered = true;
 
-            console.timeEnd(dashboardName);
+            //console.timeEnd(dashboardName);
 
             return this.activeDashboard;
         },
