@@ -39,8 +39,6 @@ define([
         initialize: function() {
             LayoutPane.prototype.initialize.apply(this, arguments);
 
-            this.windows = [];
-
             this.zIndexManager = new ZIndexManager();
         },
 
@@ -49,7 +47,6 @@ define([
             this.renderWidgets();
             
             return LayoutPane.prototype.render.apply(this, arguments);
-
         },
 
         renderTaskbar: function() {

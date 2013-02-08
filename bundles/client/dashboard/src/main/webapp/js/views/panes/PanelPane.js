@@ -18,14 +18,14 @@
  * This class is the superclass of AccordionPane and PortalPane
  */
 define([
-    'views/panes/Pane',
+    'views/panes/LayoutPane',
     'views/widgets/Panel',
     'backbone'
-], function (Pane, Panel, Backbone) {
+], function (LayoutPane, Panel, Backbone) {
     'use strict';
 
-    return Pane.extend({
-        className: Pane.prototype.className + ' panelpane',
+    return LayoutPane.extend({
+        className: LayoutPane.prototype.className + ' panelpane',
 
         render: function() {
             var me = this;
@@ -34,7 +34,7 @@ define([
                 me.addWidget(widget);
             });
 
-            return Pane.prototype.render.apply(me, arguments);
+            return LayoutPane.prototype.render.apply(me, arguments);
         },
 
         addWidget: function(widget) {
