@@ -15,7 +15,7 @@
  */
 
 define([
-    'views/panes/Pane',
+    'views/panes/LayoutPane',
     'views/widgets/Window',
     'views/Taskbar',
     'views/widgets/WindowHeader',

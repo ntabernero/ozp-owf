@@ -5,7 +5,6 @@
 
 // This variable is required.  It must be equal to the name property in the theme.json file.
 $theme-name: "a_default";
-$fontAwesomePath: "/libs/fonts/fontawesome-webfont";
 
 // ===============================
 //  Theme Variables 
@@ -20,7 +19,7 @@ $borderRadiusSmall:     0;
 
 //need to offset the taskbar in the desktop pane relative to the height of the banner
 //or the taskbar will be pushed off the page
-$taskbarBottom: 2.5em;
+$desktopTaskbarBottom: 2.5em;
 
 // Put your theme customizations here. If you have many customizations,
 // you may want to put them in a separate file which you import here. 

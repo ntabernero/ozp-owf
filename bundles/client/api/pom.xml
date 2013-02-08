@@ -15,9 +15,8 @@
 
     <name>Ozone Platform :: OWF Client Bundles :: Client APIs :: BASE API</name>
 
-    <properties>
-        <jslintVersion>1.0.1</jslintVersion>
-    </properties>
+    <!--<properties>-->
+    <!--</properties>-->
 
     <dependencies>
 

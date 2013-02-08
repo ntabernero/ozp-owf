@@ -1,3 +1,5 @@
+<%@ page contentType="text/javascript; UTF-8" %>
+<%="//data generated from the server"%>
 var initialWidgetDefinitions = [
     {
         guid: "eb5435cf-4021-4f2a-ba69-dde451d12551",

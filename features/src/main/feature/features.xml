@@ -22,6 +22,7 @@
     </feature>
 
     <feature name="owf" version="${project.version}" description="${project.description}">
+    	<feature>ozone-commons-server</feature>
         <feature>owf-web</feature>
         <feature>owf-rest</feature>
     </feature>

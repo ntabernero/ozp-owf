@@ -17,8 +17,8 @@
 // require.js configuration for application.
 require.config({
 
-    // Initialize the application with the main application file.
-    deps: ['app'],
+    //need this to be true to handle errors in IE
+    enforceDefine: true,
 
     paths: {
         bootstrap: '../libs/js/bootstrap',
@@ -70,5 +70,13 @@ require.config({
             exports: 'Backbone'
         }
     }
+
+});
+
+// Initialize the application with the main application file.  A define call needs to be here because enforceDefine is
+// true
+define([
+    'app'
+], function(app) {
 
 });
