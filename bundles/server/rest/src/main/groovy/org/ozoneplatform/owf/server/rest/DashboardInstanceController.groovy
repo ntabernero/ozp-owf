@@ -37,7 +37,7 @@ class DashboardInstanceController {
     @POST
     @Consumes("application/json")
     Response create(DashboardInstance dashboardInfo) {
-        println "In create(): ${dashboardInfo?.guid}"
+        println "In create(): ${dashboardInfo}"
         personalDashboardService.create(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }

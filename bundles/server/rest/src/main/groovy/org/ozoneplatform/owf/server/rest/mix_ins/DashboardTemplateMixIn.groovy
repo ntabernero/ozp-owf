@@ -12,10 +12,4 @@ public abstract class DashboardTemplateMixIn extends DashboardMixIn {
     @JsonIgnore
     abstract Set<WidgetDefinition> getWidgets()
 
-    @JsonIgnore
-    abstract String layoutConfig
-
-    @JsonProperty("layoutConfig")
-    abstract Object getLayoutConfigJson()
-
 }

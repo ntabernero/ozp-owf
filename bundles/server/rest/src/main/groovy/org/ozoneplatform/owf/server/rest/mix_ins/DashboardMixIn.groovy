@@ -11,4 +11,9 @@ public abstract class DashboardMixIn {
     @JsonProperty
     abstract boolean getIsLocked()
 
+    @JsonIgnore
+    abstract String layoutConfig
+
+    @JsonProperty("layoutConfig")
+    abstract Object getLayoutConfigJson()
 }
