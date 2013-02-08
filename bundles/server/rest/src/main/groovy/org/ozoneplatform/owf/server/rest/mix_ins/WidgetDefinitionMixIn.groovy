@@ -3,17 +3,30 @@ package org.ozoneplatform.owf.server.rest.mix_ins
 import com.fasterxml.jackson.annotation.JsonBackReference
 import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
+import org.ozoneplatform.commons.server.domain.model.Intent
 
-public interface WidgetDefinitionMixIn {
+abstract class WidgetDefinitionMixIn {
+
+    WidgetDefinitionMixIn(@JsonProperty("displayName") String displayName, @JsonProperty("widgetUrl") String widgetUrl,
+        @JsonProperty("imageUrlSmall") String imageUrlSmall, @JsonProperty("imageUrlLarge") String imageUrlLarge,
+        @JsonProperty("widgetType") String widgetType) {}
+
     @JsonBackReference
-    Set<PersonalWidgetDefinition> getPersonalWidgetDefinitions()
+    abstract Set<PersonalWidgetDefinition> getPersonalWidgetDefinitions()
 
     @JsonIgnore
-    boolean isIsBackground()
+    abstract boolean isIsBackground()
 
     @JsonIgnore
-    boolean isIsSingleton()
+    abstract boolean isIsSingleton()
 
     @JsonIgnore
-    boolean isIsVisibleForLaunch()
+    abstract boolean isIsVisibleForLaunch()
+
+    @JsonProperty("sendableIntents")
+    abstract Set<Intent> getMutableSendableIntents()
+
+    @JsonProperty("receivableIntents")
+    abstract Set<Intent> getMutableReceivableIntents()
 }

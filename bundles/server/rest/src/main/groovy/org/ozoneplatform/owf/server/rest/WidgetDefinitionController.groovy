@@ -16,19 +16,22 @@
 
 package org.ozoneplatform.owf.server.rest
 
-import org.ozoneplatform.owf.server.service.api.WidgetDefinitionService
 import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Intent
 import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
+import org.ozoneplatform.owf.server.service.api.WidgetDefinitionService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import javax.ws.rs.core.Context
+import javax.ws.rs.core.Response
+import javax.ws.rs.core.UriInfo
 import javax.ws.rs.*
 
 @Path("/widget-defs")
 @Produces("application/json")
-class WidgetDefinitionController {
+class WidgetDefinitionController extends OwfRestController {
     WidgetDefinitionService widgetDefinitionService
     Logger logger = LoggerFactory.getLogger(WidgetDefinitionController.class)
 
@@ -46,8 +49,10 @@ class WidgetDefinitionController {
 
     @POST
     @Consumes("application/json")
-    WidgetDefinition create(WidgetDefinition widgetDefinition) {
-        widgetDefinitionService.create(widgetDefinition)
+    Response create(WidgetDefinition widgetDefinition, @Context UriInfo uriInfo) {
+        widgetDefinition = widgetDefinitionService.create(widgetDefinition)
+        URI widgetDefinitionUri = buildEntityURI(uriInfo, widgetDefinition, "get")
+        Response.created(widgetDefinitionUri).entity(widgetDefinition).build();
     }
 
     @PUT

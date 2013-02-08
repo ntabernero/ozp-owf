@@ -3,12 +3,12 @@ package org.ozoneplatform.owf.server.rest.mix_ins
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 
-public interface DashboardMixIn {
+public abstract class DashboardMixIn {
 
     @JsonIgnore
-    boolean isIsLocked()
+    abstract boolean isIsLocked()
 
     @JsonProperty
-    boolean getIsLocked()
+    abstract boolean getIsLocked()
 
 }
