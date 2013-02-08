@@ -18,10 +18,9 @@ define([
     'views/panes/PanelPane',
     'views/widgets/Panel',
     'mixins/widgets/ResizableWidget',
-    'mixins/containers/SortableCollectionView',
     'backbone',
     'lodash'
-], function (PanelPane, Panel, ResizableWidget, SortableCollectionView, Backbone, _) {
+], function (PanelPane, Panel, ResizableWidget, Backbone, _) {
     
     'use strict';
 
@@ -44,14 +43,8 @@ define([
         }
     }));
 
-    return PanelPane.extend(_.extend({}, SortableCollectionView, {
+    return PanelPane.extend(_.extend({}, {
         className: PanelPane.prototype.className + ' portalpane',
-
-        initialize: function() {
-            PanelPane.prototype.initialize.apply(this, arguments);
-
-            this.initSortable();
-        },
 
         addWidget: function(widget) {
             var portlet = new Portlet({

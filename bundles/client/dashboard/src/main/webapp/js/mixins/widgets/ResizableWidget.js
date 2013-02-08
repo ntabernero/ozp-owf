@@ -48,12 +48,11 @@ define([
         },
 
         onResizeStart: function () {
-            $('#mask').removeClass('hide');
+            this.mask();
         },
 
-        //TODO: refactor 
         onResizeStop: function () {
-            $('#mask').addClass('hide');
+            this.unmask();
         },
 
         onResize: function (evt, ui) {

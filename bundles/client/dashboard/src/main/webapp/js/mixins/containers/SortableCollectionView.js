@@ -29,10 +29,10 @@ define([
     'use strict';
 
     return {
-        initSortable: function() {
-            this.$el.sortable({
+        initSortable: function(sortableOptions) {
+            this.$el.sortable(_.extend({
                 update: _.bind(this.handleReorder, this)
-            });
+            }, sortableOptions));
         },
         
         handleReorder: function(event, ui) {
