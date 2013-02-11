@@ -17,18 +17,18 @@ import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
-    private ObjectMapper mapper = new ObjectMapper();
+    private ObjectMapper mapper = new ObjectMapper()
 
     public ObjectMapperProvider() {
-        mapper.dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        mapper.addMixInAnnotations(PersonalWidgetDefinition.class, PersonalWidgetDefinitionMixIn.class);
-        mapper.addMixInAnnotations(WidgetDefinition.class, WidgetDefinitionMixIn.class);
-        mapper.addMixInAnnotations(Person.class, PersonMixIn.class);
-        mapper.addMixInAnnotations(DashboardInstance.class, DashboardInstanceMixIn.class);
-        mapper.addMixInAnnotations(DashboardTemplate.class, DashboardTemplateMixIn.class);
-        mapper.addMixInAnnotations(Group.class, GroupMixIn.class);
-        mapper.addMixInAnnotations(Stack.class, StackMixIn.class);
+        mapper.dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
+        mapper.addMixInAnnotations(PersonalWidgetDefinition.class, PersonalWidgetDefinitionMixIn.class)
+        mapper.addMixInAnnotations(WidgetDefinition.class, WidgetDefinitionMixIn.class)
+        mapper.addMixInAnnotations(Person.class, PersonMixIn.class)
+        mapper.addMixInAnnotations(DashboardInstance.class, DashboardInstanceMixIn.class)
+        mapper.addMixInAnnotations(DashboardTemplate.class, DashboardTemplateMixIn.class)
+        mapper.addMixInAnnotations(Group.class, GroupMixIn.class)
+        mapper.addMixInAnnotations(Stack.class, StackMixIn.class)
     }
 
-    public ObjectMapper getContext(Class<?> type) { return mapper; }
+    public ObjectMapper getContext(Class<?> type) { return mapper }
 }
