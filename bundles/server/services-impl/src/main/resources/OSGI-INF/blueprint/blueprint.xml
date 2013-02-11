@@ -22,7 +22,7 @@
     <bean id="groupService" class="org.ozoneplatform.owf.server.service.impl.GroupServiceImpl"/>
     <bean id="personService" class="org.ozoneplatform.owf.server.service.impl.PersonServiceImpl"/>
     <bean id="stackService" class="org.ozoneplatform.owf.server.service.impl.StackServiceImpl"/>
-    <bean id="personalDashboardService" class="org.ozoneplatform.owf.server.service.impl.DashboardInstanceServiceImpl"/>
+    <bean id="dashboardInstanceService" class="org.ozoneplatform.owf.server.service.impl.DashboardInstanceServiceImpl"/>
     <bean id="groupDashboardService" class="org.ozoneplatform.owf.server.service.impl.DashboardTemplateServiceImpl"/>
     <bean id="widgetDefinitionService" class="org.ozoneplatform.owf.server.service.impl.WidgetDefinitionServiceImpl"/>
     <bean id="personalWidgetDefinitionService" class="org.ozoneplatform.owf.server.service.impl.PersonalWidgetDefinitionServiceImpl"/>
@@ -30,7 +30,7 @@
     <service ref="groupService" interface="org.ozoneplatform.owf.server.service.api.GroupService"/>
     <service ref="personService" interface="org.ozoneplatform.owf.server.service.api.PersonService"/>
     <service ref="stackService" interface="org.ozoneplatform.owf.server.service.api.StackService"/>
-    <service ref="personalDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardInstanceService"/>
+    <service ref="dashboardInstanceService" interface="org.ozoneplatform.owf.server.service.api.DashboardInstanceService"/>
     <service ref="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
     <service ref="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService"/>
     <service ref="personalWidgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService"/>

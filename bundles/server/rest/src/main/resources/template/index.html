@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Ozone</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        var dashboards = <%= dashboardList %>;
+        jQuery(document).ready(function() {
+            var dashboardNames = []
+            jQuery.each(dashboards, function(index, value) {
+                dashboardNames.push("<li>" + value.name + " (id: " + value.id + ")" + "</li>");
+            });
+            jQuery("#dashboardList").html("<ul>" + dashboardNames.sort().join("") + "</ul>")
+        });
+    </script>
+</head>
+<body>
+    <h1>Welcome to Ozone</h1>
+    <h3>Your Dashboards:</h3>
+    <div id="dashboardList"></div>
+</body>
+</html>
