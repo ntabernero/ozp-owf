@@ -44,6 +44,8 @@ define([
     }));
 
     return PanelPane.extend(_.extend({}, {
+        vtype: 'portalpane',
+
         className: PanelPane.prototype.className + ' portalpane',
 
         addWidget: function(widget) {
