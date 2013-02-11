@@ -107,12 +107,14 @@ class WidgetDefinitionServiceImpl implements WidgetDefinitionService {
     }
 
     WidgetDefinition createExampleWidgetDefinition() {
-        WidgetDefinition widgetDefinition = WidgetDefinition.builder().withDisplayName('Example Widget Definition').
+        WidgetDefinition widgetDefinition = WidgetDefinition.builder().withDisplayName('Channel Listener').
                 withImageUrlLarge('http://large.image.com').withImageUrlSmall('http://small.image.com').
-                withUrl('http://www.example.com').withWidgetType('standard').build()
+                withUrl('widget.html').withWidgetType('standard').build()
         widgetDefinition.id = UUID.randomUUID().toString()
-        widgetDefinition.receivableIntents << new Intent('plot', 'lat/long')
-        widgetDefinition.receivableIntents << new Intent('render', 'html')
+        widgetDefinition.addReceivableIntent(new Intent('plot', 'lat/long'))
+        widgetDefinition.addReceivableIntent(new Intent('render', 'html'))
+        widgetDefinition.addSendableIntent(new Intent('plot', 'lat/long'))
+        widgetDefinition.addSendableIntent(new Intent('render', 'html'))
         widgetDefinition
     }
 }

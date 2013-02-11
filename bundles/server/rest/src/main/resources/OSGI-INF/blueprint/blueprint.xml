@@ -69,6 +69,11 @@
     <!--<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />-->
     <bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider" />
 
+    <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
+    <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
+    <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
+    <bean id="objectMapperProvider" class="org.ozoneplatform.owf.server.rest.ObjectMapperProvider"/>
+
     <!--
         Simple Authorization Provider
         Note: Here just for example reference
@@ -127,10 +132,10 @@
             <ref component-id="personalWidgetDefinitions"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
-            <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
-            <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
-            <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
-            <bean id="objectMapperProvider" class="org.ozoneplatform.owf.server.rest.ObjectMapperProvider"/>
+            <ref component-id="validationExceptionMap"/>
+            <ref component-id="notFoundExceptionMap"/>
+            <ref component-id="jsonExceptionMap" />
+            <ref component-id="objectMapperProvider"/>
             <ref component-id="jsonProvider" />
             
         </jaxrs:providers>
@@ -141,11 +146,11 @@
             <ref component-id="groups"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
-            <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
-            <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
-            <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
+            <ref component-id="validationExceptionMap" />
+            <ref component-id="notFoundExceptionMap" />
+            <ref component-id="jsonExceptionMap" />
             <!--ref component-id="groupsAuthFilter"/-->
-            <bean id="objectMapperProvider" class="org.ozoneplatform.owf.server.rest.ObjectMapperProvider"/>
+            <ref component-id="objectMapperProvider"/>
             <ref component-id="jsonProvider" />
         </jaxrs:providers>
     </jaxrs:server>
