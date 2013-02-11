@@ -58,6 +58,17 @@ define([
             });
 
             this.$body.append(frame.render().$el);
+        },
+
+        updateSize: function() {
+            var me = this;
+
+            LayoutPane.prototype.updateSize.apply(me, arguments);
+
+            //adjust to new size once it is worked out
+            setTimeout(function() {
+                me.tabbar.resize();
+            }, 0);
         }
     });
 });

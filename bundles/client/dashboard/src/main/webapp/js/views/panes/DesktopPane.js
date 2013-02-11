@@ -62,7 +62,7 @@ define([
         renderWidgets: function() {
             var me = this;
 
-            me.$body = $(document.createElement('div')).addClass('body');
+            me.$body = $('<div class="body">');
 
             this.collection.each(function (widgetState) {
                 me.renderWidget(widgetState);
@@ -94,6 +94,17 @@ define([
         launchWidget: function (evt, model) {
             var ww = this.renderWidget(model);
             return ww;
+        },
+
+        updateSize: function() {
+            var me = this;
+
+            LayoutPane.prototype.updateSize.apply(me, arguments);
+
+            //adjust to new size once it is worked out
+            setTimeout(function() {
+                me.taskbar.resize();
+            }, 0);
         }
     });
 });

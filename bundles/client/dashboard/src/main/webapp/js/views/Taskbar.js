@@ -63,9 +63,9 @@ define([
 
             this.initSortable();
 
-            //TODO: This is temporary, take it out once dashboards
-            //have code to call pane resize
-            $(window).on('resize', _.bind(this.resize, this));
+//            //TODO: This is temporary, take it out once dashboards
+//            //have code to call pane resize
+//            $(window).on('resize', _.bind(this.resize, this));
         },
 
         render: function() {
