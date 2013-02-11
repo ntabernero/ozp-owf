@@ -95,7 +95,7 @@ define([
         it('scrolls if its contents are too large', function() {
             $('body').append(portalPane.$el);
 
-            portalPane.$el.css('height', 500);
+            portalPane.$el.css('height', 200);
 
             expect(portalPane.$el.outerHeight()).to.be.lessThan(portalPane.$el[0].scrollHeight);
         });
