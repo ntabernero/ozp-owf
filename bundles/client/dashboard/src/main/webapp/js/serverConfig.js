@@ -261,7 +261,7 @@ var initialDashboards = [
             "height": "100%",
             "items": [
             ],
-            "xtype": "portalpane",
+            "vtype": "portalpane",
             "flex": 1,
             "paneType": "portalpane"
         },
