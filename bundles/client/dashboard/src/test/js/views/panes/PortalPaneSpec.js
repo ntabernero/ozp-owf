@@ -98,8 +98,6 @@ define([
             portalPane.$el.css('height', 500);
 
             expect(portalPane.$el.outerHeight()).to.be.lessThan(portalPane.$el[0].scrollHeight);
-
-            portalPane.$el.remove();
         });
     });
 });
