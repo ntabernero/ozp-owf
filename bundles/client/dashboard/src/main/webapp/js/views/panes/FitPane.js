@@ -26,7 +26,7 @@ define([
     return LayoutPane.extend({
 		vtype: 'fitpane',
 		
-        className: 'pane fitpane',
+        className: LayoutPane.prototype.className + ' fitpane',
 
         initialize: function() {
             LayoutPane.prototype.initialize.apply(this, arguments);
