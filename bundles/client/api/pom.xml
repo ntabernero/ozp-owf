@@ -4,13 +4,13 @@
     <parent>
         <groupId>org.ozoneplatform.owf.bundles.client</groupId>
         <artifactId>client</artifactId>
-        <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
+        <version>8.0.0-ALPHA-SPRINT3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>org.ozoneplatform.owf.bundles.client.api</groupId>
     <artifactId>api</artifactId>
-    <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
+    <version>8.0.0-ALPHA-SPRINT3</version>
     <packaging>war</packaging>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client APIs :: BASE API</name>
