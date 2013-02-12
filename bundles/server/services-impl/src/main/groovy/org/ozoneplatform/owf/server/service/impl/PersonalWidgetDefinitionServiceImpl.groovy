@@ -17,10 +17,10 @@
 package org.ozoneplatform.owf.server.service.impl
 
 import org.ozoneplatform.commons.server.domain.model.Intent
-import org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService
+import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
 import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
-import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService
 
 class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionService {
     @Override

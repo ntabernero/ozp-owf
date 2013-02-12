@@ -32,7 +32,7 @@
     <reference id="personService" interface="org.ozoneplatform.owf.server.service.api.PersonService"/>
     <reference id="stackService" interface="org.ozoneplatform.owf.server.service.api.StackService"/>
     <reference id="dashboardInstanceService" interface="org.ozoneplatform.owf.server.service.api.DashboardInstanceService"/>
-    <reference id="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
+    <reference id="dashboardTemplateService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
     <reference id="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService"/>
     <reference id="personalWidgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService"/>
 
@@ -44,7 +44,7 @@
         <property name="dashboardInstanceService" ref="dashboardInstanceService"/>
     </bean>
     <bean id="groupDashboards" class="org.ozoneplatform.owf.server.rest.DashboardTemplateController">
-        <property name="groupDashboardService" ref="groupDashboardService"/>
+        <property name="dashboardTemplateService" ref="dashboardTemplateService"/>
     </bean>
     <bean id="persons" class="org.ozoneplatform.owf.server.rest.PersonController">
         <property name="personService" ref="personService"/>

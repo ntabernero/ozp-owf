@@ -19,11 +19,15 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-    <bean id="groupService" class="org.ozoneplatform.owf.server.service.impl.GroupServiceImpl"/>
+    <bean id="groupService" class="org.ozoneplatform.owf.server.service.impl.GroupServiceImpl">
+        <property name="dashboardTemplateService" ref="dashboardTemplateService"/>
+    </bean>
     <bean id="personService" class="org.ozoneplatform.owf.server.service.impl.PersonServiceImpl"/>
     <bean id="stackService" class="org.ozoneplatform.owf.server.service.impl.StackServiceImpl"/>
     <bean id="dashboardInstanceService" class="org.ozoneplatform.owf.server.service.impl.DashboardInstanceServiceImpl"/>
-    <bean id="groupDashboardService" class="org.ozoneplatform.owf.server.service.impl.DashboardTemplateServiceImpl"/>
+    <bean id="dashboardTemplateService" class="org.ozoneplatform.owf.server.service.impl.DashboardTemplateServiceImpl">
+        <property name="groupService" ref="groupService"/>
+    </bean>
     <bean id="widgetDefinitionService" class="org.ozoneplatform.owf.server.service.impl.WidgetDefinitionServiceImpl"/>
     <bean id="personalWidgetDefinitionService" class="org.ozoneplatform.owf.server.service.impl.PersonalWidgetDefinitionServiceImpl"/>
 
@@ -31,7 +35,7 @@
     <service ref="personService" interface="org.ozoneplatform.owf.server.service.api.PersonService"/>
     <service ref="stackService" interface="org.ozoneplatform.owf.server.service.api.StackService"/>
     <service ref="dashboardInstanceService" interface="org.ozoneplatform.owf.server.service.api.DashboardInstanceService"/>
-    <service ref="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
+    <service ref="dashboardTemplateService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
     <service ref="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService"/>
     <service ref="personalWidgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService"/>
 

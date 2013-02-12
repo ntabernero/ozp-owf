@@ -16,15 +16,18 @@
 
 package org.ozoneplatform.owf.server.service.api
 
+import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 import org.ozoneplatform.commons.server.domain.model.Group
 
 interface GroupService extends PrincipalService {
     
-    List<Group> list();
-    Group fetch(Long id);
-    Group update(Long id, Group group);
-    Group create(Group group);
-    void delete(Long id);
-    
+    List<Group> list()
+    Group fetch(String id)
+    Group update(String id, Group group)
+    Group create(Group group)
+    void delete(String id)
+    Group addDashboardTemplate(String groupId, String dashboardTemplateId)
+    Group removeDashboardTemplate(String groupId, String dashboardTemplateId)
+    Iterable<DashboardTemplate> getDashboardTemplates(String id)
 }
 

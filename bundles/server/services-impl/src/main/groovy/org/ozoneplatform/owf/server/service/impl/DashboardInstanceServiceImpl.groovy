@@ -16,9 +16,9 @@
 
 package org.ozoneplatform.owf.server.service.impl
 
-import org.ozoneplatform.owf.server.service.api.DashboardInstanceService
 import org.ozoneplatform.commons.server.domain.model.DashboardInstance
 import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.owf.server.service.api.DashboardInstanceService
 
 class DashboardInstanceServiceImpl implements DashboardInstanceService {
 

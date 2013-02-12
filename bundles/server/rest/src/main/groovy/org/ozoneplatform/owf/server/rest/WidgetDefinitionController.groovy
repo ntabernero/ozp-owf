@@ -24,10 +24,10 @@ import org.ozoneplatform.owf.server.service.api.WidgetDefinitionService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import javax.ws.rs.*
 import javax.ws.rs.core.Context
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriInfo
-import javax.ws.rs.*
 
 @Path("/widget-defs")
 @Produces("application/json")

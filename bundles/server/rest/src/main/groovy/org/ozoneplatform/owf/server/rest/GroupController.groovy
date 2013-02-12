@@ -16,14 +16,16 @@
 
 package org.ozoneplatform.owf.server.rest
 
-//import javax.annotation.security.*
+import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.owf.server.service.api.GroupService
+
 import javax.ws.rs.*
+
+//import javax.annotation.security.*
 import javax.ws.rs.core.Context
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
-import org.ozoneplatform.owf.server.service.api.GroupService
-import org.ozoneplatform.commons.server.domain.model.Group
 
 @Path("/")
 @Produces("application/json")
