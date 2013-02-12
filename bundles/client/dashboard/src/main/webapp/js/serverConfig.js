@@ -195,7 +195,7 @@ var initialWidgetDefinitions = [
 var initialDashboards = [
     {
         name: 'Test Portal Dashboard',
-        guid: '11a777b9-96e5-4f64-883e-8067ba99b3ff',
+        guid: '01a777b9-96e5-4f64-883e-8067ba99b3ee',
         dashboardPosition: 0,
         alteredByAdmin: false,
         description: '',
