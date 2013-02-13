@@ -6,7 +6,7 @@ define([
         var fitPane,
             widget1 = {
                 title: 'Widget One',
-    //            uniqueId: '1',
+                id: '1',
                 url: 'widget.html',
                 x: 50,
                 y: 50,
@@ -19,7 +19,7 @@ define([
             },
             widget2 = {
                 title: 'Widget Two',
-    //            uniqueId: '2',
+                id: '2',
                 url: 'widget.html',
                 x: 400,
                 y: 300,
