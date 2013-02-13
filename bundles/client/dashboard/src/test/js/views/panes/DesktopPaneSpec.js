@@ -6,7 +6,7 @@ define([
         var desktopPane, collection,
             widget3 = {
                 title: 'Widget Three',
-     //           uniqueId: '3',
+                id: '3',
                 url: 'widget.html',
                 x: 50,
                 y: 50,
@@ -21,7 +21,7 @@ define([
         beforeEach(function(done) {
             collection = new WidgetStatesCollection([{
                 title: 'Widget One',
-                uniqueId: '1',
+                id: '1',
                 url: 'widget.html',
                 x: 50,
                 y: 50,
@@ -33,7 +33,7 @@ define([
                 closable: true
             }, {
                 title: 'Widget Two',
-                uniqueId: '2',
+                id: '2',
                 url: 'widget.html',
                 x: 400,
                 y: 300,

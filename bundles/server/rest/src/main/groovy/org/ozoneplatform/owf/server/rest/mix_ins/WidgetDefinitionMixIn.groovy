@@ -1,10 +1,10 @@
 package org.ozoneplatform.owf.server.rest.mix_ins
 
 import com.fasterxml.jackson.annotation.JsonBackReference
-import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.ozoneplatform.commons.server.domain.model.Intent
+import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
 
 abstract class WidgetDefinitionMixIn {
 

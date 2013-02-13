@@ -16,14 +16,18 @@
 
 package org.ozoneplatform.owf.server.service.impl
 
-import org.ozoneplatform.owf.server.service.api.DashboardTemplateService
 import org.ozoneplatform.commons.server.domain.model.Dashboard
 import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
-
+import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.owf.server.service.api.DashboardTemplateService
+import org.ozoneplatform.owf.server.service.api.GroupService
+import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class DashboardTemplateServiceImpl implements DashboardTemplateService {
+
+    GroupService groupService
 
     Logger logger = LoggerFactory.getLogger(DashboardTemplateServiceImpl.class)
 
@@ -38,22 +42,27 @@ class DashboardTemplateServiceImpl implements DashboardTemplateService {
     }
 
     DashboardTemplate get(String id) {
-        dashboardMap[id]
+        def dashboard = dashboardMap[id]
+        if (!dashboard) throw new NotFoundException("Dashboard template with id $id was not found")
+        dashboard
     }
 
     void update(DashboardTemplate dashboardInfo) {
         if (dashboardMap[(dashboardInfo.id)]) {
             dashboardMap[(dashboardInfo.id)] = dashboardInfo
         }
+        else {
+            throw new NotFoundException("Dashboard template with id ${dashboardInfo.id} was not found")
+        }
     }
 
     DashboardTemplate delete(String id) {
         if (dashboardMap[id]) {
             Dashboard dashboard =  dashboardMap[id]
-            dashboardMap[id] = null
+            dashboardMap.remove(id)
             dashboard
         } else {
-            null
+            throw new NotFoundException("Dashboard template with id ${id} was not found")
         }
     }
 
@@ -65,8 +74,25 @@ class DashboardTemplateServiceImpl implements DashboardTemplateService {
             copy
         }
         else {
-            null
+            throw new NotFoundException("Dashboard template with id ${id} was not found")
         }
+    }
+
+    @Override
+    Iterable<Group> getGroups(String id) {
+        return get(id).groups
+    }
+
+    @Override
+    DashboardTemplate addGroup(String dashboardTemplateId, String groupId) {
+        groupService.addDashboardTemplate(groupId, dashboardTemplateId)
+        get(dashboardTemplateId)
+    }
+
+    @Override
+    DashboardTemplate removeGroup(String dashboardTemplateId, String groupId) {
+        groupService.removeDashboardTemplate(groupId, dashboardTemplateId)
+        get(dashboardTemplateId)
     }
 
     Map<String, DashboardTemplate> dashboardMap;

@@ -16,14 +16,13 @@
 
 package org.ozoneplatform.owf.server.service.tests
 
+import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
+import org.ozoneplatform.owf.server.service.impl.PersonServiceImpl
+import spock.lang.Specification
+
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
-import org.ozoneplatform.owf.server.service.api.exception.ValidationException
-import org.ozoneplatform.owf.server.service.impl.PersonServiceImpl
-import org.ozoneplatform.commons.server.domain.model.Person
-import spock.lang.Specification
 
 class DescribePersonService extends Specification {
     
