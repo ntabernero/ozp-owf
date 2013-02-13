@@ -1,0 +1,105 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+$dashboardSwitcherBackground: $baseColor !default;
+
+$dashboardSwitcherItemBackground: $dashboardSwitcherBackground !default;
+$dashboardSwitcherItemBorder: 1px solid $dashboardSwitcherBackground !default;
+$dashboardSwitcherItemOverBackground: darken($dashboardSwitcherItemBackground, 5%) !default;
+$dashboardSwitcherItemOverBorder: 1px solid $dashboardSwitcherItemOverBackground !default;
+
+#dashboard-switcher {
+    @extend .no-border-radius;
+    border: 5px solid gray;
+    border: 5px solid rgba(gray, 0.5);
+
+    background: $dashboardSwitcherBackground;
+    overflow: hidden;
+
+    .tilesview {
+        overflow: hidden;
+    }
+
+    .btn.active {
+        color: $linkColor;
+    }
+    .manage-btn i {
+        padding-right: 0.25em;
+    }
+}
+
+div.dashboard-view {
+    background: $dashboardSwitcherItemBackground;
+    border: $dashboardSwitcherItemBorder;
+
+    float: left;
+    margin: 8px 0px 8px 8px;
+    padding: 1em;
+    min-width: 100px;
+    max-width: 164px;
+    
+    position: relative;
+    text-align: center;
+
+    @include border-radius(5px);
+
+    &:hover {
+        background: $dashboardSwitcherItemOverBackground;
+    }
+
+    &.selected {
+        background: $dashboardSwitcherItemOverBackground;
+    }
+
+    & img {
+        display: block;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    & span {
+        display: block;
+        color: black;
+        font: 11px helvetica, arial, sans-serif;
+        height: 2.5em;
+        width: 6em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-group {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0px;
+
+        .btn {
+            background: $baseColor;
+            border: none;
+
+            i {
+                &:hover {
+                    color: $linkColor;
+                }
+            }
+
+            .icon-remove:hover {
+                color: $btnDangerBackground;
+            }
+        }
+    }
+}
+

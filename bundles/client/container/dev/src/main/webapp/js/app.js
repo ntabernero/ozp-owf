@@ -20,13 +20,14 @@ define([
     'events/EventBus',
     'views/Banner',
     'views/DashboardContainer',
+    'views/dashboardswitcher/DashboardSwitcher',
     'collections/PersonalWidgetDefinitionsCollection',
     'collections/PersonalDashboardsCollection',
     'models/WidgetStateModel',
 
     'backbone',
     'jquery'
-], function (Router, EventBus, Banner, DashboardContainer, PersonalWidgetDefinitionsCollection, PersonalDashboardsCollection,
+], function (Router, EventBus, Banner, DashboardContainer, DashboardSwitcher, PersonalWidgetDefinitionsCollection, PersonalDashboardsCollection,
              WidgetStateModel, Backbone, $) {
 
     // create a collection of dashboards from initial data
@@ -53,6 +54,10 @@ define([
     };
 
     var banner = new Banner({});
+    var dashboardSwitcher = new DashboardSwitcher({
+        personalDashboardsCollection: personalDashboardsCollection
+    });
+    
     var dashboardContainer = new DashboardContainer({
         personalWidgetDefinitionsCollection: personalWidgetDefinitionsCollection,
         personalDashboardsCollection: personalDashboardsCollection
@@ -84,6 +89,26 @@ define([
         }
     });
 
+    EventBus.on('dashboard:showSwitcher', function (evt) {
+
+        // Lazily create a dashboard switcher and add it to the document body.
+        if(!this.dashboardSwitcher) {
+            this.dashboardSwitcher = new DashboardSwitcher({
+                personalDashboardsCollection: personalDashboardsCollection
+            });
+            $(document.body).append(this.dashboardSwitcher.render().$el);
+        }
+
+        // Display the switcher and switch its active style.
+        this.dashboardSwitcher.show();
+        this.dashboardSwitcher.$el.one('hidden', function () {
+            $(evt.currentTarget).removeClass('active');
+        });
+        $(evt.currentTarget).addClass('active');
+        return false;
+
+    });
+    
     EventBus.on('dashboard:create', function() {
         require([
             'views/dashboard/CreateEditDashboard',
