@@ -89,10 +89,17 @@ define([
         },
 
         handleOverflow: function() {
-            var taskbarWidth = this.$el.width(),
+            var taskbarWidth,
                 unchangeableWidth = 0,  //the total width of paddings, borders, and margins on content
                 changeableWidth = 0,    //sum of inner widths of headers
                 ratio;
+
+            taskbarWidth = window.getComputedStyle ? 
+                //use getComputedStyle to avoid rounding bug in chrome
+                Math.floor(parseInt(window.getComputedStyle(this.el, null).width, 10)) :
+
+                //IE7/8 doesn't support window.getComputedStyle
+                this.$el.width();
 
             this.$el.children('.header').each(function(idx, header) {
                 var $header = $(header),
