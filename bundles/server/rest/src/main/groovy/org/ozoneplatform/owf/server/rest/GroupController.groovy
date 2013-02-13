@@ -17,6 +17,7 @@
 package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.owf.server.service.api.GroupService
 
 import javax.ws.rs.*
@@ -106,5 +107,35 @@ class GroupController {
     Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace, @PathParam("name") String name) {
         Response.ok(groupService.fetchPreference(id, namespace, name)).build();
     }
-    
+
+    /**
+     * Adds a person to the specified group
+     */
+    @POST
+    @Path("/{id}/persons")
+    Response addPerson(@PathParam("id") String groupId, Person personInfo) {
+        def group = groupService.addPerson(groupId, personInfo.id)
+        Response.ok(group).build()
+    }
+
+    /**
+     * Removes a person from the specified group
+     */
+    @DELETE
+    @Path("/{id}/persons")
+    Response removePerson(@PathParam("id") String groupId, Person personInfo) {
+        def group = groupService.removePerson(groupId, personInfo.id)
+        Response.ok(group).build()
+    }
+
+    /**
+     * Returns the list of persons for the specified group
+     */
+    @GET
+    @Path("/{id}/persons")
+    Response getPersons(@PathParam("id") String groupId) {
+        def persons = groupService.getPersons(groupId)
+        Response.ok(persons).build()
+    }
+
 }

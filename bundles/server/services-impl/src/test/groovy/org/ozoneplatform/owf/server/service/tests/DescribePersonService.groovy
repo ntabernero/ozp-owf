@@ -16,8 +16,10 @@
 
 package org.ozoneplatform.owf.server.service.tests
 
+import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
+import org.ozoneplatform.owf.server.service.impl.GroupServiceImpl
 import org.ozoneplatform.owf.server.service.impl.PersonServiceImpl
 import spock.lang.Specification
 
@@ -27,6 +29,8 @@ import java.text.SimpleDateFormat
 class DescribePersonService extends Specification {
     
     def personService = new PersonServiceImpl()
+    def groupService = new GroupServiceImpl()
+
     DateFormat fmt = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
     Calendar cal = Calendar.instance
     
@@ -62,25 +66,25 @@ class DescribePersonService extends Specification {
     }
     */
     
-    def "fetch must receive an exisiting id"() {
+    def "fetch must receive an existing id"() {
         when: "fetching a person by invalid id"
-        personService.fetch(100L)
+        personService.fetch('100')
 
         then: "throws"
         thrown(NotFoundException)
     }
     
-    def "delete must receive an exisiting id"() {
+    def "delete must receive an existing id"() {
         when: "deleting a person by invalid id"
-        personService.delete(100L)
+        personService.delete('100')
 
         then: "throws"
         thrown(NotFoundException)
     }
     
-    def "update must receive an exisiting id"() {
+    def "update must receive an existing id"() {
         when: "updating a person by invalid id"
-        personService.update(100L, new Person("foo", "Foo"))
+        personService.update('100', new Person("foo", "Foo"))
 
         then: "throws"
         thrown(NotFoundException)
@@ -94,6 +98,6 @@ class DescribePersonService extends Specification {
         then: "throws"
         thrown(Exception)
     }
-    
+
 }
 

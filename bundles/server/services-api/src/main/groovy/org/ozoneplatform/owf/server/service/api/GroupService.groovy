@@ -18,6 +18,7 @@ package org.ozoneplatform.owf.server.service.api
 
 import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.commons.server.domain.model.Person
 
 interface GroupService extends PrincipalService {
     
@@ -28,6 +29,10 @@ interface GroupService extends PrincipalService {
     void delete(String id)
     Group addDashboardTemplate(String groupId, String dashboardTemplateId)
     Group removeDashboardTemplate(String groupId, String dashboardTemplateId)
-    Iterable<DashboardTemplate> getDashboardTemplates(String id)
+    Set<DashboardTemplate> getDashboardTemplates(String id)
+
+    Group addPerson(String groupId, String personId)
+    Group removePerson(String groupId, String personId)
+    Set<Person> getPersons(String groupId)
 }
 
