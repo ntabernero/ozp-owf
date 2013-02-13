@@ -14,6 +14,6 @@ public abstract class DashboardTemplateMixIn extends DashboardMixIn {
     abstract Set<WidgetDefinition> getWidgets()
 
     @JsonManagedReference
-    abstract Iterable<Group> getGroups()
+    abstract Set<Group> getGroups()
 
 }

@@ -16,15 +16,19 @@
 
 package org.ozoneplatform.owf.server.service.api
 
+import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Person
 
 interface PersonService extends PrincipalService {
     
-    List<Person> list();
-    Person fetch(Long id);
-    Person create(Person person);
-    Person update(Long id, Person person);
-    void delete(Long id);
-    
+    List<Person> list()
+    Person fetch(String id)
+    Person create(Person person)
+    Person update(String id, Person person)
+    void delete(String id)
+
+    Person addGroup(String personId, String groupId)
+    Person removeGroup(String personId, String groupId)
+    Set<Group> getGroups(String id)
 }
 

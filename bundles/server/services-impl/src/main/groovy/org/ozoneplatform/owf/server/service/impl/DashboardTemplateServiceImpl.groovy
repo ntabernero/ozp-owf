@@ -79,7 +79,7 @@ class DashboardTemplateServiceImpl implements DashboardTemplateService {
     }
 
     @Override
-    Iterable<Group> getGroups(String id) {
+    Set<Group> getGroups(String id) {
         return get(id).groups
     }
 
