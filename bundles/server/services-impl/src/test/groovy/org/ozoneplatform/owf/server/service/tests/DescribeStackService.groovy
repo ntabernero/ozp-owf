@@ -84,7 +84,7 @@ class DescribeStackService extends Specification {
     def "update must receive a valid stack"() {
         when: "updating a stack without a name"
         Stack stack = stackService.create(new Stack("Stack Foo", "stackfoo"))
-        stackService.update(stack.id, new Stack())
+        stackService.update(stack.id, new Stack(null, null))
 
         then: "throws"
         thrown(Exception)

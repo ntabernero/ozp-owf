@@ -94,10 +94,13 @@ class PersonServiceImpl implements PersonService {
     }
 
     Person update(String id, Person person) {
+        if (!person) {
+            throw new ValidationException("Person to update to is required; however it is null");
+        }
         Person thePerson = this.fetch(id);
-        thePerson.username = person?.username ?: thePerson.username;
-        thePerson.fullName = person?.fullName ?: thePerson.fullName;
-        thePerson.email = person?.email ?: thePerson.email;
+        thePerson.username = person.username;
+        thePerson.fullName = person.fullName;
+        thePerson.email = person.email;
         this.validate(thePerson);
         thePerson;
     }

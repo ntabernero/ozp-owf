@@ -19,6 +19,7 @@ package org.ozoneplatform.owf.server.service.tests
 import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
+import org.ozoneplatform.owf.server.service.api.exception.ValidationException
 import org.ozoneplatform.owf.server.service.impl.GroupServiceImpl
 import org.ozoneplatform.owf.server.service.impl.PersonServiceImpl
 import spock.lang.Specification
@@ -93,10 +94,10 @@ class DescribePersonService extends Specification {
     def "update must receive a valid person"() {
         when: "updating a person without a username or full name"
         Person person = personService.create(new Person("foo", "Foo"))
-        personService.update(person.id, new Person())
+        personService.update(person.id, new Person(null, null))
 
         then: "throws"
-        thrown(Exception)
+        thrown(ValidationException)
     }
 
 }
