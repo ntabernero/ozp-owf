@@ -121,7 +121,7 @@ class GroupServiceImpl implements GroupService {
         Group group = fetch(groupId)
         if (!group) throw new NotFoundException("Group with id ${groupId} was not found")
         Person person = personService.fetch(personId)
-        if (!person) throw new NotFoundException("person with id ${personId} was not found")
+        if (!person) throw new NotFoundException("Person with id ${personId} was not found")
         group.addPerson(person)
         group
     }
@@ -131,7 +131,7 @@ class GroupServiceImpl implements GroupService {
         Group group = fetch(groupId)
         if (!group) throw new NotFoundException("Group with id ${groupId} was not found")
         Person person = personService.fetch(personId)
-        if (!person) throw new NotFoundException("person with id ${personId} was not found")
+        if (!person) throw new NotFoundException("Person with id ${personId} was not found")
         group.removePerson(person)
         group
     }

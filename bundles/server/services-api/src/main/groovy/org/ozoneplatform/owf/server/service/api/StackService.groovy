@@ -18,7 +18,7 @@ package org.ozoneplatform.owf.server.service.api
 
 import org.ozoneplatform.commons.server.domain.model.Stack
 
-interface StackService {
+interface StackService extends PersonContainerService<Stack>{
 
     List<Stack> list();
     Stack create(Stack stack);

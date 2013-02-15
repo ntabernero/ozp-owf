@@ -16,6 +16,7 @@
 
 package org.ozoneplatform.owf.server.service.impl
 
+import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.commons.server.domain.model.Stack
 import org.ozoneplatform.owf.server.service.api.StackService
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
@@ -96,5 +97,19 @@ class StackServiceImpl implements StackService {
             throw new ValidationException("Name is required")
         }
     }
-    
+
+    @Override
+    Stack addPerson(String stackId, String personId) {
+        return null  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    Stack removePerson(String stackId, String personId) {
+        return null  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    Set<Person> getPersons(String stackId) {
+        return null  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
