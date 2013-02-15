@@ -15,12 +15,12 @@
  */
 
 define([
-    'views/panes/PortalPane',
+    'views/panes/AccordionPane',
     'views/widgets/Panel',
     'collections/WidgetStatesCollection'
-], function(PortalPane, Panel, WidgetStatesCollection) {
-    describe('PortalPane', function() {
-        var portalPane, collection,
+], function(AccordionPane, Panel, WidgetStatesCollection) {
+    describe('AccordionPane', function() {
+        var accordionPane, collection,
             widget1 = {
                 title: 'Widget One',
                 id: '1',
@@ -65,7 +65,7 @@ define([
         beforeEach(function(done) {
             collection = new WidgetStatesCollection([widget1, widget2]);
 
-            portalPane = new PortalPane({
+            accordionPane = new AccordionPane({
                 collection: collection
             }).render();
 
@@ -74,42 +74,33 @@ define([
 
         afterEach(function(done) {
             collection = null;
-            portalPane.remove();
-            portalPane = null;
+            accordionPane.remove();
+            accordionPane = null;
 
             done();
         });
 
-        it('does not record changes in the widgets horizontal size', function() {
-            var view = portalPane.$('.widget').data('view');
+        it('renders a widget Panel for each widget in the collection', function() {
+            collection.add(widget3);
 
-            sinon.spy(view.model, 'set');
-
-            view.onResize({}, {
-                size: {width: 1000, height: 1000}
-            });
-
-            expect(view.model.set.calledWith('height', 1000)).to.be.ok();
-            expect(view.model.set.calledWith('width')).to.not.be.ok();
+            var panels = accordionPane.$('.widget'),
+                views = _.map(panels, function(panel) {
+                    return $(panel).data('view');
+                }),
+                isPanel = _.map(views, function(view) {
+                    return view instanceof Panel;
+                });
+            
+            expect(views.length).to.equal(3);
+            expect(isPanel).to.not.contain(false);
         });
 
         it('renders already collapsed widgets as collapsed', function() {
             collection.add(widget3);
 
-            var collapsedWidgets = portalPane.$('.widget.collapsed');
+            var collapsedWidgets = accordionPane.$('.widget.collapsed');
             
             expect(collapsedWidgets.length).to.equal(1);
         });
-
-//TODO: fix this test
-//This test works for some people, but fails on jenkins and
-//actually crashes testacular for other people.  
-//        it('scrolls if its contents are too large', function() {
-//            $('body').append(portalPane.$el);
-//
-//            portalPane.$el.css('height', 200);
-//
-//            expect(portalPane.$el.outerHeight()).to.be.lessThan(portalPane.$el[0].scrollHeight);
-//        });
     });
 });

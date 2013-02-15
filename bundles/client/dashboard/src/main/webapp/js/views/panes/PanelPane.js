@@ -33,6 +33,8 @@ define([
             LayoutPane.prototype.initialize.apply(this, arguments);
 
             this.initSortable({
+                handle: ".header",
+                cursor: 'move',
                 start: function(evt, ui) {
                     ui.item.data('view').mask();
                 },
@@ -57,7 +59,12 @@ define([
                 model: widget
             });
 
+            // If widget is collapsed collapse the widget panel
+            panel.model.get('collapsed') && panel.updateCollapse();
+
             this.$el.append(panel.render().$el);
+
+            return panel;
         }
      }));
 });
