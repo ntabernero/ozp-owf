@@ -20,7 +20,7 @@ import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Person
 
-interface GroupService extends PrincipalService {
+interface GroupService extends PrincipalService, PersonContainerService<Group> {
     
     List<Group> list()
     Group fetch(String id)
@@ -30,9 +30,5 @@ interface GroupService extends PrincipalService {
     Group addDashboardTemplate(String groupId, String dashboardTemplateId)
     Group removeDashboardTemplate(String groupId, String dashboardTemplateId)
     Set<DashboardTemplate> getDashboardTemplates(String id)
-
-    Group addPerson(String groupId, String personId)
-    Group removePerson(String groupId, String personId)
-    Set<Person> getPersons(String groupId)
 }
 

@@ -29,14 +29,19 @@ import javax.ws.rs.core.UriInfo
 @Produces("application/json")
 class StackController {
 
-    StackService stackService;
+    StackService service;
+    @Delegate(methodAnnotations = true, parameterAnnotations = true) PersonContainer personContainer
 
     @Context
     private UriInfo uriInfo;
 
+    StackController() {
+        this.personContainer = new PersonContainer(this)
+    }
     @GET
+
     Response list() {
-        List<Stack> list = stackService.list();
+        List<Stack> list = service.list();
         if (list && !list.empty) {
             Response.ok(list).build();
         } else {
@@ -47,7 +52,7 @@ class StackController {
     @POST
     @Consumes("application/json")
     Response create(Stack stack) {
-        Stack theStack = stackService.create(stack);
+        Stack theStack = service.create(stack);
         URI stackUri;
         UriBuilder builder = uriInfo.getBaseUriBuilder();
         builder.path(StackController.class);
@@ -59,7 +64,7 @@ class StackController {
     @POST
     @Path("/import-operation")
     Response doImport(Stack stack) {
-        Stack theStack = stackService.doImport(stack);
+        Stack theStack = service.doImport(stack);
         URI stackUri;
         UriBuilder builder = uriInfo.getBaseUriBuilder();
         builder.path(StackController.class);
@@ -71,7 +76,7 @@ class StackController {
     @GET
     @Path("/{id}")
     Response fetch(@PathParam("id") Long id) {
-        Stack theStack = stackService.fetch(id);
+        Stack theStack = service.fetch(id);
         Response.ok(theStack).build();
     }
 
@@ -79,28 +84,27 @@ class StackController {
     @Path("/{id}")
     @Consumes("application/json")
     Response update(@PathParam("id") Long id, Stack stack) {
-        Response.ok(stackService.update(id, stack)).build();
+        Response.ok(service.update(id, stack)).build();
     }
 
     @DELETE
     @Path("/{id}")
     Response delete(@PathParam("id") Long id) {
-        stackService.delete(id);
+        service.delete(id);
         Response.ok().build();
     }
 
     @GET
     @Path("/{id}/export-operation")
     Response export(@PathParam("id") Long id) {
-        Stack theStack = stackService.export(id);
+        Stack theStack = service.export(id);
         Response.ok(theStack).build();
     }
 
     @POST
     @Path("/{id}/restore-operation")
     Response restore(@PathParam("id") Long id) {
-        Stack theStack = stackService.restore(id);
+        Stack theStack = service.restore(id);
         Response.ok(theStack).build();
     }
-
 }

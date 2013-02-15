@@ -44,16 +44,16 @@
         <property name="dashboardInstanceService" ref="dashboardInstanceService"/>
     </bean>
     <bean id="groupDashboards" class="org.ozoneplatform.owf.server.rest.DashboardTemplateController">
-        <property name="dashboardTemplateService" ref="dashboardTemplateService"/>
+        <property name="service" ref="dashboardTemplateService"/>
     </bean>
     <bean id="persons" class="org.ozoneplatform.owf.server.rest.PersonController">
         <property name="personService" ref="personService"/>
     </bean>
     <bean id="groups" class="org.ozoneplatform.owf.server.rest.GroupController">
-        <property name="groupService" ref="groupService"/>
+        <property name="service" ref="groupService"/>
     </bean>
     <bean id="stacks" class="org.ozoneplatform.owf.server.rest.StackController">
-        <property name="stackService" ref="stackService"/>
+        <property name="service" ref="stackService"/>
     </bean>
     <bean id="widgetDefinitions" class="org.ozoneplatform.owf.server.rest.WidgetDefinitionController">
         <property name="widgetDefinitionService" ref="widgetDefinitionService"/>
