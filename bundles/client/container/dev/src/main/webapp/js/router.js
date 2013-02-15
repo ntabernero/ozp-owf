@@ -104,9 +104,16 @@ define([
         },
 
         index: function (guid) {
+            
+            var banner = this.options.banner;
+            
             EventBus.trigger('dashboard:switch', new Backbone.Model({
                 guid:guid
             }));
+            
+            if (banner != null && !banner.rendered) {
+                banner.render();
+            }
         },
 
         measurePerformance: function (count) {

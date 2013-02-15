@@ -23,11 +23,12 @@ define([
     'collections/PersonalWidgetDefinitionsCollection',
     'collections/PersonalDashboardsCollection',
     'models/WidgetStateModel',
+    'models/ToolbarModel',
 
     'backbone',
     'jquery'
 ], function (Router, EventBus, Banner, DashboardContainer, PersonalWidgetDefinitionsCollection, PersonalDashboardsCollection,
-             WidgetStateModel, Backbone, $) {
+             WidgetStateModel, ToolbarModel, Backbone, $) {
 
     // create a collection of dashboards from initial data
     var personalWidgetDefinitionsCollection = new PersonalWidgetDefinitionsCollection(initialWidgetDefinitions);
@@ -52,13 +53,13 @@ define([
         return returnValue;
     };
 
-    var banner = new Banner({});
+    var banner = new Banner({ model: new ToolbarModel()});
     var dashboardContainer = new DashboardContainer({
         personalWidgetDefinitionsCollection: personalWidgetDefinitionsCollection,
         personalDashboardsCollection: personalDashboardsCollection
     });
 
-    var router = new Router();
+    var router = new Router({ banner: banner });
 
     // Trigger the initial route and enable HTML5 History API support, set the
     // root folder to '/' by default.  Change in app.js.
