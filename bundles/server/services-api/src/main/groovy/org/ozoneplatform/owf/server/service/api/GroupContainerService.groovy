@@ -17,7 +17,6 @@ package org.ozoneplatform.owf.server.service.api
 
 import org.ozoneplatform.commons.server.domain.model.Entity
 import org.ozoneplatform.commons.server.domain.model.Group
-import org.ozoneplatform.commons.server.domain.model.Person
 
 public interface GroupContainerService<T extends Entity> {
     T addGroup(String containerId, String groupId)

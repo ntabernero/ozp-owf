@@ -16,7 +16,6 @@
 
 package org.ozoneplatform.owf.server.service.tests
 
-import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
