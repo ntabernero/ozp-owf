@@ -18,7 +18,6 @@ package org.ozoneplatform.owf.server.service.api
 
 import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 import org.ozoneplatform.commons.server.domain.model.Group
-import org.ozoneplatform.commons.server.domain.model.Person
 
 interface GroupService extends PrincipalService, PersonContainerService<Group> {
     
