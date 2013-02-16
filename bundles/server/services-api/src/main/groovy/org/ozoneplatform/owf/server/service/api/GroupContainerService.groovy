@@ -1,5 +1,5 @@
-/* 
-   Copyright 2013 Next Century Corporation 
+/*
+   Copyright 2013 Next Century Corporation
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,18 +13,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
 package org.ozoneplatform.owf.server.service.api
 
+import org.ozoneplatform.commons.server.domain.model.Entity
 import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Person
 
-interface PersonService extends PrincipalService, GroupContainerService<Person> {
-    
-    List<Person> list()
-    Person fetch(String id)
-    Person create(Person person)
-    Person update(String id, Person person)
-    void delete(String id)
-}
+public interface GroupContainerService<T extends Entity> {
+    T addGroup(String containerId, String groupId)
+    T removeGroup(String containerId, String groupId)
+    Set<Group> getGroups(String id)
 
+}
