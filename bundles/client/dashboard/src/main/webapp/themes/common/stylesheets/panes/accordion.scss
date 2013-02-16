@@ -1,0 +1,9 @@
+.accordionpane {
+    position: relative;
+
+    > .widget {
+        width: 100%;
+
+        position: relative;
+    }
+}

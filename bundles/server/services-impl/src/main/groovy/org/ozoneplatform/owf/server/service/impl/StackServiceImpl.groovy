@@ -16,6 +16,7 @@
 
 package org.ozoneplatform.owf.server.service.impl
 
+import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.commons.server.domain.model.Stack
 import org.ozoneplatform.owf.server.service.api.StackService
@@ -31,13 +32,13 @@ class StackServiceImpl implements StackService {
         def stack;
         
         stack = new Stack("Stack One", "stackone");
-        stack.id = 1L;
+        stack.id = "1";
         stack.description = "This is stack one.";
         stack.descriptorUrl = "http://the.descriptor.url";
         theList.add(stack);
         
         stack = new Stack("Stack Two", "stacktwo");
-        stack.id = 2L;
+        stack.id = "2";
         stack.description = "This is stack two.";
         stack.descriptorUrl = "http://the.descriptor.url";
         theList.add(stack);
@@ -50,8 +51,8 @@ class StackServiceImpl implements StackService {
 
     Stack create(Stack stack) {
         this.validate(stack);
-        def max = theList.max{ it.id }
-        stack?.id = max.id + 1L
+        stack?.id = UUID.randomUUID().toString()
+
         theList.add(stack)
         stack
     }
@@ -60,7 +61,7 @@ class StackServiceImpl implements StackService {
         this.create(stack);
     }
 
-    Stack fetch(Long id) {
+    Stack fetch(String id) {
         Stack theStack = theList.find{ it.id == id; }
         if (theStack) {
             theStack
@@ -69,25 +70,25 @@ class StackServiceImpl implements StackService {
         }
     }
 
-    Stack update(Long id, Stack stack) {
+    Stack update(String id, Stack stack) {
         Stack theStack = this.fetch(id)
-        theStack.name = stack?.name ?: theStack.name
-        theStack.description = stack?.description ?: theStack.description
-        theStack.urlName = stack?.urlName ?: theStack.urlName
-        theStack.descriptorUrl = stack?.descriptorUrl ?: theStack.descriptorUrl
+        theStack.name = stack?.name
+        theStack.description = stack?.description
+        theStack.urlName = stack?.urlName
+        theStack.descriptorUrl = stack?.descriptorUrl
         this.validate(theStack)
         theStack
     }
 
-    void delete(Long id) {
+    void delete(String id) {
         theList.remove(this.fetch(id))
     }
 
-    Stack export(Long id) {
+    Stack export(String id) {
         this.fetch(id)
     }
 
-    Stack restore(Long id) {
+    Stack restore(String id) {
         this.fetch(id);
     }
     
@@ -110,6 +111,21 @@ class StackServiceImpl implements StackService {
 
     @Override
     Set<Person> getPersons(String stackId) {
+        return null  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    Stack addGroup(String stackId, String groupId) {
+        return null  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    Stack removeGroup(String stackId, String groupId) {
+        return null  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    Set<Group> getGroups(String stackId) {
         return null  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

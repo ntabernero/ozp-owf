@@ -1,5 +1,5 @@
-/* 
-   Copyright 2013 Next Century Corporation 
+/*
+   Copyright 2013 Next Century Corporation
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,21 +13,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
+import org.ozoneplatform.commons.server.domain.model.Entity
 import org.ozoneplatform.commons.server.domain.model.Group
 
-interface GroupService extends PrincipalService, PersonContainerService<Group> {
-    
-    List<Group> list()
-    Group fetch(String id)
-    Group update(String id, Group group)
-    Group create(Group group)
-    void delete(String id)
-    Group addDashboardTemplate(String groupId, String dashboardTemplateId)
-    Group removeDashboardTemplate(String groupId, String dashboardTemplateId)
-    Set<DashboardTemplate> getDashboardTemplates(String id)
-}
+public interface GroupContainerService<T extends Entity> {
+    T addGroup(String containerId, String groupId)
+    T removeGroup(String containerId, String groupId)
+    Set<Group> getGroups(String id)
 
+}
