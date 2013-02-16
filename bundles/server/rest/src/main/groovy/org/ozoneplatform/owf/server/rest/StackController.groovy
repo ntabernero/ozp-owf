@@ -31,12 +31,14 @@ class StackController {
 
     StackService service;
     @Delegate(methodAnnotations = true, parameterAnnotations = true) PersonContainer personContainer
+    @Delegate(methodAnnotations = true, parameterAnnotations = true) GroupContainer groupContainer
 
     @Context
     private UriInfo uriInfo;
 
     StackController() {
         this.personContainer = new PersonContainer(this)
+        this.groupContainer = new GroupContainer(this)
     }
     @GET
 
