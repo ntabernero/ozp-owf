@@ -53,6 +53,9 @@ define([
                 model: widget
             });
 
+            // If widget is collapsed collapse the widget portlet
+            portlet.model.get('collapsed') && portlet.updateCollapse();
+
             this.$el.append(portlet.render().$el);
         }
         

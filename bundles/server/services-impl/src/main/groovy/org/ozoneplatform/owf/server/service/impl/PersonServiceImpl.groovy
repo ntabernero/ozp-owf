@@ -16,8 +16,10 @@
 
 package org.ozoneplatform.owf.server.service.impl
 
+import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.commons.server.domain.model.Preference
+import org.ozoneplatform.owf.server.service.api.GroupService
 import org.ozoneplatform.owf.server.service.api.PersonService
 import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 import org.ozoneplatform.owf.server.service.api.exception.ValidationException
@@ -26,6 +28,8 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 class PersonServiceImpl implements PersonService {
+
+    GroupService groupService
     
     def theList = [];
     
@@ -72,7 +76,7 @@ class PersonServiceImpl implements PersonService {
         theList;
     }
 
-    Person fetch(Long id) {
+    Person fetch(String id) {
         Person thePerson = theList.find{ it.id == id; }
         if (thePerson) {
             thePerson;
@@ -89,20 +93,42 @@ class PersonServiceImpl implements PersonService {
         person;
     }
 
-    Person update(Long id, Person person) {
+    Person update(String id, Person person) {
+        if (!person) {
+            throw new ValidationException("Person to update to is required; however it is null");
+        }
         Person thePerson = this.fetch(id);
-        thePerson.username = person?.username ?: thePerson.username;
-        thePerson.fullName = person?.fullName ?: thePerson.fullName;
-        thePerson.email = person?.email ?: thePerson.email;
+        thePerson.username = person.username;
+        thePerson.fullName = person.fullName;
+        thePerson.email = person.email;
         this.validate(thePerson);
         thePerson;
     }
 
-    void delete(Long id) {
+    void delete(String id) {
         theList.remove(this.fetch(id));
         return;
     }
-    
+
+    @Override
+    Person addGroup(String personId, String groupId) {
+        groupService.addPerson(groupId, personId)
+        fetch(personId)
+    }
+
+    @Override
+    Person removeGroup(String personId, String groupId) {
+        groupService.removePerson(groupId, personId)
+        fetch(personId)
+    }
+
+    @Override
+    Set<Group> getGroups(String id) {
+        Person person = fetch(id)
+        if (!person) throw new NotFoundException("person with id ${id} was not found")
+        return null  //TODO: person.groups
+    }
+
     private void validate(Person person) {
         boolean validUsername = person?.username?.trim()?.length() > 0;
         boolean validFullName = person?.fullName?.trim()?.length() > 0;

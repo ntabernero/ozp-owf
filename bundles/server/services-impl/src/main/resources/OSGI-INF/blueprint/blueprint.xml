@@ -21,8 +21,11 @@
 
     <bean id="groupService" class="org.ozoneplatform.owf.server.service.impl.GroupServiceImpl">
         <property name="dashboardTemplateService" ref="dashboardTemplateService"/>
+        <property name="personService" ref="personService"/>
     </bean>
-    <bean id="personService" class="org.ozoneplatform.owf.server.service.impl.PersonServiceImpl"/>
+    <bean id="personService" class="org.ozoneplatform.owf.server.service.impl.PersonServiceImpl">
+        <property name="groupService" ref="groupService"/>
+    </bean>
     <bean id="stackService" class="org.ozoneplatform.owf.server.service.impl.StackServiceImpl"/>
     <bean id="dashboardInstanceService" class="org.ozoneplatform.owf.server.service.impl.DashboardInstanceServiceImpl"/>
     <bean id="dashboardTemplateService" class="org.ozoneplatform.owf.server.service.impl.DashboardTemplateServiceImpl">

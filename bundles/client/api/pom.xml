@@ -4,13 +4,13 @@
     <parent>
         <groupId>org.ozoneplatform.owf.bundles.client</groupId>
         <artifactId>client</artifactId>
-        <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
+        <version>8.0.0-ALPHA-SPRINT4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>org.ozoneplatform.owf.bundles.client.api</groupId>
     <artifactId>api</artifactId>
-    <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
+    <version>8.0.0-ALPHA-SPRINT4-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client APIs :: BASE API</name>
@@ -52,10 +52,10 @@
             </plugin>
 
             <!-- this executes jshint ant plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-antrun-plugin</artifactId>-->
+            <!--</plugin>-->
 
             <plugin>
                 <groupId>com.github.mcheely</groupId>

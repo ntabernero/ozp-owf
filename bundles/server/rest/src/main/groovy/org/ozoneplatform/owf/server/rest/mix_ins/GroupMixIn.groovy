@@ -29,8 +29,8 @@ abstract class GroupMixIn {
     @JsonProperty abstract boolean isIsPermissionsActive()
     @JsonIgnore abstract boolean getAutomatic()
     @JsonProperty abstract boolean isIsAutomatic()
-    @JsonIgnore abstract Iterable<Stack> getStacks()
-    @JsonIgnore abstract Iterable<Person> getPersons()
-    @JsonBackReference abstract Iterable<DashboardTemplate> getDashboardTemplates()
+    @JsonIgnore abstract Set<Stack> getStacks()
+    @JsonIgnore abstract Set<Person> getPersons()
+    @JsonBackReference abstract Set<DashboardTemplate> getDashboardTemplates()
 }
 

@@ -58,6 +58,7 @@ define([
                 zIndex: 10000,
                 maximizable: true,
                 minimizable: true,
+                collapsed: true,
                 closable: true
             };
 
@@ -90,6 +91,14 @@ define([
 
             expect(view.model.set.calledWith('height', 1000)).to.be.ok();
             expect(view.model.set.calledWith('width')).to.not.be.ok();
+        });
+
+        it('renders already collapsed widgets as collapsed', function() {
+            collection.add(widget3);
+
+            var collapsedWidgets = portalPane.$('.widget.collapsed');
+            
+            expect(collapsedWidgets.length).to.equal(1);
         });
 
 //TODO: fix this test
