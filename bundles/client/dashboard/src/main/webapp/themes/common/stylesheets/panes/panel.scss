@@ -2,4 +2,8 @@
 .panelpane .widget {
     border-left-width: 0px;
     border-right-width: 0px;
+
+    &.collapsed {
+        height: $headerLineHeight !important;
+    }
 }

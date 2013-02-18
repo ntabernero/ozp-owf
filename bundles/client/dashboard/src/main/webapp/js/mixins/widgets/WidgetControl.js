@@ -38,6 +38,9 @@ define([
 
         initialize: function() {
             this.updateActive();
+            this.updateMinimize();
+            this.updateMaximize();
+            this.updateCollapse();
         },
 
         updateMinimize: function() {

@@ -29,8 +29,6 @@ define([
     return LayoutPane.extend({
         vtype: 'desktoppane',
 
-        model: null,
-
         $body: null, //jquery element for the dashboard body
         taskbar: null, //taskbar View
 
