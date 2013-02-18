@@ -31,7 +31,7 @@ define([
         model: null,
         className: 'widget panel',
 
-        headerClass: PanelHeader,    //subclassses can override to get different headers
+        HeaderClass: PanelHeader,    //subclassses can override to get different headers
 
         initialize: function () {
             View.prototype.initialize.apply(this, arguments);
@@ -42,7 +42,7 @@ define([
         },
 
         render: function() {
-            this.header = new this.headerClass({ model: this.model });
+            this.header = new this.HeaderClass({ model: this.model });
             this.iframe = new Iframe({ model: this.model });
 
             this.$body = $('<div class="body"></div>')

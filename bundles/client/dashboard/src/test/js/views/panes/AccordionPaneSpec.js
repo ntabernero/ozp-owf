@@ -66,7 +66,7 @@ define([
             collection = new WidgetStatesCollection([widget1, widget2]);
 
             accordionPane = new AccordionPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             done();

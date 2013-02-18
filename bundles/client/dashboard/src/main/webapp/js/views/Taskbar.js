@@ -81,10 +81,10 @@ define([
             header.render();
             this.$el.append(header.$el);
 
-            this.handleOverflow();
+            this.updateSize();
         },
 
-        resize: function() {
+        updateSize: function() {
             this.handleOverflow();
         },
 

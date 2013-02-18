@@ -48,7 +48,9 @@ define([
 
         beforeEach(function(done) {
             view = new ViewClass({
-                model: new WidgetStateModel(widget)
+                model: new WidgetStateModel(widget),
+
+                remove: sinon.spy(View.prototype, 'remove')
             });
 
             done();
@@ -58,6 +60,8 @@ define([
             view.remove();
             view = null;
 
+            //remove spy on remove method
+            View.prototype.remove.restore();
             done();
         });
 
@@ -74,8 +78,6 @@ define([
         });
 
         it('removes the view when the model is destroyed', function() {
-            sinon.spy(view, 'remove');
-
             view.model.destroy();
 
             expect(view.remove.calledOnce).to.be.ok();
@@ -112,7 +114,6 @@ define([
                     width: 400,
                     height: 500,
                     zIndex: 10000,
-                    minimized: true,
                     maximized: true,
                     collapsed: true,
                     active: true
@@ -120,11 +121,28 @@ define([
             });
 
             expect(view2.$el.hasClass('active')).to.be(true);
-            expect(view2.$el.hasClass('minimized')).to.be(true);
             expect(view2.$el.hasClass('maximized')).to.be(true);
             expect(view2.$el.hasClass('collapsed')).to.be(true);
 
+            var view3 = new ViewClass({
+                model: new WidgetStateModel({
+                    title: 'Widget Three',
+                    id: '3',
+                    url: 'widget.html',
+                    x: 50,
+                    y: 50,
+                    width: 400,
+                    height: 500,
+                    zIndex: 10000,
+                    minimized: true,
+                    collapsed: true
+                })
+            });
+
+            expect(view3.$el.hasClass('minimized')).to.be(true);
+
             view2.remove();
+            view3.remove();
         });
     });
 

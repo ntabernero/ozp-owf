@@ -51,7 +51,7 @@ define([
             collection = new WidgetStatesCollection([widget1, widget2]);
 
             tabbedPane = new TabbedPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             done();

@@ -48,18 +48,24 @@ define([
         btnTemplate: btnTpl,
 
         minimize: function() {
-            this.model.set('minimized', true);
-            this.model.set('maximized', false);
+            this.model.set({
+                minimized: true,
+                maximized: false
+            });
         },
 
         restore: function() {
-            this.model.set('minimized', false);
-            this.model.set('maximized', false);
+            this.model.set({
+                minimized: false,
+                maximized: false
+            });
         },
 
         maximize: function() {
-            this.model.set('minimized', false);
-            this.model.set('maximized', true);
+            this.model.set({
+                minimized: false,
+                maximized: true
+            });
         }
 
     });

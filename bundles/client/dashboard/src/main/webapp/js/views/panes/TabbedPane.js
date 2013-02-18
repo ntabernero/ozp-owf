@@ -67,7 +67,7 @@ define([
 
             //adjust to new size once it is worked out
             setTimeout(function() {
-                me.tabbar.resize();
+                me.tabbar.updateSize();
             }, 0);
         }
     });

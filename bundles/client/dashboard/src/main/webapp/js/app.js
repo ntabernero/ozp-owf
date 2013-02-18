@@ -54,7 +54,7 @@ define([
         }
     });
    
-    // Pull in a collection of dashboards.
+    // Pull in a collection of widget definitions
     var widgetDefinitionsCollection = new WidgetDefinitionsCollection();
     widgetDefinitionsCollection.fetch({
         success: function(collection) {
@@ -65,7 +65,7 @@ define([
         }
     });
     
-    // Pull in a collection of dashboards.
+    // Pull in a collection of preferences
     var preferencesCollection = new PreferencesCollection();
     preferencesCollection.fetch({
         success: function(collection) {
@@ -76,7 +76,7 @@ define([
         }
     });
     
-    // Pull in a collection of dashboards.
+    // Pull in a collection of people
     var peopleCollection = new PeopleCollection();
     peopleCollection.fetch({
         success: function(collection) {
@@ -87,7 +87,7 @@ define([
         }
     });
     
-    // Pull in a collection of dashboards.
+    // Pull in a collection of groups
     var groupsCollection = new GroupsCollection();
     groupsCollection.fetch({
         success: function(collection) {
@@ -98,7 +98,7 @@ define([
         }
     });
 
-    // create a collection of dashboards from initial data
+    // create a collection of PersonalWidgetDefinitions from the WidgetDefinitions
     var personalWidgetDefinitionsCollection = new PersonalWidgetDefinitionsCollection(initialWidgetDefinitions);
 
     // create a collection of dashboards from initial data

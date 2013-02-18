@@ -66,7 +66,7 @@ define([
             collection = new WidgetStatesCollection([widget1, widget2]);
 
             portalPane = new PortalPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             done();

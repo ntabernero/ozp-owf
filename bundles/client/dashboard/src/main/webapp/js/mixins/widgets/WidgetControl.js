@@ -57,6 +57,10 @@ define([
 
         updateActive: function() {
             this.$el[this.model.get('active') ? 'addClass' : 'removeClass']('active');
+
+            if (this.model.get('active')) {
+                this.model.set('minimized', false);
+            }
         },
 
         activateWidget: function() {
