@@ -25,7 +25,7 @@ define([
 function(View, $, Handlebars) {
     
     var tpl = 
-            '<img src="http://lorempixel.com/124/124/abstract/" class="img-polaroid" />' +
+            '<img src="/themes/common/images/dashboardswitcher/DefaultDashboard_Color.png" class="img-polaroid" />' +
             '<span>{{this.name}}</span>' +
             '<div class="btn-group">' +
                 '<button class="btn"><i class="icon-refresh"></i></button>' +
@@ -33,6 +33,7 @@ function(View, $, Handlebars) {
                 '<button class="btn"><i class="icon-edit"></i></button>' +
                 '<button class="btn"><i class="icon-remove"></i></button>' +
             '</div>';
+   
         
     return View.extend({
         
