@@ -22,19 +22,19 @@ define([
     'views/DashboardContainer',
     'views/dashboardswitcher/DashboardSwitcher',
     'collections/PersonalWidgetDefinitionsCollection',
-    'collections/PersonalDashboardsCollection',
+    'collections/DashboardInstancesCollection',
     'models/WidgetStateModel',
 
     'backbone',
     'jquery'
-], function (Router, EventBus, Banner, DashboardContainer, DashboardSwitcher, PersonalWidgetDefinitionsCollection, PersonalDashboardsCollection,
+], function (Router, EventBus, Banner, DashboardContainer, DashboardSwitcher, PersonalWidgetDefinitionsCollection, DashboardInstancesCollection,
              WidgetStateModel, Backbone, $) {
 
     // create a collection of dashboards from initial data
     var personalWidgetDefinitionsCollection = new PersonalWidgetDefinitionsCollection(initialWidgetDefinitions);
 
     // create a collection of dashboards from initial data
-    var personalDashboardsCollection = new PersonalDashboardsCollection(initialDashboards);
+    var dashboardInstancesCollection = new DashboardInstancesCollection(initialDashboards);
 
     //alter widgetstatemodel so the get function will lookup any properties it doesn't have on the corresponding widgetdef
     WidgetStateModel.prototype.get = function(attr) {
@@ -54,13 +54,13 @@ define([
     };
 
     var banner = new Banner({});
-    var dashboardSwitcher = new DashboardSwitcher({
-        personalDashboardsCollection: personalDashboardsCollection
-    });
+//    var dashboardSwitcher = new DashboardSwitcher({
+//        dashboardInstancesCollection: dashboardInstancesCollection
+//    });
     
     var dashboardContainer = new DashboardContainer({
         personalWidgetDefinitionsCollection: personalWidgetDefinitionsCollection,
-        personalDashboardsCollection: personalDashboardsCollection
+        dashboardInstancesCollection: dashboardInstancesCollection
     });
 
     var router = new Router();
@@ -94,7 +94,7 @@ define([
         // Lazily create a dashboard switcher and add it to the document body.
         if(!this.dashboardSwitcher) {
             this.dashboardSwitcher = new DashboardSwitcher({
-                personalDashboardsCollection: personalDashboardsCollection
+                dashboardInstancesCollection: dashboardInstancesCollection
             });
             $(document.body).append(this.dashboardSwitcher.render().$el);
         }
@@ -137,7 +137,7 @@ define([
 
                     dashboardModel.set( 'layoutConfig', DashboardService.convertForDashboard( config ) );
 
-                    personalDashboardsCollection.add( dashboardModel );
+                    dashboardInstancesCollection.add( dashboardModel );
                 });
             });
         });
@@ -147,6 +147,6 @@ define([
         router: router,
         dashboardContainer: dashboardContainer,
         personalWidgetDefinitionsCollection: personalWidgetDefinitionsCollection,
-        personalDashboardsCollection: personalDashboardsCollection
+        DashboardInstancesCollection: DashboardInstancesCollection
     };
 });

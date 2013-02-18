@@ -195,7 +195,7 @@ var initialWidgetDefinitions = [
 var initialDashboards = [
     {
         name: 'Test Accordion Dashboard',
-        guid: '11a777b9-96e5-4f64-883e-8067ba99b3gg',
+        id: '11a777b9-96e5-4f64-883e-8067ba99b3gg',
         dashboardPosition: 0,
         alteredByAdmin: false,
         description: '',
@@ -271,7 +271,7 @@ var initialDashboards = [
     },
     {
         name: 'Test Portal Dashboard',
-        guid: '01a777b9-96e5-4f64-883e-8067ba99b3ee',
+        id: '01a777b9-96e5-4f64-883e-8067ba99b3ee',
         dashboardPosition: 0,
         alteredByAdmin: false,
         description: '',
@@ -323,7 +323,7 @@ var initialDashboards = [
     },
     {
         name: 'Test Dashboard 1',
-        guid: '11a777b9-96e5-4f64-883e-8067ba99b3ee',
+        id: '11a777b9-96e5-4f64-883e-8067ba99b3ee',
         dashboardPosition: 0,
         alteredByAdmin: false,
         description: '',
@@ -401,7 +401,7 @@ var initialDashboards = [
     },
     {
         name: 'Test Dashboard 2',
-        guid: '21a777b9-96e5-4f64-883e-8067ba99b3ee',
+        id: '21a777b9-96e5-4f64-883e-8067ba99b3ee',
         dashboardPosition: 1,
         alteredByAdmin: false,
         description: '',
@@ -465,12 +465,18 @@ var initialDashboards = [
             paneType: "desktoppane"
         },
         locked: false,
-        defaultDashboard: false
+        defaultDashboard: false,
+        stack: {
+            "name": "Sample Stack",
+            "description": "This is a sample Stack",
+            "urlName": "/stack",
+            "descriptorUrl": "/descriptors/sampleStackDescriptor.html"
+        }
 
     },
     {
         name: 'Test Dashboard 3',
-        guid: '31a777b9-96e5-4f64-883e-8067ba99b3ee',
+        id: '31a777b9-96e5-4f64-883e-8067ba99b3ee',
         dashboardPosition: 2,
         alteredByAdmin: false,
         description: '',
@@ -501,6 +507,21 @@ var initialDashboards = [
             "paneType": "fitpane"
         },
         locked: false,
-        defaultDashboard: false
+        defaultDashboard: false ,
+        groups: [{
+            "id": 1,
+            "name": "users",
+            "description": "This is a users' group.",
+            "displayName": "Users Group",
+            "active": true,
+            "automatic": false
+        },{
+            "id": 2,
+            "name": "admin",
+            "description": "This is an administrator's group.",
+            "displayName": "Admin Group",
+            "active": true,
+            "automatic": false
+        }]
     }
 ];

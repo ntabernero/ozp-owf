@@ -15,14 +15,14 @@
  */
 /*global define*/
 define([
-    'views/dashboard/PersonalDashboard',
+    'views/dashboard/DashboardInstance',
     'events/EventBus',
 
     //libraries
     'backbone',
     'jquery'
 
-], function (PersonalDashboard, EventBus, Backbone, $) {
+], function (DashboardInstance, EventBus, Backbone, $) {
 
     return Backbone.View.extend({
 
@@ -38,7 +38,7 @@ define([
             EventBus.on('dashboard:switch', this.activateDashboard, this);
             //EventBus.on('dashboard:create', this.createDashboard, this);
 
-            this.options.personalDashboardsCollection.on('add', this.activateDashboard, this);
+            this.options.dashboardInstancesCollection.on('add', this.activateDashboard, this);
         },
 
         render: function (model) {
@@ -47,7 +47,7 @@ define([
         },
 
         activateDashboard: function (model, animate) {
-            var guid = null,
+            var id = null,
                 dashboardName = null,
                 dashboardModel = null;
 
@@ -55,7 +55,7 @@ define([
             //console.time(dashboardName);
 
             if (model != null) {
-                dashboardModel = this.options.personalDashboardsCollection.get(model.get('guid'));
+                dashboardModel = this.options.dashboardInstancesCollection.get(model.get('id'));
             }
 
             //if dashboardcontainer has not rendered yet and the dashboard to switch doesn't exist
@@ -63,17 +63,17 @@ define([
             if (!this.rendered && dashboardModel == null) {
 
                 //todo make this the default dashboard
-                dashboardModel = this.options.personalDashboardsCollection.at(0);
+                dashboardModel = this.options.dashboardInstancesCollection.at(0);
             }
 
             //check if a dashboardModel was found
             if (dashboardModel != null) {
-                guid = dashboardModel.get('guid');
+                id = dashboardModel.get('id');
                 dashboardName = dashboardModel.get('name');
 
                 if (this.activeDashboard) {
                     //on the same dashboard just return
-                    if (this.activeDashboard.model.get('guid') === guid) {
+                    if (this.activeDashboard.model.get('id') === id) {
                         return this.activeDashboard;
                     }
 
@@ -84,20 +84,20 @@ define([
                 }
 
                 //have we seen this dash before?
-                if (this.activatedDashboards[ guid ]) {
+                if (this.activatedDashboards[ id ]) {
                     //save ref as the activeDashboard
-                    this.activeDashboard = this.activatedDashboards[ guid ];
+                    this.activeDashboard = this.activatedDashboards[ id ];
 
                     //show dash
                     this.activeDashboard.show(animate);
                 }
                 else {
                     //else we haven't rendered this dash - create it, save a ref to it, and render it
-                    this.activeDashboard = new PersonalDashboard({
+                    this.activeDashboard = new DashboardInstance({
                         model: dashboardModel
                     });
 
-                    this.activatedDashboards[ guid ] = this.activeDashboard;
+                    this.activatedDashboards[ id ] = this.activeDashboard;
                     this.$el.append(this.activeDashboard.render().el);
                 }
 
@@ -140,7 +140,7 @@ define([
 //                dd.remove();
 //                model.set( 'layoutConfig', config );
 //
-//                this.options.personalDashboardsCollection.add(model);
+//                this.options.dashboardInstancesCollection.add(model);
 //                me.activateDashboard(model);
 //            });
 

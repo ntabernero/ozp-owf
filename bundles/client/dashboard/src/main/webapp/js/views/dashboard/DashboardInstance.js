@@ -31,7 +31,7 @@ define([
     'use strict';
 
     return View.extend({
-        vtype: 'personaldashboard',
+        vtype: 'dashboardinstance',
 
         className: 'dashboard',
 

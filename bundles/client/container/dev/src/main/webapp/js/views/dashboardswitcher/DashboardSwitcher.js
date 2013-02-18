@@ -16,6 +16,8 @@
 
 define([
     'app',
+    'models/DashboardInstanceModel',
+    'models/StackModel',
     'views/View',
     'views/Modal',
     'views/dashboardswitcher/Tiles',
@@ -29,7 +31,7 @@ define([
     'bootstrap/bootstrap-modal'
 ],
 
-function(app, View, Modal, Tiles, EventBus, $, _, Handlebars) {
+function(app, DashboardInstanceModel, StackModel, View, Modal, Tiles, EventBus, $, _, Handlebars) {
     'use strict';
     
     var tpl = 
@@ -42,20 +44,75 @@ function(app, View, Modal, Tiles, EventBus, $, _, Handlebars) {
     
     return Modal.extend({
 
-        id: 'dashboard-switcher',
+        id: 'dashboard-switcher-vision',
 
         className: 'modal hide fade no-border-radius',
 
         template:   Handlebars.compile(tpl),
+        
+        dashboardContainer: null,
 
+        //dashboard unit sizes
+        dashboardItemHeight: 0,
+        dashboardItemWidth: 0,
+
+        //size of switcher in dashboard units
+        minDashboardsWidth: 3,
+        maxDashboardsWidth: 5,
+        maxDashboardsHeight: 3,
+
+        selectedItemCls : 'dashboard-selected',
+
+        _deletedStackOrDashboards: null,
+        
+        _previouslyFocusedStackOrDashboard : null,
+        
+//        DROP_LEFT_CLS: 'x-view-drop-indicator-left',
+//        DROP_RIGHT_CLS: 'x-view-drop-indicator-right',
+        
+        
         events:  {
             'click .manage-btn': 'toggleManage',
             'click .create-btn': 'create'
         },
 
         initialize: function () {
+            var me = this,
+            stackOrDashboards = [],
+            stacks = {}, dashboards = {},
+            dashboard, stack, model;
+
+            for(var i = 0, len = this.options.dashboardInstancesCollection.length; i < len; i++) {
+    
+                model = this.options.dashboardInstancesCollection.at(i);
+    
+                dashboard = model.clone();
+                dashboard.set('model', model);
+                dashboards[ dashboard.get('id') ] = dashboard;
+    
+                stack = dashboard.get('stack');
+                console.log(i, ' => Dashboard name: ', dashboard.get('name'), 'Stack: ', stack ? stack.name : 'none', ' Default: ', dashboard.get('isDefault'));
+                if( stack ) {
+                    if( stacks[ stack.id ] ) {
+                        stacks[ stack.id ].dashboards.push( dashboard );
+                    }
+                    else {
+                        stack = new StackModel(stack);
+                        stack.set('isStack', true);
+                        stack.set('dashboards', [ dashboard ]);
+    
+                        stacks[ stack.id ] = stack;
+                        stackOrDashboards.push( stack );
+                    }
+                }
+                else {
+                    stackOrDashboards.push( dashboard );
+                }
+    
+            }
+        
             this.Tiles = new Tiles({
-                collection: this.options.personalDashboardsCollection
+                collection: this.options.dashboardInstancesCollection
             });
             this.Tiles.on('itemselected', _.bind(this.onDashboardSelect, this));
         },

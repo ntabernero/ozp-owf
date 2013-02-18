@@ -47,7 +47,7 @@ function(View, $, Handlebars) {
 
         attributes: function() {
             return {
-                "data-id": this.model.get('guid'),
+                "data-id": this.model.get('id'),
                 'tabIndex': '0'
             };
         }

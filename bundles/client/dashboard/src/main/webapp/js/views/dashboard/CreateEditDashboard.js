@@ -16,7 +16,7 @@
 
 /*jshint bitwise:false*/
 define([
-    'models/PersonalDashboardModel',
+    'models/DashboardInstanceModel',
     'views/Modal',
 
     // Libraries.
