@@ -79,14 +79,14 @@ OWF = OWF || {};
          * returned is currently unspecified, though it may be specified
          * in future versions.
          *
-         * The query can be further narrowed by specifying a guid, which specifies a single
+         * The query can be further narrowed by specifying a scopeGuid, which specifies a single
          * entity in the given scope which should by searched for the preference. Only
          * administrators may specify other users, or groups that they are not a 
          * member of.
          *
          * @param {String} cfg.scope (Optional) The scope to search for the preference.
          *  Currently supports the following values: 'user', 'group' 
-         * @param {String} cfg.guid (Optional) The GUID of a specific user or group on which
+         * @param {String} cfg.scopeGuid (Optional) The GUID of a specific user or group on which
          *  to look up the preference
          * @param {String} cfg.namespace The namespace of the preference to search for
          * @param {String} cfg.name The name of the preference to search for
@@ -101,7 +101,7 @@ OWF = OWF || {};
          */
         getPreference: function(cfg) {
             return preferenceFunction(GET_PREFERENCE_SERVICE_NAME, cfg, 
-                    ['namespace', 'name', 'scope', 'guid']);
+                    ['namespace', 'name', 'scope', 'scopeGuid']);
         },
 
         /**
@@ -109,15 +109,15 @@ OWF = OWF || {};
          * The preference is saved to that scope. Only administrators
          * may save preferences to scopes higher than 'user' (the default if
          * 'scope' is not specified').  If 'scope' is 'group', the group to modify
-         * must be specified using the 'guid' parameter.  'guid' may also be specified when
-         * 'scope' is 'user', in which case it is the guid of the user to modify.  Only 
+         * must be specified using the 'scopeGuid' parameter.  'scopeGuid' may also be specified 
+         * when 'scope' is 'user', in which case it is the guid of the user to modify.  Only 
          * administrators may modify other users.
          *
          * @param {String} cfg.scope (Optional) The scope on which to set the preference.
          *  Currently supports the following values: 'user', 'group'
          *  Defaults to 'user'.
          *  Only administrators may set preferences at higher scopes than 'user'.
-         * @param {String} cfg.guid (Optional) The GUID of the group or user whose preference
+         * @param {String} cfg.scopeGuid (Optional) The GUID of the group or user whose preference
          *  is being set.  Only administrators may set group preferences or preferences on
          *  users besides themselves.
          * @param {String} cfg.namespace The namespace of the preference to set
@@ -134,7 +134,7 @@ OWF = OWF || {};
          */
         setPreference: function(cfg) {
             return preferenceFunction(SET_PREFERENCE_SERVICE_NAME, cfg, 
-                    ['namespace', 'name', 'value', 'guid', 'scope']);
+                    ['namespace', 'name', 'value', 'scopeGuid', 'scope']);
         },
 
         /**
@@ -142,8 +142,8 @@ OWF = OWF || {};
          * The preference is deleted from that scope. Only administrators
          * may modify preferences on scopes higher than 'user' (the default if
          * 'scope' is not specified').  If 'scope' is 'group', the group to modify
-         * must be specified using the 'guid' parameter.  'guid' may also be specified when
-         * 'scope' is 'user', in which case it is the guid of the user to modify.  Only 
+         * must be specified using the 'scopeGuid' parameter.  'scopeGuid' may also be specified 
+         * when 'scope' is 'user', in which case it is the guid of the user to modify.  Only 
          * administrators may modify other users.
 
          *
@@ -151,7 +151,7 @@ OWF = OWF || {};
          *  Currently supports the following values: 'user', 'group'
          *  Defaults to 'user'.
          *  Only administrators may delete preferences at higher scopes than 'user'.
-         * @param {String} cfg.guid (Optional) The GUID of the group or user whose preference
+         * @param {String} cfg.scopeGuid (Optional) The GUID of the group or user whose preference
          *  is being deleted.  Only administrators may delete group preferences or preferences on
          *  users besides themselves.
          * @param {String} cfg.namespace The namespace of the preference to delete

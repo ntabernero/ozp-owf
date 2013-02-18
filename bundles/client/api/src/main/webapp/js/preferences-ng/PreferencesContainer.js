@@ -24,15 +24,18 @@ define([
         SET_PREFERENCE_SERVICE_NAME = '_preference_set',
         DELETE_PREFERENCE_SERVICE_NAME = '_preference_delete';
 
-    /*
-     * returns a function that will can be called when the
-     * promise object of a collection fetch is resolved or rejected which will send the
-     * appropriate data back to the rpc return
+
+    /**
+     * Common code used to implement getPreference, setPreference, and deletePreference.
      *
-     * @param rpc The rpc instance which has a callback property
+     * @param rpc The rpc object which contains the gadgets.rpc callback
+     * @param cfg The cfg passed in from the widget
+     * @param verb The method to call on the PreferenceModel. Example: 'save'
+     * @param argsToPass List of names of properties to pass into model constructor
      */
-    function createResponseHandler(rpc) {
-        return function(collection, resp) {
+    function preferenceFunction(rpc, cfg, verb, argsToPass) {
+
+        function responseHandler(collection, resp) {
 
             //'this' should be the promise
             if (this.isResolved()) {
@@ -54,30 +57,42 @@ define([
                     }
                 });
             }
-        };
-    }
+        }
 
+        var args = {}, arg;
+
+        //create the args for the model
+        for (var i = 0; i < argsToPass.length; i++) {
+            arg = argsToPass[i];
+            args[arg] = cfg[arg];
+        }
+
+        //create the model, perform the requested action, and bind the
+        //response handler to the result.  This assumes that the action
+        //sepcififed by 'verb' is asynchronous and returns a Promise
+        (new PreferenceModel(args))[verb]().always(responseHandler);
+    }
 
     /* The following functions are registered with gadgets.rpc.  'this' is the rpc instance */
 
-    function getPreference(cfg) {
+    function getPreference(sender, cfg) {
         /*jshint validthis:true */
     
-        (new PreferenceModel({
-            namespace: cfg.namespace,
-            name: cfg.name,
-            scope: cfg.scope
-        })).fetch().always(createResponseHandler(this));
+        preferenceFunction(this, cfg, 'fetch', ['namespace', 'name', 'scope', 'scopeGuid']);
     }
     
-    function setPreference(cfg) {
+    function setPreference(sender, cfg) {
         /*jshint validthis:true */
     
+        preferenceFunction(this, cfg, 'save', 
+                ['namespace', 'name', 'scope', 'scopeGuid', 'value']);
     }
 
-    function deletePreference(cfg) {
+    function deletePreference(sender, cfg) {
         /*jshint validthis:true */
     
+        preferenceFunction(this, cfg, 'destroy', 
+                ['namespace', 'name', 'scope', 'scopeGuid', 'value']);
     }
 
 
