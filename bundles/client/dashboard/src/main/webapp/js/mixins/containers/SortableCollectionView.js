@@ -33,6 +33,11 @@ define([
             this.$el.sortable(_.extend({
                 update: _.bind(this.handleReorder, this)
             }, sortableOptions));
+
+            //remove the sortable plugin when the view is destroyed
+            this.on('destroy', function(view) {
+                view.$el.sortable("destroy");
+            });
         },
         
         handleReorder: function(event, ui) {

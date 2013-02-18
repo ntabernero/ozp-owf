@@ -80,10 +80,6 @@ define([
             expect(isWidgetControlIframe).to.not.contain(false);
         });
 
-        it('automatically sets the first widget to be active if none are', function() {
-            expect(collection.where({active: true})[0].get('title')).to.be(widget1.title);
-        });
-
         it('renders a taskbar with the same collection', function() {
             expect(tabbedPane.tabbar.collection).to.be(tabbedPane.collection);
         });
