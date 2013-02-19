@@ -24,9 +24,14 @@ define([
     'views/box/VBox',
     'views/panes/Pane',
     'views/panes/BoxPane',
+    'views/widgets/Window',
+    'collections/WidgetStatesCollection',
+    'services/ZIndexManager',
     'backbone',
-    'lodash'
-], function (AccordionPane, DesktopPane, FitPane, TabbedPane, PortalPane, View, HBox, VBox, Pane, BoxPane, Backbone, _) {
+    'lodash',
+    'jquery'
+], function (AccordionPane, DesktopPane, FitPane, TabbedPane, PortalPane, View, HBox, VBox, Pane, BoxPane, WidgetWindow,
+                WidgetStatesCollection, ZIndexManager, Backbone, _, $) {
 
     'use strict';
 
@@ -35,40 +40,58 @@ define([
 
         className: 'dashboard',
 
+        initialize: function() {
+            View.prototype.initialize.apply(this, arguments);
+
+            this.floatingWidgetZIndexManager = new ZIndexManager();
+
+            // Obtain the floating widget collection
+            var floatingWidgets = this.model.get('floatingWidgets');
+            if (floatingWidgets) {
+                if (_.isString(floatingWidgets)) {
+                    floatingWidgets = JSON.parse(floatingWidgets);
+                }
+                this.floatingWidgetCollection = new WidgetStatesCollection(floatingWidgets);
+            } else {
+                this.floatingWidgetCollection = new WidgetStatesCollection();
+            }
+        },
+
         views: function () {
             return this.model && this.model.get('layoutConfig');
+        },
+
+        renderFloatingWidgets: function() {
+            var me = this;
+
+            me.$floatingWidgetContainer = me.$floatingWidgetContainer || $('<div class="floatingWidgetContainer">');
+            this.floatingWidgetCollection.each(function (widgetState) {
+                me.renderFloatingWidget(widgetState);
+            });
+
+            me.$el.append(me.$floatingWidgetContainer);
+        },
+
+        renderFloatingWidget: function(widgetState) {
+
+            var ww = new WidgetWindow({
+                model: widgetState,
+                containment: this.$floatingWidgetContainer,
+                zIndexManager: this.floatingWidgetZIndexManager
+            });
+
+            this.$floatingWidgetContainer.append(ww.render().$el);
+            return ww;
+        },
+
+        addFloatingWidget: function(widget) {
+            this.floatingWidgetCollection.add(widget);
+            this.renderFloatingWidget(widget);
+        },
+
+        afterRender: function() {
+            this.renderFloatingWidgets();
         }
-
-        // render: function() {
-        //     // Get the layoutConfig
-        //     var pane = null, layoutConfig = this.model.get('layoutConfig');
-
-        //     //if layoutConfig is a string parse it into an object
-        //     if (_.isString(layoutConfig)) {
-        //         layoutConfig = JSON.parse(layoutConfig);
-        //     }
-
-        //     if (layoutConfig.paneType === 'accordionpane') {
-        //         pane = new AccordionPane(layoutConfig);
-        //     }
-        //     else if (layoutConfig.paneType === 'desktoppane') {
-        //         pane = new DesktopPane(layoutConfig);
-        //     }
-        //     else if (layoutConfig.paneType === 'fitpane') {
-        //         pane = new FitPane(layoutConfig);
-        //     }
-        //     else if (layoutConfig.paneType === 'tabbedpane') {
-        //         pane = new TabbedPane(layoutConfig);
-        //     }
-        //     else {
-        //         pane = new DesktopPane(layoutConfig);
-        //     }
-
-        //     this.$el.html(pane.render().el);
-
-        //     return this;
-        // }
-
     });
 
 });

@@ -14,8 +14,45 @@
  * limitations under the License.
  */
 
-define(['views/dashboard/DashboardInstance'], function(View) {
+define(['views/dashboard/DashboardInstance',
+        'models/DashboardModel',
+        'models/WidgetStateModel',
+        'jquery'],
+function(DashboardInstance, DashboardModel, WidgetStateModel, $) {
     describe('DashboardInstanceSpec', function() {
+        var dashboard,
+        widget1 = {
+            title: 'Widget One',
+            id: '1',
+            url: 'widget.html',
+            x: 50,
+            y: 50,
+            width: 400,
+            height: 500,
+            zIndex: 10000,
+            maximizable: true,
+            minimizable: true,
+            closable: true
+        },
+        widget2 = {
+            title: 'Widget Two',
+            id: '2',
+            url: 'widget.html',
+            x: 400,
+            y: 300,
+            width: 200,
+            height: 200,
+            zIndex: 10000,
+            maximizable: true,
+            minimizable: true,
+            closable: true
+        },
+        dashboardModel = new DashboardModel({
+            name: 'Dashboard 1',
+            description: 'Description 1',
+            position: 0
+        });
+
 
         beforeEach(function(done) {
             // Stub test initialization method;  And any custom pre-test elements here.
@@ -23,13 +60,41 @@ define(['views/dashboard/DashboardInstance'], function(View) {
         });
     
         it('Test base View.  Verify that it has a show and hide method.', function () {
-            var view = new View();
-            
-            expect(view).to.be.an('object');
-            expect(view.render).to.be.a('function');
-            expect(view.show).to.be.a('function');
-            expect(view.hide).to.be.a('function');
+            var dashboardInstance = new DashboardInstance({model: dashboardModel});
+
+            expect(dashboardInstance).to.be.an('object');
+            expect(dashboardInstance.render).to.be.a('function');
+            expect(dashboardInstance.show).to.be.a('function');
+            expect(dashboardInstance.hide).to.be.a('function');
         });
-    
+
+        it('renders a floating widget in response to add', function() {
+            var dashboardInstance = new DashboardInstance({model: dashboardModel});
+            dashboardInstance.render();
+            expect(dashboardInstance.$el.find('div.floatingWidgetContainer').length).to.equal(1);
+
+            dashboardInstance.addFloatingWidget(new WidgetStateModel({model: widget1}));
+            expect(dashboardInstance.$el.find('div.window').length).to.equal(1);
+
+            dashboardInstance.addFloatingWidget(new WidgetStateModel({model: widget2}));
+            expect(dashboardInstance.$el.find('div.window').length).to.equal(2);
+        });
+
+        it('renders a floating widgets from dashboard configuration', function() {
+
+            var dashboardModel1 = new DashboardModel({
+                name: 'Dashboard 1',
+                description: 'Description 1',
+                position: 0,
+                floatingWidgets:[widget1, widget2]
+            });
+
+            var dashboardInstance = new DashboardInstance({model: dashboardModel1});
+            dashboardInstance.render();
+            console.log(dashboardInstance.$el.html());
+            expect(dashboardInstance.$el.find('div.floatingWidgetContainer').length).to.equal(1);
+            expect(dashboardInstance.$el.find('div.window').length).to.equal(2);
+        });
+
     });
 });
