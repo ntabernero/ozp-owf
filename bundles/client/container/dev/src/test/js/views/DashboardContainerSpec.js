@@ -89,10 +89,10 @@ define([
             var dashboardModel = null;
             var id = null;
 
-            //loop throw 3 dashboards twice this switches dashboards while they are not all rendered and while they are
-            for (var i = 0; i < 6; i++) {
+            //loop throw dashboards twice this switches dashboards while they are not all rendered and while they are
+            for (var i = 0; i < dashboardInstancesCollection.length * 2; i++) {
                 //activate dashboard
-                dashboardModel = dashboardInstancesCollection.at(i % 3);
+                dashboardModel = dashboardInstancesCollection.at(i % dashboardInstancesCollection.length);
                 id = dashboardModel.get('id');
 
                 dashboardContainer.activateDashboard(dashboardModel);

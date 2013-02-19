@@ -24,17 +24,12 @@ require.config({
     paths: {
         bootstrap: '../libs/js/bootstrap',
         jqueryui: '../development-bundle/ui',
-        // alias versioned dependencies to simplify updating as new versions are released
         jquery: '../libs/js/jquery',
         lodash: '../libs/js/lodash',
         backbone: '../libs/js/backbone',
         'backbone.declarative.views': '../libs/js/backbone.declarative.views',
-        handlebars: '../libs/js/handlebars'
-        // modernizr: 'modernizr',
-        // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
-        // hbs: 'js/handlebars/handlebars-plugin-0.2.1',
-        // json2: 'js/json2',
-        // 'handlebars-i18nprecompile': 'js/handlebars/handlebars-i18nprecompile'
+        handlebars: '../libs/js/handlebars',
+        'gadgets': '../libs/js/shindig'
     },
 
     shim: {
@@ -49,11 +44,9 @@ require.config({
             deps: ['lodash', 'jquery'],
             exports: 'Backbone'
         },
-
         handlebars: {
             exports: 'Handlebars'
         },
-
         'bootstrap/bootstrap-transition': {
             deps: ['jquery'],
             exports: '$'
@@ -69,6 +62,24 @@ require.config({
         'backbone.declarative.views': {
             deps: ['lodash', 'backbone'],
             exports: 'Backbone'
+        },
+        'gadgets/json': {
+            exports: 'gadgets'
+        },
+        'gadgets/util': {
+            exports: 'gadgets'
+        },
+        'gadgets/rpc': {
+            deps: ['gadgets/json', 'gadgets/util'],
+            exports: 'gadgets'
+        },
+        'gadgets/pubsub': {
+            deps: ['gadgets/rpc'],
+            exports: 'gadgets'
+        },
+        'gadgets/pubsub_router': {
+            deps: ['gadgets/rpc'],
+            exports: 'gadgets'
         }
     }
 

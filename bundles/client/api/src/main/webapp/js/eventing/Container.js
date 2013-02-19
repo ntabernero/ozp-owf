@@ -1,27 +1,35 @@
-/**
- * @ignore
+/*
+ * Copyright 2013 Next Century Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-var Ozone = Ozone ? Ozone : {};
+/*global require, initialWidgetDefinitions, initialDashboards*/
+define([
+    'gadgets/rpc',
+    'jquery'
+], function(gadgets, $) {
 
-/**
- * @ignore
- * @namespace
- */
-Ozone.eventing = Ozone.eventing ? Ozone.eventing : {};
+    'use strict';
 
-(function (window, document, undefined) {
-
-    Ozone.eventing.Container = function () {
+    return function () {
 
         var cbMap = {
-                widgetEventingReady:[],
-                onRoute:[],
-                onPublish:[],
-                onSubscribe:[],
-                onUnsubscribe:[]
-            },
-            iframeIds = {},
-            config = {};
+            widgetEventingReady:[],
+            onRoute:[],
+            onPublish:[],
+            onSubscribe:[],
+            onUnsubscribe:[]
+        }, iframeIds = {}, config = {};
 
         function containerInit(sender, message) {
             //Handler used by container to parse out incoming initiation messages from gadgets
@@ -34,7 +42,7 @@ Ozone.eventing = Ozone.eventing ? Ozone.eventing : {};
             var initMessage = gadgets.json.parse(message);
             var useMultiPartMessagesForIFPC = initMessage.useMultiPartMessagesForIFPC;
             var idString = null;
-            if (initMessage.id.charAt(0) != '{') {
+            if (initMessage.id.charAt(0) !== '{') {
                 idString = initMessage.id;
             }
             else {
@@ -88,10 +96,10 @@ Ozone.eventing = Ozone.eventing ? Ozone.eventing : {};
 
                 //check for overrides
                 if (config.getIframeId != null) {
-                    this.getIframeId = owfdojo.hitch(config.getIframeId.scope, config.getIframeId.fn);
+                    this.getIframeId = $.proxy(config.getIframeId.fn, config.getIframeId.scope);
                 }
                 if (config.getOpenedWidgets != null) {
-                    this.getOpenedWidgets = owfdojo.hitch(config.getOpenedWidgets.scope, config.getOpenedWidgets.fn);
+                    this.getOpenedWidgets = $.proxy(config.getOpenedWidgets.fn, config.getOpenedWidgets.scope);
                 }
 
                 //initialize Ozone.eventing.rpc
@@ -193,12 +201,12 @@ Ozone.eventing = Ozone.eventing ? Ozone.eventing : {};
             },
             removeListener:function (event, handler, scope) {
                 if (cbMap[event] != null) {
-                  for (var i = 0 ; i < cbMap[event].length ; i++) {
-                      var cb = cbMap[event][i];
-                      if (cb.fn == handler && cb.scope == scope) {
-                          cbMap[event].splice(i,1);
-                      }
-                  }
+                    for (var i = 0; i < cbMap[event].length; i++) {
+                        var cb = cbMap[event][i];
+                        if (cb.fn == handler && cb.scope == scope) {
+                            cbMap[event].splice(i, 1);
+                        }
+                    }
                 }
             },
             clearListeners:function (event) {
@@ -398,5 +406,4 @@ Ozone.eventing = Ozone.eventing ? Ozone.eventing : {};
             }
         };
     }();
-
-}(window, document));
+});
