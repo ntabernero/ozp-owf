@@ -18,7 +18,6 @@ define([
     'views/View',
     'views/List',
     'views/dashboardswitcher/Tile',
-    'collections/DashboardsCollection',
 
     // Libraries.
     'jquery',
@@ -27,7 +26,7 @@ define([
     'jqueryui/jquery-ui.custom'
 ],
 
-function(app, View, List, Tile, DashboardsCollection, $, _, Handlebars) {
+function(app, View, List, Tile, $, _, Handlebars) {
 
     return List.extend({
         
