@@ -1,15 +1,15 @@
-/**
- * @ignore
- */
-var Ozone = Ozone ? Ozone : {};
+;(function (window, document, undefined) {
 
-/**
- * @ignore
- * @namespace
- */
-Ozone.eventing = Ozone.eventing ? Ozone.eventing : {};
+    /**
+     * @ignore
+     */
+    var Ozone = window.Ozone = window.Ozone ? window.Ozone : {};
 
-(function (window, document, undefined) {
+    /**
+     * @ignore
+     * @namespace
+     */
+    Ozone.eventing = Ozone.eventing ? Ozone.eventing : {};
 
     function rpcCall(widgetId, widgetIdCaller, functionName, var_args) {
         gadgets.rpc.call("..", "FUNCTION_CALL", null, widgetId, widgetIdCaller, functionName, var_args);
