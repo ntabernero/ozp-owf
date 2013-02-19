@@ -3,7 +3,7 @@ define([
     'events/EventBus',
 
 //    'views/launchmenu/LaunchMenu',
-//    'views/dashboardswitcher/DashboardSwitcher',
+    'views/dashboardswitcher/DashboardSwitcher',
 //    'views/UserProfileWindow',
 //    'views/AboutWindow',
 
@@ -12,8 +12,8 @@ define([
     'jquery'
 ],
 
-function(app, EventBus,
-//         LaunchMenu, DashboardSwitcher, UserProfileWindow, AboutWindow,
+function(app, EventBus, DashboardSwitcher,
+//         LaunchMenu, UserProfileWindow, AboutWindow,
          Backbone, $) {
 
     var $body = $(document.body),
@@ -54,17 +54,9 @@ function(app, EventBus,
         },
 
         showDashboardsWindow: function(evt) {
-//            if(!this.dashboardSwitcher) {
-//                this.dashboardSwitcher = new DashboardSwitcher();
-//                $body.append(this.dashboardSwitcher.render().$el);
-//            }
-//
-//            this.dashboardSwitcher.show();
-//            this.dashboardSwitcher.$el.one('hidden', function () {
-//                $(evt.currentTarget).removeClass('active');
-//            });
-//            $(evt.currentTarget).addClass('active');
-            return false;
+            evt.preventDefault();
+            evt.stopPropagation();
+            EventBus.trigger('dashboard:showSwitcher', evt);
         },
 
         showAdminWindow: function(e) {

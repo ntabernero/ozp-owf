@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-$desktopTaskbarBottom: 0 !default;
-
 .desktoppane {
     position: relative;
 
@@ -30,6 +28,6 @@ $desktopTaskbarBottom: 0 !default;
 
     > .taskbar {
         position: absolute;
-        bottom: $desktopTaskbarBottom;
+        bottom: 0;
     }
 }

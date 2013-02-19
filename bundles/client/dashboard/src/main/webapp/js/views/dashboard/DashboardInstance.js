@@ -18,6 +18,7 @@ define([
     'views/panes/DesktopPane',
     'views/panes/FitPane',
     'views/panes/TabbedPane',
+    'views/panes/PortalPane',
     'views/View',
 	'views/box/HBox',
     'views/box/VBox',
@@ -25,12 +26,12 @@ define([
     'views/panes/BoxPane',
     'backbone',
     'lodash'
-], function (AccordionPane, DesktopPane, FitPane, TabbedPane, View, HBox, VBox, Pane, BoxPane, Backbone, _) {
+], function (AccordionPane, DesktopPane, FitPane, TabbedPane, PortalPane, View, HBox, VBox, Pane, BoxPane, Backbone, _) {
 
     'use strict';
 
     return View.extend({
-        vtype: 'personaldashboard',
+        vtype: 'dashboardinstance',
 
         className: 'dashboard',
 

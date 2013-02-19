@@ -16,29 +16,28 @@
 
 package org.ozoneplatform.owf.server.rest
 
+import org.ozoneplatform.commons.server.domain.model.DashboardInstance
 import org.ozoneplatform.owf.server.service.api.DashboardInstanceService
-import org.ozoneplatform.commons.server.domain.model.Dashboard
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Response
-import org.ozoneplatform.commons.server.domain.model.DashboardInstance
 
 @Path("/dashboard-instances")
 @Produces("application/json")
 class DashboardInstanceController {
 
-    DashboardInstanceService personalDashboardService
+    DashboardInstanceService dashboardInstanceService
 
     @GET
     List<DashboardInstance> list() {
-        personalDashboardService.list()
+        dashboardInstanceService.list()
     }
 
     @POST
     @Consumes("application/json")
     Response create(DashboardInstance dashboardInfo) {
         println "In create(): ${dashboardInfo}"
-        personalDashboardService.create(dashboardInfo)
+        dashboardInstanceService.create(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }
 
@@ -46,20 +45,20 @@ class DashboardInstanceController {
     @Path("/{id}")
     DashboardInstance get(@PathParam("id") String id) {
         println "In get(): $id"
-        personalDashboardService.get(id)
+        dashboardInstanceService.get(id)
     }
 
     @PUT
     @Consumes("application/json")
     Response update(DashboardInstance dashboardInfo) {
-        personalDashboardService.update(dashboardInfo)
+        dashboardInstanceService.update(dashboardInfo)
         Response.ok(dashboardInfo).build()
     }
 
     @DELETE
     @Path("/{id}")
     Response delete(@PathParam("id") String id) {
-        def dashboard = personalDashboardService.delete(id)
+        def dashboard = dashboardInstanceService.delete(id)
         Response.ok(dashboard).build()
     }
 
@@ -67,7 +66,7 @@ class DashboardInstanceController {
     @Path("/{id}/restore")
     Response restore(@PathParam("id") String id) {
         println "Restored $id"
-        def dashboard = personalDashboardService.restore(id)
+        def dashboard = dashboardInstanceService.restore(id)
         Response.ok(dashboard).build()
     }
 }

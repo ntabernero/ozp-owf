@@ -16,7 +16,7 @@
 
 /*jshint bitwise:false*/
 define([
-    'models/PersonalDashboardModel',
+    'models/DashboardInstanceModel',
     'views/Modal',
 
     // Libraries.
@@ -88,7 +88,7 @@ function(DashboardModel, Modal, $) {
                 var dashboard = new DashboardModel({
                     name: name,
                     description: description,
-                    guid: guid()
+                    id: guid()
                 });
                 
                 me.hide().then(function () {

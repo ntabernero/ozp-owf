@@ -27,13 +27,13 @@ define([
     return LayoutPane.extend({
 		vtype: 'tabbedpane',
 		
-        className: 'pane tabbedpane',
+        className: LayoutPane.prototype.className + ' tabbedpane',
 
         $body: null,
         tabbar: null,
 
-        afterRender: function() {
-            var me = this;
+        render: function() {
+            var me = this; 
 
             me.tabbar = new Taskbar({
                 collection: me.collection,
@@ -49,12 +49,7 @@ define([
                   me.addWidget(widgetState);             
             });
 
-            //if no widget is active, activate first widget
-            if (!me.$('.widgetframe.active').length && me.collection.length) {
-                me.collection.at(0).set('active', true);
-            }
-
-            return me;
+            return LayoutPane.prototype.render.apply(me, arguments);
         },
 
         addWidget: function(widget) {
@@ -63,6 +58,17 @@ define([
             });
 
             this.$body.append(frame.render().$el);
+        },
+
+        updateSize: function() {
+            var me = this;
+
+            LayoutPane.prototype.updateSize.apply(me, arguments);
+
+            //adjust to new size once it is worked out
+            setTimeout(function() {
+                me.tabbar.resize();
+            }, 0);
         }
     });
 });

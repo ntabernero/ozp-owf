@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-define(['views/dashboard/PersonalDashboard'], function(View) {
-    describe('PersonalDashboardSpec', function() {
+define(['views/dashboard/DashboardInstance'], function(View) {
+    describe('DashboardInstanceSpec', function() {
 
         beforeEach(function(done) {
             // Stub test initialization method;  And any custom pre-test elements here.

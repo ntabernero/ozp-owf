@@ -10,6 +10,16 @@ $theme-name: "accessibility-bow";
 //  Theme Variables 
 // ===============================
 
+$owf-tool-width: 17px;
+$owf-base-color: #222;
+$owf-alt-base-color: #aaa;
+$owf-focus-color: #93E057;
+
+
+$owf-font-size: 12px;
+$owf-toolbar-base-color: #e6e7e8;
+$required-widgets-color: #454F55;
+
 $baseColor: #fff;
 $focusColor: red;
 
@@ -73,3 +83,4 @@ body {
 @import "compass_twitter_bootstrap_awesome";
 @import "dashboard/main";
 @import "dashboard/all";
+@import "container/all";

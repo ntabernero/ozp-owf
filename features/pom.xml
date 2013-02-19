@@ -3,13 +3,13 @@
     <parent>
         <artifactId>owf</artifactId>
         <groupId>org.ozoneplatform.owf</groupId>
-        <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
+        <version>8.0.0-ALPHA-SPRINT4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>org.ozoneplatform.owf</groupId>
     <artifactId>features</artifactId>
-    <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
+    <version>8.0.0-ALPHA-SPRINT4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Ozone Platform :: OWF Server Bundles :: OWF OSGi Kernel Features</name>
 

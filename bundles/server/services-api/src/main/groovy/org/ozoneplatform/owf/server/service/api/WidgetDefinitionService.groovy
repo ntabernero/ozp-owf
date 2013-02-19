@@ -16,10 +16,10 @@
 
 package org.ozoneplatform.owf.server.service.api
 
-import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Intent
 import org.ozoneplatform.commons.server.domain.model.Person
-import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
 
 interface WidgetDefinitionService {
     List<WidgetDefinition> list()

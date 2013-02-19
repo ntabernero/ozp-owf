@@ -13,30 +13,36 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
 package org.ozoneplatform.owf.server.rest
 
-//import javax.annotation.security.*
+import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.owf.server.service.api.GroupService
+
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
 import javax.ws.rs.core.Response
+
+//import javax.annotation.security.*
 import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
-import org.ozoneplatform.owf.server.service.api.GroupService
-import org.ozoneplatform.commons.server.domain.model.Group
 
 @Path("/")
 @Produces("application/json")
 class GroupController {
 
-    GroupService groupService;
+    GroupService service;
+    @Delegate(methodAnnotations = true, parameterAnnotations = true) PersonContainer personContainer
 
     @Context
     private UriInfo uriInfo;
 
+    GroupController() {
+        personContainer = new PersonContainer(this)
+    }
+
     @GET
     Response list() {
-        List<Group> list = groupService.list();
+        List<Group> list = service.list();
         if (list && !list.empty) {
             Response.ok(list).build();
         } else {
@@ -49,7 +55,7 @@ class GroupController {
     @Consumes("application/json")
     //@RolesAllowed("ROLE_ADMIN")
     Response create(Group group) {
-        Group theGroup = groupService.create(group);
+        Group theGroup = service.create(group);
         URI groupUri;
         UriBuilder builder = uriInfo.getBaseUriBuilder();
         builder.path(GroupController.class);
@@ -61,7 +67,7 @@ class GroupController {
     @GET
     @Path("/{id}")
     Response fetch(@PathParam("id") Long id) {
-        Group theGroup = groupService.fetch(id);
+        Group theGroup = service.fetch(id);
         Response.ok(theGroup).build();
     }
 
@@ -70,14 +76,14 @@ class GroupController {
     @Consumes("application/json")
     //@RolesAllowed("ROLE_ADMIN")
     Response update(@PathParam("id") Long id, Group group) {
-        Response.ok(groupService.update(id, group)).build();
+        Response.ok(service.update(id, group)).build();
     }
 
     @DELETE
     @Path("/{id}")
     //@RolesAllowed("ROLE_ADMIN")
     Response delete(@PathParam("id") Long id) {
-        groupService.delete(id);
+        service.delete(id);
         Response.ok().build();
     }
 
@@ -90,19 +96,19 @@ class GroupController {
     @GET
     @Path("/{id}/preferences")
     Response listGroupPreferences(@PathParam("id") Long id) {
-        Response.ok(groupService.listPreferences(id)).build();
+        Response.ok(service.listPreferences(id)).build();
     }
     
     @GET
     @Path("/{id}/preferences/{namespace}")
     Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace) {
-        Response.ok(groupService.listPreferences(id, namespace)).build();
+        Response.ok(service.listPreferences(id, namespace)).build();
     }
     
     @GET
     @Path("/{id}/preferences/{namespace}/{name}")
     Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace, @PathParam("name") String name) {
-        Response.ok(groupService.fetchPreference(id, namespace, name)).build();
+        Response.ok(service.fetchPreference(id, namespace, name)).build();
     }
-    
+
 }

@@ -17,6 +17,7 @@
 package org.ozoneplatform.owf.server.service.api
 
 import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
+import org.ozoneplatform.commons.server.domain.model.Group
 
 interface DashboardTemplateService {
     List<DashboardTemplate> list()
@@ -31,4 +32,24 @@ interface DashboardTemplateService {
 
     DashboardTemplate copy(String id)
 
+    /**
+     * Returns the list of groups for the given dashboard template.
+     * @param id template id
+     * @return dashboard template's groups
+     */
+    Set<Group> getGroups(String id)
+
+    /**
+     * Adds a specified group to the specified dashboard template
+     * @param dashboardTemplateId
+     * @param groupId
+     */
+    DashboardTemplate addGroup(String dashboardTemplateId, String groupId)
+
+    /**
+     * Removes a specified group from the specified dashboard template
+     * @param dashboardTemplateId
+     * @param groupId
+     */
+    DashboardTemplate removeGroup(String dashboardTemplateId, String groupId)
 }

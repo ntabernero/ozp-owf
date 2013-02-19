@@ -19,9 +19,12 @@
 @import "../widgets/panel";
 @import "../widgets/window";
 @import "../widgets/fit";
-@import "../panes/taskbar";
+@import "../panes/accordion";
 @import "../panes/desktop";
 @import "../panes/tabbed";
+@import "../panes/panel";
+@import "../panes/portal";
+@import "../panes/taskbar";
 @import "dashboard";
 @import "create_edit_dashboard";
 @import "designer/designer";

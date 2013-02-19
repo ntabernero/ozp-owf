@@ -16,14 +16,18 @@
 
 package org.ozoneplatform.owf.server.rest.mix_ins
 
-import com.fasterxml.jackson.annotation.*
-import org.ozoneplatform.commons.server.domain.model.*
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
+import org.ozoneplatform.commons.server.domain.model.DashboardInstance
+import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
+import org.ozoneplatform.commons.server.domain.model.Stack
 
 abstract class PersonMixIn {
     PersonMixIn(@JsonProperty("username") String username, @JsonProperty("fullName") String fullName) {}
-    @JsonIgnore abstract Iterable<Group> getGroups()
-    @JsonIgnore abstract Iterable<DashboardInstance> getDashboards()
-    @JsonIgnore abstract Iterable<PersonalWidgetDefinition> getPersonalWidgetDefinitions()
-    @JsonIgnore abstract Iterable<Stack> getStacks()
+    @JsonIgnore abstract Set<Group> getGroups()
+    @JsonIgnore abstract Set<DashboardInstance> getDashboards()
+    @JsonIgnore abstract Set<PersonalWidgetDefinition> getPersonalWidgetDefinitions()
+    @JsonIgnore abstract Set<Stack> getStacks()
 }
 

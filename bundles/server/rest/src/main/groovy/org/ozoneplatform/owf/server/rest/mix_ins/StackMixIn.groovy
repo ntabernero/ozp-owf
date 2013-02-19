@@ -16,11 +16,12 @@
 
 package org.ozoneplatform.owf.server.rest.mix_ins
 
-import com.fasterxml.jackson.annotation.*
-import org.ozoneplatform.commons.server.domain.model.*
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
+import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 
 abstract class StackMixIn {
     StackMixIn(@JsonProperty("name") String name, @JsonProperty("urlName") String urlName){}
-    @JsonIgnore abstract Iterable<DashboardTemplate> getDashboardTemplates()
+    @JsonIgnore abstract Set<DashboardTemplate> getDashboardTemplates()
 }
 

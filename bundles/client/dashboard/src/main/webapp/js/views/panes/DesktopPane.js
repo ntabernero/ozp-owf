@@ -34,27 +34,19 @@ define([
         $body: null, //jquery element for the dashboard body
         taskbar: null, //taskbar View
 
-        className: 'pane desktoppane',
+        className: LayoutPane.prototype.className + ' desktoppane',
 
         initialize: function() {
             LayoutPane.prototype.initialize.apply(this, arguments);
-
-            this.windows = [];
 
             this.zIndexManager = new ZIndexManager();
         },
 
         render: function () {
-            var me = this;
-
-            //console.time('pane');
             this.renderTaskbar();
             this.renderWidgets();
             
-            this.constructor.__super__.render.call(this);
-
-            //console.timeEnd('pane');
-            return this;
+            return LayoutPane.prototype.render.apply(this, arguments);
         },
 
         renderTaskbar: function() {
@@ -70,7 +62,7 @@ define([
         renderWidgets: function() {
             var me = this;
 
-            me.$body = $(document.createElement('div')).addClass('body');
+            me.$body = $('<div class="body">');
 
             this.collection.each(function (widgetState) {
                 me.renderWidget(widgetState);
@@ -102,6 +94,17 @@ define([
         launchWidget: function (evt, model) {
             var ww = this.renderWidget(model);
             return ww;
+        },
+
+        updateSize: function() {
+            var me = this;
+
+            LayoutPane.prototype.updateSize.apply(me, arguments);
+
+            //adjust to new size once it is worked out
+            setTimeout(function() {
+                me.taskbar.resize();
+            }, 0);
         }
     });
 });

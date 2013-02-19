@@ -16,10 +16,11 @@
 
 package org.ozoneplatform.owf.server.service.impl
 
-import org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService
+import org.ozoneplatform.commons.server.domain.model.Intent
+import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
 import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
-import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService
 
 class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionService {
     @Override
@@ -80,10 +81,17 @@ class PersonalWidgetDefinitionServiceImpl implements PersonalWidgetDefinitionSer
     }
 
     PersonalWidgetDefinition createExamplePersonalWidgetDefinition() {
-        def widgetDefinition = WidgetDefinition.builder().withDisplayName('Example Widget Definition').
-                withImageUrlLarge('http://large.image.com').withImageUrlSmall('http://small.image.com').
-                withUrl('http://www.example.com').withWidgetType('standard').build()
-        widgetDefinition.id = UUID.randomUUID().toString()
+        def widgetDefinition = WidgetDefinition.builder().withDisplayName('Channel Shouter').
+                withUrl('widget.html').withWidgetType('standard').build()
+        widgetDefinition.id = 'eb5435cf-4021-4f2a-ba69-dde451d12551'
+        widgetDefinition.width = 400
+        widgetDefinition.height = 400
+        widgetDefinition.tags = ["chat"]
+        widgetDefinition.addReceivableIntent(new Intent('plot', 'lat/long'))
+        widgetDefinition.addReceivableIntent(new Intent('render', 'html'))
+        widgetDefinition.addSendableIntent(new Intent('plot', 'lat/long'))
+        widgetDefinition.addSendableIntent(new Intent('render', 'html'))
+
         PersonalWidgetDefinition personalWidgetDefinition = new Person('user2', 'User Two').createPersonalWidgetDefinition(widgetDefinition)
         personalWidgetDefinition.displayName = widgetDefinition.displayName + " (Personal)"
         personalWidgetDefinition.id = UUID.randomUUID().toString()

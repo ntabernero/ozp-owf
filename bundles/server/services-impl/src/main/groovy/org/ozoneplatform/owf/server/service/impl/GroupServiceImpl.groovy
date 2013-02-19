@@ -16,14 +16,21 @@
 
 package org.ozoneplatform.owf.server.service.impl
 
-import org.ozoneplatform.owf.server.service.api.GroupService
-import org.ozoneplatform.owf.server.service.api.exception.*
+import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
 import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.commons.server.domain.model.Preference
+import org.ozoneplatform.owf.server.service.api.DashboardTemplateService
+import org.ozoneplatform.owf.server.service.api.GroupService
+import org.ozoneplatform.owf.server.service.api.PersonService
+import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
 
 class GroupServiceImpl implements GroupService {
     
     def theList = [];
+
+    DashboardTemplateService dashboardTemplateService
+    PersonService personService
     
     GroupServiceImpl() {
 
@@ -51,7 +58,7 @@ class GroupServiceImpl implements GroupService {
         theList;
     }
 
-    Group fetch(Long id) {
+    Group fetch(String id) {
         Group theGroup = theList.find{ it.id == id; }
         if (theGroup) {
             theGroup;
@@ -60,7 +67,7 @@ class GroupServiceImpl implements GroupService {
         }
     }
 
-    Group update(Long id, Group group) {
+    Group update(String id, Group group) {
         Group theGroup = this.fetch(id);
         theGroup.name = group?.name ?: theGroup.name;
         theGroup.displayName = group?.displayName ?: theGroup.displayName;
@@ -77,11 +84,65 @@ class GroupServiceImpl implements GroupService {
         group;
     }
 
-    void delete(Long id) {
+    void delete(String id) {
         theList.remove(this.fetch(id));
         return;
     }
-    
+
+    @Override
+    Group addDashboardTemplate(String groupId, String dashboardTemplateId) {
+        def group = fetch(groupId)
+        if (!group) throw new NotFoundException("Group with id ${groupId} was not found")
+        def template = dashboardTemplateService.get(dashboardTemplateId)
+        if (!template) throw new NotFoundException("Dashboard template with id ${dashboardTemplateId} was not found")
+        group.addDashboardTemplate(template);
+        group
+    }
+
+    @Override
+    Group removeDashboardTemplate(String groupId, String dashboardTemplateId) {
+        def group = fetch(groupId)
+        if (!group) throw new NotFoundException("Group with id ${groupId} was not found")
+        def template = dashboardTemplateService.get(dashboardTemplateId)
+        if (!template) throw new NotFoundException("Dashboard template with id ${dashboardTemplateId} was not found")
+        group.removeDashboardTemplate(template);
+        group
+    }
+
+    @Override
+    Set<DashboardTemplate> getDashboardTemplates(String id) {
+        def group = fetch(id)
+        if (!group) throw new NotFoundException("Group with id ${id} was not found")
+        group.dashboardTemplates
+    }
+
+    @Override
+    Group addPerson(String groupId, String personId) {
+        Group group = fetch(groupId)
+        if (!group) throw new NotFoundException("Group with id ${groupId} was not found")
+        Person person = personService.fetch(personId)
+        if (!person) throw new NotFoundException("Person with id ${personId} was not found")
+        group.addPerson(person)
+        group
+    }
+
+    @Override
+    Group removePerson(String groupId, String personId) {
+        Group group = fetch(groupId)
+        if (!group) throw new NotFoundException("Group with id ${groupId} was not found")
+        Person person = personService.fetch(personId)
+        if (!person) throw new NotFoundException("Person with id ${personId} was not found")
+        group.removePerson(person)
+        group
+    }
+
+    @Override
+    Set<Person> getPersons(String groupId) {
+        Group group = fetch(groupId)
+        if (!group) throw new NotFoundException("Group with id ${groupId} was not found")
+        group.persons
+    }
+
     Set<Preference> listPreferences(Long id) {
         Group theGroup = this.fetch(id);
         return theGroup.preferences;

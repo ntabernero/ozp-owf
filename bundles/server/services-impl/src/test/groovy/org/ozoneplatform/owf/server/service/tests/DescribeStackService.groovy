@@ -16,10 +16,9 @@
 
 package org.ozoneplatform.owf.server.service.tests
 
-import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
-import org.ozoneplatform.owf.server.service.api.exception.ValidationException
-import org.ozoneplatform.owf.server.service.impl.StackServiceImpl
 import org.ozoneplatform.commons.server.domain.model.Stack
+import org.ozoneplatform.owf.server.service.api.exception.NotFoundException
+import org.ozoneplatform.owf.server.service.impl.StackServiceImpl
 import spock.lang.Specification
 
 class DescribeStackService extends Specification {
@@ -36,7 +35,7 @@ class DescribeStackService extends Specification {
     
     def "fetch must receive an exisiting id"() {
         when: "fetching a stack by invalid id"
-        stackService.fetch(100L)
+        stackService.fetch("100")
 
         then: "throws"
         thrown(NotFoundException)
@@ -44,7 +43,7 @@ class DescribeStackService extends Specification {
     
     def "delete must receive an exisiting id"() {
         when: "deleting a stack by invalid id"
-        stackService.delete(100L)
+        stackService.delete("100")
 
         then: "throws"
         thrown(NotFoundException)
@@ -52,7 +51,7 @@ class DescribeStackService extends Specification {
     
     def "update must receive an exisiting id"() {
         when: "updating a stack by invalid id"
-        stackService.update(100L, new Stack("Stack Foo", "stackfoo"))
+        stackService.update("100", new Stack("Stack Foo", "stackfoo"))
 
         then: "throws"
         thrown(NotFoundException)
@@ -68,7 +67,7 @@ class DescribeStackService extends Specification {
     
     def "export must receive an exisiting id"() {
         when: "exporting a stack by invalid id"
-        stackService.export(100L)
+        stackService.export("100")
 
         then: "throws"
         thrown(NotFoundException)
@@ -76,7 +75,7 @@ class DescribeStackService extends Specification {
     
     def "restore must receive an exisiting id"() {
         when: "restoring a stack by invalid id"
-        stackService.restore(100L)
+        stackService.restore("100")
 
         then: "throws"
         thrown(NotFoundException)
@@ -85,7 +84,7 @@ class DescribeStackService extends Specification {
     def "update must receive a valid stack"() {
         when: "updating a stack without a name"
         Stack stack = stackService.create(new Stack("Stack Foo", "stackfoo"))
-        stackService.update(stack.id, new Stack())
+        stackService.update(stack.id, new Stack(null, null))
 
         then: "throws"
         thrown(Exception)

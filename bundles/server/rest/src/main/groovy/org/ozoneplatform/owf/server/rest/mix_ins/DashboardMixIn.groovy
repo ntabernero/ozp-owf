@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 public abstract class DashboardMixIn {
 
+    @JsonProperty
+    String id
+
     @JsonIgnore
     abstract boolean isIsLocked()
 

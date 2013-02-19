@@ -17,11 +17,11 @@
 define([
     'views/View',
     'mixins/widgets/WidgetControl',
+    'mixins/containers/SortableCollectionView',
     'jquery',
     'backbone',
-    'lodash',
-    'jqueryui/jquery-ui.custom'
-], function (View, WidgetControl, $, Backbone, _) {
+    'lodash'
+], function (View, WidgetControl, SortableCollectionView, $, Backbone, _) {
     'use strict';
  
     /**
@@ -45,7 +45,7 @@ define([
         }));
     }   
 
-    return View.extend({
+    return View.extend(_.extend({}, SortableCollectionView, {
         tagName: 'ol',
 
         className: 'taskbar', 
@@ -61,16 +61,14 @@ define([
 
             this.TaskbarHeader = createTaskbarHeaderClass(options.HeaderClass);
 
-            //TODO: This is temporary, take it out once dashboards
-            //have code to call pane resize
-            $(window).on('resize', _.bind(this.resize, this));
+            this.initSortable();
+
+//            //TODO: This is temporary, take it out once dashboards
+//            //have code to call pane resize
+//            $(window).on('resize', _.bind(this.resize, this));
         },
 
         render: function() {
-            this.$el.sortable({
-                update: _.bind(this.handleReorder, this)
-            });
-
             this.collection.each(_.bind(this.addWidget, this));
             return this;
         },
@@ -91,10 +89,17 @@ define([
         },
 
         handleOverflow: function() {
-            var taskbarWidth = this.$el.width(),
+            var taskbarWidth,
                 unchangeableWidth = 0,  //the total width of paddings, borders, and margins on content
                 changeableWidth = 0,    //sum of inner widths of headers
                 ratio;
+
+            taskbarWidth = window.getComputedStyle ? 
+                //use getComputedStyle to avoid rounding bug in chrome
+                Math.floor(parseInt(window.getComputedStyle(this.el, null).width, 10)) :
+
+                //IE7/8 doesn't support window.getComputedStyle
+                this.$el.width();
 
             this.$el.children('.header').each(function(idx, header) {
                 var $header = $(header),
@@ -120,13 +125,6 @@ define([
                     $header.width($header.width() * ratio);
                 });
             }
-        },
-
-        handleReorder: function(event, ui) {
-            var $item = $(ui.item),
-                header = $item.data('view');
-
-            this.collection.updateIndex(header.model, $item.index());
         }
-    });
+    }));
 });

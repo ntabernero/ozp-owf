@@ -15,24 +15,73 @@
  */
 
 define([
-    'views/panes/LayoutPane',
-
-    'backbone'
-], function (LayoutPane, Backbone) {
+    'views/panes/PanelPane',
+    'views/widgets/Panel',
+    'mixins/containers/SortableCollectionView',
+    'jquery',
+    'backbone',
+    'lodash'
+], function (PanelPane, Panel, SortableCollectionView, $, Backbone, _) {
     
     'use strict';
 
-    return LayoutPane.extend({
+    return PanelPane.extend(_.extend({}, SortableCollectionView, {
+        vtype: 'accordionpane',
 
-        model: null,
+        className: PanelPane.prototype.className + ' accordionpane',
 
-        className: 'pane',
+        initialize: function() {
+            var me = this;
 
-        render: function() {
-            this.$el.html('This is an accordion pane.');
-            return this;
+            PanelPane.prototype.initialize.apply(this, arguments);
+
+            // TODO: Remove this when updateSize of each pane is called on resize
+            // Update widget heights on window resize
+            var id;
+            $(window).resize(function() {
+                // Use timeouts so resize handler doesn't execute too many times
+                clearTimeout(id);
+                id = setTimeout($.proxy(me.updateSize, me), 100);
+            });
+        },
+
+        addWidget: function(widget) {
+            var panel = PanelPane.prototype.addWidget.apply(this, arguments);
+
+            // If widget is collapsed or destroyed update size of widgets
+            panel.model.on('change:collapsed destroy', $.proxy(this.updateSize, this));
+
+            this.updateSize();
+        },
+
+        updateSize: function() {
+            var me = this,
+                paneHeight = me.$el.height();
+
+            // TODO: Remove this if/else (keep if block's code) when updateSize of each pane is called on dashboard render
+            // If height is 0px pane hasn't been rendered to body yet
+            if(paneHeight > 0) {
+
+                var widgets = me.$el.find('.widget'),
+                    collapsedWidgets = widgets.filter('.collapsed'),
+                    headerHeight = widgets.find('.header:first').height();
+
+                // Get the % height of the pane that a widget header takes up
+                var headerHeightPct = 100 * (headerHeight / paneHeight);
+
+                // Get the % height of the pane that an expanded widget takes up by dividing the
+                // total % height the collapsed widgets take by the number of expanded widgets
+                var expandedWidgetHeightPct = (100 - collapsedWidgets.length * headerHeightPct) / (widgets.length - collapsedWidgets.length);
+
+                // Set the % height of all expanded and collapsed widgets appropriately
+                widgets.css('height', expandedWidgetHeightPct + '%');
+                collapsedWidgets.css('height', headerHeightPct + '%');
+            }
+            else {
+                // Not rendered, wait a bit and try again
+                clearTimeout(me.id);
+                me.id = setTimeout(function() { me.updateSize(); }, 100);
+            }
         }
-        
-    });
-
+    }));
 });
