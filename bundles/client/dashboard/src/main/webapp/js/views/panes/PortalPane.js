@@ -40,6 +40,13 @@ define([
             this.$el.css('width', '');
 
             this.model.set('height', ui.size.height);
+        },
+
+        updateCollapse: function() {
+            Panel.prototype.updateCollapse.apply(this, arguments);
+
+            //disable resize on collapsed widgets
+            this[this.model.get('collapsed') ? 'disableResize' : 'enableResize']();
         }
     }));
 
@@ -53,12 +60,10 @@ define([
                 model: widget
             });
 
-            // If widget is collapsed collapse the widget portlet
-            portlet.model.get('collapsed') && portlet.updateCollapse();
-
             this.$el.append(portlet.render().$el);
+
+            return portlet;
         }
-        
     }));
 
 });

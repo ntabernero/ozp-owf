@@ -27,14 +27,14 @@ define([
                 '<i class="icon-minus"></i>' +
             '</a>' +
         '</li>' +
-        '<li class="maximize">' +
-            '<a title="Maximize" class="maximize-btn">' +
-                '<i class="icon-resize-full"></i>' +
-            '</a>' +
-        '</li>' +
         '<li class="restore">' +
             '<a title="Restore" class="restore-btn">' +
                 '<i class="icon-resize-small"></i>' +
+            '</a>' +
+        '</li>' +
+        '<li class="maximize">' +
+            '<a title="Maximize" class="maximize-btn">' +
+                '<i class="icon-resize-full"></i>' +
             '</a>' +
         '</li>';
 

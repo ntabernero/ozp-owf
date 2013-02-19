@@ -63,5 +63,4 @@ define([
             $('#mask').addClass('hide');
         }
     }));
-
 });

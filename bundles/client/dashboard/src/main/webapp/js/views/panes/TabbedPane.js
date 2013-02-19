@@ -58,6 +58,8 @@ define([
             });
 
             this.$body.append(frame.render().$el);
+
+            return frame;
         },
 
         updateSize: function() {

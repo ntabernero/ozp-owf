@@ -35,6 +35,7 @@ define([
             this.initSortable({
                 handle: ".header",
                 cursor: 'move',
+                axis: 'y',
                 start: function(evt, ui) {
                     ui.item.data('view').mask();
                 },

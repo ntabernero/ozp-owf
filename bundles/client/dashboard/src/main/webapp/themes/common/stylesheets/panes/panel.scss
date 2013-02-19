@@ -5,5 +5,10 @@
 
     &.collapsed {
         height: $headerLineHeight !important;
+
+        > .body {
+            //necessary for IE7
+            height: 0;
+        }
     }
 }

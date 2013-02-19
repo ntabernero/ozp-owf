@@ -20,11 +20,11 @@ define([
     'backbone',
     'jquery',
     'lodash'
-], function (View, WidgetStatesCollection, Backbone, $, _) {
+], function (Pane, WidgetStatesCollection, Backbone, $, _) {
     
     'use strict';
 
-    return View.extend({
+    return Pane.extend({
         vtype: 'layoutpane',
 
         className: 'pane',
@@ -44,7 +44,7 @@ define([
 
             this.collection.on('change:active', _.bind(this.changeActivation, this));
 
-            View.prototype.initialize.apply(this, arguments);
+            Pane.prototype.initialize.apply(this, arguments);
 
             //if no widget is active, activate first widget
             if (this.collection.length && !this.collection.where({active: true}).length) {
@@ -54,7 +54,6 @@ define([
 
         afterRender: function () {
             this.$el.append( '<div class="paneshim hide"></div>' );
-
         },
 
 

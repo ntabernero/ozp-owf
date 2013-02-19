@@ -61,7 +61,7 @@ define([
 
             this.TaskbarHeader = createTaskbarHeaderClass(options.HeaderClass);
 
-            this.initSortable();
+            this.initSortable({axis: 'x'});
 
 //            //TODO: This is temporary, take it out once dashboards
 //            //have code to call pane resize

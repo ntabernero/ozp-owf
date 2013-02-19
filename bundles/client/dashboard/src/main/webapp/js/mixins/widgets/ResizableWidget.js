@@ -25,6 +25,15 @@ define([
     'lodash',
     'jqueryui/jquery-ui.custom'
 ], function(_, $) {
+
+    function disableResize() {
+        this.$el.resizable('disable');
+    }
+
+    function enableResize() {
+        this.$el.resizable('enable');
+    }
+
     return {
         /**
          * @param resizableOpts Extra options to be passed
@@ -32,8 +41,8 @@ define([
          */
         render: function(resizableOpts, widthResizable, heightResizable) {
             this.$el.resizable(_.extend({}, resizableOpts, {
-                minHeight: 50,
-                minWidth: 50,
+                minHeight: 200,
+                minWidth: 200,
                 start: _.bind(this.onResizeStart, this),
                 resize: _.bind(this.onResize, this),
                 stop: _.bind(this.onResizeStop, this)
@@ -44,6 +53,18 @@ define([
             }
             if (heightResizable) {
                 this.$el.css('height', this.model.get('height'));
+            }
+
+            //Once render is called and the resizable plugin
+            //is initialized, we can hook up the functions that enable
+            //and disable that plugin
+            _.extend(this, {
+                enableResize: enableResize,
+                disableResize: disableResize
+            });
+
+            if (this.resizeDisabled) {
+                this.disableResize();
             }
         },
 
@@ -58,6 +79,18 @@ define([
         onResize: function (evt, ui) {
             this.model.set('height', ui.size.height);
             this.model.set('width', ui.size.width);
+        },
+
+        //these functions save whether or not resize
+        //should be disabled once it is initialized. Once 
+        //render is called these are replaced with functions that
+        //immediately disable or enable the plugin
+        enableResize: function() {
+            this.resizeDisabled = false;
+        },
+
+        disableResize: function() {
+            this.resizeDisabled = true;
         }
     };
 });
