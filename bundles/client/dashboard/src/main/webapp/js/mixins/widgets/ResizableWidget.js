@@ -48,6 +48,10 @@ define([
                 stop: _.bind(this.onResizeStop, this)
             }));
 
+            this.on('remove', function(view) {
+                view.$el.resizable('destroy');
+            });
+
             if (widthResizable) {
                 this.$el.css('width', this.model.get('width'));
             }
@@ -69,11 +73,11 @@ define([
         },
 
         onResizeStart: function () {
-            this.mask();
+            this.$el.trigger('dragstart');
         },
 
         onResizeStop: function () {
-            this.unmask();
+            this.$el.trigger('dragend');
         },
 
         onResize: function (evt, ui) {

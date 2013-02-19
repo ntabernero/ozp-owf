@@ -30,12 +30,16 @@ define([
 
     return {
         initSortable: function(sortableOptions) {
+            var me = this;
+
             this.$el.sortable(_.extend({
-                update: _.bind(this.handleReorder, this)
+                update: _.bind(me.handleReorder, me),
+                start: function() { me.$el.trigger('dragstart'); },
+                stop: function() { me.$el.trigger('dragend'); }
             }, sortableOptions));
 
             //remove the sortable plugin when the view is destroyed
-            this.on('destroy', function(view) {
+            this.on('remove', function(view) {
                 view.$el.sortable("destroy");
             });
         },
