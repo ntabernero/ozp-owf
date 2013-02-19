@@ -35,7 +35,7 @@ define([
             if(!layoutConfig) {
                 layoutConfig = {
                     vtype: 'designerpane',
-                    paneType: 'tabbed',
+                    paneType: 'tabbedpane',
                     htmlText: '100%'
                 };
                 this.model.set('layoutConfig', layoutConfig);
@@ -60,19 +60,7 @@ define([
 
         reset: function () {
             var pane = this.views[0];
-            var box = pane && pane.views[0];
-
-            // remove sub view if found
-            if( box ) {
-                pane.removeView(box);
-                delete this.layoutConfig.box;
-            }
-            // fall back to DOM retrieval
-            else {
-                pane = this.$el.find('.pane').data('view');
-                box = pane && pane.$el.find('.box').data('view');
-                box.remove();
-            }
+            pane.reset();
         }
     });
 

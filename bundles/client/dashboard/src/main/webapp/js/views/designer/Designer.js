@@ -20,6 +20,7 @@ define([
     'views/box/VBox',
     './Pane',
     './WorkingArea',
+    './SidePanel',
     'views/Modal',
     'jquery',
     'lodash',
@@ -28,18 +29,12 @@ define([
     'jquery-splitter'
 ],
 
-function(View, HBox, VBox, Pane, WorkingArea, Modal, $, _, Handlebars) {
+function(View, HBox, VBox, Pane, WorkingArea, SidePanel, Modal, $, _, Handlebars) {
 
     'use strict';
 
     var HIGHLIGHTCLASS = 'highlight',
         tpl = 
-            '<div id="side-panel">' +
-                '<ul class="unstyled">' +
-                    '<li data-type="vertical">|</li>' +
-                    '<li data-type="horizontal">-</li>' +
-                '</ul>' +
-            '</div>' +
             '<div class="actions">' +
                 '<div class="pull-left">' +
                     '<button class="btn enabled reset-btn">Reset</button>' +
@@ -71,11 +66,13 @@ function(View, HBox, VBox, Pane, WorkingArea, Modal, $, _, Handlebars) {
         _$droppables: null,
 
         views: function() {
-            return {
+            return [{
                 vtype: 'workingArea',
                 vid: 'workingArea',
                 model: this.model
-            };
+            }, {
+                vtype: SidePanel
+            }];
         },
 
         afterRender: function() {
@@ -141,8 +138,8 @@ function(View, HBox, VBox, Pane, WorkingArea, Modal, $, _, Handlebars) {
         },
 
         _initDragAndDrop: function() {
-            this._$draggables = this.$('#side-panel li').draggable({
-                cursorAt: { left: -50 },
+            this._$draggables = this.$('.side-panel li').draggable({
+                cursorAt: { left: -50, top: -25 },
                 helper: 'clone',
                 scroll: false,
                 start: _.bind(this._onDragStart, this),
@@ -164,7 +161,8 @@ function(View, HBox, VBox, Pane, WorkingArea, Modal, $, _, Handlebars) {
 
         _onDragStart: function(evt, ui) {
             $(ui.helper).data({
-                type: $(evt.target).data().type
+                ruleType: $(evt.target).data().ruletype,
+                paneType: $(evt.target).data().panetype
             });
 
             $(document)
@@ -174,24 +172,33 @@ function(View, HBox, VBox, Pane, WorkingArea, Modal, $, _, Handlebars) {
         
         _onDrop: function (evt, ui) {
             var data = $(ui.helper).data(),
+                view = this._$mouseOverPane.data().view,
+                paneType, hBoxOptions, vBoxOptions, options;
+
+            if( data.ruleType ) {
+                paneType = view.getPaneType();
                 hBoxOptions = {
                     vtype: 'hbox',
                     panes: [
-                        { vtype: 'designerpane', htmlText: '50%', width: '50%' },
-                        { vtype: 'designerpane', htmlText: '50%', width: '50%' }
+                        { vtype: 'designerpane', paneType: paneType, htmlText: '50%', width: '50%' },
+                        { vtype: 'designerpane', paneType: paneType, htmlText: '50%', width: '50%' }
                     ]
                 },
                 vBoxOptions = {
                     vtype: 'vbox',
                     panes: [
-                        { vtype: 'designerpane', htmlText: '50%', height: '50%' },
-                        { vtype: 'designerpane', htmlText: '50%', height: '50%' }
+                        { vtype: 'designerpane', paneType: paneType, htmlText: '50%', height: '50%' },
+                        { vtype: 'designerpane', paneType: paneType, htmlText: '50%', height: '50%' }
                     ]
                 },
-                options = data.type === 'vertical' ? hBoxOptions : vBoxOptions;
+                options = data.ruleType === 'vertical' ? hBoxOptions : vBoxOptions;
+                view.nest( options );
+            }
+            // update pane type
+            else {
+                view.setPaneType( data.paneType );
+            }
 
-            var view = this._$mouseOverPane.data().view;
-            view.nest( options );
 
             this._$mouseOverPane.removeClass( HIGHLIGHTCLASS );
             this.enableReset();

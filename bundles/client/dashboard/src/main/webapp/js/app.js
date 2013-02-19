@@ -169,7 +169,7 @@ define([
                     });
 
                 dd.render();
-                $(document.body).append(dd.$el);
+                $('.dashboard').append(dd.$el);
 
                 dd.design().then(function(config) {
                     dd.remove();
@@ -191,31 +191,36 @@ define([
                 dashboardModel = new PersonalDashboardModel({
                     layoutConfig: {
                         vtype: 'designerpane',
-                        paneType: 'tabbed',
+                        paneType: 'tabbedpane',
                         box: {
                             vtype: 'hbox',
                             panes: [{
                                 vtype: 'designerpane',
+                                paneType: 'tabbedpane',
                                 htmlText: '50%',
                                 width: '50%'
                             }, {
                                 vtype: 'designerpane',
+                                paneType: 'tabbedpane',
                                 htmlText: '50%',
                                 width: '50%',
                                 box: {
                                     vtype: 'vbox',
                                     panes: [{
                                         vtype: 'designerpane',
+                                        paneType: 'tabbedpane',
                                         htmlText: '50%',
                                         height: '50%',
                                         box: {
                                             vtype: 'vbox',
                                             panes: [{
                                                 vtype: 'designerpane',
+                                                paneType: 'accordionpane',
                                                 htmlText: '50%',
                                                 height: '50%'
                                             }, {
                                                 vtype: 'designerpane',
+                                                paneType: 'portalpane',
                                                 htmlText: '50%',
                                                 height: '50%'
                                             }]
@@ -228,10 +233,12 @@ define([
                                             vtype: 'vbox',
                                             panes: [{
                                                 vtype: 'designerpane',
+                                                paneType: 'desktoppane',
                                                 htmlText: '50%',
                                                 height: '50%'
                                             }, {
                                                 vtype: 'designerpane',
+                                                paneType: 'fitpane',
                                                 htmlText: '50%',
                                                 height: '50%'
                                             }]
@@ -244,8 +251,10 @@ define([
                 });
             
             var dd = new DashboardDesigner({
-                    model: dashboardModel
-                });
+                model: dashboardModel
+            });
+
+            $('.dashboard').append(dd.render().el);
 
             dd.design().then(function(config) {
                 dd.remove();
@@ -262,7 +271,7 @@ define([
                 $('body').append(dashboard.render().el);
             });
         
-            $(document.body).append(dd.$el);
+            //$(document.body).append(dd.$el);
         });
        
     });

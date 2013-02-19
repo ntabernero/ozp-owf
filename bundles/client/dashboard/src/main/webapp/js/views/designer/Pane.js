@@ -43,8 +43,20 @@ define([
         },
 
         initialize: function () {
-            this.$el.addClass( this.options.paneType );
+            if(!this.options.box) {
+                this.$el.addClass( this.options.paneType );
+            }
             Pane.prototype.initialize.apply( this, arguments );
+        },
+
+        getPaneType: function () {
+            return this.options.paneType;
+        },
+
+        setPaneType: function (paneType) {
+            this.$el.removeClass(this.options.paneType);
+            this.options.paneType = paneType;
+            this.$el.addClass( paneType );
         },
 
         afterRender: function () {
@@ -59,12 +71,25 @@ define([
             return this;
         },
 
-        nest: function (options) {
+        nest: function (config) {
             this.removeEditable();
-            this.$el.empty();
-            this.box = this.addView( options );
-            this.options.box = options;
+            this.$el.removeClass( this.getPaneType() ).empty();
+            
+            this.addView( config );
+            this.options.box = config;
             return this;
+        },
+
+        reset: function () {
+            this.$el.addClass( this.getPaneType() );
+            
+            var box = this.views[0];
+            
+            // remove sub view if found
+            if( box ) {
+                this.removeView(box);
+                delete this.options.box;
+            }
         },
 
         initEditable: function () {

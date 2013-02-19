@@ -16,7 +16,11 @@
 
 #dashboard-designer {
 	z-index: 1000000000;
-    background: $baseColor;
+
+    background-color: $baseColor;
+    background-image: theme_image($theme-name, "dashboard-designer/background.png");
+    background-repeat: repeat;
+
     position: absolute;
     top: 0;
     left: 0;
@@ -60,7 +64,7 @@
     width: auto;
     height: auto;
     margin: 0 120px 3em 0;
-    background: $baseColor;
+    background: transparent;
 
     > .pane {
         position: absolute;
@@ -69,12 +73,13 @@
     }
 
     &.highlight, .pane.highlight {
-        background-color: $gray;
-        background-color: rgba($gray,0.1);
+        background-color: $grayDarker !important;
+        background-color: rgba($grayDarker, 0.2) !important;
+        @include transition(background 0.5s ease-in, opacity 0.5s ease-in);
     }
 }
 
-#side-panel {
+.side-panel {
     position: absolute;
     float: right;
     width: 120px;
@@ -86,7 +91,16 @@
     & > ul > li {
         text-align: center;
         font-size: 2em;
-        padding: 1em;
+        padding: 0.25em 0 0.25em 0;
+
+        img {
+            width: 48px;
+            height: 48px;
+        }
+    }
+
+    .paneTypes{
+        padding: 0.25em 0 0 0;
     }
 }
 
@@ -156,11 +170,45 @@ $active-pane-border-color: red !default;
             border: $dashboard-designer-pane-dimensions-border;
             background: rgba($dashboard-designer-pane-dimensions-background-color, $dashboard-designer-pane-dimensions-opacity);
         }
+    }
 
-        &.tabbed {
-            background-color: $dashboard-designer-tabbed-pane-background-color;
-            background-color: rgba($dashboard-designer-tabbed-pane-background-color, $dashboard-designer-fit-pane-opacity);
-        }
+    .accordionpane,
+    .desktoppane,
+    .portalpane,
+    .tabbedpane,
+    .fitpane {
+        background-position: 15px 10px;
+        background-repeat: no-repeat;
+    }
+
+    .tabbedpane {
+        background-color: $dashboard-designer-tabbed-pane-background-color;
+        background-color: rgba($dashboard-designer-tabbed-pane-background-color, $dashboard-designer-tabbed-pane-opacity);
+        background-image: theme_image($theme-name, "dashboard-designer/tabbed.png")
+    }
+
+    .accordionpane {
+        background-color: $dashboard-designer-accordion-pane-background-color;
+        background-color: rgba($dashboard-designer-accordion-pane-background-color, $dashboard-designer-accordion-pane-opacity);
+        background-image: theme_image($theme-name, "dashboard-designer/accordion.png")
+    }
+
+    .desktoppane {
+        background-color: $dashboard-designer-desktop-pane-background-color;
+        background-color: rgba($dashboard-designer-desktop-pane-background-color, $dashboard-designer-desktop-pane-opacity);
+        background-image: theme_image($theme-name, "dashboard-designer/desktop.png")
+    }
+
+    .portalpane {
+        background-color: $dashboard-designer-portal-pane-background-color;
+        background-color: rgba($dashboard-designer-portal-pane-background-color, $dashboard-designer-portal-pane-opacity);
+        background-image: theme_image($theme-name, "dashboard-designer/portal.png")
+    }
+
+    .fitpane {
+        background-color: $dashboard-designer-fit-pane-background-color;
+        background-color: rgba($dashboard-designer-fit-pane-background-color, $dashboard-designer-fit-pane-opacity);
+        background-image: theme_image($theme-name, "dashboard-designer/fit.png")
     }
 
     .vbox > .one > .editable, .vbox > .two > .editable {
