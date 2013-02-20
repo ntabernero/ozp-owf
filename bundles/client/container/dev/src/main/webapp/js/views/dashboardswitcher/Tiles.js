@@ -18,7 +18,7 @@ define([
     'views/View',
     'views/List',
     'views/dashboardswitcher/Tile',
-
+    'events/EventBus',
     // Libraries.
     'jquery',
     'lodash',
@@ -26,7 +26,7 @@ define([
     'jqueryui/jquery-ui.custom'
 ],
 
-function(app, View, List, Tile, $, _, Handlebars) {
+function(app, View, List, Tile, EventBus, $, _, Handlebars) {
 
     return List.extend({
         
@@ -37,9 +37,15 @@ function(app, View, List, Tile, $, _, Handlebars) {
         tabIndex: '-1',
 
         events: {
-            'click .dashboard-view': 'onDashboardClick',
-            'mouseenter .dashboard-view': 'showActions',
-            'mouseleave .dashboard-view': 'hideActions'
+            //'click .dashboard-view': 'onDashboardClick',
+            //'mouseenter .dashboard-view': 'showActions',
+            //'mouseleave .dashboard-view': 'hideActions'
+            'click > .dashboard': 'onDashboardClick',
+            'click > .stack': 'onStackClick',
+            'mouseenter > .stack': 'showActions',
+            'mouseleave > .stack': 'hideActions',
+            'mouseenter > .dashboard': 'showActions',
+            'mouseleave > .dashboard': 'hideActions'
         },
 
         initialize: function() {
@@ -47,6 +53,13 @@ function(app, View, List, Tile, $, _, Handlebars) {
         },
 
         onDashboardClick: function (evt) {
+            var currentTarget = $(evt.currentTarget),
+                model = this.collection.get(currentTarget.data('id'));
+
+            this.trigger('itemselected', model);
+        },
+        
+        onStackClick: function (evt) {
             var currentTarget = $(evt.currentTarget),
                 model = this.collection.get(currentTarget.data('id'));
 
@@ -62,7 +75,9 @@ function(app, View, List, Tile, $, _, Handlebars) {
                 return;
             }
 
-            $('.btn-group', evt.currentTarget).show();
+            $('.dashboard-actions', evt.currentTarget).show();
+            $('.stack-actions', evt.currentTarget).show();
+            $('.tooltip', evt.currentTarget).hide();
         },
 
         hideActions: function (evt) {
@@ -70,7 +85,9 @@ function(app, View, List, Tile, $, _, Handlebars) {
                 return;
             }
 
-            $('.btn-group', evt.currentTarget).hide();
+            $('.dashboard-actions', evt.currentTarget).hide();
+            $('.stack-actions', evt.currentTarget).hide();
+            $('.tooltip', evt.currentTarget).show();
         }
     });
 

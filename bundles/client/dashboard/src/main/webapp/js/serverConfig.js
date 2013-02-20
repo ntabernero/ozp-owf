@@ -467,6 +467,7 @@ var initialDashboards = [
         locked: false,
         defaultDashboard: false,
         stack: {
+            "id": 1,
             "name": "Sample Stack",
             "description": "This is a sample Stack",
             "urlName": "/stack",
