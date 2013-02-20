@@ -26,21 +26,22 @@ define([
     'views/panes/BoxPane',
     'views/widgets/Window',
     'collections/WidgetStatesCollection',
+    'mixins/CollectionView',
     'services/ZIndexManager',
     'backbone',
     'lodash',
     'jquery'
 ], function (AccordionPane, DesktopPane, FitPane, TabbedPane, PortalPane, View, HBox, VBox, Pane, BoxPane, WidgetWindow,
-                WidgetStatesCollection, ZIndexManager, Backbone, _, $) {
+                WidgetStatesCollection, CollectionView, ZIndexManager, Backbone, _, $) {
 
     'use strict';
 
-    return View.extend({
+    return View.extend(_.extend({}, CollectionView, {
         vtype: 'dashboardinstance',
 
         className: 'dashboard',
 
-        //whenever a drag event is occuring,
+        //whenever a drag event is occurring,
         //display a mask over the dashboard to prevent widget iframes
         //from interfering with mouseovers
         events: {
@@ -63,9 +64,6 @@ define([
             } else {
                 this.floatingWidgetCollection = new WidgetStatesCollection();
             }
-
-            this.floatingWidgetCollection.on('add', _.bind(this.addFloatingWidget, this));
-            this.floatingWidgetCollection.on('remove', _.bind(this.removeFloatingWidget, this));
         },
 
         showMask: function() {
@@ -89,48 +87,25 @@ define([
         },
 
         afterRender: function() {
-            this.renderFloatingWidgets();
-            return this;
+            var me = this;
+
+            me.renderCollection({
+                $body: me.$el,
+                collection: me.floatingWidgetCollection,
+                viewFactory: function(model) {
+                    return new WidgetWindow({
+                        model: model,
+                        containment: me.$el,
+                        zIndexManager: me.floatingWidgetZIndexManager
+                    });
+                }
+            });
+
+            return me;
         },
 
         floatingWidgets: function() {
             return this.floatingWidgetCollection;
-        },
-
-        renderFloatingWidgets: function() {
-            var me = this;
-
-            this.floatingWidgetCollection.each(function (widgetState) {
-                me.renderFloatingWidget(widgetState);
-            });
-
-        },
-
-        renderFloatingWidget: function(widgetState) {
-
-            var ww = new WidgetWindow({
-                model: widgetState,
-                containment: this.$el,
-                zIndexManager: this.floatingWidgetZIndexManager
-            });
-
-            this.$el.append(ww.render().$el);
-            return ww;
-        },
-
-        addFloatingWidget: function(widget) {
-            // Check whether the widget is in the collection
-            if (!this.floatingWidgetCollection.get(widget.id)) {
-                this.floatingWidgetCollection.add(widget, {silent: true});
-            }
-            this.renderFloatingWidget(widget);
-        },
-
-        removeFloatingWidget: function(widget) {
-            if (this.floatingWidgetCollection.get(widget.id)) {
-                this.floatingWidgetCollection.remove(widget, {silent: true});
-            }
-            //TODO: implement removal from view when logic for removal of widgets from parent views is implemented
         }
-    });
+    }));
 });

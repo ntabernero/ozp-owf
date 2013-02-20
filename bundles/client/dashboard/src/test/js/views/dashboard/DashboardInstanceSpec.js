@@ -68,17 +68,6 @@ function(DashboardInstance, DashboardModel, WidgetStateModel, $) {
             expect(dashboardInstance.hide).to.be.a('function');
         });
 
-        it('renders a floating widget in response to add', function() {
-            var dashboardInstance = new DashboardInstance({model: dashboardModel});
-            dashboardInstance.render();
-
-            dashboardInstance.addFloatingWidget(new WidgetStateModel({model: widget1}));
-            expect(dashboardInstance.$el.children('.widget').length).to.equal(1);
-
-            dashboardInstance.addFloatingWidget(new WidgetStateModel({model: widget2}));
-            expect(dashboardInstance.$el.children('.widget').length).to.equal(2);
-        });
-
         it('renders a floating widgets from dashboard configuration', function() {
 
             var dashboardModel1 = new DashboardModel({
