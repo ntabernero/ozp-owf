@@ -30,4 +30,20 @@
         position: absolute;
         bottom: 0;
     }
+
+    .widget {
+        &.maximized {
+            width: 100% !important;
+            height: 100% !important;
+
+            top: 0px !important;
+            left: 0px !important;
+        }
+
+        &.minimized {
+            top: -10000px !important;
+            left: -10000px !important;
+        }
+    }
+
 }

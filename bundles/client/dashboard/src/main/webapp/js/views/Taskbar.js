@@ -61,7 +61,7 @@ define([
 
             this.TaskbarHeader = createTaskbarHeaderClass(options.HeaderClass);
 
-            this.initSortable();
+            this.initSortable({axis: 'x'});
 
 //            //TODO: This is temporary, take it out once dashboards
 //            //have code to call pane resize
@@ -81,10 +81,10 @@ define([
             header.render();
             this.$el.append(header.$el);
 
-            this.handleOverflow();
+            this.updateSize();
         },
 
-        resize: function() {
+        updateSize: function() {
             this.handleOverflow();
         },
 
@@ -92,7 +92,8 @@ define([
             var taskbarWidth,
                 unchangeableWidth = 0,  //the total width of paddings, borders, and margins on content
                 changeableWidth = 0,    //sum of inner widths of headers
-                ratio;
+                ratio,
+                headerEls = this.$el.children('.header');
 
             taskbarWidth = window.getComputedStyle ? 
                 //use getComputedStyle to avoid rounding bug in chrome
@@ -101,7 +102,7 @@ define([
                 //IE7/8 doesn't support window.getComputedStyle
                 this.$el.width();
 
-            this.$el.children('.header').each(function(idx, header) {
+            headerEls.each(function(idx, header) {
                 var $header = $(header),
                     outerWidth,
                     innerWidth;
@@ -119,7 +120,7 @@ define([
 
             //if content is too wide, resize according to calculated ratio
             if (ratio < 1) {
-                this.$el.children('.header').each(function(idx, header) {
+                headerEls.each(function(idx, header) {
                     var $header = $(header);
 
                     $header.width($header.width() * ratio);

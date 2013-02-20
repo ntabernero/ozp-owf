@@ -1,4 +1,6 @@
+/*global gadgets*/
 ;(function (window, document, undefined) {
+    'use strict';
 
     /**
      * @ignore
@@ -35,7 +37,7 @@
         // assume JSON
         if(widgetId.charAt(0) === '{') {
             widgetIframeId = widgetId;
-            widgetId = OWF.Util.parseJson(widgetIframeId).id;
+            widgetId = JSON.parse(widgetIframeId).id;
         }
         else {
             widgetIframeId = '{\"id\":\"' + widgetId + '\"}';
@@ -96,6 +98,7 @@
             for (var ii = 0; ii < functions.length; ii++) {
                 var functionName = functions[ii];
 
+                /*jshint loopfunc:true */
                 pub[functionName] = function (name) {
                     return function () {
                         var callback = arguments[arguments.length - 1];
@@ -105,7 +108,7 @@
                             pub.callbacks[name] = callback;
                         }
                         rpcCall.call(this, widgetId, srcId, name, args);
-                    }
+                    };
                 }(functionName);
 
             }

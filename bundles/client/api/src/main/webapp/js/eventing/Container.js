@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*global require, initialWidgetDefinitions, initialDashboards*/
+/*global require*/
 define([
     'gadgets/rpc',
+    'util/util',
+    'util/version',
     'jquery'
-], function(gadgets, $) {
-
+], function(gadgets, Util, version, $) {
     'use strict';
 
     return function () {
@@ -69,13 +70,14 @@ define([
         return /** @lends Ozone.eventing.Container */ {
 
             name:'OWF',
-            version:Ozone.version.owfversion + Ozone.version.eventing,
+            version:version.owfversion + version.eventing,
 
             init:function (cfg) {
                 config = cfg || {};
 
                 //determine containerRelay
-                this.setContainerRelay(config.containerRelay != null ? config.containerRelay : Ozone.util.getContainerRelay());
+//                this.setContainerRelay(config.containerRelay != null ? config.containerRelay : Util.getContainerRelay());
+                this.setContainerRelay(config.containerRelay);
 
                 //setup any widgetEventingReady callbacks
                 if (config.widgetEventingReady != null) {
@@ -104,14 +106,14 @@ define([
 
                 //initialize Ozone.eventing.rpc
                 gadgets.rpc.register("LIST_WIDGETS", this.getOpenedWidgets);
-                Ozone.eventing.rpc.init({
-                    getIframeId:this.getIframeId
-                });
+//                Ozone.eventing.rpc.init({
+//                    getIframeId:this.getIframeId
+//                });
 
                 //hook containerInit for when widgets initialize with the container
                 gadgets.rpc.register("container_init", function (sender, message, functions) {
                     //need to hook eventing.rpc to container_init
-                    Ozone.eventing.rpc.priv.clientToldUsFunctionsHandler(sender, message, functions);
+//                    Ozone.eventing.rpc.priv.clientToldUsFunctionsHandler(sender, message, functions);
 
                     //initialize the widget with the container
                     containerInit(sender, message);
@@ -126,7 +128,7 @@ define([
 
                         //execute any callbacks if any return false then stop the message
                         for (var i = 0, len = cbMap.onRoute.length; i < len; i++) {
-                            returnValue = returnValue && !(cbMap.onRoute[i].fn.call(cbMap.onRoute[i].scope, sender, subscriber, channel, message) === false);
+                            returnValue = returnValue && (cbMap.onRoute[i].fn.call(cbMap.onRoute[i].scope, sender, subscriber, channel, message) !== false);
                         }
 
                         //shindig pubsubrouter expects true to means don't send the message
@@ -138,7 +140,7 @@ define([
 
                         //execute any callbacks if any return false then stop the message
                         for (var i = 0, len = cbMap.onPublish.length; i < len; i++) {
-                            returnValue = returnValue && !(cbMap.onPublish[i].fn.call(cbMap.onPublish[i].scope, sender, channel, message) === false);
+                            returnValue = returnValue && (cbMap.onPublish[i].fn.call(cbMap.onPublish[i].scope, sender, channel, message) !== false);
                         }
 
                         //shindig pubsubrouter expects true to means don't send the message
@@ -150,7 +152,7 @@ define([
 
                         //execute any callbacks if any return false then stop the message
                         for (var i = 0, len = cbMap.onSubscribe.length; i < len; i++) {
-                            returnValue = returnValue && !(cbMap.onSubscribe[i].fn.call(cbMap.onSubscribe[i].scope, sender, message) === false);
+                            returnValue = returnValue && (cbMap.onSubscribe[i].fn.call(cbMap.onSubscribe[i].scope, sender, message) !== false);
                         }
 
                         //shindig pubsubrouter expects true to means don't send the message
@@ -162,7 +164,7 @@ define([
 
                         //execute any callbacks if any return false then stop the message
                         for (var i = 0, len = cbMap.onUnsubscribe.length; i < len; i++) {
-                            returnValue = returnValue && !(cbMap.onUnsubscribe[i].fn.call(cbMap.onUnsubscribe[i].scope, sender, message) === false);
+                            returnValue = returnValue && (cbMap.onUnsubscribe[i].fn.call(cbMap.onUnsubscribe[i].scope, sender, message) !== false);
                         }
 
                         //shindig pubsubrouter expects true to means don't send the message
@@ -245,24 +247,24 @@ define([
             getIframeProperties:function (url, id, widget, paneType, launchData, isLocked) {
                 url || (url = widget.url);
 
-                var generatedIdText = Ozone.util.toString(this.generateIframeId(id));
+                var generatedIdText = JSON.stringify(this.generateIframeId(id));
                 var generatedNameObj = this.generateIframeName(url, id, widget, paneType, launchData, isLocked);
-                var generatedNameText = Ozone.util.toString(generatedNameObj);
-                var htmlEncodedId = Ozone.util.HTMLEncodeReservedJS(generatedIdText);
-                var htmlEncodedName = Ozone.util.HTMLEncodeReservedJS(generatedNameText);
+                var generatedNameText = JSON.stringify(generatedNameObj);
+                var htmlEncodedId = Util.HTMLEncodeReservedJS(generatedIdText);
+                var htmlEncodedName = Util.HTMLEncodeReservedJS(generatedNameText);
                 var a = url.split('?');
-                var base = Ozone.util.HTMLEncodeReservedJS(a[0]);
+                var base = Util.HTMLEncodeReservedJS(a[0]);
                 var qstring = '';
                 if (a[1]) {
                     qstring = '&' + a[1];
                 }
-                qstring = Ozone.util.HTMLEncodeReservedJS(qstring);
+                qstring = Util.HTMLEncodeReservedJS(qstring);
 
                 //put extra parameters into the frame src and use the generatedid for the id and name of the frame
-                var ret = "id = \"" + htmlEncodedId + "\" name = \"" + htmlEncodedName + "\" src= \"" + base + "?lang=" + Ozone.lang.getLanguage() + "&owf=true" + qstring;
+                var ret = "id = \"" + htmlEncodedId + "\" name = \"" + htmlEncodedName + "\" src= \"" + base + "?lang=en-US&owf=true" + qstring;
                 if (generatedNameObj.currentTheme) {
-                    var currentThemeName = Ozone.util.HTMLEncodeReservedJS(generatedNameObj.currentTheme.themeName);
-                    var currentThemeContrast = Ozone.util.HTMLEncodeReservedJS(generatedNameObj.currentTheme.themeContrast);
+                    var currentThemeName = Util.HTMLEncodeReservedJS(generatedNameObj.currentTheme.themeName);
+                    var currentThemeContrast = Util.HTMLEncodeReservedJS(generatedNameObj.currentTheme.themeContrast);
                     var currentThemeFontSize = generatedNameObj.currentTheme.themeFontSize;
 
                     ret += '&themeName=' + currentThemeName;
@@ -281,13 +283,13 @@ define([
                 var iframeNameObj = {
                     id:objectId,
 
-                    containerVersion:Ozone.version.owfversion,
-                    webContextPath:Ozone.config.webContextPath,
-                    preferenceLocation:Ozone.config.prefsLocation,
+                    containerVersion:version.owfversion,
+//                    webContextPath:Ozone.config.webContextPath,
+//                    preferenceLocation:Ozone.config.prefsLocation,
 
                     relayUrl:this.getContainerRelay(),
-                    lang:Ozone.lang.getLanguage(),
-                    currentTheme:Ozone.config.currentTheme,
+//                    lang:Ozone.lang.getLanguage(),
+//                    currentTheme:Ozone.config.currentTheme,
                     owf:true,
                     layout:paneType || "",
                     url:url,

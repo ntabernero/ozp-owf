@@ -58,6 +58,8 @@ define([
             });
 
             this.$body.append(frame.render().$el);
+
+            return frame;
         },
 
         updateSize: function() {
@@ -67,7 +69,7 @@ define([
 
             //adjust to new size once it is worked out
             setTimeout(function() {
-                me.tabbar.resize();
+                me.tabbar.updateSize();
             }, 0);
         }
     });

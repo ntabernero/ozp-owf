@@ -17,9 +17,6 @@
 .tabbedpane {
     position: relative;
 
-    > .taskbar {
-    }
-
     > .body {
         position: absolute;
         width: 100%;
@@ -27,7 +24,7 @@
         top: $headerLineHeight;
         bottom: 0;
 
-        > iframe {
+        > .widgetframe {
             position: absolute;
             z-index: 0;
 

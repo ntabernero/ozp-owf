@@ -35,12 +35,7 @@ define([
             this.initSortable({
                 handle: ".header",
                 cursor: 'move',
-                start: function(evt, ui) {
-                    ui.item.data('view').mask();
-                },
-                stop: function(evt, ui) {
-                    ui.item.data('view').unmask();
-                }
+                axis: 'y'
             });
         },
 
@@ -58,9 +53,6 @@ define([
             var panel = new Panel({
                 model: widget
             });
-
-            // If widget is collapsed collapse the widget panel
-            panel.model.get('collapsed') && panel.updateCollapse();
 
             this.$el.append(panel.render().$el);
 

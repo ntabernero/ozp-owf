@@ -128,7 +128,7 @@ define([
 
             $(document.body).append(taskbar.$el);
             taskbar.$el.width(200);
-            taskbar.resize();
+            taskbar.updateSize();
 
             expect(taskbar.$el.width()).to.equal(200);
 

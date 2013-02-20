@@ -29,8 +29,6 @@ define([
     return LayoutPane.extend({
         vtype: 'desktoppane',
 
-        model: null,
-
         $body: null, //jquery element for the dashboard body
         taskbar: null, //taskbar View
 
@@ -65,13 +63,13 @@ define([
             me.$body = $('<div class="body">');
 
             this.collection.each(function (widgetState) {
-                me.renderWidget(widgetState);
+                me.addWidget(widgetState);
             });
 
             me.$el.append(me.$body);
         },
 
-        renderWidget: function(widgetState) {
+        addWidget: function(widgetState) {
 //            console.time('widget');
         
             var ww = new WidgetWindow({
@@ -87,12 +85,8 @@ define([
             return ww;
         },
 
-        addWidget: function(widget) {
-            this.renderWidget(widget);
-        },
-
         launchWidget: function (evt, model) {
-            var ww = this.renderWidget(model);
+            var ww = this.addWidget(model);
             return ww;
         },
 
@@ -103,7 +97,7 @@ define([
 
             //adjust to new size once it is worked out
             setTimeout(function() {
-                me.taskbar.resize();
+                me.taskbar.updateSize();
             }, 0);
         }
     });

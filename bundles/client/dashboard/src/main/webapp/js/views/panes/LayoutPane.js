@@ -20,11 +20,11 @@ define([
     'backbone',
     'jquery',
     'lodash'
-], function (View, WidgetStatesCollection, Backbone, $, _) {
+], function (Pane, WidgetStatesCollection, Backbone, $, _) {
     
     'use strict';
 
-    return View.extend({
+    return Pane.extend({
         vtype: 'layoutpane',
 
         className: 'pane',
@@ -38,29 +38,25 @@ define([
         },
         
         initialize: function () {
-            View.prototype.initialize.apply(this, arguments);
-
-            //for now, accept collections as either 'collection' or 'widgets'
-            var collectionProp = this.options.collection ? 'collection' : 'widgets';
-
-            this.collection = this.options[collectionProp] instanceof Backbone.Collection ? 
-                this.options[collectionProp] :
-                new WidgetStatesCollection(this.options[collectionProp] || []);
+            this.collection = this.options.widgets instanceof Backbone.Collection ? 
+                this.options.widgets :
+                new WidgetStatesCollection(this.options.widgets || []);
 
             this.collection.on('change:active', _.bind(this.changeActivation, this));
-        },
 
-        afterRender: function () {
-            this.$el.append( '<div class="paneshim hide"></div>' );
+            Pane.prototype.initialize.apply(this, arguments);
 
             //if no widget is active, activate first widget
-            if (!this.$('.active').length && this.collection.length) {
+            if (this.collection.length && !this.collection.where({active: true}).length) {
                 this.collection.at(0).set('active', true);
             }
         },
 
+        afterRender: function () {
+            this.$el.append( '<div class="paneshim hide"></div>' );
+        },
 
-        //abstract method, override to provide widget activation semantics
+
         changeActivation: function (widget) {
             var active = widget.get('active');
 
@@ -74,10 +70,12 @@ define([
             }
         },
 
-        addWidget: $.noop, //abstract
-
-        launchWidget: function (evt, model) {}
-
+        //this should be overridden with more behavior in subclasses
+        addWidget: function(widget) {
+            if (widget.get('active')) {
+                this.changeActivation(widget);
+            }
+        }
     });
 
 });

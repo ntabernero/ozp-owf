@@ -40,6 +40,14 @@ define([
 
         className: 'dashboard',
 
+        //whenever a drag event is occuring,
+        //display a mask over the dashboard to prevent widget iframes
+        //from interfering with mouseovers
+        events: {
+            'dragstart': 'showMask',
+            'dragend': 'hideMask'
+        },
+
         initialize: function() {
             View.prototype.initialize.apply(this, arguments);
 
@@ -60,12 +68,33 @@ define([
             this.floatingWidgetCollection.on('remove', _.bind(this.removeFloatingWidget, this));
         },
 
-        floatingWidgets: function() {
-            return this.floatingWidgetCollection;
+        showMask: function() {
+            this.$el.children('.mask').removeClass('hide');
+        },
+
+        hideMask: function() {
+            this.$el.children('.mask').addClass('hide');
         },
 
         views: function () {
             return this.model && this.model.get('layoutConfig');
+        },
+
+        render: function() {
+            View.prototype.render.apply(this, arguments);
+
+            //create the drag mask
+            this.$el.append('<div class="mask hide" />');
+            return this;
+        },
+
+        afterRender: function() {
+            this.renderFloatingWidgets();
+            return this;
+        },
+
+        floatingWidgets: function() {
+            return this.floatingWidgetCollection;
         },
 
         renderFloatingWidgets: function() {
@@ -102,12 +131,6 @@ define([
                 this.floatingWidgetCollection.remove(widget, {silent: true});
             }
             //TODO: implement removal from view when logic for removal of widgets from parent views is implemented
-        },
-
-        afterRender: function() {
-            this.renderFloatingWidgets();
-            return this;
         }
     });
-
 });

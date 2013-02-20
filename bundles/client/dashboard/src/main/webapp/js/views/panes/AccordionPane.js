@@ -52,6 +52,8 @@ define([
             panel.model.on('change:collapsed destroy', $.proxy(this.updateSize, this));
 
             this.updateSize();
+
+            return panel;
         },
 
         updateSize: function() {
