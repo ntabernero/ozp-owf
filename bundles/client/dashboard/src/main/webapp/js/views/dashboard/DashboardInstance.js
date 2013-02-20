@@ -55,6 +55,13 @@ define([
             } else {
                 this.floatingWidgetCollection = new WidgetStatesCollection();
             }
+
+            this.floatingWidgetCollection.on('add', _.bind(this.addFloatingWidget, this));
+            this.floatingWidgetCollection.on('remove', _.bind(this.removeFloatingWidget, this));
+        },
+
+        floatingWidgets: function() {
+            return this.floatingWidgetCollection;
         },
 
         views: function () {
@@ -64,33 +71,42 @@ define([
         renderFloatingWidgets: function() {
             var me = this;
 
-            me.$floatingWidgetContainer = me.$floatingWidgetContainer || $('<div class="floatingWidgetContainer">');
             this.floatingWidgetCollection.each(function (widgetState) {
                 me.renderFloatingWidget(widgetState);
             });
 
-            me.$el.append(me.$floatingWidgetContainer);
         },
 
         renderFloatingWidget: function(widgetState) {
 
             var ww = new WidgetWindow({
                 model: widgetState,
-                containment: this.$floatingWidgetContainer,
+                containment: this.$el,
                 zIndexManager: this.floatingWidgetZIndexManager
             });
 
-            this.$floatingWidgetContainer.append(ww.render().$el);
+            this.$el.append(ww.render().$el);
             return ww;
         },
 
         addFloatingWidget: function(widget) {
-            this.floatingWidgetCollection.add(widget);
+            // Check whether the widget is in the collection
+            if (!this.floatingWidgetCollection.get(widget.id)) {
+                this.floatingWidgetCollection.add(widget, {silent: true});
+            }
             this.renderFloatingWidget(widget);
+        },
+
+        removeFloatingWidget: function(widget) {
+            if (this.floatingWidgetCollection.get(widget.id)) {
+                this.floatingWidgetCollection.remove(widget, {silent: true});
+            }
+            //TODO: implement removal from view when logic for removal of widgets from parent views is implemented
         },
 
         afterRender: function() {
             this.renderFloatingWidgets();
+            return this;
         }
     });
 

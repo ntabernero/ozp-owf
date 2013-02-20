@@ -71,7 +71,6 @@ function(DashboardInstance, DashboardModel, WidgetStateModel, $) {
         it('renders a floating widget in response to add', function() {
             var dashboardInstance = new DashboardInstance({model: dashboardModel});
             dashboardInstance.render();
-            expect(dashboardInstance.$el.find('div.floatingWidgetContainer').length).to.equal(1);
 
             dashboardInstance.addFloatingWidget(new WidgetStateModel({model: widget1}));
             expect(dashboardInstance.$el.find('div.window').length).to.equal(1);
@@ -91,9 +90,18 @@ function(DashboardInstance, DashboardModel, WidgetStateModel, $) {
 
             var dashboardInstance = new DashboardInstance({model: dashboardModel1});
             dashboardInstance.render();
-            console.log(dashboardInstance.$el.html());
-            expect(dashboardInstance.$el.find('div.floatingWidgetContainer').length).to.equal(1);
             expect(dashboardInstance.$el.find('div.window').length).to.equal(2);
+        });
+
+        it('renders a floating widget when it is added to the collection', function() {
+            var dashboardInstance = new DashboardInstance({model: dashboardModel});
+            dashboardInstance.render();
+
+            dashboardInstance.floatingWidgets().add(widget1)
+            expect(dashboardInstance.$el.find('div.window').length).to.equal(1);
+            dashboardInstance.floatingWidgets().add(widget2)
+            expect(dashboardInstance.$el.find('div.window').length).to.equal(2);
+
         });
 
     });
