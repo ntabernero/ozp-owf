@@ -41,10 +41,26 @@ define([
         },
 
         render: function () {
-            this.renderTaskbar();
-            this.renderWidgets();
+            var me = this;
+
+            me.renderTaskbar();
+
+            me.$body = $('<div class="body">');
+            me.$el.append(me.$body);
+
+            me.renderCollection({
+                $body: me.$body,
+                viewFactory: function(model) {
+                    return new WidgetWindow({
+                        model: model,
+                        containment: me.$body,
+                        zIndexManager: me.zIndexManager
+                    });
+                },
+                collection: me.collection
+            });
             
-            return LayoutPane.prototype.render.apply(this, arguments);
+            return LayoutPane.prototype.render.apply(me, arguments);
         },
 
         renderTaskbar: function() {
@@ -55,39 +71,6 @@ define([
 
             this.taskbar.render();
             this.$el.append(this.taskbar.$el);
-        },
-
-        renderWidgets: function() {
-            var me = this;
-
-            me.$body = $('<div class="body">');
-
-            this.collection.each(function (widgetState) {
-                me.addWidget(widgetState);
-            });
-
-            me.$el.append(me.$body);
-        },
-
-        addWidget: function(widgetState) {
-//            console.time('widget');
-        
-            var ww = new WidgetWindow({
-                model: widgetState,
-                containment: this.$body,
-                zIndexManager: this.zIndexManager
-            });
-
-            this.$body.append(ww.render().$el);
-
-//            console.timeEnd('widget');
-
-            return ww;
-        },
-
-        launchWidget: function (evt, model) {
-            var ww = this.addWidget(model);
-            return ww;
         },
 
         updateSize: function() {

@@ -30,29 +30,29 @@ define([
 
         initialize: function() {
             LayoutPane.prototype.initialize.apply(this, arguments);
-
-            if (this.collection.length > 1) {
-                throw "Fit Panes cannot contain more than one widget";
-            }
         },
 
         render: function() {
-            LayoutPane.prototype.render.apply(this, arguments);
-            this.addWidget();
-            return this;
-        },
+            var me = this;
 
-        addWidget: function() {
-            if (this.collection.length > 1) {
-                throw "Fit Panes cannot contain more than one widget";
+            function viewFactory(model) {
+                if (me.collection.length > 1) {
+                    throw "Fit Panes cannot contain more than one widget";
+                }
+                else {
+                    return new WidgetControlIframe({
+                        model: model
+                    });
+                }
             }
-            else if (this.collection.length === 1) {
-                this.$el.append(
-                    new WidgetControlIframe({
-                        model: this.collection.at(0)
-                    }).render().$el
-                );
-            }
+
+            me.renderCollection({
+                $body: me.$el,
+                viewFactory: viewFactory,
+                collection: me.collection
+            });
+
+            return LayoutPane.prototype.render.apply(me, arguments);
         }
     });
 });

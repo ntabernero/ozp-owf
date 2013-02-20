@@ -36,19 +36,19 @@ define([
                 height: 500,
                 zIndex: 10000,
                 active: true
-            },
-            MyPane;
+            };//,
+//            MyPane;
 
         beforeEach(function(done) {
             collection = new WidgetStatesCollection([widget1, widget2]);
 
-            //custom subclass that allows us to track addWidget calls
-            MyPane = LayoutPane.extend({
-                addWidget: sinon.spy(LayoutPane.prototype, 'addWidget')  
-            });
+//            //custom subclass that allows us to track addWidget calls
+//            MyPane = LayoutPane.extend({
+//                addWidget: sinon.spy(LayoutPane.prototype, 'addWidget')  
+//            });
 
 
-            pane = new MyPane({
+            pane = new LayoutPane({
                 widgets: collection
             }).render();
 
@@ -60,17 +60,18 @@ define([
             pane.remove();
             pane = null;
 
-            LayoutPane.prototype.addWidget.restore();
+//            LayoutPane.prototype.addWidget.restore();
             done();
         });
 
-        it('calls addWidget when a new model is added to the collection', function() {
-            var oldCallCount = pane.addWidget.callCount;
-
-            collection.add(widget3);
-
-            expect(pane.addWidget.callCount).to.equal(oldCallCount + 1);
-        });
+//no longer used publicly
+//        it('calls addWidget when a new model is added to the collection', function() {
+//            var oldCallCount = pane.addWidget.callCount;
+//
+//            collection.add(widget3);
+//
+//            expect(pane.addWidget.callCount).to.equal(oldCallCount + 1);
+//        });
 
         it('activates the first widget if not widget is active when initialized', function() {
             expect(pane.collection.at(0).get('active')).to.be(true);
@@ -79,7 +80,7 @@ define([
 
         it('does not change which widget is active when the initial colleciton includes an active widget', function() {
 
-            var pane2 = new MyPane({
+            var pane2 = new LayoutPane({
                 widgets: [widget1, widget3] //widget3 has the active flag set
             });
 
