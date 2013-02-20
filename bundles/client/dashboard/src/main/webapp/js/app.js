@@ -66,17 +66,6 @@ define([
     });
     
     // Pull in a collection of dashboards.
-    var preferencesCollection = new PreferencesCollection();
-    preferencesCollection.fetch({
-        success: function(collection) {
-            console.log("Loaded " + collection.length + " preferences");
-        },
-        error: function() {
-            console.log("Failed to load any preferences");
-        }
-    });
-    
-    // Pull in a collection of dashboards.
     var peopleCollection = new PeopleCollection();
     peopleCollection.fetch({
         success: function(collection) {

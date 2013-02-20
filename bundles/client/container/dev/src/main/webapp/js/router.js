@@ -105,7 +105,7 @@ define([
 
         index: function (id) {
             EventBus.trigger('dashboard:switch', new Backbone.Model({
-                guid:id
+                id:id
             }));
         },
 
