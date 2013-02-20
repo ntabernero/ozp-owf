@@ -35,7 +35,7 @@ define([
      */
     function preferenceFunction(rpc, cfg, verb, argsToPass) {
 
-        function responseHandler(collection, resp) {
+        function responseHandler(model, resp) {
 
             //'this' should be the promise
             if (this.isResolved()) {
@@ -43,7 +43,7 @@ define([
                 
                 rpc.callback({
                     success: true,
-                    data: collection.toJSON()
+                    data: model.toJSON()
                 });
             }
             else {
@@ -69,7 +69,7 @@ define([
 
         //create the model, perform the requested action, and bind the
         //response handler to the result.  This assumes that the action
-        //sepcififed by 'verb' is asynchronous and returns a Promise
+        //specified by 'verb' is asynchronous and returns a Promise
         (new PreferenceModel(args))[verb]().always(responseHandler);
     }
 
