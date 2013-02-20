@@ -39,6 +39,9 @@ define([
 
             PanelPane.prototype.initialize.apply(this, arguments);
 
+            // Set sortable's scroll to false so the pane is static when dragging widgets
+            me.$el.sortable("option", "scroll", false);
+
             // TODO: Remove this when updateSize of each pane is called on resize
             // Update widget heights on window resize
             var id;
@@ -62,21 +65,23 @@ define([
             // TODO: Remove this if/else (keep if block's code) when updateSize of each pane is called on dashboard render
             // If height is 0px pane hasn't been rendered to body yet
             if(paneHeight > 0) {
+                var widgets = me.$el.children('.widget'),
+                    collapsedWidgets = widgets.filter('.collapsed').length,
+                    expandedWidgets = widgets.length - collapsedWidgets,
+                    headerHeight = widgets.children('.header:first').height();
 
-                var widgets = me.$el.find('.widget'),
-                    collapsedWidgets = widgets.filter('.collapsed'),
-                    headerHeight = widgets.find('.header:first').height();
+                // Get the % height of the pane that a widget border takes up, parseInt to remove 'px'
+                var borderPct = 100 * ((parseInt(widgets.css("border-top-width"), 10) + parseInt(widgets.css("border-bottom-width"), 10)) / paneHeight);
 
-                // Get the % height of the pane that a widget header takes up
-                var headerHeightPct = 100 * (headerHeight / paneHeight);
+                // Get the % height of the pane that a widget header takes up, handles floating-point
+                var headerPct = parseFloat((100 * (headerHeight / paneHeight)).toPrecision(12));
 
-                // Get the % height of the pane that an expanded widget takes up by dividing the
-                // total % height the collapsed widgets take by the number of expanded widgets
-                var expandedWidgetHeightPct = (100 - collapsedWidgets.length * headerHeightPct) / (widgets.length - collapsedWidgets.length);
+                // Get the % height of the pane that an expanded widget should take up by dividing the total
+                // % height the collapsed widgets and widget borders take up by the number of expanded widgets
+                var expandedWidgetPct = (100 - (collapsedWidgets * headerPct) - (widgets.length * borderPct)) / expandedWidgets;
 
-                // Set the % height of all expanded and collapsed widgets appropriately
-                widgets.css('height', expandedWidgetHeightPct + '%');
-                collapsedWidgets.css('height', headerHeightPct + '%');
+                // Set the % height of all widgets, collapsed widgets will have their height overridden in css
+                widgets.css('height', expandedWidgetPct + '%');
             }
             else {
                 // Not rendered, wait a bit and try again
