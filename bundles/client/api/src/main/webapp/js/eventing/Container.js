@@ -289,6 +289,7 @@ define([
 
                     relayUrl:this.getContainerRelay(),
 //                    lang:Ozone.lang.getLanguage(),
+                    lang:'en-US',
 //                    currentTheme:Ozone.config.currentTheme,
                     owf:true,
                     layout:paneType || "",

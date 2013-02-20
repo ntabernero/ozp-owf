@@ -71,20 +71,20 @@ define([
             expect(fitPane.$el.children('iframe').length).to.equal(1);
         });
 
-        it('throws an exception if created with more than one widget', function() {
+        it('throws an exception if rendered with more than one widget', function() {
             collection.add(widget2);
 
             expect(function() {
                 fitPane = new FitPane({
                     widgets: collection
-                });
+                }).render();
             }).to.throwException();
         });
 
-        it('throws an exception if an additional widget is added after creation', function() {
+        it('throws an exception if an additional widget is added after render', function() {
             fitPane = new FitPane({
                 widgets: collection
-            });
+            }).render();
 
             expect(function() {
                 collection.add(widget2);

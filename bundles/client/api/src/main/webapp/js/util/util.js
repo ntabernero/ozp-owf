@@ -7,19 +7,17 @@
     /**
      * @ignore
      */
-    var Ozone = window.Ozone = window.Ozone ? window.Ozone : {};
+    var OWF = window.OWF = window.OWF || {};
 
     /**
      * @ignore
-     * @namespace
      */
-    Ozone.util = Ozone.util ? Ozone.util : {};
-
+    OWF.Util = OWF.Util || {};
 
     /**
      * @private
      */
-    Ozone.util.HTMLEncodeReservedJS = function (str) {
+    OWF.Util.HTMLEncodeReservedJS = function (str) {
         return str.replace(/"/g, '&quot;').replace(/'/g, "&#39;");
     };
 
@@ -28,16 +26,19 @@
      *
      * @description Similar to Ext.util.Format.htmlEncode except this method also handles the single quote
      */
-    Ozone.util.HTMLEncode = function (str) {
+    OWF.Util.HTMLEncode = function (str) {
         return !str ? str : String(str).replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     };
-
 
     //requirejs support
     if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
         define(function () {
-            return Ozone.util;
+            return OWF.Util;
         });
     }
+
+    //put on Ozone namespace for backwards compat
+    var Ozone = window.Ozone = window.Ozone || {};
+    Ozone.util = OWF.Util;
 
 })(window, document);

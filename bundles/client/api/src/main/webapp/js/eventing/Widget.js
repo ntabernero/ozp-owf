@@ -1,22 +1,6 @@
 /*global gadgets*/
-;(function (window, document, $, undefined) {
+;(function (window, document, OWF, $, undefined) {
     'use strict';
-
-    /**
-     * @ignore
-     */
-    var Ozone = window.Ozone = window.Ozone ? window.Ozone : {};
-
-    /**
-     * @ignore
-     */
-    var OWF = window.OWF = Ozone;
-
-    /**
-     * @ignore
-     * @namespace
-     */
-    Ozone.eventing = Ozone.eventing ? Ozone.eventing : {};
 
 //-----------------------------------------------------------------
 //Ozone Eventing Widget Object
@@ -39,12 +23,12 @@
  * });
      * @throws {Error} throws an error with a message if widget initialization fails
      */
-    Ozone.eventing.Widget = function (widgetRelay, afterInit) {
-        if (Ozone.eventing.Widget.instance == null) {
-            Ozone.eventing.Widget.instance = this;
+    var Widget = function (widgetRelay, afterInit) {
+        if (Widget.instance == null) {
+            Widget.instance = this;
             this.isAfterInit = false;
             if (afterInit != null) {
-                $(this).on('afterInit',afterInit);
+                $(this).on('afterInit', afterInit);
             }
             this.setWidgetRelay(widgetRelay);
             try {
@@ -57,7 +41,7 @@
         else {
             if (afterInit != null) {
                 if (this.isAfterInit === false) {
-                    $(this).on('afterInit',afterInit);
+                    $(this).on('afterInit', afterInit);
                 }
                 else {
                     //already initialized just execute the supplied callback
@@ -65,7 +49,7 @@
                 }
             }
         }
-        return Ozone.eventing.Widget.instance;
+        return Widget.instance;
     };
 
     /**
@@ -86,11 +70,11 @@
      * &lt;/script&gt;
      *
      */
-    Ozone.eventing.Widget.widgetRelayURL = Ozone.eventing.Widget.widgetRelayURL ? Ozone.eventing.Widget.widgetRelayURL : null;
+    Widget.widgetRelayURL = Widget.widgetRelayURL || OWF.relayFile;
 
-    Ozone.eventing.Widget.prototype = {
+    Widget.prototype = {
 
-        version: Ozone.version.owfversion + Ozone.version.eventing,
+        version: OWF.Version.owfversion + OWF.Version.eventing,
 
         /**
          * @ignore
@@ -109,8 +93,8 @@
             //if null figure out path
             if (relaypath == null) {
                 //check if global path variable was set
-                if (Ozone.eventing.Widget.widgetRelayURL != null) {
-                    relaypath = Ozone.eventing.Widget.widgetRelayURL;
+                if (Widget.widgetRelayURL != null) {
+                    relaypath = Widget.widgetRelayURL;
                 }
                 //else calculate a standard relative path
                 else {
@@ -173,7 +157,7 @@
             var jsonString = null;
 
             //check for data in window.name
-            var configParams = Ozone.util.parseWindowNameData();
+            var configParams = OWF.Util.parseWindowNameData();
             if (configParams != null) {
 
                 //the id is the whole contents of the window.name
@@ -193,7 +177,7 @@
             gadgets.rpc.setRelayUrl("..", this.containerRelay, false, true);
 
             var handlersActive = false;
-            var activateWidget = $.proxy(function() {
+            var activateWidget = $.proxy(function () {
 
                 var config = {
                     fn: "activateWidget",
@@ -210,17 +194,17 @@
                 else {
                     this.disableActivateWidget = false;
                 }
-            },this);
+            }, this);
 
             //register for after_container_init
-            gadgets.rpc.register("after_container_init",function () {
+            gadgets.rpc.register("after_container_init", function () {
 
                 gadgets.rpc.unregister("after_container_init");
 
                 //attach mouse click and keydown listener to send activate calls for the widget
                 if (!handlersActive) {
-                    $(document).on('click',activateWidget);
-                    $(document).on('keyup',activateWidget);
+                    $(document).on('click', activateWidget);
+                    $(document).on('keyup', activateWidget);
                     handlersActive = true;
                 }
 
@@ -233,8 +217,8 @@
                 //console.log("_widget_activated => " + configParams.id);
 
                 if (handlersActive) {
-                    $(document).off('click',activateWidget);
-                    $(document).off('keyup',activateWidget);
+                    $(document).off('click', activateWidget);
+                    $(document).off('keyup', activateWidget);
                     handlersActive = false;
                 }
             });
@@ -243,8 +227,8 @@
                 //console.log("_widget_deactivated => " + configParams.id);
 
                 if (!handlersActive) {
-                    $(document).on('click',activateWidget);
-                    $(document).on('keyup',activateWidget);
+                    $(document).on('click', activateWidget);
+                    $(document).on('keyup', activateWidget);
                     handlersActive = true;
                 }
             });
@@ -264,7 +248,7 @@
                 }
 
                 //jsonString = gadgets.json.stringify(data);
-                jsonString = Ozone.util.toString(data);
+                jsonString = JSON.stringify(data);
                 gadgets.rpc.call('..', 'container_init', null, idString, jsonString);
 
             }
@@ -285,7 +269,7 @@
          * default noop callback
          */
         afterInitCallBack: function (widgetEventingController) {
-          $(this).trigger('afterInit',widgetEventingController);
+            $(this).trigger('afterInit', widgetEventingController);
         },
 
         /**
@@ -354,10 +338,10 @@
          * @param {String} channelName The name of the channel to publish to
          * @param {Object} message The message to publish to the channel.
          * @param {String} [dest] The id of a particular destination.  Defaults to null which sends to all
-         *                 subscribers on the channel.  See <a href="#getWidgetId">Ozone.eventing.Widget.getWidgetId</a>
+         *                 subscribers on the channel.  See <a href="#getWidgetId">Widget.getWidgetId</a>
          *                 for a description of the id.
          * @example
-         * this.widgetEventingController = Ozone.eventing.Widget.getInstance();
+         * this.widgetEventingController = Widget.getInstance();
          * this.widgetEventingController.publish("ClockChannel", currentTimeString);
          */
         publish: function (channelName, message, dest) {
@@ -392,23 +376,35 @@
  *       });
      * &lt;/script&gt;
      */
-    Ozone.eventing.Widget.getInstance = function (afterInit, widgetRelay) {
-        if (Ozone.eventing.Widget.instance == null) {
-            Ozone.eventing.Widget.instance = new Ozone.eventing.Widget(widgetRelay, afterInit);
+    Widget.getInstance = function (afterInit, widgetRelay) {
+        if (Widget.instance == null) {
+            Widget.instance = new Widget(widgetRelay, afterInit);
         }
         else {
             if (afterInit != null) {
-                if (!Ozone.eventing.Widget.instance.isAfterInit) {
-                    $(this).on('afterInit',afterInit);
+                if (!Widget.instance.isAfterInit) {
+                    $(this).on('afterInit', afterInit);
                 }
                 else {
                     //already initialized just execute the supplied callback
                     setTimeout(function () {
-                        afterInit(Ozone.eventing.Widget.instance);
+                        afterInit(Widget.instance);
                     }, 50);
                 }
             }
         }
-        return Ozone.eventing.Widget.instance;
+        return Widget.instance;
     };
-})(window, document, window.owfjQuery);
+
+    //expose eventing to OWF.Eventing namepace
+    var Eventing = OWF.Eventing = OWF.Eventing || {};
+    for (var i = 0, methods = ['publish', 'subscribe', 'unsubscribe']; i < methods.length; i++) {
+        Eventing[ methods[i] ] = Widget[ methods[i] ];
+    }
+
+    //put on Ozone namespace for backwards compat
+    var Ozone = window.Ozone = window.Ozone || {};
+    Ozone.eventing = Ozone.eventing || {};
+    Ozone.eventing.Widget = Widget;
+
+})(window, document, window.OWF = window.OWF || {}, window.owfjQuery);

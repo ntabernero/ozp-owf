@@ -16,21 +16,24 @@
 
 define([
     'views/panes/Pane',
+    'mixins/CollectionView',
     'collections/WidgetStatesCollection',
     'backbone',
     'jquery',
     'lodash'
-], function (Pane, WidgetStatesCollection, Backbone, $, _) {
+], function (Pane, CollectionView, WidgetStatesCollection, Backbone, $, _) {
     
     'use strict';
 
-    return Pane.extend({
+    //by mixing in CollectionView we get the renderCollection method.  However
+    //it is up to subclasses to call that method with the appropriate arguments
+    return Pane.extend(_.extend({}, CollectionView, {
         vtype: 'layoutpane',
 
         className: 'pane',
 
         modelEvents: {
-            'add': 'addWidget'
+            'add': 'widgetAdded'
         },
 
         views: function () {
@@ -70,12 +73,10 @@ define([
             }
         },
 
-        //this should be overridden with more behavior in subclasses
-        addWidget: function(widget) {
+        widgetAdded: function(widget) {
             if (widget.get('active')) {
                 this.changeActivation(widget);
             }
         }
-    });
-
+    }));
 });

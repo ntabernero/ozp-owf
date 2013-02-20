@@ -30,6 +30,10 @@ define([
 
         className: PanelPane.prototype.className + ' accordionpane',
 
+        modelEvents: _.extend({}, PanelPane.prototype.modelEvents, {
+            'change:collapsed destroy': 'updateSize'
+        }),
+
         initialize: function() {
             var me = this;
 
@@ -45,15 +49,10 @@ define([
             });
         },
 
-        addWidget: function(widget) {
-            var panel = PanelPane.prototype.addWidget.apply(this, arguments);
-
-            // If widget is collapsed or destroyed update size of widgets
-            panel.model.on('change:collapsed destroy', $.proxy(this.updateSize, this));
+        afterRender: function() {
+            PanelPane.prototype.afterRender.apply(this, arguments);
 
             this.updateSize();
-
-            return panel;
         },
 
         updateSize: function() {

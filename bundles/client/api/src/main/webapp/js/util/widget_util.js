@@ -4,13 +4,12 @@
     /**
      * @ignore
      */
-    var Ozone = window.Ozone = window.Ozone ? window.Ozone : {};
+    var OWF = window.OWF = window.OWF || {};
 
     /**
      * @ignore
-     * @namespace
      */
-    Ozone.util = Ozone.util ? Ozone.util : {};
+    OWF.Util = OWF.Util || {};
 
     /**
      * @description This method informs a widget developer if their widget is running
@@ -19,12 +18,12 @@
      * @returns  boolean true if the widget is inside a container, false otherwise.
      *
      */
-    Ozone.util.isInContainer = function () {
+    OWF.Util.isInContainer = function () {
         var inContainer = false;
 
         //check window.name
-        if (Ozone.util.parseJson) {
-            var configParams = Ozone.util.parseWindowNameData();
+        if (OWF.Util.parseJson) {
+            var configParams = OWF.Util.parseWindowNameData();
             if (configParams != null
             //is the fact that a json string was in window.name enough to determine the widget is in a container?
             //&& configParams.inContainer
@@ -42,12 +41,12 @@
      * @returns  boolean true if the widget is inside OWF, false otherwise.
      *
      */
-    Ozone.util.isRunningInOWF = function () {
+    OWF.Util.isRunningInOWF = function () {
         var isInOwf = false;
 
         //check window.name
-        if (Ozone.util.parseJson) {
-            var configParams = Ozone.util.parseWindowNameData();
+        if (OWF.Util.parseJson) {
+            var configParams = OWF.Util.parseWindowNameData();
             if (configParams != null && configParams.owf) {
                 isInOwf = true;
             }
@@ -61,7 +60,7 @@
      * @returns  flash/flex object from dom
      *
      */
-    Ozone.util.getFlashApp = function (id) {
+    OWF.Util.getFlashApp = function (id) {
         id = id || Ozone.dragAndDrop.WidgetDragAndDrop.getInstance().getFlashWidgetId();
         if (!id) {
             return;
@@ -87,12 +86,12 @@
      * @throws Error if parameter is not a string
      * @throws Error if there is an issue converting to JSON
      */
-    Ozone.util.parseJson = function (str) {
+    OWF.Util.parseJson = function (str) {
         if (typeof(str) === 'string') {
             return JSON.parse(str);
         }
         else {
-            throw "Ozone.util.parseJson expected a string, but didn't get one";
+            throw "OWF.Util.parseJson expected a string, but didn't get one";
         }
     };
 
@@ -105,7 +104,7 @@
      *
      * @returns string
      */
-    Ozone.util.toString = function (obj) {
+    OWF.Util.toString = function (obj) {
         if (typeof(obj) === 'object') {
             return JSON.stringify(obj);
         }
@@ -114,7 +113,7 @@
         }
     };
 
-    Ozone.util.parseWindowNameData = function () {
+    OWF.Util.parseWindowNameData = function () {
         var configParams = null;
         return function () {
 
@@ -125,7 +124,7 @@
 
             //parse out the config
             try {
-                configParams = Ozone.util.parseJson(
+                configParams = OWF.Util.parseJson(
                         window.name
                 );
                 return configParams;
@@ -135,5 +134,9 @@
             }
         };
     }();
+
+    //put on Ozone namespace for backwards compat
+    var Ozone = window.Ozone = window.Ozone || {};
+    Ozone.util = OWF.Util;
 
 })(window, document);

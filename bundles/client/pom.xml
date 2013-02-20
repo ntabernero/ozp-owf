@@ -56,15 +56,6 @@
                             <configuration>
                                 <artifactItems>
                                     <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.modules</groupId>
-                                        <artifactId>client</artifactId>
-                                        <version>${project.version}</version>
-                                        <type>zip</type>
-                                        <classifier>js</classifier>
-                                        <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
-                                    </artifactItem>
-                                    <artifactItem>
                                         <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>json</artifactId>
                                         <version>2</version>

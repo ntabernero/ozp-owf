@@ -17,11 +17,12 @@
 define([
     'views/View',
     'mixins/widgets/WidgetControl',
+    'mixins/CollectionView',
     'mixins/containers/SortableCollectionView',
     'jquery',
     'backbone',
     'lodash'
-], function (View, WidgetControl, SortableCollectionView, $, Backbone, _) {
+], function (View, WidgetControl, CollectionView, SortableCollectionView, $, Backbone, _) {
     'use strict';
  
     /**
@@ -45,14 +46,10 @@ define([
         }));
     }   
 
-    return View.extend(_.extend({}, SortableCollectionView, {
+    return View.extend(_.extend({}, CollectionView, SortableCollectionView, {
         tagName: 'ol',
 
         className: 'taskbar', 
-
-        modelEvents: {
-            'add': 'addWidget'
-        },
 
         initialize: function(options) {
             View.prototype.initialize.apply(this, arguments);
@@ -62,26 +59,22 @@ define([
             this.TaskbarHeader = createTaskbarHeaderClass(options.HeaderClass);
 
             this.initSortable({axis: 'x'});
-
-//            //TODO: This is temporary, take it out once dashboards
-//            //have code to call pane resize
-//            $(window).on('resize', _.bind(this.resize, this));
         },
 
         render: function() {
-            this.collection.each(_.bind(this.addWidget, this));
-            return this;
-        },
+            var me = this;
 
-        addWidget: function(widget) {
-            var header = new this.TaskbarHeader({
-                model: widget
+            me.renderCollection({
+                $body: me.$el,
+                collection: me.collection,
+                viewFactory: function(model) {
+                    return new me.TaskbarHeader({
+                        model: model
+                    });
+                }
             });
 
-            header.render();
-            this.$el.append(header.$el);
-
-            this.updateSize();
+            return me;
         },
 
         updateSize: function() {

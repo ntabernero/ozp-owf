@@ -55,14 +55,10 @@ define([
 
         className: PanelPane.prototype.className + ' portalpane',
 
-        addWidget: function(widget) {
-            var portlet = new Portlet({
+        viewFactory: function(widget) {
+            return new Portlet({
                 model: widget
             });
-
-            this.$el.append(portlet.render().$el);
-
-            return portlet;
         }
     }));
 
