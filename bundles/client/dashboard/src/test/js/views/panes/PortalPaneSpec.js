@@ -66,7 +66,7 @@ define([
             collection = new WidgetStatesCollection([widget1, widget2]);
 
             portalPane = new PortalPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             done();
@@ -111,5 +111,20 @@ define([
 //
 //            expect(portalPane.$el.outerHeight()).to.be.lessThan(portalPane.$el[0].scrollHeight);
 //        });
+
+        it('renders a widget Panel for each widget in the collection', function() {
+            collection.add(widget3);
+
+            var panels = portalPane.$('.widget'),
+                views = _.map(panels, function(panel) {
+                    return $(panel).data('view');
+                }),
+                isPanel = _.map(views, function(view) {
+                    return view instanceof Panel;
+                });
+            
+            expect(views.length).to.equal(3);
+            expect(isPanel).to.not.contain(false);
+        });
     });
 });

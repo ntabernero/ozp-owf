@@ -35,40 +35,34 @@ define([
 
         className: 'dashboard',
 
+        //whenever a drag event is occuring,
+        //display a mask over the dashboard to prevent widget iframes
+        //from interfering with mouseovers
+        events: {
+            'dragstart': 'showMask',
+            'dragend': 'hideMask'
+        },
+
+        showMask: function() {
+            this.$el.children('.mask').removeClass('hide');
+        },
+
+        hideMask: function() {
+            this.$el.children('.mask').addClass('hide');
+        },
+
         views: function () {
             return this.model && this.model.get('layoutConfig');
+        },
+
+        render: function() {
+            View.prototype.render.apply(this, arguments);
+
+            //create the drag mask
+            this.$el.append('<div class="mask hide" />');
+
+            return this;
         }
-
-        // render: function() {
-        //     // Get the layoutConfig
-        //     var pane = null, layoutConfig = this.model.get('layoutConfig');
-
-        //     //if layoutConfig is a string parse it into an object
-        //     if (_.isString(layoutConfig)) {
-        //         layoutConfig = JSON.parse(layoutConfig);
-        //     }
-
-        //     if (layoutConfig.paneType === 'accordionpane') {
-        //         pane = new AccordionPane(layoutConfig);
-        //     }
-        //     else if (layoutConfig.paneType === 'desktoppane') {
-        //         pane = new DesktopPane(layoutConfig);
-        //     }
-        //     else if (layoutConfig.paneType === 'fitpane') {
-        //         pane = new FitPane(layoutConfig);
-        //     }
-        //     else if (layoutConfig.paneType === 'tabbedpane') {
-        //         pane = new TabbedPane(layoutConfig);
-        //     }
-        //     else {
-        //         pane = new DesktopPane(layoutConfig);
-        //     }
-
-        //     this.$el.html(pane.render().el);
-
-        //     return this;
-        // }
-
     });
 
 });
