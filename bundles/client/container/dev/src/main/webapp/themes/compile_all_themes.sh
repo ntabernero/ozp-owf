@@ -3,7 +3,7 @@
 #Usage: sh compile_all_themes.sh [compass_compile_args]
 
 
-for file in `ls -d *.theme/sass`
+for file in `ls -d *.theme/stylesheets`
 do
     cd "$file"
     

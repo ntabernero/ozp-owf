@@ -221,10 +221,8 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.build.directory}/minified-output/themes</workingDirectory>
-                            <executable>
-                                ${project.build.directory}/minified-output/themes/compile_all_themes${os.extension}
-                            </executable>
+                            <workingDirectory>${basedir}/src/main/webapp/themes</workingDirectory>
+                            <executable>${basedir}/src/main/webapp/themes/compile_all_themes${os.extension}</executable>
                         </configuration>
                     </execution>
                 </executions>

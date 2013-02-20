@@ -182,36 +182,11 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.build.directory}/minified-output/themes</workingDirectory>
-                            <executable>${project.build.directory}/minified-output/themes/compile_all_themes${os.extension}</executable>
+                            <workingDirectory>${basedir}/src/main/webapp/themes</workingDirectory>
+                            <executable>${basedir}/src/main/webapp/themes/compile_all_themes${os.extension}</executable>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <!--there's no java in this project-->
-                    <packagingExcludes>WEB-INF/lib/**, WEB-INF/classes/**</packagingExcludes>
-                    <webResources>
-                        <resource>
-                            <!-- this is relative to the pom.xml directory -->
-                            <directory>${project.build.directory}/minified-output</directory>
-                        </resource>
-                    </webResources>
-                </configuration>
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>attach-artifacts</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>war</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
             </plugin>
 
         </plugins>
