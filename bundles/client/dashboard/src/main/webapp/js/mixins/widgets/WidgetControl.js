@@ -38,6 +38,9 @@ define([
 
         initialize: function() {
             this.updateActive();
+            this.updateMinimize();
+            this.updateMaximize();
+            this.updateCollapse();
         },
 
         updateMinimize: function() {
@@ -54,6 +57,10 @@ define([
 
         updateActive: function() {
             this.$el[this.model.get('active') ? 'addClass' : 'removeClass']('active');
+
+            if (this.model.get('active')) {
+                this.model.set('minimized', false);
+            }
         },
 
         activateWidget: function() {

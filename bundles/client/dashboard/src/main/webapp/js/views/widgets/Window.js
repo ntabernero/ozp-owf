@@ -30,11 +30,10 @@ define([
         model: null,
         className: 'widget window',
 
-        headerClass: WindowHeader,
+        HeaderClass: WindowHeader,
 
         initialize: function (options) {
-            var parent =  this.constructor.__super__;
-            parent.initialize.apply(this, arguments);
+            Panel.prototype.initialize.apply(this, arguments);
 
             this.zIndexManager = options.zIndexManager;
             this.zIndexManager.register(this, this.model.get('zIndex'));
@@ -43,33 +42,29 @@ define([
         render: function() {
             var me = this;
 
-            me.constructor.__super__.render.call(me);
+            Panel.prototype.render.call(me);
 
             me.$el
                 .one('mousedown', function (evt) {
                     me.$el
                         .draggable({
                             containment: me.containment,
-                            start: me.mask,
+                            start: function() { me.$el.trigger('dragstart'); },
                             stop: function(evt, ui) {
-                                me.unmask();
+                                me.$el.trigger('dragend');
                                 me._onMove(evt, ui);
                             }
                         })
                         .trigger(evt);
+
+                    me.on('remove', function(view) {
+                        view.$el.draggable('destroy');
+                    });
                 });
     
             ResizableWidget.render.call(this, undefined, true, true);
 
             return me;
-        },
-
-        close: function () {
-            this.$el
-                .draggable( 'destroy' )
-                .resizable( 'destroy' );
-
-            this.constructor.__super__.close.apply(this, arguments);
         },
 
         updateMinimize: function() {

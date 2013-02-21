@@ -17,11 +17,12 @@
 define([
     'views/View',
     'mixins/widgets/WidgetControl',
+    'mixins/CollectionView',
     'mixins/containers/SortableCollectionView',
     'jquery',
     'backbone',
     'lodash'
-], function (View, WidgetControl, SortableCollectionView, $, Backbone, _) {
+], function (View, WidgetControl, CollectionView, SortableCollectionView, $, Backbone, _) {
     'use strict';
  
     /**
@@ -45,14 +46,10 @@ define([
         }));
     }   
 
-    return View.extend(_.extend({}, SortableCollectionView, {
+    return View.extend(_.extend({}, CollectionView, SortableCollectionView, {
         tagName: 'ol',
 
         className: 'taskbar', 
-
-        modelEvents: {
-            'add': 'addWidget'
-        },
 
         initialize: function(options) {
             View.prototype.initialize.apply(this, arguments);
@@ -61,30 +58,26 @@ define([
 
             this.TaskbarHeader = createTaskbarHeaderClass(options.HeaderClass);
 
-            this.initSortable();
-
-//            //TODO: This is temporary, take it out once dashboards
-//            //have code to call pane resize
-//            $(window).on('resize', _.bind(this.resize, this));
+            this.initSortable({axis: 'x'});
         },
 
         render: function() {
-            this.collection.each(_.bind(this.addWidget, this));
-            return this;
-        },
+            var me = this;
 
-        addWidget: function(widget) {
-            var header = new this.TaskbarHeader({
-                model: widget
+            me.renderCollection({
+                $body: me.$el,
+                collection: me.collection,
+                viewFactory: function(model) {
+                    return new me.TaskbarHeader({
+                        model: model
+                    });
+                }
             });
 
-            header.render();
-            this.$el.append(header.$el);
-
-            this.handleOverflow();
+            return me;
         },
 
-        resize: function() {
+        updateSize: function() {
             this.handleOverflow();
         },
 
@@ -92,7 +85,8 @@ define([
             var taskbarWidth,
                 unchangeableWidth = 0,  //the total width of paddings, borders, and margins on content
                 changeableWidth = 0,    //sum of inner widths of headers
-                ratio;
+                ratio,
+                headerEls = this.$el.children('.header');
 
             taskbarWidth = window.getComputedStyle ? 
                 //use getComputedStyle to avoid rounding bug in chrome
@@ -101,7 +95,7 @@ define([
                 //IE7/8 doesn't support window.getComputedStyle
                 this.$el.width();
 
-            this.$el.children('.header').each(function(idx, header) {
+            headerEls.each(function(idx, header) {
                 var $header = $(header),
                     outerWidth,
                     innerWidth;
@@ -119,7 +113,7 @@ define([
 
             //if content is too wide, resize according to calculated ratio
             if (ratio < 1) {
-                this.$el.children('.header').each(function(idx, header) {
+                headerEls.each(function(idx, header) {
                     var $header = $(header);
 
                     $header.width($header.width() * ratio);

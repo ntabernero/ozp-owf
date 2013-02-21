@@ -32,6 +32,7 @@ define([
                 zIndex: 10000,
                 maximizable: true,
                 minimizable: true,
+                collapsed: false,
                 closable: true
             },
             widget2 = {
@@ -45,6 +46,7 @@ define([
                 zIndex: 10000,
                 maximizable: true,
                 minimizable: true,
+                collapsed: false,
                 closable: true
             },
             widget3 = {
@@ -60,13 +62,59 @@ define([
                 minimizable: true,
                 collapsed: true,
                 closable: true
+            },
+            // Helper method that does element height setup required to call updateSize, then asserts it worked correctly
+            assertUpdateSize = function() {
+                // Set the pixel height of the pane
+                var paneHeight = 1000;
+                accordionPane.$el.height(paneHeight);
+
+                // Get all the widgets in the pane
+                var widgets = accordionPane.$el.children('.widget');
+
+                // Set the pixel height of widget headers and top/bottom borders as they are used in updateSize to calculate the height
+                var headerHeight = 35,
+                    widgetBorderTop = 1,
+                    widgetBorderBottom = 1;
+                widgets.children('.header').height(headerHeight);
+                widgets.css({
+                    "border-style": "solid", // Must be specified for IE
+                    "border-top-width": widgetBorderTop, 
+                    "border-bottom-width": widgetBorderBottom
+                });
+
+                accordionPane.updateSize();
+                
+                // Ensure the pane height was set appropriately
+                expect(accordionPane.$el.height()).to.equal(paneHeight);
+
+                // Calculate the variables necessary to determine the appropriate height % for expanded widgets
+                var borderPct = 100 * (((widgetBorderTop + widgetBorderBottom) * collection.length) / paneHeight);
+
+                var collapsedWidgets = 0, expandedWidgets = 0;
+                collection.each(function(widget) {
+                    widget.get('collapsed') ? collapsedWidgets++ : expandedWidgets++;
+                });
+
+                var collapsedPct = parseFloat((100 * ((headerHeight * collapsedWidgets) / paneHeight)).toPrecision(12));
+
+                // Expected widget height % removes the borders and collapsed widgets, then divides
+                // remaining % space among expanded widgets.
+                var expectedWidgetHeightPct = (100 - borderPct - collapsedPct) / expandedWidgets;
+
+                // Ensure each widget's height is set to expected height %, collapsed widgets
+                // should be set to it as well since their explicit height will override it
+                accordionPane.$el.children('.widget').each(function(i, widget) {
+                    // jQuery's height() or css("height") returns 0 IE7 for some reason so inspect style
+                    expect(parseFloat(widget.style.height)).to.equal(expectedWidgetHeightPct);
+                });
             };
 
         beforeEach(function(done) {
             collection = new WidgetStatesCollection([widget1, widget2]);
 
             accordionPane = new AccordionPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             done();
@@ -101,6 +149,15 @@ define([
             var collapsedWidgets = accordionPane.$('.widget.collapsed');
             
             expect(collapsedWidgets.length).to.equal(1);
+        });
+
+        it('updates the percentage height of 2 expanded widgets appropriately', function() {
+            assertUpdateSize();
+        });
+
+        it('updates the percentage height of 1 collapsed and 2 expanded widgets appropriately', function() {
+            collection.add(widget3);
+            assertUpdateSize();
         });
     });
 });

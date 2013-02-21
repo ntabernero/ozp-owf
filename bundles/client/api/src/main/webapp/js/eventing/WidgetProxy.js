@@ -1,15 +1,6 @@
-;(function (window, document, undefined) {
-
-    /**
-     * @ignore
-     */
-    var Ozone = window.Ozone = window.Ozone ? window.Ozone : {};
-
-    /**
-     * @ignore
-     * @namespace
-     */
-    Ozone.eventing = Ozone.eventing ? Ozone.eventing : {};
+/*global gadgets*/
+;(function (window, document, OWF, undefined) {
+    'use strict';
 
     function rpcCall(widgetId, widgetIdCaller, functionName, var_args) {
         gadgets.rpc.call("..", "FUNCTION_CALL", null, widgetId, widgetIdCaller, functionName, var_args);
@@ -26,33 +17,33 @@
      * @param {Ozone.eventing.WidgetProxy} [proxy] A existing proxy object to be used, instead of creating a new instance
      * @constructor
      */
-    Ozone.eventing.WidgetProxy = function (wid, functions, srcId, proxy) {
+    var WidgetProxy = function (wid, functions, srcId, proxy) {
         var widgetId = wid,
-            widgetIframeId,
-            readyList = [],
-            pub = proxy;
+                widgetIframeId,
+                readyList = [],
+                pub = proxy;
 
         // assume JSON
-        if(widgetId.charAt(0) === '{') {
+        if (widgetId.charAt(0) === '{') {
             widgetIframeId = widgetId;
-            widgetId = OWF.Util.parseJson(widgetIframeId).id;
+            widgetId = JSON.parse(widgetIframeId).id;
         }
         else {
             widgetIframeId = '{\"id\":\"' + widgetId + '\"}';
         }
-        
+
         if (pub == null) {
-            pub = /** @lends Ozone.eventing.WidgetProxy.prototype */ {
+            pub = /** @lends WidgetProxy.prototype */ {
 
                 /**
                  * Id of the Widget that this proxy represents
                  */
-                id:widgetIframeId,
+                id: widgetIframeId,
                 /**
                  * Flag which represents if the Widget this proxy represents
                  */
-                isReady:false,
-                callbacks:{},
+                isReady: false,
+                callbacks: {},
                 /**
                  * Sends a direct message to the Widget this proxy represents
                  * @param {Object} dataToSend
@@ -60,7 +51,7 @@
                  * var widgetProxy = OWF.RPC.getWidgetProxy(id);
                  * widgetProxy.sendMessage({data:'foo'});
                  */
-                sendMessage:function (dataToSend) {
+                sendMessage: function (dataToSend) {
                     gadgets.rpc.call("..", 'DIRECT_MESSAGE', null, widgetId, dataToSend);
                 },
 
@@ -72,7 +63,7 @@
                  * var widgetProxy = OWF.RPC.getWidgetProxy(id);
                  * widgetProxy.onReady(function() { console.log("Other widget is ready!"); });
                  */
-                onReady:function (readyListener, readyListenerScope) {
+                onReady: function (readyListener, readyListenerScope) {
 
                     if (this.isReady) {
                         //just execute because the widget is already ready
@@ -80,10 +71,10 @@
                     }
                     else {
                         //save ready listeners
-                        readyList.push({fn:readyListener, scope:readyListenerScope});
+                        readyList.push({fn: readyListener, scope: readyListenerScope});
                     }
                 },
-                fireReady: function() {
+                fireReady: function () {
                     this.isReady = true;
                     for (var i = 0, len = readyList.length; i < len; i++) {
                         readyList[i].fn.call(readyList[i].scope);
@@ -96,6 +87,7 @@
             for (var ii = 0; ii < functions.length; ii++) {
                 var functionName = functions[ii];
 
+                /*jshint loopfunc:true */
                 pub[functionName] = function (name) {
                     return function () {
                         var callback = arguments[arguments.length - 1];
@@ -105,7 +97,7 @@
                             pub.callbacks[name] = callback;
                         }
                         rpcCall.call(this, widgetId, srcId, name, args);
-                    }
+                    };
                 }(functionName);
 
             }
@@ -114,4 +106,14 @@
         return pub;
     };
 
-}(window, document));
+    //OWF.Eventing namespace
+    var Eventing = OWF.Eventing = OWF.Eventing || {};
+    Eventing.WidgetProxy = WidgetProxy;
+
+    //put on Ozone namespace for backwards compat
+    var Ozone = window.Ozone = window.Ozone || {};
+    Ozone.eventing = Ozone.eventing || {};
+    Ozone.eventing.Widget = WidgetProxy;
+
+
+}(window, document, window.OWF = window.OWF || {}));

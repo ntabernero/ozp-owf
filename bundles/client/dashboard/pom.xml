@@ -54,6 +54,15 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
+                                    <groupId>org.ozoneplatform.commons.modules</groupId>
+                                    <artifactId>client</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                    <classifier>js</classifier>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
                                     <groupId>org.ozoneplatform.owf.bundles.client.api</groupId>
                                     <artifactId>api</artifactId>
                                     <version>${project.version}</version>
@@ -221,10 +230,8 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.build.directory}/minified-output/themes</workingDirectory>
-                            <executable>
-                                ${project.build.directory}/minified-output/themes/compile_all_themes${os.extension}
-                            </executable>
+                            <workingDirectory>${basedir}/src/main/webapp/themes</workingDirectory>
+                            <executable>${basedir}/src/main/webapp/themes/compile_all_themes${os.extension}</executable>
                         </configuration>
                     </execution>
                 </executions>

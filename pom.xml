@@ -62,24 +62,6 @@
                                 <goal>run</goal>
                             </goals>
                         </execution>
-
-                        <!--set exec permissions for compass scripts-->
-                        <execution>
-                            <id>Set permissions for compass sh files</id>
-                            <phase>process-resources</phase>
-                            <configuration>
-                                <target>
-                                    <chmod perm="u+x">
-                                        <fileset dir="${project.build.directory}/minified-output/">
-                                            <include name="themes/*.sh" />
-                                        </fileset>
-                                    </chmod>
-                                </target>
-                            </configuration>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                        </execution>
                     </executions>
                     <dependencies>
                         <dependency>

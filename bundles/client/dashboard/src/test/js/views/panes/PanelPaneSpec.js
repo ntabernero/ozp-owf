@@ -65,7 +65,7 @@ define([
             collection = new WidgetStatesCollection([widget1, widget2]);
 
             panelPane = new PanelPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             done();
