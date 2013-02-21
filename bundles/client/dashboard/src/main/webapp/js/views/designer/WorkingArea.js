@@ -29,11 +29,11 @@ define([
         className: 'working-area',
 
         views: function() {
-            return this.model.get('layoutConfig');
+            return this.layoutConfig;
         },
 
         initialize: function () {
-            this.layoutConfig = this.model.get('layoutConfig');
+            this.layoutConfig = _.cloneDeep( this.model.get('layoutConfig') );
             View.prototype.initialize.apply( this, arguments );
         },
 
@@ -43,7 +43,7 @@ define([
 
         reset: function () {
             var pane = this.views[0];
-            pane.reset();
+            pane.reset( this.model.getPaneWidgetsFromLayoutConfig() );
         }
     });
 

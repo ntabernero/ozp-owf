@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+$actions-bar-height: 3em;
+
 #dashboard-designer {
 	z-index: 1000000000;
 
@@ -32,9 +34,9 @@
     .actions {
         background: darken($baseColor, 10%);
         position: absolute;
-        bottom: 0;
+        bottom: $actions-bar-height;
         width: 100%;
-        height: 3em;
+        height: $actions-bar-height;
 
         .btn {
             margin-top: 6px;
@@ -57,10 +59,10 @@
 
 .working-area {
     position: absolute;
-    bottom:0;
-    top:0;
-    left:0;
-    right:0;
+    bottom: $actions-bar-height;
+    top: 0;
+    left: 0;
+    right: 0;
     width: auto;
     height: auto;
     margin: 0 120px 3em 0;
@@ -73,7 +75,7 @@
     }
 
     &.highlight, .pane.highlight {
-        background-color: $grayDarker !important;
+        background-color: $gray !important;
         background-color: rgba($grayDarker, 0.2) !important;
         @include transition(background 0.5s ease-in, opacity 0.5s ease-in);
     }

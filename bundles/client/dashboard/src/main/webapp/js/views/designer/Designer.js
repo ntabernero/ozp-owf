@@ -163,6 +163,7 @@ function(View, HBox, VBox, Pane, WorkingArea, SidePanel, Modal, DashboardService
 
         _onMouseOutPane: function  () {
             this._$mouseOverPane && this._$mouseOverPane.removeClass(HIGHLIGHTCLASS);
+            this._$mouseOverPane = null;
         },
 
         _onDragStart: function(evt, ui) {
@@ -177,6 +178,10 @@ function(View, HBox, VBox, Pane, WorkingArea, SidePanel, Modal, DashboardService
         },
         
         _onDrop: function (evt, ui) {
+            // jquery ui executes onDrop handler when proxy is above draggables
+            if(!this._$mouseOverPane) {
+                return;
+            }
             var data = $(ui.helper).data(),
                 view = this._$mouseOverPane.data().view;
 

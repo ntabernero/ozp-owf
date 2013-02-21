@@ -94,6 +94,7 @@ define([
 
             // cleanup
             this.removeEditable();
+            // remove pane class to avoid stacking
             this.$el.removeClass( this.getPaneType() ).empty();
             
             this.addView( config );
@@ -101,7 +102,7 @@ define([
             return this;
         },
 
-        reset: function () {
+        reset: function (widgets) {
             this.$el.addClass( this.getPaneType() );
             
             var box = this.views[0];
@@ -111,6 +112,7 @@ define([
                 this.removeView(box);
                 delete this.options.box;
             }
+            this.options.widgets = widgets;
         },
 
         initEditable: function () {
