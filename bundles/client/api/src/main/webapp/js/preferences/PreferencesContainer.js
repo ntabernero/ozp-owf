@@ -19,6 +19,7 @@ define([
     'collections/PreferencesCollection',
     'gadgets'
 ], function(PreferenceModel, PreferenceCollection, gadgets) {
+    'use strict';
 
     var GET_PREFERENCE_SERVICE_NAME = '_preference_get',
         SET_PREFERENCE_SERVICE_NAME = '_preference_set',
@@ -35,6 +36,7 @@ define([
      */
     function preferenceFunction(rpc, cfg, verb, argsToPass) {
 
+        /*jshint validthis:true */
         function responseHandler(model, resp) {
 
             //'this' should be the promise

@@ -18,11 +18,7 @@
  * This function defines the preferences API functions that are being
  * kept for backwards compatibility with OWF 7
  */
-
-OWF = OWF || {};
-Ozone = Ozone || {};
-
-(function(OWF, Ozone, $, document) {
+;(function(OWF, Ozone, $, document) {
     'use strict';
 
     /**
@@ -31,7 +27,8 @@ Ozone = Ozone || {};
      */
     function createErrorWindow(msg) {
         //using inline styles to avoid putting stylesheet requirements on widgets.
-        var html = '<div style="position: absolute; top: 50%; margin-top: -4em; left: 50%; margin-left: -5em; height: 8em; width: 10em; text-align: center">' +
+        var html = '<div style="position: absolute; top: 50%; margin-top: -4em; ' +
+            ' left: 50%; margin-left: -5em; height: 8em; width: 10em; text-align: center">' +
                 '<p></p>' + 
                 '<button>OK</button>' +
             '</div>',
@@ -495,4 +492,4 @@ Ozone = Ozone || {};
     //really old API support
     Ozone.pref = Ozone.pref || {};
     Ozone.pref.PrefServer = OWF.Preferences;
-})(OWF, Ozone, $, document);
+})(window.OWF = window.OWF || {}, window.Ozone = window.Ozone || {}, window.owfjQuery, document);

@@ -19,9 +19,7 @@
  * OWF 8
  */
 
-OWF = OWF || {};
-
-(function(OWF, $, gadgets) {
+;(function(OWF, $, gadgets) {
     'use strict';
 
     /*
@@ -171,4 +169,4 @@ OWF = OWF || {};
                     ['namespace', 'name', 'user', 'group', 'scope']);
         }
     });
-})(OWF, $, gadgets);
+})(window.OWF = window.OWF || {}, window.owfjQuery, gadgets);
