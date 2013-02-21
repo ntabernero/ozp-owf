@@ -194,16 +194,19 @@ var initialWidgetDefinitions = [
 
 var initialDashboards = [
     {
-        name: 'Test Portal Dashboard',
-        guid: '01a777b9-96e5-4f64-883e-8067ba99b3ee',
+        name: 'Test Accordion Dashboard',
+        id: '11a777b9-96e5-4f64-883e-8067ba99b3gg',
         dashboardPosition: 0,
         alteredByAdmin: false,
         description: '',
         layoutConfig: {
             "widgets": [
                 {
+                    "universalName": null,
                     "widgetGuid": "eb5435cf-4021-4f2a-ba69-dde451d12551",
-                    "id": "f25ac11a-8401-4ec3-abd4-7ed5d66423d2",
+                    "uniqueId": "f25ac11a-8401-4ec3-abd4-7ed5d66423d2",
+                    "dashboardGuid": "dba76cba-52b1-4da0-82c5-5a066f6720e7",
+                    "paneGuid": "e4894cef-e085-3903-903b-f2a509e6c224",
                     "name": "Channel Shouter1",
                     "active": false,
                     "x": 549,
@@ -218,14 +221,68 @@ var initialDashboards = [
                     "width": 295
                 },
                 {
+                    "universalName": null,
                     "widgetGuid": "ec5435cf-4021-4f2a-ba69-dde451d12551",
-                    "id": "9c30452d-5f38-4d20-8972-6f9fc3232d44",
+                    "uniqueId": "9c30452d-5f38-4d20-8972-6f9fc3232d44",
+                    "dashboardGuid": "dba76cba-52b1-4da0-82c5-5a066f6720e7",
+                    "paneGuid": "e4894cef-e085-3903-903b-f2a509e6c224",
                     "name": "Channel Listener1",
                     "active": true,
                     "x": 4,
                     "y": 5,
                     "minimized": false,
                     "maximized": false,
+                    "collapsed": false,
+                    "intentConfig": null,
+                    "launchData": null,
+                    "zIndex": 19010,
+                    "height": 383,
+                    "width": 540
+                }
+            ],
+            "height": "100%",
+            "items": [
+            ],
+            "vtype": "accordionpane",
+            "flex": 1,
+            "paneType": "accordionpane"
+        },
+        locked: false,
+        defaultDashboard: true
+
+    },{
+        name: 'Test Portal Dashboard',
+        id: '01a777b9-96e5-4f64-883e-8067ba99b3ee',
+        dashboardPosition: 0,
+        alteredByAdmin: false,
+        description: '',
+        layoutConfig: {
+            "widgets": [
+                {
+                    "widgetGuid": "eb5435cf-4021-4f2a-ba69-dde451d12551",
+                    "id": "f25ac11a-8401-4ec3-abd4-7ed5d66423d2",
+                    "name": "Channel Shouter1",
+                    "active": false,
+                    "x": 549,
+                    "y": 7,
+                    "minimized": false,
+                    "maximized": false,
+                    "collapsed": true,
+                    "intentConfig": null,
+                    "launchData": null,
+                    "zIndex": 19000,
+                    "height": 250,
+                    "width": 295
+                },
+                {
+                    "widgetGuid": "ec5435cf-4021-4f2a-ba69-dde451d12551",
+                    "id": "9c30452d-5f38-4d20-8972-6f9fc3232d44",
+                    "name": "Channel Listener1",
+                    "active": true,
+                    "x": 4,
+                    "y": 5,
+                    "minimized": true,
+                    "maximized": true,
                     "collapsed": false,
                     "intentConfig": null,
                     "launchData": null,
@@ -247,7 +304,7 @@ var initialDashboards = [
     },
     {
         name: 'Test Dashboard 1',
-        guid: '11a777b9-96e5-4f64-883e-8067ba99b3ee',
+        id: '11a777b9-96e5-4f64-883e-8067ba99b3ee',
         dashboardPosition: 0,
         alteredByAdmin: false,
         description: '',
@@ -268,7 +325,7 @@ var initialDashboards = [
                               "active": false,
                               "x": 549,
                               "y": 7,
-                              "minimized": false,
+                              "minimized": true,
                               "maximized": false,
                               "collapsed": false,
                               "intentConfig": null,
@@ -285,7 +342,7 @@ var initialDashboards = [
                               "x": 4,
                               "y": 5,
                               "minimized": false,
-                              "maximized": false,
+                              "maximized": true,
                               "collapsed": false,
                               "intentConfig": null,
                               "launchData": null,
@@ -306,9 +363,9 @@ var initialDashboards = [
                               "active": false,
                               "x": 549,
                               "y": 7,
-                              "minimized": false,
+                              "minimized": true,
                               "maximized": false,
-                              "collapsed": false,
+                              "collapsed": true,
                               "intentConfig": null,
                               "launchData": null,
                               "zIndex": 19000,
@@ -325,7 +382,7 @@ var initialDashboards = [
     },
     {
         name: 'Test Dashboard 2',
-        guid: '21a777b9-96e5-4f64-883e-8067ba99b3ee',
+        id: '21a777b9-96e5-4f64-883e-8067ba99b3ee',
         dashboardPosition: 1,
         alteredByAdmin: false,
         description: '',
@@ -357,8 +414,8 @@ var initialDashboards = [
                     "x": 549,
                     "y": 7,
                     "minimized": false,
-                    "maximized": false,
-                    "collapsed": false,
+                    "maximized": true,
+                    "collapsed": true,
                     "intentConfig": null,
                     "launchData": null,
                     "singleton": false,
@@ -375,7 +432,7 @@ var initialDashboards = [
                     "active": true,
                     "x": 4,
                     "y": 5,
-                    "minimized": false,
+                    "minimized": true,
                     "maximized": false,
                     "collapsed": false,
                     "intentConfig": null,
@@ -389,12 +446,18 @@ var initialDashboards = [
             paneType: "desktoppane"
         },
         locked: false,
-        defaultDashboard: false
+        defaultDashboard: false,
+        stack: {
+            "name": "Sample Stack",
+            "description": "This is a sample Stack",
+            "urlName": "/stack",
+            "descriptorUrl": "/descriptors/sampleStackDescriptor.html"
+        }
 
     },
     {
         name: 'Test Dashboard 3',
-        guid: '31a777b9-96e5-4f64-883e-8067ba99b3ee',
+        id: '31a777b9-96e5-4f64-883e-8067ba99b3ee',
         dashboardPosition: 2,
         alteredByAdmin: false,
         description: '',
@@ -407,9 +470,9 @@ var initialDashboards = [
                     "active": false,
                     "x": 549,
                     "y": 7,
-                    "minimized": false,
-                    "maximized": false,
-                    "collapsed": false,
+                    "minimized": true,
+                    "maximized": true,
+                    "collapsed": true,
                     "intentConfig": null,
                     "launchData": null,
                     "zIndex": 19000,
@@ -425,6 +488,21 @@ var initialDashboards = [
             "paneType": "fitpane"
         },
         locked: false,
-        defaultDashboard: false
+        defaultDashboard: false ,
+        groups: [{
+            "id": 1,
+            "name": "users",
+            "description": "This is a users' group.",
+            "displayName": "Users Group",
+            "active": true,
+            "automatic": false
+        },{
+            "id": 2,
+            "name": "admin",
+            "description": "This is an administrator's group.",
+            "displayName": "Admin Group",
+            "active": true,
+            "automatic": false
+        }]
     }
 ];

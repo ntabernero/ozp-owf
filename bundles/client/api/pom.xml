@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.ozoneplatform.owf.bundles.client</groupId>
         <artifactId>client</artifactId>
-        <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
+        <version>8.0.0-ALPHA-SPRINT4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>org.ozoneplatform.owf.bundles.client.api</groupId>
     <artifactId>api</artifactId>
-    <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
+    <version>8.0.0-ALPHA-SPRINT4-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Ozone Platform :: OWF Client Bundles :: Client APIs :: BASE API</name>
@@ -36,14 +37,36 @@
 
     </dependencies>
 
-
     <build>
-
         <plugins>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-api</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.ozoneplatform.commons.vendor</groupId>
+                                    <artifactId>shindig</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                    <classifier>js</classifier>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -51,64 +74,73 @@
                 <artifactId>jetty-maven-plugin</artifactId>
             </plugin>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>webminifier-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>minify-js</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceFolder>${project.build.directory}/minified-output</sourceFolder>
+                    <destinationFolder>${project.build.directory}/webminifier-output</destinationFolder>
+                    <htmlIncludes>
+                        <include>owf-widget.html</include>
+                    </htmlIncludes>
+                </configuration>
+            </plugin>
+
             <!-- this executes jshint ant plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>com.github.mcheely</groupId>
-                <artifactId>requirejs-maven-plugin</artifactId>
-                <version>1.0.3</version>
                 <executions>
-                    <!-- <execution>
-                        <id>concatenate-css</id>
-                        <goals>
-                            <goal>optimize</goal>
-                        </goals>
-                        <configuration>
-                            <configFile>
-                                ${basedir}/src/build/buildconfig-concatenate-css.js
-                            </configFile>
-                            <optimizerFile>
-                                ${basedir}/src/build/r-2.0.6-plus.js
-                            </optimizerFile>
-                            <filterConfig>
-                                false
-                            </filterConfig>
-                        </configuration>
-                    </execution> -->
+                    <!--<execution>-->
+                        <!--<id>jshint</id>-->
+                        <!--<phase>validate</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>run</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<skip>true</skip>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                    <!--copy webminifier-output to minified-output to -->
                     <execution>
-                        <id>minify-javascript</id>
+                        <id>copy-webminified-resources</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>optimize</goal>
+                            <goal>run</goal>
                         </goals>
                         <configuration>
-                            <configFile>
-                                ${basedir}/src/build/buildconfig-minify-javascript.js
-                            </configFile>
-                            <optimizerFile>
-                                ${basedir}/src/build/r-2.0.6-plus.js
-                            </optimizerFile>
-                            <filterConfig>
-                                false
-                            </filterConfig>
+                            <target>
+                                <!--copy owf widget files to minified-output-->
+                                <copy file="${project.build.directory}/webminifier-output/1.js"
+                                      tofile="${project.build.directory}/minified-output/js-min/owf-widget-debug.js"/>
+                                <copy file="${project.build.directory}/webminifier-output/1-min.js"
+                                      tofile="${project.build.directory}/minified-output/js-min/owf-widget-min.js"/>
+
+                                <!--create gzipped version-->
+                                <gzip src="${project.build.directory}/minified-output/js-min/owf-widget-min.js"
+                                      destfile="${project.build.directory}/minified-output/js-min/owf-widget-min.js.gz"/>
+
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.5</version>
                 <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>resources</goal>
-                        </goals>
-                    </execution>
+                    <!--copy src/main/webapp to minified-output-->
                     <execution>
                         <id>copy-resources</id>
                         <phase>generate-sources</phase>
@@ -125,34 +157,36 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <!--copy src/main/webapp to minified-output-->
+                    <execution>
+                        <id>copy-filtered-resources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/minified-output</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.2.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
+
+                    <warSourceDirectory>${project.build.directory}/minified-output</warSourceDirectory>
+                    <warSourceExcludes>owf-widget.*</warSourceExcludes>
+
                     <!--there's no java in this project-->
                     <packagingExcludes>WEB-INF/lib/**, WEB-INF/classes/**</packagingExcludes>
-                    <webResources>
-                        <resource>
-                            <!-- this is relative to the pom.xml directory -->
-                            <directory>${project.build.directory}/minified-output</directory>
-                        </resource>
-                    </webResources>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-artifacts</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>war</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>

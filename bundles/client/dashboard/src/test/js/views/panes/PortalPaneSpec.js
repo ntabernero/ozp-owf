@@ -58,6 +58,7 @@ define([
                 zIndex: 10000,
                 maximizable: true,
                 minimizable: true,
+                collapsed: true,
                 closable: true
             };
 
@@ -65,7 +66,7 @@ define([
             collection = new WidgetStatesCollection([widget1, widget2]);
 
             portalPane = new PortalPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             done();
@@ -92,6 +93,14 @@ define([
             expect(view.model.set.calledWith('width')).to.not.be.ok();
         });
 
+        it('renders already collapsed widgets as collapsed', function() {
+            collection.add(widget3);
+
+            var collapsedWidgets = portalPane.$('.widget.collapsed');
+            
+            expect(collapsedWidgets.length).to.equal(1);
+        });
+
 //TODO: fix this test
 //This test works for some people, but fails on jenkins and
 //actually crashes testacular for other people.  
@@ -102,5 +111,20 @@ define([
 //
 //            expect(portalPane.$el.outerHeight()).to.be.lessThan(portalPane.$el[0].scrollHeight);
 //        });
+
+        it('renders a widget Panel for each widget in the collection', function() {
+            collection.add(widget3);
+
+            var panels = portalPane.$('.widget'),
+                views = _.map(panels, function(panel) {
+                    return $(panel).data('view');
+                }),
+                isPanel = _.map(views, function(view) {
+                    return view instanceof Panel;
+                });
+            
+            expect(views.length).to.equal(3);
+            expect(isPanel).to.not.contain(false);
+        });
     });
 });

@@ -48,14 +48,14 @@ define([
 
         it('renders no widgets when its collection is empty', function() {
             fitPane = new FitPane({
-                collection: new WidgetStatesCollection()
+                widgets: new WidgetStatesCollection()
             }).render();
             expect(fitPane.$el.children('iframe').length).to.equal(0);
         });
 
         it('renders a single widget when its collection contains that widget', function() {
             fitPane = new FitPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             expect(fitPane.$el.children('iframe').length).to.equal(1);
@@ -63,7 +63,7 @@ define([
 
             var newCollection = new WidgetStatesCollection();
             fitPane = new FitPane({
-                collection: newCollection
+                widgets: newCollection
             }).render();
 
             newCollection.add(widget2);
@@ -71,20 +71,20 @@ define([
             expect(fitPane.$el.children('iframe').length).to.equal(1);
         });
 
-        it('throws an exception if created with more than one widget', function() {
+        it('throws an exception if rendered with more than one widget', function() {
             collection.add(widget2);
 
             expect(function() {
                 fitPane = new FitPane({
-                    collection: collection
-                });
+                    widgets: collection
+                }).render();
             }).to.throwException();
         });
 
-        it('throws an exception if an additional widget is added after creation', function() {
+        it('throws an exception if an additional widget is added after render', function() {
             fitPane = new FitPane({
-                collection: collection
-            });
+                widgets: collection
+            }).render();
 
             expect(function() {
                 collection.add(widget2);
@@ -93,7 +93,7 @@ define([
 
         it('deletes a widget iframe if the widget model is destroyed', function() {
             fitPane = new FitPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             collection.at(0).destroy();

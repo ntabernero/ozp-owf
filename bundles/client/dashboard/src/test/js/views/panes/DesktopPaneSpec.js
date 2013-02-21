@@ -46,7 +46,7 @@ define([
             }]);
 
             desktopPane = new DesktopPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             done();
@@ -67,30 +67,6 @@ define([
 
         it('renders a taskbar with the same collection', function() {
             expect(desktopPane.taskbar.collection).to.be(desktopPane.collection);
-        });
-
-        it('deactivates other widgets when a widget is activated', function() {
-            collection.add(widget3);
-
-            collection.at(0).set('active', true);
-            expect(collection.where({active: true}).length).to.equal(1);
-            expect(collection.where({active: true})[0].get('title')).to.equal('Widget One');
-
-            collection.at(1).set('active', true);
-            expect(collection.where({active: true}).length).to.equal(1);
-            expect(collection.where({active: true})[0].get('title')).to.equal('Widget Two');
-
-            collection.at(2).set('active', true);
-            expect(collection.where({active: true}).length).to.equal(1);
-            expect(collection.where({active: true})[0].get('title')).to.equal('Widget Three');
-
-            collection.at(0).set('active', true);
-            expect(collection.where({active: true}).length).to.equal(1);
-            expect(collection.where({active: true})[0].get('title')).to.equal('Widget One');
-
-            collection.at(2).set('active', true);
-            expect(collection.where({active: true}).length).to.equal(1);
-            expect(collection.where({active: true})[0].get('title')).to.equal('Widget Three');
         });
 
         it('registers each widget with the ZIndexManager', function() {

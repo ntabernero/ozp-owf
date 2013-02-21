@@ -33,31 +33,27 @@ define([
             LayoutPane.prototype.initialize.apply(this, arguments);
 
             this.initSortable({
-                start: function(evt, ui) {
-                    ui.item.data('view').mask();
-                },
-                stop: function(evt, ui) {
-                    ui.item.data('view').unmask();
-                }
+                handle: ".header",
+                cursor: 'move',
+                axis: 'y'
             });
         },
 
         render: function() {
-            var me = this;
-
-            me.collection.each(function(widget) {
-                me.addWidget(widget);
+            this.renderCollection({
+                $body: this.$el,
+                collection: this.collection,
+                viewFactory: this.viewFactory
             });
 
-            return LayoutPane.prototype.render.apply(me, arguments);
+            return LayoutPane.prototype.render.apply(this, arguments);
         },
 
-        addWidget: function(widget) {
-            var panel = new Panel({
+        //can be overridden by subclasses
+        viewFactory: function(widget) {
+            return new Panel({
                 model: widget
             });
-
-            this.$el.append(panel.render().$el);
         }
      }));
 });

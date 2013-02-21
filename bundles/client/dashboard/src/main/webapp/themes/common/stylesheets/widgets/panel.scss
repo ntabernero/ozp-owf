@@ -50,9 +50,6 @@ $widgetActiveBorder: 1px solid #ccc !default;
         margin-bottom: 0px; // IE7
     }
 
-    &.collapsed {
-        height: $headerLineHeight !important;
-    }
 }
 
 
@@ -69,7 +66,6 @@ $widgetActiveBorder: 1px solid #ccc !default;
     width: auto;
     height: auto;
     margin-top: $headerLineHeight;
-    z-index: -1;
 
     .widgetframe {
         width: 100%;

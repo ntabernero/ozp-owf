@@ -37,7 +37,7 @@ interface DashboardTemplateService {
      * @param id template id
      * @return dashboard template's groups
      */
-    Iterable<Group> getGroups(String id)
+    Set<Group> getGroups(String id)
 
     /**
      * Adds a specified group to the specified dashboard template

@@ -35,10 +35,10 @@ define([
 
     return Header.extend({
 
-        events: _.extend({
+        events: _.extend({}, Header.prototype.events, {
             'click .collapse-btn' : 'collapse',
             'click .expand-btn' : 'expand'
-        }, Header.prototype.events),
+        }),
 
         btnTemplate: btnTpl,
 

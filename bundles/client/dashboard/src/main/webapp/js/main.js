@@ -33,11 +33,6 @@ require.config({
         'jquery-splitter': '../libs/js/jquery-splitter',
         'bootstrap-editable': '../libs/js/bootstrap-editable'
 
-        // modernizr: '../libs/js/modernizr'
-        // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
-        // hbs: 'js/handlebars/handlebars-plugin-0.2.1',
-        // json2: 'js/json2',
-        // 'handlebars-i18nprecompile': 'js/handlebars/handlebars-i18nprecompile'
     },
 
     shim: {

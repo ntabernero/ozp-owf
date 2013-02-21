@@ -51,7 +51,7 @@ define([
             collection = new WidgetStatesCollection([widget1, widget2]);
 
             tabbedPane = new TabbedPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             done();
@@ -78,10 +78,6 @@ define([
             
             expect(views.length).to.equal(3);
             expect(isWidgetControlIframe).to.not.contain(false);
-        });
-
-        it('automatically sets the first widget to be active if none are', function() {
-            expect(collection.where({active: true})[0].get('title')).to.be(widget1.title);
         });
 
         it('renders a taskbar with the same collection', function() {

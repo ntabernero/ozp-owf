@@ -18,13 +18,12 @@ package org.ozoneplatform.owf.server.service.api
 
 import org.ozoneplatform.commons.server.domain.model.Person
 
-interface PersonService extends PrincipalService {
+interface PersonService extends PrincipalService, GroupContainerService<Person> {
     
-    List<Person> list();
-    Person fetch(Long id);
-    Person create(Person person);
-    Person update(Long id, Person person);
-    void delete(Long id);
-    
+    List<Person> list()
+    Person fetch(String id)
+    Person create(Person person)
+    Person update(String id, Person person)
+    void delete(String id)
 }
 

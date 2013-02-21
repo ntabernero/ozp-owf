@@ -25,9 +25,9 @@ import org.ozoneplatform.commons.server.domain.model.Stack
 
 abstract class PersonMixIn {
     PersonMixIn(@JsonProperty("username") String username, @JsonProperty("fullName") String fullName) {}
-    @JsonIgnore abstract Iterable<Group> getGroups()
-    @JsonIgnore abstract Iterable<DashboardInstance> getDashboards()
-    @JsonIgnore abstract Iterable<PersonalWidgetDefinition> getPersonalWidgetDefinitions()
-    @JsonIgnore abstract Iterable<Stack> getStacks()
+    @JsonIgnore abstract Set<Group> getGroups()
+    @JsonIgnore abstract Set<DashboardInstance> getDashboards()
+    @JsonIgnore abstract Set<PersonalWidgetDefinition> getPersonalWidgetDefinitions()
+    @JsonIgnore abstract Set<Stack> getStacks()
 }
 

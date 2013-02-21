@@ -1,0 +1,11 @@
+.accordionpane {
+    position: relative;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+
+    > .widget {
+        width: 100%;
+
+        position: relative;
+    }
+}

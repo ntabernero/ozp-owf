@@ -16,25 +16,25 @@
 
 /*global require, initialWidgetDefinitions, initialDashboards*/
 define([
-    'models/PersonalDashboardModel',
-	'views/dashboard/PersonalDashboard',
+    'models/DashboardInstanceModel',
+	'views/dashboard/DashboardInstance',
 	'collections/StacksCollection',
     'collections/WidgetDefinitionsCollection',
     'collections/PreferencesCollection',
     'collections/PeopleCollection',
     'collections/GroupsCollection',
     'collections/PersonalWidgetDefinitionsCollection',
-    'collections/PersonalDashboardsCollection',
+    'collections/DashboardInstancesCollection',
     'models/WidgetStateModel',
 	'services/Dashboard',
 	'jquery'
-], function (PersonalDashboardModel, Dashboard,
+], function (DashboardInstanceModel, Dashboard,
              StacksCollection, WidgetDefinitionsCollection, PreferencesCollection,
              PeopleCollection, GroupsCollection, PersonalWidgetDefinitionsCollection,
-             PersonalDashboardsCollection, WidgetStateModel, DashboardService, $) {
+             DashboardInstancesCollection, WidgetStateModel, DashboardService, $) {
 	// Pull in a collection of dashboards.
-    var personalDashboardsCollection = new PersonalDashboardsCollection();
-    personalDashboardsCollection.fetch({
+    var dashboardInstancesCollection = new DashboardInstancesCollection();
+    dashboardInstancesCollection.fetch({
         success: function(collection) {
             console.log("Loaded " + collection.length + " Dashboards");
         },
@@ -54,7 +54,7 @@ define([
         }
     });
    
-    // Pull in a collection of dashboards.
+    // Pull in a collection of widget definitions
     var widgetDefinitionsCollection = new WidgetDefinitionsCollection();
     widgetDefinitionsCollection.fetch({
         success: function(collection) {
@@ -65,18 +65,7 @@ define([
         }
     });
     
-    // Pull in a collection of dashboards.
-    var preferencesCollection = new PreferencesCollection();
-    preferencesCollection.fetch({
-        success: function(collection) {
-            console.log("Loaded " + collection.length + " preferences");
-        },
-        error: function() {
-            console.log("Failed to load any preferences");
-        }
-    });
-    
-    // Pull in a collection of dashboards.
+    // Pull in a collection of people
     var peopleCollection = new PeopleCollection();
     peopleCollection.fetch({
         success: function(collection) {
@@ -87,7 +76,7 @@ define([
         }
     });
     
-    // Pull in a collection of dashboards.
+    // Pull in a collection of groups
     var groupsCollection = new GroupsCollection();
     groupsCollection.fetch({
         success: function(collection) {
@@ -98,11 +87,11 @@ define([
         }
     });
 
-    // create a collection of dashboards from initial data
+    // create a collection of PersonalWidgetDefinitions from the WidgetDefinitions
     var personalWidgetDefinitionsCollection = new PersonalWidgetDefinitionsCollection(initialWidgetDefinitions);
 
     // create a collection of dashboards from initial data
-    var pdc = new PersonalDashboardsCollection(initialDashboards);
+    var dashboards = new DashboardInstancesCollection(initialDashboards);
 
     //alter widgetstatemodel so the get function will lookup any properties it doesn't have on the corresponding widgetdef
     WidgetStateModel.prototype.get = function(attr) {
@@ -122,9 +111,9 @@ define([
     };
 
     // Create a test dashboard.
-    var testDashboard = new PersonalDashboardModel({
+    var testDashboard = new DashboardInstanceModel({
         name: 'Test Dashboard',
-        layoutConfig: pdc.at(0).get('layoutConfig')
+        layoutConfig: dashboards.at(0).get('layoutConfig')
     });
     
     // Save the dashboard to the server.
@@ -188,7 +177,7 @@ define([
         ], function(DashboardDesigner) {
             
             var me = this,
-                dashboardModel = new PersonalDashboardModel({
+                dashboardModel = new DashboardInstanceModel({
                     layoutConfig: {
                         vtype: 'designerpane',
                         paneType: 'tabbed',

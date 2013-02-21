@@ -24,53 +24,60 @@ basePath = '';
 
 // list of files / patterns to load in the browser
 files = [
-  MOCHA,
-  MOCHA_ADAPTER,
-  'target/minified-output/libs/js/lodash.js',
-  REQUIRE,
-  REQUIRE_ADAPTER,
-  
-  // Libs required for test framework
-  
-  // libs
-  'target/minified-output/libs/js/json2.js',
-  'target/minified-output/libs/js/jquery.js',
-  'target/minified-output/libs/js/backbone.js',
-  'target/minified-output/libs/js/backbone.declarative.views.js',
-  'target/minified-output/libs/js/expect.js',
-  'target/minified-output/libs/js/sinon.js',
-  'target/minified-output/libs/patches/**/*.js',
-  'target/minified-output/libs/development-bundle/ui/jquery-ui.custom.js',
-  
-  // Include serverConfig.js for stubbed out config
-  'target/minified-output/js/serverConfig.js',
+    MOCHA,
+    MOCHA_ADAPTER,
+    'target/minified-output/libs/js/lodash.js',
+    REQUIRE,
+    REQUIRE_ADAPTER,
 
-  // Include the script to configure and trigger require.
-  'src/test/js/config.js',
-  
-  // Include the src and test files on the test server but not as script tags.
-  //{pattern: 'src/main/webapp/js/**/*.js', included: false},
-  {pattern: 'target/minified-output/js/**/*.js', included: false},
-  {pattern: 'target/minified-output/libs/js/**/*.js', included: false},
-  {pattern: 'src/test/js/**/*.js', included: false},
+    // Libs required for test framework
+    'target/minified-output/libs/js/json2.js',
+    'target/minified-output/libs/js/jquery.js',
+    'target/minified-output/libs/js/backbone.js',
+    'target/minified-output/libs/js/backbone.declarative.views.js',
+    'target/minified-output/libs/js/expect.js',
+    'target/minified-output/libs/js/sinon.js',
+    'target/minified-output/libs/patches/**/*.js',
+    'target/minified-output/libs/development-bundle/ui/jquery-ui.custom.js',
 
-  //css files necessary for proper test functioning
-  {pattern: 'target/minified-output/themes/a_default.theme/css/a_default.css', included: false}
+    // Include serverConfig.js for stubbed out config
+    'target/minified-output/js/serverConfig.js',
+
+    // Include the script to configure and trigger require.
+    'src/test/js/config.js',
+
+    // Include the src and test files on the test server but not as script tags.
+    //{pattern: 'src/main/webapp/js/**/*.js', included: false},
+    {pattern: 'target/minified-output/js/**/*.js', included: false},
+    {pattern: 'target/minified-output/libs/js/**/*.js', included: false},
+    {pattern: 'src/test/js/**/*.js', included: false},
+
+    //css files necessary for proper test functioning
+    {pattern: 'target/minified-output/themes/a_default.theme/css/a_default.css', included: false}
 ];
 
 
 // list of files to exclude
 exclude = [
-  
+
 ];
 
 
 // test results reporter to use
 // possible values: 'dots', 'progress', 'junit'
-reporters = ['progress', 'junit'];
+reporters = ['progress', 'junit', 'coverage'];
 
-junitReporter= {
-     outputFile: 'target/surefire-reports/test-results.xml'
+junitReporter = {
+    outputFile: 'target/surefire-reports/test-results.xml'
+};
+
+preprocessors = {
+    'target/minified-output/js/**/*.js': 'coverage'
+};
+
+coverageReporter = {
+    type : 'cobertura',
+    dir : 'target/coverage/'
 };
 
 // web server port
