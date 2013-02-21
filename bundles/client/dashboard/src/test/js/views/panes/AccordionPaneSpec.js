@@ -77,7 +77,11 @@ define([
                     widgetBorderTop = 1,
                     widgetBorderBottom = 1;
                 widgets.children('.header').height(headerHeight);
-                widgets.css('border-top-width', widgetBorderTop).css('border-bottom-width', widgetBorderBottom);
+                widgets.css({
+                    "border-style": "solid", // Must be specified for IE
+                    "border-top-width": widgetBorderTop, 
+                    "border-bottom-width": widgetBorderBottom
+                });
 
                 accordionPane.updateSize();
                 
