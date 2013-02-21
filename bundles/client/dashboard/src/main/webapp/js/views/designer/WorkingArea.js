@@ -25,32 +25,15 @@ define([
 
     return View.extend({
         vtype: 'workingArea',
-
-        id: 'designer',
+        
         className: 'working-area',
 
-        viewOptions: function () {
-            var layoutConfig = this.model.get('layoutConfig');
-
-            if(!layoutConfig) {
-                layoutConfig = {
-                    vtype: 'designerpane',
-                    paneType: 'tabbedpane',
-                    htmlText: '100%'
-                };
-                this.model.set('layoutConfig', layoutConfig);
-            }
-            return layoutConfig;
-        },
-
         views: function() {
-            return this.viewOptions();
+            return this.model.get('layoutConfig');
         },
 
         initialize: function () {
-            this.layoutConfig = this.viewOptions();
-
-            this.$el.data( 'layoutConfig', this.layoutConfig );
+            this.layoutConfig = this.model.get('layoutConfig');
             View.prototype.initialize.apply( this, arguments );
         },
 

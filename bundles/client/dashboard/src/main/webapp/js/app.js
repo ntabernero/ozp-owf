@@ -26,12 +26,11 @@ define([
     'collections/PersonalWidgetDefinitionsCollection',
     'collections/DashboardInstancesCollection',
     'models/WidgetStateModel',
-	'services/Dashboard',
 	'jquery'
 ], function (DashboardInstanceModel, Dashboard,
              StacksCollection, WidgetDefinitionsCollection, PreferencesCollection,
              PeopleCollection, GroupsCollection, PersonalWidgetDefinitionsCollection,
-             DashboardInstancesCollection, WidgetStateModel, DashboardService, $) {
+             DashboardInstancesCollection, WidgetStateModel, $) {
 	// Pull in a collection of dashboards.
     var dashboardInstancesCollection = new DashboardInstancesCollection();
     dashboardInstancesCollection.fetch({
@@ -62,17 +61,6 @@ define([
         },
         error: function() {
             console.log("Failed to load any widgets");
-        }
-    });
-    
-    // Pull in a collection of dashboards.
-    var preferencesCollection = new PreferencesCollection();
-    preferencesCollection.fetch({
-        success: function(collection) {
-            console.log("Loaded " + collection.length + " preferences");
-        },
-        error: function() {
-            console.log("Failed to load any preferences");
         }
     });
     
@@ -187,69 +175,7 @@ define([
             'views/designer/Designer'
         ], function(DashboardDesigner) {
             
-            var me = this,
-                dashboardModel = new DashboardInstanceModel({
-                    layoutConfig: {
-                        vtype: 'designerpane',
-                        paneType: 'tabbedpane',
-                        box: {
-                            vtype: 'hbox',
-                            panes: [{
-                                vtype: 'designerpane',
-                                paneType: 'tabbedpane',
-                                htmlText: '50%',
-                                width: '50%'
-                            }, {
-                                vtype: 'designerpane',
-                                paneType: 'tabbedpane',
-                                htmlText: '50%',
-                                width: '50%',
-                                box: {
-                                    vtype: 'vbox',
-                                    panes: [{
-                                        vtype: 'designerpane',
-                                        paneType: 'tabbedpane',
-                                        htmlText: '50%',
-                                        height: '50%',
-                                        box: {
-                                            vtype: 'vbox',
-                                            panes: [{
-                                                vtype: 'designerpane',
-                                                paneType: 'accordionpane',
-                                                htmlText: '50%',
-                                                height: '50%'
-                                            }, {
-                                                vtype: 'designerpane',
-                                                paneType: 'portalpane',
-                                                htmlText: '50%',
-                                                height: '50%'
-                                            }]
-                                        }
-                                    }, {
-                                        vtype: 'designerpane',
-                                        htmlText: '50%',
-                                        height: '50%',
-                                        box: {
-                                            vtype: 'vbox',
-                                            panes: [{
-                                                vtype: 'designerpane',
-                                                paneType: 'desktoppane',
-                                                htmlText: '50%',
-                                                height: '50%'
-                                            }, {
-                                                vtype: 'designerpane',
-                                                paneType: 'fitpane',
-                                                htmlText: '50%',
-                                                height: '50%'
-                                            }]
-                                        }
-                                    }]
-                                }
-                            }]
-                        }
-                    }
-                });
-            
+            var dashboardModel = $('.dashboard').data('view').model;
             var dd = new DashboardDesigner({
                 model: dashboardModel
             });
@@ -258,7 +184,6 @@ define([
 
             dd.design().then(function(config) {
                 dd.remove();
-                config = DashboardService.convertForDashboard( config );
                 dashboardModel.set( 'layoutConfig', config );
 
                 console.log( config );
@@ -270,8 +195,6 @@ define([
                 });
                 $('body').append(dashboard.render().el);
             });
-        
-            //$(document.body).append(dd.$el);
         });
        
     });

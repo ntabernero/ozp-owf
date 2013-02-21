@@ -22,21 +22,16 @@ define([
 
     return {
 
-        upgradeLayoutConfig: function (layoutConfig) {
-
-        },
-
         convertForDesigner: function (layoutConfig) {
             var me = this;
 
             if(layoutConfig.box) {
                 layoutConfig.vtype = 'designerpane';
-                me.convertForDashboard( layoutConfig.box );
+                me.convertForDesigner( layoutConfig.box );
             }
             else if(layoutConfig.panes) {
-                layoutConfig.vtype = 'designerbox';
                 _.each( layoutConfig.panes, function( config ) {
-                    me.convertForDashboard( config );
+                    me.convertForDesigner( config );
                 });
             }
             else {

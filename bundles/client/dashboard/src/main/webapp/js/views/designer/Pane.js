@@ -36,7 +36,6 @@ define([
         vtype: 'designerpane',
 
         paneType: null,
-        htmlText: null,
 
         attributes: {
             tabindex: 0
@@ -60,10 +59,12 @@ define([
         },
 
         afterRender: function () {
-            var text = this.options.htmlText;
+            var size = this.options.width || this.options.height,
+                text;
 
             // don't allow editing for a single pane
-            if(!this.options.box && text !== '100%') {
+            if( !this.options.box && ((size && size !== '100%') || this.options.flex) ) {
+                text = this.options.flex ? 'Variable' : size;
                 var $size = $( '<h3>' + _.escape( text ) + '</h3>' );
                 this.$el.append( $size );
                 this.initEditable();
@@ -71,7 +72,27 @@ define([
             return this;
         },
 
-        nest: function (config) {
+        nest: function ( ruleType ) {
+            var paneType = this.getPaneType(),
+                widgets = this.options.widgets,
+                config = ruleType === 'vertical' ? {
+                    vtype: 'hbox',
+                    panes: [
+                        { vtype: 'designerpane', paneType: paneType, width: '50%', widgets: widgets },
+                        { vtype: 'designerpane', paneType: paneType, width: '50%' }
+                    ]
+                } : {
+                    vtype: 'vbox',
+                    panes: [
+                        { vtype: 'designerpane', paneType: paneType, height: '50%', widgets: widgets },
+                        { vtype: 'designerpane', paneType: paneType, height: '50%' }
+                    ]
+                };
+
+            // remove widgets from current pane
+            delete this.options.widgets;
+
+            // cleanup
             this.removeEditable();
             this.$el.removeClass( this.getPaneType() ).empty();
             
@@ -143,7 +164,7 @@ define([
 
             this.$el.children('h3')
                 .editable( 'destroy' )
-                .html( this.options.htmlText );
+                .html( this.options.flex ? 'Variable' : (this.options.width || this.options.height) );
 
             this.initEditable();
         },

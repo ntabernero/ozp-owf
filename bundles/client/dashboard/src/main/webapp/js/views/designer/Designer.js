@@ -22,6 +22,7 @@ define([
     './WorkingArea',
     './SidePanel',
     'views/Modal',
+    'services/Dashboard',
     'jquery',
     'lodash',
     'handlebars',
@@ -29,7 +30,7 @@ define([
     'jquery-splitter'
 ],
 
-function(View, HBox, VBox, Pane, WorkingArea, SidePanel, Modal, $, _, Handlebars) {
+function(View, HBox, VBox, Pane, WorkingArea, SidePanel, Modal, DashboardService, $, _, Handlebars) {
 
     'use strict';
 
@@ -73,6 +74,11 @@ function(View, HBox, VBox, Pane, WorkingArea, SidePanel, Modal, $, _, Handlebars
             }, {
                 vtype: SidePanel
             }];
+        },
+
+        initialize: function () {
+            this.model.set('layoutConfig', DashboardService.convertForDesigner(this.model.get('layoutConfig')), {silent: true});
+            View.prototype.initialize.apply(this, arguments);
         },
 
         afterRender: function() {
@@ -129,7 +135,7 @@ function(View, HBox, VBox, Pane, WorkingArea, SidePanel, Modal, $, _, Handlebars
 
         save: function () {
             var config = this.workingArea.getLayoutConfig();
-            this._deferred.resolve( config );
+            this._deferred.resolve( DashboardService.convertForDashboard(config) );
         },
 
         cancel: function () {
@@ -172,33 +178,15 @@ function(View, HBox, VBox, Pane, WorkingArea, SidePanel, Modal, $, _, Handlebars
         
         _onDrop: function (evt, ui) {
             var data = $(ui.helper).data(),
-                view = this._$mouseOverPane.data().view,
-                paneType, hBoxOptions, vBoxOptions, options;
+                view = this._$mouseOverPane.data().view;
 
             if( data.ruleType ) {
-                paneType = view.getPaneType();
-                hBoxOptions = {
-                    vtype: 'hbox',
-                    panes: [
-                        { vtype: 'designerpane', paneType: paneType, htmlText: '50%', width: '50%' },
-                        { vtype: 'designerpane', paneType: paneType, htmlText: '50%', width: '50%' }
-                    ]
-                },
-                vBoxOptions = {
-                    vtype: 'vbox',
-                    panes: [
-                        { vtype: 'designerpane', paneType: paneType, htmlText: '50%', height: '50%' },
-                        { vtype: 'designerpane', paneType: paneType, htmlText: '50%', height: '50%' }
-                    ]
-                },
-                options = data.ruleType === 'vertical' ? hBoxOptions : vBoxOptions;
-                view.nest( options );
+                view.nest( data.ruleType );
             }
             // update pane type
             else {
                 view.setPaneType( data.paneType );
             }
-
 
             this._$mouseOverPane.removeClass( HIGHLIGHTCLASS );
             this.enableReset();
