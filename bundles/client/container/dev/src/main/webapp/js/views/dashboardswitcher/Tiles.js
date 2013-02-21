@@ -37,11 +37,12 @@ function(app, View, List, Tile, EventBus, $, _, Handlebars) {
         tabIndex: '-1',
 
         events: {
-            //'click .dashboard-view': 'onDashboardClick',
-            //'mouseenter .dashboard-view': 'showActions',
-            //'mouseleave .dashboard-view': 'hideActions'
             'click > .dashboard': 'onDashboardClick',
             'click > .stack': 'onStackClick',
+            'click .share': 'onShare',
+            'click .refresh': 'onRefresh',
+            'click .edit': 'onEdit',
+            'click .remove': 'onDelete',
             'mouseenter > .stack': 'showActions',
             'mouseleave > .stack': 'hideActions',
             'mouseenter > .dashboard': 'showActions',
@@ -52,11 +53,56 @@ function(app, View, List, Tile, EventBus, $, _, Handlebars) {
             this.constructor.__super__.initialize.call(this);
         },
 
+        onRefresh: function (evt) {
+            var currentTarget = $(evt.currentTarget),
+                model = this.collection.get(currentTarget.data('id'));
+            
+            evt.stopPropagation();
+            
+            if (model.get('isStack')) {
+                this.trigger('stackrestore', model);
+            }
+            else {
+                this.trigger('dashboardrestore', model);
+            }
+        },
+        
+        onShare: function (evt) {
+            var currentTarget = $(evt.currentTarget),
+                model = this.collection.get(currentTarget.data('id'));
+            
+            evt.stopPropagation(); 
+            this.trigger('dashboardshare', model);
+        },
+        
+        onEdit: function (evt) {
+            var currentTarget = $(evt.currentTarget),
+                model = this.collection.get(currentTarget.data('id'));
+        
+            evt.stopPropagation();
+            this.trigger('dashboardedit', model);
+        },
+        
+        onDelete: function (evt) {
+            var currentTarget = $(evt.currentTarget),
+                model = this.collection.get(currentTarget.data('id'));
+        
+            evt.stopPropagation(); 
+            
+            if (model.get('isStack')) {
+                this.trigger('stackdelete', model);
+            }
+            else {
+                this.trigger('dashboarddelete', model);
+            }
+        },
+        
         onDashboardClick: function (evt) {
             var currentTarget = $(evt.currentTarget),
                 model = this.collection.get(currentTarget.data('id'));
-
-            this.trigger('itemselected', model);
+            if (!this.isManaging()) {
+                this.trigger('itemselected', model);
+            }
         },
         
         onStackClick: function (evt) {
@@ -68,8 +114,21 @@ function(app, View, List, Tile, EventBus, $, _, Handlebars) {
 
         toggleManage: function () {
             this._managing = !this._managing;
+            if (this._managing) {
+                $('.stack').tooltip('disable');
+                $('.dashboard').tooltip('disable');
+            }
+            else {
+                $('.stack').tooltip('enable');
+                $('.dashboard').tooltip('enable');
+            }
+                
         },
 
+        isManaging: function () {
+            return this._managing;
+        },
+        
         showActions: function (evt) {
             if( !this._managing ) {
                 return;
@@ -77,7 +136,6 @@ function(app, View, List, Tile, EventBus, $, _, Handlebars) {
 
             $('.dashboard-actions', evt.currentTarget).show();
             $('.stack-actions', evt.currentTarget).show();
-            $('.tooltip', evt.currentTarget).hide();
         },
 
         hideActions: function (evt) {
@@ -87,7 +145,6 @@ function(app, View, List, Tile, EventBus, $, _, Handlebars) {
 
             $('.dashboard-actions', evt.currentTarget).hide();
             $('.stack-actions', evt.currentTarget).hide();
-            $('.tooltip', evt.currentTarget).show();
         }
     });
 

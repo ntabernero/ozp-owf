@@ -16,6 +16,7 @@
 define([
     'views/View',
     'views/dashboardswitcher/Tiles',
+    'events/EventBus',
     // Libraries.
     'jquery',
     'lodash',
@@ -24,7 +25,7 @@ define([
     'bootstrap/bootstrap-tooltip'
 ],
 
-function(View, Tiles, $, _, Handlebars) {
+function(View, Tiles, EventBus, $, _, Handlebars) {
     
 //    var tpl = 
 //            '<img src="/themes/common/images/dashboardswitcher/DefaultDashboard_Color.png" class="img-polaroid" />' +
@@ -44,16 +45,16 @@ function(View, Tiles, $, _, Handlebars) {
         '{{#if this.isStack}}' +
             '<ul class="stack-actions hide">'+
                 '<li></li>'+
-                '<li class="restore icon-refresh" tabindex="0" data-qtip="Restore"></li>'+
-                '<li class="remove icon-remove" tabindex="0" data-qtip="Delete"></li>'+
+                '<li class="refresh icon-refresh" tabindex="0" title="Restore" data-id="{{this.id}}"></li>'+
+                '<li class="remove icon-remove" tabindex="0" title="Delete" data-id="{{this.id}}"></li>'+
                 '<li></li>'+
             '</ul>' +
         '{{else}}' +
             '<ul class="dashboard-actions hide">'+
-                '<li class="share icon-share" tabindex="0" data-qtip="Share"></li>'+
-                '<li class="refresh icon-refresh" tabindex="0" data-qtip="Restore"></li>'+
-                '<li class="edit icon-edit" tabindex="0" data-qtip="Edit"></li>'+
-                '<li class="remove icon-remove" tabindex="0" data-qtip="Delete"></li>'+
+                '<li class="share icon-share" tabindex="0" title="Share" data-id="{{this.id}}"></li>'+
+                '<li class="refresh icon-refresh" tabindex="0" title="Restore" data-id="{{this.id}}"></li>'+
+                '<li class="edit icon-edit" tabindex="0" title="Edit" data-id="{{this.id}}"></li>'+
+                '<li class="remove icon-remove" tabindex="0" title="Delete" data-id="{{this.id}}"></li>'+
             '</ul>' +
         '{{/if}}' +
         '<div class="dashboard-name">' +
@@ -63,7 +64,7 @@ function(View, Tiles, $, _, Handlebars) {
     return View.extend({
 
         className: function() {
-            return this.getName(this.model) + " span1";
+            return this.getName(this.model) + "";
         },
         
         template:   Handlebars.compile(tpl),
@@ -72,11 +73,6 @@ function(View, Tiles, $, _, Handlebars) {
         
         initialize: function() {
             this.constructor.__super__.initialize.call(this);
-//            if (this.model.get('children')) {
-//                this.subtiles = new Tiles({
-//                    collection: this.model.get('children')
-//                });
-//            }
         },
         
         render: function() {
@@ -87,10 +83,7 @@ function(View, Tiles, $, _, Handlebars) {
                 html: true,
                 placement: "bottom"
             });
-            // Append the elements for any nested elements.
-            if (this.subtiles) {
-                this.$el.append( this.tiles.render().$el );
-            }
+
             return this;
         },
 
@@ -104,6 +97,38 @@ function(View, Tiles, $, _, Handlebars) {
             };
             retVal["data-" + this.getName(this.model) + "-id"] = this.model.get('id');
             return retVal;
+        },
+        
+        onRefresh: function (evt) {
+            evt.stopPropagation();
+
+            if (this.model.get('isStack')) {
+                this.trigger('stackrestore', this.model);
+            }
+            else {
+                this.trigger('dashboardrestore', this.model);
+            }
+        },
+        
+        onShare: function (evt) {
+            evt.stopPropagation(); 
+            this.trigger('dashboardshare', this.model);
+        },
+        
+        onEdit: function (evt) {
+            evt.stopPropagation();
+            this.trigger('dashboardedit', this.model);
+        },
+        
+        onDelete: function (evt) {
+            evt.stopPropagation();
+            
+            if (this.model.get('isStack')) {
+                this.trigger('stackdelete', this.model);
+            }
+            else {
+                this.trigger('dashboarddelete', this.model);
+            }
         },
         
         getName: function(model) {

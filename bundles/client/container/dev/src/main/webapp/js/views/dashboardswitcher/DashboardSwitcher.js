@@ -44,13 +44,19 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
         }
     });
     
-    var tpl = 
-        '<div class="pull-right container-fluid">' +
-            '<div class="btn-group span6">' +
-                '<button class="btn manage-btn span1 offset4"><i class="icon-cogs"></i>  Manage</button>' +
-                '<button class="btn create-btn span1"><i class="icon-plus"></i>  Create</button>' +
-            '</div>' +
-        '</div>';
+//    var tpl = 
+//        '<div class="pull-right ">' +
+//            '<div class="btn-group ">' +
+//                '<button class="btn manage-btn span1 offset4"><i class="icon-cogs"></i>  Manage</button>' +
+//                '<button class="btn create-btn span1"><i class="icon-plus"></i>  Create</button>' +
+//            '</div>' +
+//        '</div>';
+    var tpl =
+        '<ul class="actions">' +
+            '<li class="manage" tabindex="0" title="Activates the Share, Restore, Edit, and Delete manager buttons.">Manage</li>' +
+            '<li class="create" tabindex="0" title="Name, describe and design a new dashboard"><i class="icon-plus"></i></li>' +
+        '</ul>';
+        
     
     return Modal.extend({
 
@@ -74,8 +80,8 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
         selectedItemCls : 'dashboard-selected',
         
         events:  {
-            'click .manage-btn': 'toggleManage',
-            'click .create-btn': 'create'
+            'click .manage': 'toggleManage',
+            'click .create': 'create'
         },
 
         initialize: function () {
@@ -92,13 +98,18 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
             }
             
             me.tiles = new Tiles({
-                //collection: this.options.dashboardInstancesCollection
                 collection: this.stackOrDashboards
             });
             me.tiles.on('itemselected', _.bind(this.onItemSelect, this));
+            me.tiles.on('stackrestore', _.bind(this.onStackRestore, this));
+            me.tiles.on('dashboardrestore', _.bind(this.onDashboardRestore, this));
+            me.tiles.on('stackdelete', _.bind(this.onStackDelete, this));
+            me.tiles.on('dashboarddelete', _.bind(this.onDashboardDelete, this));
+            me.tiles.on('dashboardedit', _.bind(this.onDashboardEdit, this));
+            me.tiles.on('dashboardshare', _.bind(this.onDashboardShare, this));
             
             // Listen to the main instances collection for adds & deletes.
-            _.bindAll(me, "render");
+            //_.bindAll(me, "render");
             me.options.dashboardInstancesCollection.bind('add', me.addSwitcherItemForDashboard, me);
             me.options.dashboardInstancesCollection.bind('remove', me.removeSwitcherItemForDashboard, me);
             
@@ -141,7 +152,6 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
                     }));
                 
                     // Add the stack to the switcher collection
-                    //stacks[stack.id] = stack;
                     me.stackOrDashboards.add(switcherModel);
                 }
                 
@@ -169,25 +179,19 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
         },
         
         onItemSelect: function (model) {
-            var me = this,
-                stackEl;
+            var me = this;
             
             if (model) {
                 // Handle any stack clicks.
                 if (model.get('isStack')) {
-                    stackEl = me.$('div[data-stack-id=' + model.id + ']')
+                    
                     // If this stack is not the last opened it, create its listing.
                     if (me.openStack && (me.openStack.get('id') !== model.get('id'))) {
                         // Close the last stack and open this one.
                         if (me.stackTiles) {
                             me.stackTiles.remove();
                         }
-                        me.stackTiles = new Tiles({
-                            collection: model.get('children')
-                        })
-                        me.stackTiles.on('itemselected', _.bind(this.onItemSelect, this));
-                        me.openStack = model;
-                        stackEl.after( this.stackTiles.render().$el );
+                        this.openSubTiles(model);
                     }
                     // If it was already open, close the existing stack.
                     else if (me.openStack) {
@@ -196,12 +200,7 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
                     }
                     // Otherwise, just open the stack.
                     else {
-                        me.stackTiles = new Tiles({
-                            collection: model.get('children')
-                        })
-                        me.stackTiles.on('itemselected', _.bind(this.onItemSelect, this));
-                        me.openStack = model;
-                        stackEl.after( this.stackTiles.render().$el );
+                        this.openSubTiles(model);
                     }
                 }
                 // Otherwise, just trigger any dashboards.
@@ -212,32 +211,64 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
                 }
             }
             
+        },
+        
+        onStackRestore: function (model) {
+            // TODO
+            console.log('restoring stack ' + model.get('id'));
+        },
+        
+        onDashboardRestore: function (model) {
+            // TODO
+            console.log('restoring dashboard ' + model.get('id'));
+        } ,
+        
+        onStackDelete: function (model) {
+            // TODO
+            console.log('deleting stack ' + model.get('id'));
+        },
+        
+        onDashboardDelete: function (model) {
+            // TODO
+            console.log('deleting dashboard ' + model.get('id'));
+        },
+        
+        onDashboardEdit: function (model) {
+            // TODO
+            console.log('editing dashboard ' + model.get('id'));
+        },
+        
+        onDashboardShare: function (model) {
+            // TODO
+            console.log('sharing dashboard ' + model.get('id'));
+        },
+        
+        openSubTiles: function (model) {
+            var stackEl = this.$('div[data-stack-id=' + model.id + ']');
+            this.stackTiles = new Tiles({
+                collection: model.get('children')
+            });
+            this.stackTiles.on('itemselected', _.bind(this.onItemSelect, this));
+            this.stackTiles.on('stackrestore', _.bind(this.onStackRestore, this));
+            this.stackTiles.on('dashboardrestore', _.bind(this.onDashboardRestore, this));
+            this.stackTiles.on('stackdelete', _.bind(this.onStackDelete, this));
+            this.stackTiles.on('dashboarddelete', _.bind(this.onDashboardDelete, this));
+            this.stackTiles.on('dashboardedit', _.bind(this.onDashboardEdit, this));
+            this.stackTiles.on('dashboardshare', _.bind(this.onDashboardShare, this));
             
-//            if (model.get('isStack')) {
-//                // Close any other stack tilesets
-//                if (this.stackTiles) {
-//                    this.stackTiles.remove();
-//                }
-//                
-//                console.log('clicked a stack');
-//                // Create a tileset for this stack.
-//                this.stackTiles = new Tiles({
-//                    collection: model.get('children')
-//                });
-//                
-//                // Append after the stack's view.
-//                stackEl.after( this.stackTiles.render().$el );
-//            }
-//            else {
-//                this.hide().then(function () {
-//                    EventBus.trigger('dashboard:switch', model);
-//                });
-//            }
+            this.openStack = model;
+            stackEl.after( this.stackTiles.render().$el );
+            if (this.tiles.isManaging()) {
+                this.stackTiles.toggleManage();
+            }
         },
         
         toggleManage: function (evt) {
-            $(evt.currentTarget).toggleClass('active');
+            $(evt.currentTarget).toggleClass('selected');
             this.tiles.toggleManage();
+            if (this.stackTiles) {
+                this.stackTiles.toggleManage();
+            }
         },
 
         create: function () {
