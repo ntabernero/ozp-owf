@@ -29,8 +29,6 @@ define([
     return LayoutPane.extend({
         vtype: 'desktoppane',
 
-        model: null,
-
         $body: null, //jquery element for the dashboard body
         taskbar: null, //taskbar View
 
@@ -43,10 +41,26 @@ define([
         },
 
         render: function () {
-            this.renderTaskbar();
-            this.renderWidgets();
+            var me = this;
+
+            me.renderTaskbar();
+
+            me.$body = $('<div class="body">');
+            me.$el.append(me.$body);
+
+            me.renderCollection({
+                $body: me.$body,
+                viewFactory: function(model) {
+                    return new WidgetWindow({
+                        model: model,
+                        containment: me.$body,
+                        zIndexManager: me.zIndexManager
+                    });
+                },
+                collection: me.collection
+            });
             
-            return LayoutPane.prototype.render.apply(this, arguments);
+            return LayoutPane.prototype.render.apply(me, arguments);
         },
 
         renderTaskbar: function() {
@@ -59,43 +73,6 @@ define([
             this.$el.append(this.taskbar.$el);
         },
 
-        renderWidgets: function() {
-            var me = this;
-
-            me.$body = $('<div class="body">');
-
-            this.collection.each(function (widgetState) {
-                me.renderWidget(widgetState);
-            });
-
-            me.$el.append(me.$body);
-        },
-
-        renderWidget: function(widgetState) {
-//            console.time('widget');
-        
-            var ww = new WidgetWindow({
-                model: widgetState,
-                containment: this.$body,
-                zIndexManager: this.zIndexManager
-            });
-
-            this.$body.append(ww.render().$el);
-
-//            console.timeEnd('widget');
-
-            return ww;
-        },
-
-        addWidget: function(widget) {
-            this.renderWidget(widget);
-        },
-
-        launchWidget: function (evt, model) {
-            var ww = this.renderWidget(model);
-            return ww;
-        },
-
         updateSize: function() {
             var me = this;
 
@@ -103,7 +80,7 @@ define([
 
             //adjust to new size once it is worked out
             setTimeout(function() {
-                me.taskbar.resize();
+                me.taskbar.updateSize();
             }, 0);
         }
     });

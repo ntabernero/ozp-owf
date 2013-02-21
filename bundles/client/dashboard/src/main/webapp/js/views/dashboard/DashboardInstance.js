@@ -24,51 +24,88 @@ define([
     'views/box/VBox',
     'views/panes/Pane',
     'views/panes/BoxPane',
+    'views/widgets/Window',
+    'collections/WidgetStatesCollection',
+    'mixins/CollectionView',
+    'services/ZIndexManager',
     'backbone',
-    'lodash'
-], function (AccordionPane, DesktopPane, FitPane, TabbedPane, PortalPane, View, HBox, VBox, Pane, BoxPane, Backbone, _) {
+    'lodash',
+    'jquery'
+], function (AccordionPane, DesktopPane, FitPane, TabbedPane, PortalPane, View, HBox, VBox, Pane, BoxPane, WidgetWindow,
+                WidgetStatesCollection, CollectionView, ZIndexManager, Backbone, _, $) {
 
     'use strict';
 
-    return View.extend({
+    return View.extend(_.extend({}, CollectionView, {
         vtype: 'dashboardinstance',
 
         className: 'dashboard',
 
+        //whenever a drag event is occurring,
+        //display a mask over the dashboard to prevent widget iframes
+        //from interfering with mouseovers
+        events: {
+            'dragstart': 'showMask',
+            'dragend': 'hideMask'
+        },
+
+        initialize: function() {
+            View.prototype.initialize.apply(this, arguments);
+
+            this.floatingWidgetZIndexManager = new ZIndexManager();
+
+            // Obtain the floating widget collection
+            var floatingWidgets = this.model.get('floatingWidgets');
+            if (floatingWidgets) {
+                if (_.isString(floatingWidgets)) {
+                    floatingWidgets = JSON.parse(floatingWidgets);
+                }
+                this.floatingWidgetCollection = new WidgetStatesCollection(floatingWidgets);
+            } else {
+                this.floatingWidgetCollection = new WidgetStatesCollection();
+            }
+        },
+
+        showMask: function() {
+            this.$el.children('.mask').removeClass('hide');
+        },
+
+        hideMask: function() {
+            this.$el.children('.mask').addClass('hide');
+        },
+
         views: function () {
             return this.model && this.model.get('layoutConfig');
+        },
+
+        render: function() {
+            View.prototype.render.apply(this, arguments);
+
+            //create the drag mask
+            this.$el.append('<div class="mask hide" />');
+            return this;
+        },
+
+        afterRender: function() {
+            var me = this;
+
+            me.renderCollection({
+                $body: me.$el,
+                collection: me.floatingWidgetCollection,
+                viewFactory: function(model) {
+                    return new WidgetWindow({
+                        model: model,
+                        containment: me.$el,
+                        zIndexManager: me.floatingWidgetZIndexManager
+                    });
+                }
+            });
+
+            return me;
+        },
+
+        floatingWidgets: function() {
+            return this.floatingWidgetCollection;
         }
-
-        // render: function() {
-        //     // Get the layoutConfig
-        //     var pane = null, layoutConfig = this.model.get('layoutConfig');
-
-        //     //if layoutConfig is a string parse it into an object
-        //     if (_.isString(layoutConfig)) {
-        //         layoutConfig = JSON.parse(layoutConfig);
-        //     }
-
-        //     if (layoutConfig.paneType === 'accordionpane') {
-        //         pane = new AccordionPane(layoutConfig);
-        //     }
-        //     else if (layoutConfig.paneType === 'desktoppane') {
-        //         pane = new DesktopPane(layoutConfig);
-        //     }
-        //     else if (layoutConfig.paneType === 'fitpane') {
-        //         pane = new FitPane(layoutConfig);
-        //     }
-        //     else if (layoutConfig.paneType === 'tabbedpane') {
-        //         pane = new TabbedPane(layoutConfig);
-        //     }
-        //     else {
-        //         pane = new DesktopPane(layoutConfig);
-        //     }
-
-        //     this.$el.html(pane.render().el);
-
-        //     return this;
-        // }
-
-    });
-
+    }));
 });

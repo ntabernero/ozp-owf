@@ -45,19 +45,17 @@ define([
             me.$el.append(me.tabbar.render().$el)
                     .append(me.$body);
 
-            me.collection.each(function(widgetState) {
-                  me.addWidget(widgetState);             
+            me.renderCollection({
+                $body: me.$body,
+                collection: me.collection,
+                viewFactory: function(model) {
+                    return new WidgetControlIframe({
+                        model: model
+                    });
+                }
             });
 
             return LayoutPane.prototype.render.apply(me, arguments);
-        },
-
-        addWidget: function(widget) {
-            var frame = new WidgetControlIframe({
-                model: widget
-            });
-
-            this.$body.append(frame.render().$el);
         },
 
         updateSize: function() {
@@ -67,7 +65,7 @@ define([
 
             //adjust to new size once it is worked out
             setTimeout(function() {
-                me.tabbar.resize();
+                me.tabbar.updateSize();
             }, 0);
         }
     });

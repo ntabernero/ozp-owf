@@ -6,7 +6,7 @@
 #of these watches will be intertwined
 
 
-for file in `ls -d *.theme/sass`
+for file in `ls -d *.theme/stylesheets`
 do
     cd "$file"
     compass watch $@ &

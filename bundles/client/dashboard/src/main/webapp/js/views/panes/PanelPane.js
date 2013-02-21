@@ -35,36 +35,25 @@ define([
             this.initSortable({
                 handle: ".header",
                 cursor: 'move',
-                start: function(evt, ui) {
-                    ui.item.data('view').mask();
-                },
-                stop: function(evt, ui) {
-                    ui.item.data('view').unmask();
-                }
+                axis: 'y'
             });
         },
 
         render: function() {
-            var me = this;
-
-            me.collection.each(function(widget) {
-                me.addWidget(widget);
+            this.renderCollection({
+                $body: this.$el,
+                collection: this.collection,
+                viewFactory: this.viewFactory
             });
 
-            return LayoutPane.prototype.render.apply(me, arguments);
+            return LayoutPane.prototype.render.apply(this, arguments);
         },
 
-        addWidget: function(widget) {
-            var panel = new Panel({
+        //can be overridden by subclasses
+        viewFactory: function(widget) {
+            return new Panel({
                 model: widget
             });
-
-            // If widget is collapsed collapse the widget panel
-            panel.model.get('collapsed') && panel.updateCollapse();
-
-            this.$el.append(panel.render().$el);
-
-            return panel;
         }
      }));
 });

@@ -15,8 +15,7 @@
  */
 
 // fit pane widget
-.fitpane > iframe  {
-	position: absolute;
+.fitpane > .widgetframe,  {
     height: 100%;
     width: 100%;
 }

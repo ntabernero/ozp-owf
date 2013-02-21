@@ -19,4 +19,10 @@ public abstract class DashboardMixIn {
 
     @JsonProperty("layoutConfig")
     abstract Object getLayoutConfigJson()
+
+    @JsonIgnore
+    abstract String floatingWidgets
+
+    @JsonProperty("floatingWidgets")
+    abstract Object getFloatingWidgetsJson()
 }
