@@ -98,9 +98,16 @@ define([
 
                 var collapsedPct = parseFloat((100 * ((headerHeight * collapsedWidgets) / paneHeight)).toPrecision(12));
 
-                // Ensure widgets heights are set to equal % divisions of paneHeight
-                // after widget borders and collapsed widgets %'s are removed
-                expect(accordionPane.$el.children('.widget').height()).to.equal((100 - borderPct - collapsedPct) / expandedWidgets);
+                // Expected widget height % removes the borders and collapsed widgets, then divides
+                // remaining % space among expanded widgets.
+                var expectedWidgetHeightPct = (100 - borderPct - collapsedPct) / expandedWidgets;
+
+                // Ensure each widget's height is set to expected height %, collapsed widgets
+                // should be set to it as well since their explicit height will override it
+                accordionPane.$el.children('.widget').each(function(i, widget) {
+                    // jQuery's height() or css("height") returns 0 IE7 for some reason so inspect style
+                    expect(parseFloat(widget.style.height)).to.equal(expectedWidgetHeightPct);
+                });
             };
 
         beforeEach(function(done) {
