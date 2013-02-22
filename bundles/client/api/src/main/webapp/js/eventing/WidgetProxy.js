@@ -128,7 +128,7 @@
     //put on Ozone namespace for backwards compat
     var Ozone = window.Ozone = window.Ozone || {};
     Ozone.eventing = Ozone.eventing || {};
-    Ozone.eventing.Widget = WidgetProxy;
+    Ozone.eventing.WidgetProxy = WidgetProxy;
 
 
 }(window, document, window.OWF = window.OWF || {}));
