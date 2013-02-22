@@ -61,8 +61,9 @@
     <bean id="personalWidgetDefinitions" class="org.ozoneplatform.owf.server.rest.PersonalWidgetDefinitionController">
         <property name="personalWidgetDefinitionService" ref="personalWidgetDefinitionService"/>
     </bean>
-    <bean id="welcome" class="org.ozoneplatform.owf.server.rest.WelcomeController">
+    <bean id="config" class="org.ozoneplatform.owf.server.rest.ConfigController">
         <property name="dashboardInstanceService" ref="dashboardInstanceService"/>
+        <property name="widgetDefinitionService" ref="widgetDefinitionService"/>
         <property name="objectMapperProvider" ref="objectMapperProvider"/>
     </bean>
 
@@ -134,7 +135,7 @@
             <ref component-id="stacks"/>
             <ref component-id="widgetDefinitions"/>
             <ref component-id="personalWidgetDefinitions"/>
-            <ref component-id="welcome"/>
+            <ref component-id="config"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref component-id="validationExceptionMap"/>

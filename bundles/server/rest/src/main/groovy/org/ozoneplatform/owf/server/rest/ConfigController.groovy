@@ -18,6 +18,7 @@ package org.ozoneplatform.owf.server.rest
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.text.SimpleTemplateEngine
 import org.ozoneplatform.owf.server.service.api.DashboardInstanceService
+import org.ozoneplatform.owf.server.service.api.WidgetDefinitionService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -26,12 +27,12 @@ import javax.ws.rs.Path
 import javax.ws.rs.Produces
 import javax.ws.rs.core.Response
 
-@Path("/index")
-@Produces("text/html")
-class WelcomeController {
-    private static final String TEMPLATE_FILE = 'template/index.html'
+@Produces("text/javascript")
+class ConfigController {
+    private static final String TEMPLATE_FILE = 'template/serverConfig.js'
 
     DashboardInstanceService dashboardInstanceService
+    WidgetDefinitionService widgetDefinitionService
 
     ObjectMapperProvider objectMapperProvider
 
@@ -40,16 +41,19 @@ class WelcomeController {
     Logger logger = LoggerFactory.getLogger(DashboardTemplateController.class)
 
     @GET
-    Response welcomePage() {
+    @Path("/serverConfig.js")
+    Response serverConfigJs() {
 
         def dashboardList = dashboardInstanceService.list()
+        def widgetDefinitionList = widgetDefinitionService.list()
 
         ObjectMapper objectMapper = objectMapperProvider.getContext(null)
 
         String dashboardJson = objectMapper.writeValueAsString(dashboardList)
+        String widgetDefJson = objectMapper.writeValueAsString(widgetDefinitionList)
 
         def templateText = readTemplate(TEMPLATE_FILE)
-        def template = templateEngine.createTemplate(templateText).make([dashboardList: dashboardJson])
+        def template = templateEngine.createTemplate(templateText).make([dashboardList: dashboardJson, widgetDefinitionList: widgetDefJson])
 
         Response.ok(template.toString()).build();
     }
