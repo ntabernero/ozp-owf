@@ -44,18 +44,13 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
         }
     });
     
-//    var tpl = 
-//        '<div class="pull-right ">' +
-//            '<div class="btn-group ">' +
-//                '<button class="btn manage-btn span1 offset4"><i class="icon-cogs"></i>  Manage</button>' +
-//                '<button class="btn create-btn span1"><i class="icon-plus"></i>  Create</button>' +
-//            '</div>' +
-//        '</div>';
-    var tpl =
-        '<ul class="actions">' +
-            '<li class="manage" tabindex="0" title="Activates the Share, Restore, Edit, and Delete manager buttons.">Manage</li>' +
-            '<li class="create" tabindex="0" title="Name, describe and design a new dashboard"><i class="icon-plus"></i></li>' +
-        '</ul>';
+    var tpl = 
+        '<div class="pull-right">' +
+            '<div class="btn-group ">' +
+                '<button class="btn manage-btn"><i class="icon-cogs"></i>  Manage</button>' +
+                '<button class="btn create-btn"><i class="icon-plus"></i>  Create</button>' +
+            '</div>' +
+        '</div>';
         
     
     return Modal.extend({
@@ -80,8 +75,8 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
         selectedItemCls : 'dashboard-selected',
         
         events:  {
-            'click .manage': 'toggleManage',
-            'click .create': 'create'
+            'click .manage-btn': 'toggleManage',
+            'click .create-btn': 'create'
         },
 
         initialize: function () {
@@ -112,6 +107,8 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
             //_.bindAll(me, "render");
             me.options.dashboardInstancesCollection.bind('add', me.addSwitcherItemForDashboard, me);
             me.options.dashboardInstancesCollection.bind('remove', me.removeSwitcherItemForDashboard, me);
+            me.options.dashboardInstancesCollection.bind('change', me.changeSwitcherItemForDashboard, me);
+            me.options.dashboardInstancesCollection.bind('destroy', me.removeSwitcherItemForDashboard, me);
             
         },
         
@@ -130,7 +127,8 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
                 // If we had the stack already
                 if (me.stackOrDashboards.get(stack.id)) {
                     me.stackOrDashboards.get(stack.id).get('children').add(new SwitcherModel({
-                        switcherItem: dashboard.clone(),
+                        switcherItem:dashboard,
+//                        switcherItem: dashboard.clone(),
                         isStack: false
                     }));
                 }
@@ -167,14 +165,53 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
             }
         },
         
-        removeSwitcherItemForDashboard: function() {
-            // TODO
+        removeSwitcherItemForDashboard: function(dashboard) {
+            var me = this,
+                stack = dashboard.get('stack'),
+                stackSwitcherItem,
+                switcherModel;
+            
+            // Check if the dashboard belongs in a stack.
+            if (stack) {            
+                stackSwitcherItem = me.stackOrDashboards.get(stack.id);
+                // If we had the stack already
+                if (stackSwitcherItem) {
+                    // Remove the dashboard from this stack.
+                    stackSwitcherItem.get('children').remove(stackSwitcherItem.get('children').get(dashboard.get('id')));
+                }                
+            }
+            else {
+                // Remove the dashboard.
+                me.stackOrDashboards.remove(me.stackOrDashboards.get(dashboard.get('id')));
+            }
+        },
+        
+        changeSwitcherItemForDashboard: function(dashboard) {
+            var me = this,
+                stack = dashboard.get('stack'),
+                stackSwitcherItem,
+                switcherModel;
+            
+            // Check if the dashboard belongs in a stack.
+            if (stack) {            
+                stackSwitcherItem = me.stackOrDashboards.get(stack.id);
+                // If we had the stack already
+                if (stackSwitcherItem) {
+                    // Remove the dashboard from this stack.
+                    stackSwitcherItem.get('children').get(dashboard.get('id')).set('switcherItem', dashboard);
+                }                
+            }
+            else {
+                // Remove the dashboard.
+                me.stackOrDashboards.get(dashboard.get('id')).set('switcherItem', dashboard);
+            }
         },
         
         render: function  () {
             this.constructor.__super__.render.call(this);
-            this.$el.append( this.tiles.render().$el )
-                    .append( this.template );
+            
+            this.$body.html(this.tiles.render().$el);
+            this.$el.append(this.template);
             return this;
         },
         
@@ -214,7 +251,7 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
         },
         
         onStackRestore: function (model) {
-            // TODO
+            // TODO            
             console.log('restoring stack ' + model.get('id'));
         },
         
@@ -230,16 +267,21 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
         
         onDashboardDelete: function (model) {
             // TODO
+            //EventBus.trigger('dashboard:delete', model);
+            model.get('switcherItem').destroy();
             console.log('deleting dashboard ' + model.get('id'));
         },
         
         onDashboardEdit: function (model) {
-            // TODO
             console.log('editing dashboard ' + model.get('id'));
+            this.hide().then(function () {
+                EventBus.trigger('dashboard:create');
+            });
         },
         
         onDashboardShare: function (model) {
             // TODO
+            EventBus.trigger('dashboard:share', model);
             console.log('sharing dashboard ' + model.get('id'));
         },
         
@@ -261,10 +303,11 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
             if (this.tiles.isManaging()) {
                 this.stackTiles.toggleManage();
             }
+            this.updateWindowSize();
         },
         
         toggleManage: function (evt) {
-            $(evt.currentTarget).toggleClass('selected');
+            $(evt.currentTarget).toggleClass('active');
             this.tiles.toggleManage();
             if (this.stackTiles) {
                 this.stackTiles.toggleManage();
@@ -275,9 +318,58 @@ function(app, DashboardInstanceModel, StackModel, Collection, View, Modal, Tiles
             this.hide().then(function () {
                 EventBus.trigger('dashboard:create');
             });
-        }
+        },
         
+        updateWindowSize: function() {
+            var newWidth,
+                newHeight,
+                item = this.$('.dashboard')[0] || this.$('.stack')[0];
+            
+            if(!item) {
+                return;
+            }
 
+            var windowEl = this.$('.dashboard-switcher-body'),
+                widthMargin = $(item).outerWidth(true) - $(item).outerWidth(),
+                heightMargin = $(item).outerHeight(true) - $(item).outerHeight(),
+                totalDashboards = this.$('> .tilesview > .dashboard, > .tilesview > .stack').length,
+                dashboardInRow = 0;
+
+            this.dashboardItemWidth = $(item).width();
+            this.dashboardItemHeight = $(item).height();
+
+            if(totalDashboards < this.minDashboardsWidth) {
+                dashboardInRow = this.minDashboardsWidth;
+            }
+            else if (totalDashboards > this.maxDashboardsWidth) {
+                dashboardInRow = this.maxDashboardsWidth;
+            }
+            else {
+                dashboardInRow = totalDashboards;
+            }
+
+            newWidth = (this.dashboardItemWidth + widthMargin + 1) * dashboardInRow;
+
+            if(totalDashboards > this.maxDashboardsWidth * this.maxDashboardsHeight) {
+                // add 30 to accomodate for scrollbar
+                newWidth += 30;
+            }
+            if(totalDashboards > this.maxDashboardsWidth * this.maxDashboardsHeight) {
+                newHeight = (this.dashboardItemHeight + heightMargin) * this.maxDashboardsHeight;
+            }
+
+            this.$('> .tilesview').css('height', newHeight);
+            this.$('> .tilesview').css('width', newWidth + 30);
+            this.$('> .tilesview').css('max-height', ((this.dashboardItemHeight + heightMargin + 1) * this.maxDashboardsHeight) + 40 + 'px');
+
+        },
+        
+        show: function() {
+            this.constructor.__super__.show.call(this);
+            this.updateWindowSize();
+        }
+            
+            
     });
 
 });

@@ -15,14 +15,16 @@
  */
 /*global define*/
 define([
-    'views/dashboard/DashboardInstance',
     'events/EventBus',
-
+    'views/dashboard/DashboardInstance',
+    'views/dashboard/CreateEditDashboard',
+    'views/designer/Designer',
+    'services/Dashboard',
     //libraries
     'backbone',
     'jquery'
 
-], function (DashboardInstance, EventBus, Backbone, $) {
+], function (EventBus, DashboardInstance, CreateEditDashboard, DashboardDesigner, DashboardService, Backbone, $) {
 
     return Backbone.View.extend({
 
@@ -36,7 +38,8 @@ define([
 
             EventBus.on('launch-widget', this.launchWidget, this);
             EventBus.on('dashboard:switch', this.activateDashboard, this);
-            //EventBus.on('dashboard:create', this.createDashboard, this);
+            EventBus.on('dashboard:restore', this.activateDashboard, this);
+            EventBus.on('dashboard:create', this.createDashboard, this);
 
             this.options.dashboardInstancesCollection.on('add', this.activateDashboard, this);
         },
@@ -106,9 +109,6 @@ define([
 
                 EventBus.trigger('dashboard:switched', dashboardModel);
             }
-//            else {
-//                //trying to activate a dashboard that does not exist - do nothing stay on same dash
-//            }
 
             this.rendered = true;
 
@@ -116,17 +116,33 @@ define([
 
             return this.activeDashboard;
         },
-
+        
         createDashboard: function () {
-//            var me = this,
-//                ced = new CreateEditDashboard();
-//
-//            $(document.body).append( ced.render().$el );
-//
-//            ced.show();
-//            ced.create().then(function (model) {
-//                me.designDashboard( model );
-//            });
+             var collection = this.options.dashboardInstancesCollection;
+             var cd = new CreateEditDashboard({
+                 title: 'Create Dashboard',
+                 removeOnClose: true
+             });
+
+             cd.show();
+            
+             cd.create().then(function( dashboardModel ) {
+                 var me =this,
+                     dd = new DashboardDesigner({
+                         model: dashboardModel
+                     });
+
+                 dd.render();
+                 $(document.body).append(dd.$el);
+
+                 dd.design().then(function(config) {
+                     dd.remove();
+
+                     dashboardModel.set( 'layoutConfig', DashboardService.convertForDashboard( config ) );
+
+                     collection.add( dashboardModel );
+                 });
+             });
         },
 
         designDashboard: function (model) {

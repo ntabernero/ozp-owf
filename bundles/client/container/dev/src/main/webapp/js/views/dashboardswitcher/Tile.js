@@ -26,16 +26,6 @@ define([
 ],
 
 function(View, Tiles, EventBus, $, _, Handlebars) {
-    
-//    var tpl = 
-//            '<img src="/themes/common/images/dashboardswitcher/DefaultDashboard_Color.png" class="img-polaroid" />' +
-//            '<span>{{this.name}}</span>' +
-//            '<div class="btn-group">' +
-//                '<button class="btn"><i class="icon-refresh"></i></button>' +
-//                '<button class="btn"><i class="icon-share"></i></button>' +
-//                '<button class="btn"><i class="icon-edit"></i></button>' +
-//                '<button class="btn"><i class="icon-remove"></i></button>' +
-//            '</div>';
    
     var tpl = 
         '<div class="thumb-wrap">' +
@@ -43,28 +33,24 @@ function(View, Tiles, EventBus, $, _, Handlebars) {
             '</div>' +
         '</div>' +
         '{{#if this.isStack}}' +
-            '<ul class="stack-actions hide">'+
-                '<li></li>'+
-                '<li class="refresh icon-refresh" tabindex="0" title="Restore" data-id="{{this.id}}"></li>'+
-                '<li class="remove icon-remove" tabindex="0" title="Delete" data-id="{{this.id}}"></li>'+
-                '<li></li>'+
-            '</ul>' +
+            '<div class="btn-group">' +
+                '<button class="btn refresh" data-id="{{this.id}}"><i class="icon-refresh"></i></button>' +
+                '<button class="btn remove" data-id="{{this.id}}"><i class="icon-remove"></i></button>' +
+            '</div>'+
         '{{else}}' +
-            '<ul class="dashboard-actions hide">'+
-                '<li class="share icon-share" tabindex="0" title="Share" data-id="{{this.id}}"></li>'+
-                '<li class="refresh icon-refresh" tabindex="0" title="Restore" data-id="{{this.id}}"></li>'+
-                '<li class="edit icon-edit" tabindex="0" title="Edit" data-id="{{this.id}}"></li>'+
-                '<li class="remove icon-remove" tabindex="0" title="Delete" data-id="{{this.id}}"></li>'+
-            '</ul>' +
+            '<div class="btn-group">' +
+                '<button class="btn refresh" data-id="{{this.id}}"><i class="icon-refresh"></i></button>' +
+                '<button class="btn share" data-id="{{this.id}}"><i class="icon-share"></i></button>' +
+                '<button class="btn edit" data-id="{{this.id}}"><i class="icon-edit"></i></button>' +
+                '<button class="btn remove" data-id="{{this.id}}"><i class="icon-remove"></i></button>' +
+            '</div>'+
         '{{/if}}' +
-        '<div class="dashboard-name">' +
-            '{{this.switcherItem.attributes.name}}' +
-        '</div>';
+        '<span class="dashboard-name">{{this.switcherItem.attributes.name}}</span>';
     
     return View.extend({
 
         className: function() {
-            return this.getName(this.model) + "";
+            return this.getName(this.model) + " dashboard-view";
         },
         
         template:   Handlebars.compile(tpl),
@@ -73,13 +59,19 @@ function(View, Tiles, EventBus, $, _, Handlebars) {
         
         initialize: function() {
             this.constructor.__super__.initialize.call(this);
+            this.listenTo(this.model, "change", this.render);
+            this.listenTo(this.model, "remove", this.destroy);
         },
         
         render: function() {
-            //this.$el.html( this.template( this.model.get('switcherItem').toJSON() ) );
+            this.$el.empty();
             this.$el.html(this.template(this.model.toJSON()));
             // Enable HTML tooltips.
             this.$el.tooltip({
+                html: true,
+                placement: "bottom"
+            });
+            this.$el.find('btn').tooltip({
                 html: true,
                 placement: "bottom"
             });
@@ -97,38 +89,6 @@ function(View, Tiles, EventBus, $, _, Handlebars) {
             };
             retVal["data-" + this.getName(this.model) + "-id"] = this.model.get('id');
             return retVal;
-        },
-        
-        onRefresh: function (evt) {
-            evt.stopPropagation();
-
-            if (this.model.get('isStack')) {
-                this.trigger('stackrestore', this.model);
-            }
-            else {
-                this.trigger('dashboardrestore', this.model);
-            }
-        },
-        
-        onShare: function (evt) {
-            evt.stopPropagation(); 
-            this.trigger('dashboardshare', this.model);
-        },
-        
-        onEdit: function (evt) {
-            evt.stopPropagation();
-            this.trigger('dashboardedit', this.model);
-        },
-        
-        onDelete: function (evt) {
-            evt.stopPropagation();
-            
-            if (this.model.get('isStack')) {
-                this.trigger('stackdelete', this.model);
-            }
-            else {
-                this.trigger('dashboarddelete', this.model);
-            }
         },
         
         getName: function(model) {

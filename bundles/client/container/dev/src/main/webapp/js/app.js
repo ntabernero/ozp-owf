@@ -108,40 +108,6 @@ define([
         return false;
 
     });
-    
-    EventBus.on('dashboard:create', function() {
-        require([
-            'views/dashboard/CreateEditDashboard',
-            'views/designer/Designer',
-            'services/Dashboard'
-        ], function(CreateEditDashboard, DashboardDesigner, DashboardService) {
-            
-            var cd = new CreateEditDashboard({
-                title: 'Create Dashboard',
-                removeOnClose: true
-            });
-
-            cd.show();
-           
-            cd.create().then(function( dashboardModel ) {
-                var me =this,
-                    dd = new DashboardDesigner({
-                        model: dashboardModel
-                    });
-
-                dd.render();
-                $(document.body).append(dd.$el);
-
-                dd.design().then(function(config) {
-                    dd.remove();
-
-                    dashboardModel.set( 'layoutConfig', DashboardService.convertForDashboard( config ) );
-
-                    dashboardInstancesCollection.add( dashboardModel );
-                });
-            });
-        });
-    });
 
     return {
         router: router,

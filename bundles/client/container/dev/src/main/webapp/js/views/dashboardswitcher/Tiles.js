@@ -51,6 +51,7 @@ function(app, View, List, Tile, EventBus, $, _, Handlebars) {
 
         initialize: function() {
             this.constructor.__super__.initialize.call(this);
+            this._managing = false;
         },
 
         onRefresh: function (evt) {
@@ -133,18 +134,14 @@ function(app, View, List, Tile, EventBus, $, _, Handlebars) {
             if( !this._managing ) {
                 return;
             }
-
-            $('.dashboard-actions', evt.currentTarget).show();
-            $('.stack-actions', evt.currentTarget).show();
+            $('.btn-group', evt.currentTarget).show();
         },
 
         hideActions: function (evt) {
             if( !this._managing ) {
                 return;
             }
-
-            $('.dashboard-actions', evt.currentTarget).hide();
-            $('.stack-actions', evt.currentTarget).hide();
+            $('.btn-group', evt.currentTarget).hide();
         }
     });
 
