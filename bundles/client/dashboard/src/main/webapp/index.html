@@ -15,13 +15,26 @@
     <![endif]-->
     <link rel="stylesheet" href="libs/css/jquery-splitter.css">
     <link rel="stylesheet" href="libs/css/bootstrap-editable.css">
-    <link rel="stylesheet" href="libs/development-bundle/themes/base/minified/jquery-ui.min.css">
+    <link rel="stylesheet" href="libs/development-bundle/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="themes/a_default.theme/css/a_default.css">
 </head>
 <body>
     <noscript>This application requires javascript to be enabled.</noscript>
     
     <div id="mask" class="hide"></div>
+    <div id="banner" class="navbar navbar-static-top">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <li class="">
+                    <a href="#" id="create-dashboard">Create Dashboard</a>
+                </li>
+                <li class="">
+                    <a href="#" id="design-dashboard">Design Dashboard</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 
     <script type="text/javascript">
         ;(function() {
@@ -44,7 +57,7 @@
     </script>
     <script src="libs/js/json2.js"></script>
     <script src="js/serverConfig.js"></script>
-    <script data-main="js/main" src="js/production.js"></script>
+    <script data-main="js/main" src="libs/js/require.js"></script>
     <script type="text/template" id="dashboard-template">
         <h1><%- name %></h1>
         <%- layoutConfig %>
