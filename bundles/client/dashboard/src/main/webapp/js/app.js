@@ -18,6 +18,9 @@
 define([
     'models/DashboardInstanceModel',
 	'views/dashboard/DashboardInstance',
+    'views/dashboard/CreateDashboard',
+    'views/dashboard/EditDashboard',
+    'views/designer/Designer',
 	'collections/StacksCollection',
     'collections/WidgetDefinitionsCollection',
     'collections/PreferencesCollection',
@@ -28,7 +31,7 @@ define([
     'models/WidgetStateModel',
 	'services/Dashboard',
 	'jquery'
-], function (DashboardInstanceModel, Dashboard,
+], function (DashboardInstanceModel, Dashboard, CreateDashboard, EditDashboard, DashboardDesigner,
              StacksCollection, WidgetDefinitionsCollection, PreferencesCollection,
              PeopleCollection, GroupsCollection, PersonalWidgetDefinitionsCollection,
              DashboardInstancesCollection, WidgetStateModel, DashboardService, $) {
@@ -113,7 +116,7 @@ define([
     // Create a test dashboard.
     var testDashboard = new DashboardInstanceModel({
         name: 'Test Dashboard',
-        layoutConfig: dashboards.at(0).get('layoutConfig')
+        layoutConfig: dashboards.at(2).get('layoutConfig')
     });
     
     // Save the dashboard to the server.
@@ -139,63 +142,48 @@ define([
     });
 
     $('#create-dashboard').on('click', function () {
-        require([
-            'views/dashboard/CreateEditDashboard',
-            'views/designer/Designer'
-        ], function(CreateEditDashboard, DashboardDesigner) {
-            
-            var cd = new CreateEditDashboard({
-                title: 'Create Dashboard',
-                removeOnClose: true
-            });
-
-            cd.show();
-           
-            cd.create().then(function( dashboardModel ) {
-                var me =this,
-                    dd = new DashboardDesigner({
-                        model: dashboardModel
-                    });
-
-                dd.render();
-                $('.dashboard').append(dd.$el);
-
-                dd.design().then(function(config) {
-                    dd.remove();
-                    dashboardModel.set( 'layoutConfig', config );
-
-                    console.log(config);
+        var cd = new CreateDashboard({
+            title: 'Create Dashboard',
+            removeOnClose: true,
+            dashboards: dashboards
+        });
+       
+        cd.create().then(function( dashboardModel ) {
+            cd.remove();
+            var me =this,
+                dd = new DashboardDesigner({
+                    model: dashboardModel
                 });
+
+            dd.render();
+            $('.dashboard').append(dd.$el);
+
+            dd.design().then(function(config) {
+                dd.remove();
+                dashboardModel.set( 'layoutConfig', config );
             });
         });
     });
 
     $('#design-dashboard').on('click', function() {
-
-        require([
-            'views/designer/Designer'
-        ], function(DashboardDesigner) {
             
-            var dashboardModel = $('.dashboard').data('view').model;
-            var dd = new DashboardDesigner({
+        var dashboardModel = $('.dashboard').data('view').model;
+        var dd = new DashboardDesigner({
+            model: dashboardModel
+        });
+
+        $('.dashboard').append(dd.render().el);
+
+        dd.design().then(function(config) {
+            dd.remove();
+            dashboardModel.set( 'layoutConfig', config );
+
+            $('.dashboard').data('view').remove();
+
+            var dashboard = new Dashboard({
                 model: dashboardModel
             });
-
-            $('.dashboard').append(dd.render().el);
-
-            dd.design().then(function(config) {
-                dd.remove();
-                dashboardModel.set( 'layoutConfig', config );
-
-                console.log( config );
-
-                $('.dashboard').data('view').remove();
-
-                var dashboard = new Dashboard({
-                    model: dashboardModel
-                });
-                $('body').append(dashboard.render().el);
-            });
+            $('body').append(dashboard.render().el);
         });
        
     });

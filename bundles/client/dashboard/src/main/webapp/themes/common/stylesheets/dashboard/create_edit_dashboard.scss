@@ -14,14 +14,36 @@
  * limitations under the License.
  */
 
-#create-edit-dashboard-window {
+#create-dashboard-window, #edit-dashboard-window {
     @extend .no-border-radius;
     border: 5px solid gray;
     border: 5px solid rgba(gray, 0.5);
     z-index: 100000000;
 
-    .row {
-        line-height: 3em;
+    input[type="text"], textarea {
+        width: 100%;
+    }
+}
+#create-dashboard-window, #edit-dashboard-window, .select2-drop {
+    z-index: 100000000;
+}
+
+#create-dashboard-window {
+
+    .create-from-existing {
+        select {
+            width: 100%;
+        }
+    }
+    
+    .create-from-existing, .import {
+        & > label {
+            padding-left: 0;
+
+            & > input {
+                margin-left: 0;
+            }
+        }
     }
 
 }

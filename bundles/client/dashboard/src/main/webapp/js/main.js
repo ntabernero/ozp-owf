@@ -21,28 +21,28 @@ require.config({
     enforceDefine: true,
 
     paths: {
-        bootstrap: '../libs/js/bootstrap',
-        jqueryui: '../libs/development-bundle/ui',
+        'bootstrap': '../libs/js/bootstrap',
+        'jqueryui': '../libs/development-bundle/ui',
         // alias versioned dependencies to simplify updating as new versions are released
-        jquery: '../libs/js/jquery',
-        lodash: '../libs/js/lodash',
-        backbone: '../libs/js/backbone',
+        'jquery': '../libs/js/jquery',
+        'lodash': '../libs/js/lodash',
+        'backbone': '../libs/js/backbone',
         'backbone.declarative.views': '../libs/js/backbone.declarative.views',
-        handlebars: '../libs/js/handlebars',
-        modernizr: '../libs/js/modernizr',
+        'handlebars': '../libs/js/handlebars',
+        'modernizr': '../libs/js/modernizr',
         'jquery-splitter': '../libs/js/jquery-splitter',
-        'bootstrap-editable': '../libs/js/bootstrap-editable'
-
+        'bootstrap-editable': '../libs/js/bootstrap-editable',
+        'select2': '../libs/js/select2'
     },
 
     shim: {
-        jquery: {
+        'jquery': {
             exports: '$'
         },
-        lodash: {
+        'lodash': {
             exports: '_'
         },
-        backbone: {
+        'backbone': {
             deps: ['lodash', 'jquery'],
             exports: 'Backbone'
         },
@@ -51,7 +51,7 @@ require.config({
             exports: 'Backbone'
         },
 
-        handlebars: {
+        'handlebars': {
             exports: 'Handlebars'
         },
 
@@ -80,6 +80,10 @@ require.config({
             exports: '$'
         },
         'jquery-splitter': {
+            deps: ['jquery'],
+            exports: '$'
+        },
+        'select2': {
             deps: ['jquery'],
             exports: '$'
         }
