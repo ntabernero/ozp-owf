@@ -16,7 +16,6 @@
 
 package org.ozoneplatform.owf.server.rest
 
-import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Person
 import org.ozoneplatform.commons.server.domain.model.Preference
 import org.ozoneplatform.owf.server.service.api.PersonService
@@ -32,15 +31,20 @@ import javax.ws.rs.core.UriInfo
 @Produces("application/json")
 class PersonController extends OwfRestController {
 
-    PersonService personService
+    PersonService service
     PreferenceService preferenceService
+    @Delegate(methodAnnotations = true, parameterAnnotations = true) GroupContainer groupContainer
 
     @Context
     private UriInfo uriInfo
 
+    PersonController() {
+        this.groupContainer = new GroupContainer(this)
+    }
+
     @GET
     Response list() {
-        List<Person> list = personService.list()
+        List<Person> list = service.list()
         if (list && !list.empty) {
             Response.ok(list).build()
         } else {
@@ -51,7 +55,7 @@ class PersonController extends OwfRestController {
     @POST
     @Consumes("application/json")
     Response create(Person person) {
-        Person thePerson = personService.create(person)
+        Person thePerson = service.create(person)
         URI personUri
         UriBuilder builder = uriInfo.getBaseUriBuilder()
         builder.path(PersonController.class)
@@ -63,7 +67,7 @@ class PersonController extends OwfRestController {
     @GET
     @Path("/{id}")
     Response fetch(@PathParam("id") String id) {
-        Person thePerson = personService.fetch(id)
+        Person thePerson = service.fetch(id)
         Response.ok(thePerson).build()
     }
 
@@ -71,13 +75,13 @@ class PersonController extends OwfRestController {
     @Path("/{id}")
     @Consumes("application/json")
     Response update(@PathParam("id") String id, Person person) {
-        Response.ok(personService.update(id, person)).build()
+        Response.ok(service.update(id, person)).build()
     }
 
     @DELETE
     @Path("/{id}")
     Response delete(@PathParam("id") String id) {
-        personService.delete(id)
+        service.delete(id)
         Response.ok().build()
     }
 
@@ -115,36 +119,6 @@ class PersonController extends OwfRestController {
     Response getPreference(@PathParam("id") String id, @PathParam("namespace") String namespace, @PathParam("name") String name) {
         Preference preference = preferenceService.getPersonalPreference(id, namespace, name)
         preference ? Response.ok(preference).build() : Response.noContent().build()
-    }
-
-    /**
-     * Adds a group to the specified person
-     */
-    @POST
-    @Path("/{id}/groups")
-    Response addGroup(@PathParam("id") String id, Group groupInfo) {
-        def person = personService.addGroup(id, groupInfo.id)
-        Response.ok(person).build()
-    }
-
-    /**
-     * Removes a group from the specified person
-     */
-    @DELETE
-    @Path("/{id}/groups")
-    Response removeGroup(@PathParam("id") String id, Group groupInfo) {
-        def person = personService.removeGroup(id, groupInfo.id)
-        Response.ok(person).build()
-    }
-
-    /**
-     * Returns the list of groups for the specified person
-     */
-    @GET
-    @Path("/{id}/groups")
-    Response getGroups(@PathParam("id") String id) {
-        def groups = personService.getGroups(id)
-        Response.ok(groups).build()
     }
 
     /**

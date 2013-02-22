@@ -31,9 +31,9 @@ class PreferenceServiceImpl implements PreferenceService {
     Preference getPreference(String personId, String namespace, String name) {
         Preference preference = getPersonalPreference(personId, namespace, name)
 
-        if (!preference) {
-            //TODO: handle group preferences
-        }
+//        TODO: handle group preferences
+//        if (!preference) {
+//        }
         preference
     }
 

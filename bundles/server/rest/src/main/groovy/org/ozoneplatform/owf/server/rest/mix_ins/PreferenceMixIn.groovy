@@ -16,12 +16,7 @@
 
 package org.ozoneplatform.owf.server.rest.mix_ins
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
-import org.ozoneplatform.commons.server.domain.model.DashboardInstance
-import org.ozoneplatform.commons.server.domain.model.Group
-import org.ozoneplatform.commons.server.domain.model.PersonalWidgetDefinition
-import org.ozoneplatform.commons.server.domain.model.Stack
 
 abstract class PreferenceMixIn {
     PreferenceMixIn(@JsonProperty("namespace") String namespace, @JsonProperty("name") String name,

@@ -24,9 +24,9 @@ import org.ozoneplatform.owf.server.service.api.PreferenceService
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
 import javax.ws.rs.core.Response
+import javax.ws.rs.core.UriBuilder
 
 //import javax.annotation.security.*
-import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
 
 @Path("/")

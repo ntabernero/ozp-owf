@@ -48,7 +48,7 @@
         <property name="service" ref="dashboardTemplateService"/>
     </bean>
     <bean id="persons" class="org.ozoneplatform.owf.server.rest.PersonController">
-        <property name="personService" ref="personService"/>
+        <property name="service" ref="personService"/>
         <property name="preferenceService" ref="preferenceService"/>
     </bean>
     <bean id="groups" class="org.ozoneplatform.owf.server.rest.GroupController">

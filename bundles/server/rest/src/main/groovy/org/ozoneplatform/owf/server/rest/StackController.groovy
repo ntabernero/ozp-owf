@@ -40,8 +40,8 @@ class StackController extends OwfRestController {
         this.personContainer = new PersonContainer(this)
         this.groupContainer = new GroupContainer(this)
     }
-    @GET
 
+    @GET
     Response list() {
         List<Stack> list = service.list();
         if (list && !list.empty) {
