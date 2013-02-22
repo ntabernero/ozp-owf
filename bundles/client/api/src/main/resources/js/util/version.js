@@ -2,7 +2,7 @@
     'use strict';
 
     var OWF = window.OWF = window.OWF || {};
-    OWF.version = {
+    OWF.Version = {
 
         owfversion: '${project.version}',
 
@@ -28,12 +28,12 @@
 
     //put on Ozone namespace for backwards compat
     var Ozone = window.Ozone = window.Ozone || {};
-    Ozone.version = OWF.version;
+    Ozone.version = OWF.Version;
 
     //requirejs support
     if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
         define(function () {
-            return OWF.version;
+            return OWF.Version;
         });
     }
 })(window, document);

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2013 Next Century Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 /*global gadgets*/
 ;(function (window, document, OWF, $, undefined) {
     'use strict';
@@ -28,7 +43,9 @@
             Widget.instance = this;
             this.isAfterInit = false;
             if (afterInit != null) {
-                $(this).on('afterInit', afterInit);
+                $(this).on('afterInit', function (event, w) {
+                    afterInit(w);
+                });
             }
             this.setWidgetRelay(widgetRelay);
             try {
@@ -41,11 +58,15 @@
         else {
             if (afterInit != null) {
                 if (this.isAfterInit === false) {
-                    $(this).on('afterInit', afterInit);
+                    $(this).on('afterInit', function (event, w) {
+                        afterInit(w);
+                    });
                 }
                 else {
                     //already initialized just execute the supplied callback
-                    setTimeout(afterInit, 50);
+                    setTimeout(function () {
+                        afterInit(this);
+                    }, 50);
                 }
             }
         }
@@ -197,6 +218,7 @@
             }, this);
 
             //register for after_container_init
+            var me = this;
             gadgets.rpc.register("after_container_init", function () {
 
                 gadgets.rpc.unregister("after_container_init");
@@ -209,7 +231,7 @@
                 }
 
                 //execute callback
-                this.afterContainerInit();
+                me.afterContainerInit();
 
             });
 
@@ -383,7 +405,9 @@
         else {
             if (afterInit != null) {
                 if (!Widget.instance.isAfterInit) {
-                    $(this).on('afterInit', afterInit);
+                    $(this).on('afterInit', function (event, w) {
+                        afterInit(w);
+                    });
                 }
                 else {
                     //already initialized just execute the supplied callback
@@ -398,6 +422,7 @@
 
     //expose eventing to OWF.Eventing namepace
     var Eventing = OWF.Eventing = OWF.Eventing || {};
+    Eventing._Widget = Widget;
     for (var i = 0, methods = ['publish', 'subscribe', 'unsubscribe']; i < methods.length; i++) {
         Eventing[ methods[i] ] = Widget[ methods[i] ];
     }

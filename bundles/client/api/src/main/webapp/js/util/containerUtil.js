@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Next Century Corporation 
+ * Copyright 2013 Next Century Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /*global require*/
-require([
-	'jquery'
-], function ($) {
+define(function () {
+    'use strict';
+
+    return {
+        guid: function () {
+            function S4() {
+                /*jshint bitwise:false*/
+                return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+            }
+
+            return function () {
+                return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+            };
+        }()
+    };
 });

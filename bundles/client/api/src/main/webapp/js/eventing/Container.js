@@ -15,7 +15,7 @@
  */
 /*global require*/
 define([
-    'gadgets/rpc',
+    'gadgets/pubsub_router',
     'util/util',
     'util/version',
     'jquery'
@@ -334,7 +334,8 @@ define([
             setContainerRelay:function (relaypath) {
 
                 if (relaypath === undefined || relaypath === '') {
-                    throw 'Ozone.eventing.Container.setContainerRelay was called with a null or empty string. Please provide a valid URL.';
+                    //default location
+                    relaypath = window.location.protocol + "//" + window.location.host + window.location.pathname + "/js/eventing/rpc_relay.uncompressed.html";
                 }
 
                 //For purposes of basic proxy safeguards the container relay is pulled from the current

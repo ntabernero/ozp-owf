@@ -21,6 +21,10 @@ for (var file in window.__testacular__.files) {
     }
 }
 
+//configure mocha
+mocha.setup({ignoreLeaks: true});
+mocha.timeout(10000);
+
 requirejs.config({
     enforceDefine: true
 });
@@ -28,15 +32,6 @@ requirejs.config({
 require({
 
     baseUrl: '/base/target/minified-output/js',
-//    paths: {
-//      require: '../target/minified-output/js/require',
-//      backbone: '/base/target/minified-output/js/backbone'
-//    },
-//    shim: {
-//        backbone: {
-//            exports: 'Backbone'
-//        }
-//    }
     paths: {
         bootstrap: '../libs/js/bootstrap',
         jqueryui: '../libs/development-bundle/ui',
@@ -48,11 +43,8 @@ require({
         modernizr: '../libs/js/modernizr',
         handlebars: '../libs/js/handlebars',
         'jquery-splitter': '../libs/js/jquery-splitter',
-        'bootstrap-editable': '../libs/js/bootstrap-editable'
-        // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
-        // hbs: 'js/handlebars/handlebars-plugin-0.2.1',
-        // json2: 'js/json2',
-        // 'handlebars-i18nprecompile': 'js/handlebars/handlebars-i18nprecompile'
+        'bootstrap-editable': '../libs/js/bootstrap-editable',
+        'gadgets': '../libs/js/shindig'
     },
 
     shim: {
@@ -102,22 +94,40 @@ require({
         'jquery-splitter': {
             deps: ['jquery'],
             exports: '$'
+        },
+        'gadgets/json': {
+            exports: 'gadgets'
+        },
+        'gadgets/util': {
+            exports: 'gadgets'
+        },
+        'gadgets/rpc': {
+            deps: ['gadgets/json', 'gadgets/util'],
+            exports: 'gadgets'
+        },
+        'gadgets/pubsub': {
+            deps: ['gadgets/rpc'],
+            exports: 'gadgets'
+        },
+        'gadgets/pubsub_router': {
+            deps: ['gadgets/rpc'],
+            exports: 'gadgets'
         }
     }
-  }, tests, function() {
-    var cssPath = '/base/target/minified-output/themes/a_default.theme/css/a_default.css';
-
-    //before starting tests, import default css
-    if (document.createStyleSheet) {
-        document.createStyleSheet(cssPath);
-    }
-    else {
-        var stylesheet = $('<link>')
-            .appendTo('head')
-            .attr('type', 'text/css')
-            .attr('rel', 'stylesheet')
-            .attr('href', cssPath);
-    }
+}, tests, function () {
+//    var cssPath = '/base/target/minified-output/themes/a_default.theme/css/a_default.css';
+//
+//    //before starting tests, import default css
+//    if (document.createStyleSheet) {
+//        document.createStyleSheet(cssPath);
+//    }
+//    else {
+//        var stylesheet = $('<link>')
+//                .appendTo('head')
+//                .attr('type', 'text/css')
+//                .attr('rel', 'stylesheet')
+//                .attr('href', cssPath);
+//    }
 
     window.__testacular__.start();
 });
