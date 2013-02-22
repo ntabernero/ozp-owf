@@ -51,11 +51,7 @@ files = [
     {pattern: 'target/minified-output/js/**/*.*', included: false},
     {pattern: 'target/minified-output/js-min/**/*.*', included: false},
     {pattern: 'target/minified-output/libs/js/**/*.js', included: false},
-//    {pattern: 'src/test/js/**/*.js', included: false},
-    {pattern: 'src/test/js/eventing/rpc/rpcLocalTestSpec.js', included: false},
-    {pattern: 'src/test/js/eventing/rpc/rpcRemoteTestSpec.js', included: false},
-    {pattern: 'src/test/js/eventing/rpcLargePayload/rpcLocalTestSpec.js', included: false},
-    {pattern: 'src/test/js/eventing/rpcLargePayload/rpcRemoteTestSpec.js', included: false},
+    {pattern: 'src/test/js/**/*.js', included: false},
 
     //widget html needed for tests
     {pattern: 'src/test/js/**/*.html', included: false}

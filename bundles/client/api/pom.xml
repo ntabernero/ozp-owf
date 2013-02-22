@@ -16,8 +16,9 @@
 
     <name>Ozone Platform :: OWF Client Bundles :: Client APIs :: BASE API</name>
 
-    <!--<properties>-->
-    <!--</properties>-->
+    <properties>
+        <browsers>PhantomJS</browsers>
+    </properties>
 
     <dependencies>
 
@@ -101,14 +102,14 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <!--<execution>-->
-                        <!--<id>jshint</id>-->
-                        <!--<phase>validate</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>run</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<skip>true</skip>-->
-                        <!--</configuration>-->
+                    <!--<id>jshint</id>-->
+                    <!--<phase>validate</phase>-->
+                    <!--<goals>-->
+                    <!--<goal>run</goal>-->
+                    <!--</goals>-->
+                    <!--<configuration>-->
+                    <!--<skip>true</skip>-->
+                    <!--</configuration>-->
                     <!--</execution>-->
                     <!--copy webminifier-output to minified-output to -->
                     <execution>
@@ -192,4 +193,67 @@
         </plugins>
     </build>
 
+    <profiles>
+        <!-- Identify the platform to set the appropriate OS extension (.bat or .sh) -->
+        <profile>
+            <id>platform-windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+
+            <properties>
+                <os.extension>.bat</os.extension>
+            </properties>
+        </profile>
+        <profile>
+            <id>platform-unix</id>
+            <activation>
+                <os>
+                    <family>!windows</family>
+                </os>
+            </activation>
+
+            <properties>
+                <os.extension>.sh</os.extension>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>testacular</id>
+            <activation>
+                <property>
+                    <name>!skipClientTests</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <id>JS Testing</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>testacular</executable>
+                                    <arguments>
+                                        <argument>start</argument>
+                                        <argument>--browsers</argument>
+                                        <argument>${browsers}</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
 </project>
