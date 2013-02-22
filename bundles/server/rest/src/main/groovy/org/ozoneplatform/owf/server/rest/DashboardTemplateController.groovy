@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response
 
 @Path("/dashboard-templates")
 @Produces("application/json")
-class DashboardTemplateController {
+class DashboardTemplateController extends OwfRestController {
 
     Logger logger = LoggerFactory.getLogger(DashboardTemplateController.class)
 

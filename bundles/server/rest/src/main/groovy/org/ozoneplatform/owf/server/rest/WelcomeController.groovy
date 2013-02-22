@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response
 
 @Path("/index")
 @Produces("text/html")
-class WelcomeController {
+class WelcomeController extends OwfRestController {
     private static final String TEMPLATE_FILE = 'template/index.html'
 
     DashboardInstanceService dashboardInstanceService

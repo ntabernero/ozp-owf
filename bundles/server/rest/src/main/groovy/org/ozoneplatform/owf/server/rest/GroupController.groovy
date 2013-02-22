@@ -2,6 +2,7 @@
    Copyright 2013 Next Century Corporation 
 
    Licensed under the Apache License, Version 2.0 (the "License");
+   Licensed under the Apache License, Version 2.0 (the "License")
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
@@ -16,7 +17,9 @@
 package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.commons.server.domain.model.Preference
 import org.ozoneplatform.owf.server.service.api.GroupService
+import org.ozoneplatform.owf.server.service.api.PreferenceService
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
@@ -28,13 +31,14 @@ import javax.ws.rs.core.UriInfo
 
 @Path("/")
 @Produces("application/json")
-class GroupController {
+class GroupController extends OwfRestController {
 
     GroupService service;
     @Delegate(methodAnnotations = true, parameterAnnotations = true) PersonContainer personContainer
+    PreferenceService preferenceService
 
     @Context
-    private UriInfo uriInfo;
+    private UriInfo uriInfo
 
     GroupController() {
         personContainer = new PersonContainer(this)
@@ -44,9 +48,9 @@ class GroupController {
     Response list() {
         List<Group> list = service.list();
         if (list && !list.empty) {
-            Response.ok(list).build();
+            Response.ok(list).build()
         } else {
-            Response.noContent().build();
+            Response.noContent().build()
         }
 
     }
@@ -89,26 +93,67 @@ class GroupController {
 
     @GET
     @Path("/{id}/group-dashboards")
-    Response listGroupDashboards(@PathParam("id") Long id) {
-        Response.ok().build();
-    }
-    
-    @GET
-    @Path("/{id}/preferences")
-    Response listGroupPreferences(@PathParam("id") Long id) {
-        Response.ok(service.listPreferences(id)).build();
-    }
-    
-    @GET
-    @Path("/{id}/preferences/{namespace}")
-    Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace) {
-        Response.ok(service.listPreferences(id, namespace)).build();
-    }
-    
-    @GET
-    @Path("/{id}/preferences/{namespace}/{name}")
-    Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace, @PathParam("name") String name) {
-        Response.ok(service.fetchPreference(id, namespace, name)).build();
+    Response listGroupDashboards(@PathParam("id") String id) {
+        Response.ok().build()
     }
 
+    /**
+     * Returns all the preferences for the specified group
+     * @param id
+     * @return
+     */
+    @GET
+    @Path("/{id}/preferences")
+    Response listGroupPreferences(@PathParam("id") String id) {
+        Response.ok(preferenceService.listGroupPreferences(id)).build()
+    }
+
+    /**
+     * Returns the preference for teh specified group given namespace and name
+     * @param id
+     * @param namespace
+     * @param name
+     * @return
+     */
+    @GET
+    @Path("/{id}/preferences/{namespace}/{name}")
+    Response getGroupPreference(@PathParam("id") String id, @PathParam("namespace") String namespace, @PathParam("name") String name) {
+        Preference preference = preferenceService.getGroupPreference(id, namespace, name)
+        preference ? Response.ok(preference).build() : Response.noContent().build()
+    }
+
+    /**
+     * Create/replace a preference for the specified group
+     * @param id group id
+     * @param namespace preference namesapce
+     * @param name preference name
+     * @param value preference value
+     * @return created preference
+     */
+    @POST
+    @Path("/{id}/preferences")
+    Response setPreference(@PathParam("id") String id, Preference preference) {
+        preference = preferenceService.setGroupPreference(id, preference)
+        URI preferenceUri
+        UriBuilder builder = uriInfo.getBaseUriBuilder()
+        builder.path(GroupController.class)
+        builder.path(GroupController.class.getMethod("getGroupPreference", String.class, String.class, String.class))
+        preferenceUri = builder.build(id, preference.namespace, preference.name)
+        Response.created(preferenceUri).entity(preference).build()
+    }
+
+    /**
+     * Delete the specified group preference
+     * @param id group id
+     * @param namespace preference namesapce
+     * @param name preference name
+     * @return deleted preference
+     */
+    @DELETE
+    @Path("/{id}/preferences/{namespace}/{name}")
+    Response deletePreference(@PathParam("id") String id, @PathParam("namespace") String namespace,
+                              @PathParam("name") String name) {
+        preferenceService.deleteGroupPreference(id, namespace, name)
+        Response.ok().build()
+    }
 }

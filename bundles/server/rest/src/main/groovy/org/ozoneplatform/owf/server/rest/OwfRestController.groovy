@@ -17,14 +17,29 @@ package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.commons.server.domain.model.Entity
 
+import javax.ws.rs.core.Context
 import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
 
 abstract class OwfRestController {
+
+    final static String CURRENT_PERSON_ID = '_me_'
+
+    @Context
+    protected org.apache.cxf.jaxrs.ext.MessageContext messageContext;
+
     protected URI buildEntityURI(UriInfo uriInfo, Entity entity, String methodName, String extraParam = null) {
         UriBuilder builder = uriInfo.getBaseUriBuilder()
         builder.path(this.class)
         builder.path(this.class.getMethod(methodName, String.class))
         extraParam ? builder.build(extraParam, entity.id) : builder.build(entity.id)
+    }
+
+    protected String normalizePersonId(String id) {
+        (id == CURRENT_PERSON_ID) ? getCurrentUserId() : id
+    }
+
+    protected String getCurrentUserId() {
+        return null //TODO
     }
 }

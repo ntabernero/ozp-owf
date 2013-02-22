@@ -40,7 +40,7 @@ class PersonServiceImpl implements PersonService {
         def person
         
         person = new Person("testUser1", "Test User 1");
-        person.id = 1L;
+        person.id = "1";
         person.email = "testuser1@blah.blah";
         cal.time = fmt.parse("07/10/2012 10:30:00");
         person.prevLogin = (Calendar)cal.clone();
@@ -51,7 +51,7 @@ class PersonServiceImpl implements PersonService {
         theList.add(person);
         
         person = new Person("testUser2", "Test User 2");
-        person.id = 2L;
+        person.id = "2";
         person.email = "testuser2@blah.blah";
         cal.time = fmt.parse("11/06/2012 12:36:21");
         person.prevLogin = (Calendar)cal.clone();
@@ -61,7 +61,7 @@ class PersonServiceImpl implements PersonService {
         theList.add(person);
         
         person = new Person("testAdmin1", "Test Administrator 1");
-        person.id = 3L;
+        person.id = "3";
         person.email = "testadmin1@blah.blah";
         cal.time = fmt.parse("09/25/2012 10:30:00");
         person.prevLogin = (Calendar)cal.clone();
@@ -87,8 +87,7 @@ class PersonServiceImpl implements PersonService {
 
     Person create(Person person) {
         this.validate(person);
-        def max = theList.max{ it.id }
-        person?.id = max.id + 1L;
+        person?.id = UUID.randomUUID().toString();
         theList.add(person);
         person;
     }
@@ -141,17 +140,12 @@ class PersonServiceImpl implements PersonService {
         return;
     }
     
-    Set<Preference> listPreferences(Long id) {
+    Set<Preference> listPreferences(String id) {
         Person thePerson = this.fetch(id);
         return thePerson.preferences;
     }
     
-    Set<Preference> listPreferences(Long id, String namespace) {
-        Person thePerson = this.fetch(id);
-        return thePerson.preferences.findAll{ it.namespace == namespace; };
-    }
-    
-    Preference fetchPreference(Long id, String namespace, String name) {
+    Preference fetchPreference(String id, String namespace, String name) {
         Person thePerson = this.fetch(id);
         return thePerson.preferences.find{ it.namespace == namespace && it.name == name; };
     }

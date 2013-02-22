@@ -22,6 +22,7 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
         mapper.addMixInAnnotations(DashboardTemplate.class, DashboardTemplateMixIn.class)
         mapper.addMixInAnnotations(Group.class, GroupMixIn.class)
         mapper.addMixInAnnotations(Stack.class, StackMixIn.class)
+        mapper.addMixInAnnotations(Preference.class, PreferenceMixIn.class)
     }
 
     public ObjectMapper getContext(Class<?> type) { return mapper }

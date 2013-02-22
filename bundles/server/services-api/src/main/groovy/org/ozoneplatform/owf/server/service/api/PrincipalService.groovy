@@ -19,8 +19,7 @@ package org.ozoneplatform.owf.server.service.api
 import org.ozoneplatform.commons.server.domain.model.Preference
 
 interface PrincipalService {
-    Set<Preference> listPreferences(Long id);
-    Set<Preference> listPreferences(Long id, String namespace);
-    Preference fetchPreference(Long id, String namespace, String name);
+    Set<Preference> listPreferences(String id);
+    Preference fetchPreference(String id, String namespace, String name);
 }
 

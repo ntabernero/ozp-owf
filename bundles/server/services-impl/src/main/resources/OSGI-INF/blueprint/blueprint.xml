@@ -33,6 +33,10 @@
     </bean>
     <bean id="widgetDefinitionService" class="org.ozoneplatform.owf.server.service.impl.WidgetDefinitionServiceImpl"/>
     <bean id="personalWidgetDefinitionService" class="org.ozoneplatform.owf.server.service.impl.PersonalWidgetDefinitionServiceImpl"/>
+    <bean id="preferenceService" class="org.ozoneplatform.owf.server.service.impl.PreferenceServiceImpl">
+        <property name="personService" ref="personService"/>
+        <property name="groupService" ref="groupService"/>
+    </bean>
 
     <service ref="groupService" interface="org.ozoneplatform.owf.server.service.api.GroupService"/>
     <service ref="personService" interface="org.ozoneplatform.owf.server.service.api.PersonService"/>
@@ -41,5 +45,6 @@
     <service ref="dashboardTemplateService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
     <service ref="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService"/>
     <service ref="personalWidgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService"/>
+    <service ref="preferenceService" interface="org.ozoneplatform.owf.server.service.api.PreferenceService"/>
 
 </blueprint>

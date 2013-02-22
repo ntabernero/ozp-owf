@@ -1,7 +1,7 @@
 /* 
    Copyright 2013 Next Century Corporation 
 
-   Licensed under the Apache License, Version 2.0 (the "License");
+   Licensed under the Apache License, Version 2.0 (the "License")
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
@@ -18,7 +18,9 @@ package org.ozoneplatform.owf.server.rest
 
 import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.commons.server.domain.model.Preference
 import org.ozoneplatform.owf.server.service.api.PersonService
+import org.ozoneplatform.owf.server.service.api.PreferenceService
 
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
@@ -28,84 +30,91 @@ import javax.ws.rs.core.UriInfo
 
 @Path("/persons")
 @Produces("application/json")
-class PersonController {
+class PersonController extends OwfRestController {
 
-    PersonService personService;
+    PersonService personService
+    PreferenceService preferenceService
 
     @Context
-    private UriInfo uriInfo;
+    private UriInfo uriInfo
 
     @GET
     Response list() {
-        List<Person> list = personService.list();
+        List<Person> list = personService.list()
         if (list && !list.empty) {
-            Response.ok(list).build();
+            Response.ok(list).build()
         } else {
-            Response.noContent().build();
+            Response.noContent().build()
         }
     }
 
     @POST
     @Consumes("application/json")
     Response create(Person person) {
-        Person thePerson = personService.create(person);
-        URI personUri;
-        UriBuilder builder = uriInfo.getBaseUriBuilder();
-        builder.path(PersonController.class);
-        builder.path(PersonController.class.getMethod("fetch", Long.class));
-        personUri = builder.build(person.id);
-        Response.created(personUri).entity(thePerson).build();
+        Person thePerson = personService.create(person)
+        URI personUri
+        UriBuilder builder = uriInfo.getBaseUriBuilder()
+        builder.path(PersonController.class)
+        builder.path(PersonController.class.getMethod("fetch", Long.class))
+        personUri = builder.build(person.id)
+        Response.created(personUri).entity(thePerson).build()
     }
 
     @GET
     @Path("/{id}")
-    Response fetch(@PathParam("id") Long id) {
-        Person thePerson = personService.fetch(id);
-        Response.ok(thePerson).build();
+    Response fetch(@PathParam("id") String id) {
+        Person thePerson = personService.fetch(id)
+        Response.ok(thePerson).build()
     }
 
     @PUT
     @Path("/{id}")
     @Consumes("application/json")
-    Response update(@PathParam("id") Long id, Person person) {
-        Response.ok(personService.update(id, person)).build();
+    Response update(@PathParam("id") String id, Person person) {
+        Response.ok(personService.update(id, person)).build()
     }
 
     @DELETE
     @Path("/{id}")
-    Response delete(@PathParam("id") Long id) {
-        personService.delete(id);
-        Response.ok().build();
+    Response delete(@PathParam("id") String id) {
+        personService.delete(id)
+        Response.ok().build()
     }
 
     @GET
     @Path("/{id}/dashboards")
-    Response listDashboards(@PathParam("id") Long id) {
-        Response.ok().build();
+    Response listDashboards(@PathParam("id") String id) {
+        Response.ok().build()
     }
 
     @GET
     @Path("/{id}/widgets")
-    Response listWidgets(@PathParam("id") Long id) {
-        Response.ok().build();
+    Response listWidgets(@PathParam("id") String id) {
+        Response.ok().build()
     }
-    
+
+    /**
+     * List all the preferences for the specified user
+     * @param id
+     * @return
+     */
     @GET
     @Path("/{id}/preferences")
-    Response listGroupPreferences(@PathParam("id") Long id) {
-        Response.ok(personService.listPreferences(id)).build();
+    Response listPreferences(@PathParam("id") String id) {
+        Response.ok(preferenceService.listPersonalPreferences(id)).build()
     }
-    
-    @GET
-    @Path("/{id}/preferences/{namespace}")
-    Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace) {
-        Response.ok(personService.listPreferences(id, namespace)).build();
-    }
-    
+
+    /**
+     * Get the value of the preference specified by namespace and name for the given person
+     * @param namespace
+     * @param name
+     * @return preference value as response body
+     */
     @GET
     @Path("/{id}/preferences/{namespace}/{name}")
-    Response listGroupPreferences(@PathParam("id") Long id, @PathParam("namespace") String namespace, @PathParam("name") String name) {
-        Response.ok(personService.fetchPreference(id, namespace, name)).build();
+    Response getPreference(@PathParam("id") String id, @PathParam("namespace") String namespace, @PathParam("name") String name) {
+        Preference preference = preferenceService.getPersonalPreference(id, namespace, name)
+        preference ? Response.ok(preference).build() : Response.noContent().build()
     }
 
     /**
@@ -136,5 +145,39 @@ class PersonController {
     Response getGroups(@PathParam("id") String id) {
         def groups = personService.getGroups(id)
         Response.ok(groups).build()
+    }
+
+    /**
+     * Create/replace a preference for the specified user
+     * @param id user id
+     * @param namespace preference namespace
+     * @param name preference name
+     * @param value preference value
+     * @return created preference
+     */
+    @POST
+    @Path("/{id}/preferences")
+    Response setPreference(@PathParam("id") String id, Preference preference) {
+        preference = preferenceService.setPersonalPreference(id, preference)
+        UriBuilder builder = uriInfo.getBaseUriBuilder()
+        builder.path(PersonController.class)
+        builder.path(PersonController.class.getMethod("getPreference", String.class, String.class, String.class))
+        URI preferenceUri = builder.build(id, preference.namespace, preference.name)
+        Response.created(preferenceUri).entity(preference).build()
+    }
+
+    /**
+     * Delete the specified user preference
+     * @param id user id
+     * @param namespace preference namespace
+     * @param name preference name
+     * @return deleted preference
+     */
+    @DELETE
+    @Path("/{id}/preferences/{namespace}/{name}")
+    Response deletePreference(@PathParam("id") String id, @PathParam("namespace") String namespace,
+                           @PathParam("name") String name) {
+        preferenceService.deletePersonalPreference(id, namespace, name)
+        Response.ok().build()
     }
 }

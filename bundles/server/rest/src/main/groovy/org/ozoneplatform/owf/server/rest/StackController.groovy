@@ -27,7 +27,7 @@ import javax.ws.rs.core.UriInfo
 
 @Path("/stacks")
 @Produces("application/json")
-class StackController {
+class StackController extends OwfRestController {
 
     StackService service;
     @Delegate(methodAnnotations = true, parameterAnnotations = true) PersonContainer personContainer

@@ -35,6 +35,7 @@
     <reference id="dashboardTemplateService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
     <reference id="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService"/>
     <reference id="personalWidgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService"/>
+    <reference id="preferenceService" interface="org.ozoneplatform.owf.server.service.api.PreferenceService"/>
 
     <!--
         We are using the OSGi Blueprint XML syntax to define a bean that we referred to in our JAX-RS server setup.
@@ -48,9 +49,11 @@
     </bean>
     <bean id="persons" class="org.ozoneplatform.owf.server.rest.PersonController">
         <property name="personService" ref="personService"/>
+        <property name="preferenceService" ref="preferenceService"/>
     </bean>
     <bean id="groups" class="org.ozoneplatform.owf.server.rest.GroupController">
         <property name="service" ref="groupService"/>
+        <property name="preferenceService" ref="preferenceService"/>
     </bean>
     <bean id="stacks" class="org.ozoneplatform.owf.server.rest.StackController">
         <property name="service" ref="stackService"/>
@@ -64,6 +67,9 @@
     <bean id="welcome" class="org.ozoneplatform.owf.server.rest.WelcomeController">
         <property name="dashboardInstanceService" ref="dashboardInstanceService"/>
         <property name="objectMapperProvider" ref="objectMapperProvider"/>
+    </bean>
+    <bean id="preferences" class="org.ozoneplatform.owf.server.rest.PreferenceController">
+        <property name="preferenceService" ref="preferenceService"/>
     </bean>
 
     <!--
@@ -135,6 +141,7 @@
             <ref component-id="widgetDefinitions"/>
             <ref component-id="personalWidgetDefinitions"/>
             <ref component-id="welcome"/>
+            <ref component-id="preferences"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref component-id="validationExceptionMap"/>

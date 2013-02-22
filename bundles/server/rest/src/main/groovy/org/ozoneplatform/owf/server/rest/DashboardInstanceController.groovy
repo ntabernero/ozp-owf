@@ -24,7 +24,7 @@ import javax.ws.rs.core.Response
 
 @Path("/dashboard-instances")
 @Produces("application/json")
-class DashboardInstanceController {
+class DashboardInstanceController extends OwfRestController {
 
     DashboardInstanceService dashboardInstanceService
 

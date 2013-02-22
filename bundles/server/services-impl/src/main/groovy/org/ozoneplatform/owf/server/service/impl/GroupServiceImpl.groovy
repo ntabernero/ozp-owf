@@ -143,17 +143,12 @@ class GroupServiceImpl implements GroupService {
         group.persons
     }
 
-    Set<Preference> listPreferences(Long id) {
+    Set<Preference> listPreferences(String id) {
         Group theGroup = this.fetch(id);
         return theGroup.preferences;
     }
     
-    Set<Preference> listPreferences(Long id, String namespace) {
-        Group theGroup = this.fetch(id);
-        return theGroup.preferences.findAll{ it.namespace == namespace; };
-    }
-    
-    Preference fetchPreference(Long id, String namespace, String name) {
+    Preference fetchPreference(String id, String namespace, String name) {
         Group theGroup = this.fetch(id);
         return theGroup.preferences.find{ it.namespace == namespace && it.name == name; };
     }
