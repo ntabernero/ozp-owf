@@ -31,7 +31,7 @@ define([
 
         var setupWidget = function () {
             //var altHostName = window.location.hostname;
-            var altHostName = 'ntabernero1';
+            var altHostName = '127.0.0.1';
             var port = window.location.port != '' ? ':' + window.location.port : '';
 
             //init container
