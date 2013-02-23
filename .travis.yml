@@ -10,7 +10,7 @@ before_install:
   - gem install sass
   - gem install compass
 install: /bin/true
-script:  mvn clean install -q
+script:  mvn clean install
 branches:
   only:
     - master
