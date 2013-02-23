@@ -1,4 +1,4 @@
-Ozone Widget Framework
+Ozone Widget Framework [![Build Status](https://travis-ci.org/ntabernero/ozp-owf.png?branch=master)](https://travis-ci.org/ntabernero/ozp-owf)
 ======================
 
 This is the OWF module of the Ozone Platform.  It builds OSGI bundles that are meant to be run in the 
