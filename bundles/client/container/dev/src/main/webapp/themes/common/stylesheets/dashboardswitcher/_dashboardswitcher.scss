@@ -1,0 +1,356 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+$dashboard-switcher-header-font-size: 12px !default;
+
+$dashboard-switcher-body-radius: 15px !default;
+$dashboard-switcher-background-color: $baseColor !default;
+$dashboard-switcher-opacity: 0.90 !default;
+
+$dashboard-switcher-dashboard-background-color: $dashboard-switcher-background-color !default;
+$dashboard-switcher-dashboard-over-background-color: darken($dashboard-switcher-dashboard-background-color, 15) !default;
+$dashboard-switcher-dashboard-selected-background-color: lighten($dashboard-switcher-dashboard-background-color, 10) !default;
+
+$dashboard-switcher-dashboard-border-color: $dashboard-switcher-background-color !default;
+$dashboard-switcher-dashboard-over-border-color: $dashboard-switcher-dashboard-over-background-color !default;
+$dashboard-switcher-dashboard-selected-border-color: $dashboard-switcher-dashboard-selected-background-color !default;
+
+$dashboard-switcher-dashboard-text-color: getHighContrastColor($dashboard-switcher-dashboard-background-color) !default;
+$dashboard-switcher-dashboard-over-text-color: getHighContrastColor($dashboard-switcher-dashboard-over-background-color) !default;
+$dashboard-switcher-dashboard-selected-text-color: getHighContrastColor($dashboard-switcher-dashboard-selected-background-color) !default;
+
+$dashboard-switcher-layout-default-icon: theme-image($theme-name, 'dashboardswitcher/DefaultDashboard.png') !default;
+$dashboard-switcher-layout-default-icon-over: theme-image($theme-name, 'dashboardswitcher/DefaultDashboard_Color.png') !default;
+
+$dashboard-switcher-layout-stack-default-icon: theme-image($theme-name, 'dashboardswitcher/StacksIcon.png') !default;
+$dashboard-switcher-layout-stack-default-icon-over: theme-image($theme-name, 'dashboardswitcher/StacksIcon_Color.png') !default;
+
+$dashboard-switcher-tooltip-heading-color: #acd2ed !default;
+$dashboard-switcher-tooltip-label-color: #ababab !default;
+
+$dashboard-switcher-share-color: #6ba6dd !default;
+$dashboard-switcher-restore-color: #dd8f08 !default;
+$dashboard-switcher-edit-color: #99d460 !default;
+$dashboard-switcher-delete-color: #b3292d !default;
+
+#dashboard-switcher {
+
+    width: auto !important;
+    height: auto !important;
+    padding: 0px;
+    // &-body did not work in sass 3.2.5.  
+    &.body {
+        overflow: auto;
+        @include border-radius($dashboard-switcher-body-radius);
+    }
+
+    ul.actions {
+        // clear: both;
+        // float: right;
+        text-align: right;
+        color: $dashboard-switcher-dashboard-text-color;
+        margin-right: 15px;
+        
+        li {
+            display: inline-block;
+            padding: 5px 10px;
+
+            &:hover, &.selected {
+                background: $dashboard-switcher-dashboard-over-background-color;
+                color: $dashboard-switcher-dashboard-over-text-color;
+            }
+        }
+    }
+}
+
+#dashboard-switcher .dashboard, #dashboard-switcher .stack, .stack.drag-proxy, .dashboard.drag-proxy {
+    $thumb-width: 73px;
+    $name-width: 8.2em;
+
+    //For these elements, it is more useful
+    //to compute content width not overall box 
+    //width, since we are setting width based on
+    //its contents
+    @include box-sizing(content-box);
+
+    float: left;
+    margin: 10px;
+    padding: 15px 15px 0px 15px;
+    position: relative;
+    text-align:center;
+    overflow: hidden;
+    cursor: pointer;
+    min-width: $name-width;
+    max-width: $name-width;
+    
+    .thumb-wrap {
+        text-align: center;
+        white-space:nowrap;
+        margin-left:auto;
+        margin-right:auto;
+        width: $thumb-width;
+        .thumb {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            width: $thumb-width;
+            height: 70px;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-image: $dashboard-switcher-layout-default-icon;
+        }
+    }
+    // &-name flagged as error in sass 3.2.5
+    &.name {
+        color: $dashboard-switcher-dashboard-text-color;
+        height: 3.25em;
+        width: $name-width;
+        margin-top: 2px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    &:hover {
+        background-color: $dashboard-switcher-dashboard-over-background-color !important;
+        border-color: $dashboard-switcher-dashboard-over-border-color !important;
+        .dashboard-name {
+            color: $dashboard-switcher-dashboard-over-text-color  !important;
+        }
+        @include border-top-radius($dashboard-switcher-body-radius);
+        @include border-bottom-radius($dashboard-switcher-body-radius);
+        
+    }
+    // &-selected flagged as error in sass 3.2.5
+    &.selected {
+        .dashboard-name {
+            color: $dashboard-switcher-dashboard-selected-text-color !important;
+            font-weight: bold;
+        }
+        .thumb {
+            background-image: $dashboard-switcher-layout-default-icon-over !important;
+        }
+    }
+}
+#dashboard-switcher .stack, .stack.drag-proxy {
+    .thumb {
+        background-image: $dashboard-switcher-layout-stack-default-icon !important;
+    }
+    &.dashboard-selected {
+        .thumb {
+            background-image: $dashboard-switcher-layout-stack-default-icon-over !important;
+        }
+    }
+}
+
+.stack.drag-proxy, .dashboard.drag-proxy {
+    float: none;
+    position: absolute;
+}
+
+.icon-share {
+    &:hover, &.hover {
+        color: $dashboard-switcher-share-color;
+    }
+}
+
+.icon-refresh {
+    &:hover, &.hover {
+        color: $dashboard-switcher-restore-color;
+    }
+}
+
+.icon-edit {
+    &:hover, &.hover {
+        color: $dashboard-switcher-edit-color;
+    }
+}
+
+.icon-remove {
+    &:hover, &.hover {
+        color: $dashboard-switcher-delete-color;
+    }
+}
+
+.dashboard-actions, .stack-actions {
+    color: #fff;
+    padding: 5px 0px;
+
+        li {
+            display: inline-block;
+            font-size: 1.5em;
+        }
+        -webkit-animation-duration: 0.2s;
+        -webkit-animation-delay: 1s;
+}
+
+.x-ie7 {
+    #dashboard-switcher {
+        ul.actions li{
+            zoom: 1; display: inline;
+        }
+    }
+    .dashboard-actions, .stack-actions {
+            li {
+                display: inline;
+                font-size: 1.5em;
+            }
+    }
+}
+.dashboard-actions, .stack-actions {
+    li {
+        width: 25%;
+    }
+}
+
+#stacks-or-dashboards {
+    overflow: hidden;
+}
+
+.stack-dashboards {
+    clear: both;
+    position: relative;
+    top: -30px;
+
+    .dashboards {
+        background: darken($dashboard-switcher-dashboard-background-color, 10%);
+        overflow: hidden;
+    }
+}
+.stack-dashboards-anchor-tip {
+    position: relative;
+    border-width: 20px;
+    border-bottom-color: darken($dashboard-switcher-dashboard-background-color, 10%);
+}
+
+.ozonequicktip {
+    .dashboard-tooltip-content {
+        padding: 1.25em;
+    }
+
+    label {
+        color: $dashboard-switcher-tooltip-label-color;
+    }
+
+    h3 {
+        color: $dashboard-switcher-tooltip-heading-color;
+        font-size: 1.5em;
+        margin: 0 0 1.25em 0;
+    }
+
+    p {
+        font-size: $owf-font-size;
+        line-height: 1.5em;
+    }
+
+    .tip-description {
+        line-height: (14/12);
+    }
+}
+
+
+
+
+
+// Themes from vision.  Remove when views are migrated to other template.
+//$dashboardSwitcherBackground: $owf-base-color !default;
+$dashboardSwitcherBackground: #fff !default;
+
+$dashboardSwitcherItemBackground: $dashboardSwitcherBackground !default;
+$dashboardSwitcherItemBorder: 1px solid $dashboardSwitcherBackground !default;
+$dashboardSwitcherItemOverBackground: darken($dashboardSwitcherItemBackground, 5%) !default;
+$dashboardSwitcherItemOverBorder: 1px solid $dashboardSwitcherItemOverBackground !default;
+
+#dashboard-switcher-vision {
+    @extend .no-border-radius;
+    border: 5px solid gray;
+    border: 5px solid rgba(gray, 0.5);
+
+    background: $dashboardSwitcherBackground;
+    overflow: hidden;
+
+    .tilesview {
+        overflow: hidden;
+    }
+
+    .btn.active {
+        color: $linkColor;
+    }
+    .manage-btn i {
+        padding-right: 0.25em;
+    }
+}
+
+div.dashboard-view {
+    background: $dashboardSwitcherItemBackground;
+    border: $dashboardSwitcherItemBorder;
+
+    float: left;
+    margin: 8px 0px 8px 8px;
+    padding: 1em;
+    min-width: 100px;
+    max-width: 164px;
+    
+    position: relative;
+    text-align: center;
+
+    @include border-radius(5px);
+
+    &:hover {
+        background: $dashboardSwitcherItemOverBackground;
+    }
+
+    &.selected {
+        background: $dashboardSwitcherItemOverBackground;
+    }
+
+    & img {
+        display: block;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    & span {
+        display: block;
+        color: black;
+        font: 11px helvetica, arial, sans-serif;
+        height: 2.5em;
+        width: 6em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-group {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0px;
+
+        .btn {
+            background: $baseColor;
+            border: none;
+
+            i {
+                &:hover {
+                    color: $linkColor;
+                }
+            }
+
+            .icon-remove:hover {
+                color: $btnDangerBackground;
+            }
+        }
+    }
+}

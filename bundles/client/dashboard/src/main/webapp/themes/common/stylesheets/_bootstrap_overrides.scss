@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2013 Next Century Corporation 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,6 +26,7 @@
  */
 $iconSpritePath: theme-image($theme-name, "glyphicons-halflings.png", true);
 $iconWhiteSpritePath: theme-image($theme-name, "glyphicons-halflings-white.png", true);
+$baseFontSize: 14px !default;
 
 .dropdown-menu {
     li > a {
@@ -43,4 +44,17 @@ $iconWhiteSpritePath: theme-image($theme-name, "glyphicons-halflings-white.png",
 .tooltip-inner {
 	padding-left: 2em;
 	padding-right: 2em;
+}
+
+// modal 
+// -------------------------------------------
+.modal-header {
+    & > h4 {
+        margin: 0;
+    }
+
+    & > button {
+        margin: 0;
+        line-height: $baseFontSize * 1.25;
+    }
 }

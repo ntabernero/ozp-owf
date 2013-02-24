@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.ozoneplatform.owf.bundles</groupId>
         <artifactId>bundles</artifactId>
-        <version>8.0.0-ALPHA-SPRINT3-SNAPSHOT</version>
+        <version>8.0.0-ALPHA-SPRINT4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -55,15 +55,6 @@
                             </goals>
                             <configuration>
                                 <artifactItems>
-                                    <artifactItem>
-                                        <groupId>org.ozoneplatform.commons.modules</groupId>
-                                        <artifactId>client</artifactId>
-                                        <version>${project.version}</version>
-                                        <type>zip</type>
-                                        <classifier>js</classifier>
-                                        <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}/minified-output</outputDirectory>
-                                    </artifactItem>
                                     <artifactItem>
                                         <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>json</artifactId>
@@ -122,6 +113,33 @@
                                         <groupId>org.ozoneplatform.commons.vendor</groupId>
                                         <artifactId>backbone</artifactId>
                                         <version>0.9.10</version>
+                                        <type>zip</type>
+                                        <classifier>js</classifier>
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
+                                    </artifactItem>
+                                    <artifactItem>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
+                                        <artifactId>jquery-splitter</artifactId>
+                                        <version>0.3</version>
+                                        <type>zip</type>
+                                        <classifier>js</classifier>
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
+                                    </artifactItem>
+                                    <artifactItem>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
+                                        <artifactId>bootstrap-editable</artifactId>
+                                        <version>1.4.1</version>
+                                        <type>zip</type>
+                                        <classifier>js</classifier>
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>${project.build.directory}/minified-output/libs</outputDirectory>
+                                    </artifactItem>
+                                    <artifactItem>
+                                        <groupId>org.ozoneplatform.commons.vendor</groupId>
+                                        <artifactId>backbone.declarative.views</artifactId>
+                                        <version>0.2</version>
                                         <type>zip</type>
                                         <classifier>js</classifier>
                                         <overWrite>true</overWrite>

@@ -25,20 +25,11 @@
         }
     }
 
-    &.maximized {
-        width: 100% !important;
-        height: 100% !important;
+    &.window {
+        position: absolute;
 
-        top: 0px !important;
-        left: 0px !important;
+        .header {
+            cursor: move;
+        }
     }
-
-    &.minimized {
-        top: -10000px !important;
-        left: -10000px !important;
-    }
-}
-
-.widget.window .header {
-    cursor: move;
 }

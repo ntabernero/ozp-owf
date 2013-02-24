@@ -1,0 +1,22 @@
+.portalpane {
+    position: relative;
+
+    overflow-y: auto;
+
+    > .widget {
+        width: 100%;
+
+        position: relative;
+
+        &.ui-state-disabled {
+            //when the resizable plugin is disabled, it
+            //makes things translucent by default
+            opacity: 1;
+            filter: none;
+
+            > .ui-resizable-handle {
+                display: none !important;
+            }
+        }
+    }
+}

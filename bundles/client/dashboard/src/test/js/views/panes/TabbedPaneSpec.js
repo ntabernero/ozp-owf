@@ -9,7 +9,7 @@ define([
         var tabbedPane, collection,
             widget1 = {
                 title: 'Widget One',
-                uniqueId: '1',
+                id: '1',
                 url: 'widget.html',
                 x: 50,
                 y: 50,
@@ -22,7 +22,7 @@ define([
             },
             widget2 = {
                 title: 'Widget Two',
-                uniqueId: '2',
+                id: '2',
                 url: 'widget.html',
                 x: 400,
                 y: 300,
@@ -35,7 +35,7 @@ define([
             },
             widget3 = {
                 title: 'Widget Three',
-     //           uniqueId: '3',
+                id: '3',
                 url: 'widget.html',
                 x: 50,
                 y: 50,
@@ -51,7 +51,7 @@ define([
             collection = new WidgetStatesCollection([widget1, widget2]);
 
             tabbedPane = new TabbedPane({
-                collection: collection
+                widgets: collection
             }).render();
 
             done();
@@ -78,10 +78,6 @@ define([
             
             expect(views.length).to.equal(3);
             expect(isWidgetControlIframe).to.not.contain(false);
-        });
-
-        it('automatically sets the first widget to be active if none are', function() {
-            expect(collection.where({active: true})[0].get('title')).to.be(widget1.title);
         });
 
         it('renders a taskbar with the same collection', function() {

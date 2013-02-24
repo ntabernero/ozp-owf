@@ -31,8 +31,8 @@
     <reference id="groupService" interface="org.ozoneplatform.owf.server.service.api.GroupService"/>
     <reference id="personService" interface="org.ozoneplatform.owf.server.service.api.PersonService"/>
     <reference id="stackService" interface="org.ozoneplatform.owf.server.service.api.StackService"/>
-    <reference id="personalDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardInstanceService"/>
-    <reference id="groupDashboardService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
+    <reference id="dashboardInstanceService" interface="org.ozoneplatform.owf.server.service.api.DashboardInstanceService"/>
+    <reference id="dashboardTemplateService" interface="org.ozoneplatform.owf.server.service.api.DashboardTemplateService"/>
     <reference id="widgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.WidgetDefinitionService"/>
     <reference id="personalWidgetDefinitionService" interface="org.ozoneplatform.owf.server.service.api.PersonalWidgetDefinitionService"/>
 
@@ -41,25 +41,29 @@
         This bean carries a set of JAX-RS annotations that allow its methods to be mapped to incoming requests.
     -->
     <bean id="personalDashboards" class="org.ozoneplatform.owf.server.rest.DashboardInstanceController">
-        <property name="personalDashboardService" ref="personalDashboardService"/>
+        <property name="dashboardInstanceService" ref="dashboardInstanceService"/>
     </bean>
     <bean id="groupDashboards" class="org.ozoneplatform.owf.server.rest.DashboardTemplateController">
-        <property name="groupDashboardService" ref="groupDashboardService"/>
+        <property name="service" ref="dashboardTemplateService"/>
     </bean>
     <bean id="persons" class="org.ozoneplatform.owf.server.rest.PersonController">
         <property name="personService" ref="personService"/>
     </bean>
     <bean id="groups" class="org.ozoneplatform.owf.server.rest.GroupController">
-        <property name="groupService" ref="groupService"/>
+        <property name="service" ref="groupService"/>
     </bean>
     <bean id="stacks" class="org.ozoneplatform.owf.server.rest.StackController">
-        <property name="stackService" ref="stackService"/>
+        <property name="service" ref="stackService"/>
     </bean>
     <bean id="widgetDefinitions" class="org.ozoneplatform.owf.server.rest.WidgetDefinitionController">
         <property name="widgetDefinitionService" ref="widgetDefinitionService"/>
     </bean>
     <bean id="personalWidgetDefinitions" class="org.ozoneplatform.owf.server.rest.PersonalWidgetDefinitionController">
         <property name="personalWidgetDefinitionService" ref="personalWidgetDefinitionService"/>
+    </bean>
+    <bean id="welcome" class="org.ozoneplatform.owf.server.rest.WelcomeController">
+        <property name="dashboardInstanceService" ref="dashboardInstanceService"/>
+        <property name="objectMapperProvider" ref="objectMapperProvider"/>
     </bean>
 
     <!--
@@ -68,6 +72,11 @@
 
     <!--<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />-->
     <bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider" />
+
+    <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
+    <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
+    <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
+    <bean id="objectMapperProvider" class="org.ozoneplatform.owf.server.rest.ObjectMapperProvider"/>
 
     <!--
         Simple Authorization Provider
@@ -125,12 +134,13 @@
             <ref component-id="stacks"/>
             <ref component-id="widgetDefinitions"/>
             <ref component-id="personalWidgetDefinitions"/>
+            <ref component-id="welcome"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
-            <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
-            <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
-            <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
-            <bean id="objectMapperProvider" class="org.ozoneplatform.owf.server.rest.ObjectMapperProvider"/>
+            <ref component-id="validationExceptionMap"/>
+            <ref component-id="notFoundExceptionMap"/>
+            <ref component-id="jsonExceptionMap" />
+            <ref component-id="objectMapperProvider"/>
             <ref component-id="jsonProvider" />
 
         </jaxrs:providers>
@@ -141,11 +151,11 @@
             <ref component-id="groups"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
-            <bean id="validationExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.ValidationExceptionMapper" />
-            <bean id="notFoundExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.NotFoundExceptionMapper" />
-            <bean id="jsonExceptionMap" class="org.ozoneplatform.owf.server.rest.exceptionmap.JsonExceptionMapper" />
+            <ref component-id="validationExceptionMap" />
+            <ref component-id="notFoundExceptionMap" />
+            <ref component-id="jsonExceptionMap" />
             <!--ref component-id="groupsAuthFilter"/-->
-            <bean id="objectMapperProvider" class="org.ozoneplatform.owf.server.rest.ObjectMapperProvider"/>
+            <ref component-id="objectMapperProvider"/>
             <ref component-id="jsonProvider" />
         </jaxrs:providers>
     </jaxrs:server>

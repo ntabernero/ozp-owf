@@ -15,9 +15,10 @@
 */
 package org.ozoneplatform.owf.server.rest
 
-import javax.ws.rs.core.UriInfo
 import org.ozoneplatform.commons.server.domain.model.Entity
+
 import javax.ws.rs.core.UriBuilder
+import javax.ws.rs.core.UriInfo
 
 abstract class OwfRestController {
     protected URI buildEntityURI(UriInfo uriInfo, Entity entity, String methodName, String extraParam = null) {

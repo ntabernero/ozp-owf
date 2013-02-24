@@ -46,7 +46,9 @@ require({
         backbone: '../libs/js/backbone',
         'backbone.declarative.views': '../libs/js/backbone.declarative.views',
         modernizr: '../libs/js/modernizr',
-        handlebars: '../libs/js/handlebars'
+        handlebars: '../libs/js/handlebars',
+        'jquery-splitter': '../libs/js/jquery-splitter',
+        'bootstrap-editable': '../libs/js/bootstrap-editable'
         // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
         // hbs: 'js/handlebars/handlebars-plugin-0.2.1',
         // json2: 'js/json2',
@@ -54,7 +56,6 @@ require({
     },
 
     shim: {
-        // Backbone library depends on lodash and jQuery.
         jquery: {
             exports: '$'
         },
@@ -63,6 +64,10 @@ require({
         },
         backbone: {
             deps: ['lodash', 'jquery'],
+            exports: 'Backbone'
+        },
+        'backbone.declarative.views': {
+            deps: ['lodash', 'backbone'],
             exports: 'Backbone'
         },
 
@@ -78,13 +83,25 @@ require({
             deps: ['jquery', 'bootstrap/bootstrap-transition'],
             exports: '$'
         },
+        'bootstrap/bootstrap-tooltip': {
+            deps: ['jquery', 'bootstrap/bootstrap-transition'],
+            exports: '$'
+        },
+        'bootstrap/bootstrap-popover': {
+            deps: ['jquery', 'bootstrap/bootstrap-transition', 'bootstrap/bootstrap-tooltip'],
+            exports: '$'
+        },
+        'bootstrap-editable': {
+            deps: ['jquery', 'bootstrap/bootstrap-transition', 'bootstrap/bootstrap-tooltip', 'bootstrap/bootstrap-popover'],
+            exports: '$'
+        },
         'jqueryui/jquery-ui.custom': {
             deps: ['jquery'],
             exports: '$'
         },
-        'backbone.declarative.views': {
-            deps: ['lodash', 'backbone'],
-            exports: 'Backbone'
+        'jquery-splitter': {
+            deps: ['jquery'],
+            exports: '$'
         }
     }
   }, tests, function() {

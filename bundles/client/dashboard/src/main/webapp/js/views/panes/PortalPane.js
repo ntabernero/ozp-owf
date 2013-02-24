@@ -15,24 +15,51 @@
  */
 
 define([
-    'views/panes/LayoutPane',
-
-    'backbone'
-], function (Pane, Backbone) {
+    'views/panes/PanelPane',
+    'views/widgets/Panel',
+    'mixins/widgets/ResizableWidget',
+    'backbone',
+    'lodash'
+], function (PanelPane, Panel, ResizableWidget, Backbone, _) {
     
     'use strict';
 
-    return Pane.extend({
-
-        model: null,
-
-        className: 'pane',
-
+    var Portlet = Panel.extend(_.extend({}, ResizableWidget, {
         render: function() {
-            this.$el.html('This is a portal pane.');
+            Panel.prototype.render.apply(this, arguments);
+
+            //allow only the south handle on the resizable plugin, effectively
+            //disabling horizontal resize
+            ResizableWidget.render.call(this, {handles: 's'}, false, true);
+
             return this;
+        },
+
+        //override onResize to unset width, and only record changes in height
+        onResize: function(evt, ui) {
+            this.$el.css('width', '');
+
+            this.model.set('height', ui.size.height);
+        },
+
+        updateCollapse: function() {
+            Panel.prototype.updateCollapse.apply(this, arguments);
+
+            //disable resize on collapsed widgets
+            this[this.model.get('collapsed') ? 'disableResize' : 'enableResize']();
         }
-        
-    });
+    }));
+
+    return PanelPane.extend(_.extend({}, {
+        vtype: 'portalpane',
+
+        className: PanelPane.prototype.className + ' portalpane',
+
+        viewFactory: function(widget) {
+            return new Portlet({
+                model: widget
+            });
+        }
+    }));
 
 });

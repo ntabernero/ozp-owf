@@ -1,0 +1,14 @@
+//Styles common to portal and accordion
+.panelpane .widget {
+    border-left-width: 0px;
+    border-right-width: 0px;
+
+    &.collapsed {
+        height: $headerLineHeight !important;
+
+        > .body {
+            //necessary for IE7
+            height: 0;
+        }
+    }
+}

@@ -87,7 +87,7 @@ define([
     var Router = Backbone.Router.extend({
         routes: {
             '': 'index',
-            'guid=:guid': 'index',
+            'guid=:id': 'index',
             'perf/:count': 'measurePerformance',
             ':guid': 'index'
         },
@@ -95,17 +95,17 @@ define([
         initialize: function (options) {
             this.options = options;
 
-            //anytime a dashboard is switched update the url so it has the dashboard's guid
+            //anytime a dashboard is switched update the url so it has the dashboard's id
             EventBus.on('dashboard:switched', function (model) {
-              if (model != null && model.get('guid') != null) {
-                  this.navigate('guid='+model.get('guid'));
+              if (model != null && model.get('id') != null) {
+                  this.navigate('guid='+model.get('id'));
               }
             }, this);
         },
 
-        index: function (guid) {
+        index: function (id) {
             EventBus.trigger('dashboard:switch', new Backbone.Model({
-                guid:guid
+                id:id
             }));
         },
 

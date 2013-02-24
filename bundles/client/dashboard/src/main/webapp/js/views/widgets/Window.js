@@ -17,23 +17,23 @@
 define([
     'views/widgets/Panel',
     'views/widgets/WindowHeader',
+    'mixins/widgets/ResizableWidget',
     'backbone',
     'lodash',
     'jqueryui/jquery-ui.custom'
-], function (Panel, WindowHeader, Backbone, _, $) {
+], function (Panel, WindowHeader, ResizableWidget, Backbone, _, $) {
     
     'use strict';
 
-    return Panel.extend({
+    return Panel.extend(_.extend({}, ResizableWidget, {
 
         model: null,
         className: 'widget window',
 
-        headerClass: WindowHeader,
+        HeaderClass: WindowHeader,
 
         initialize: function (options) {
-            var parent =  this.constructor.__super__;
-            parent.initialize.apply(this, arguments);
+            Panel.prototype.initialize.apply(this, arguments);
 
             this.zIndexManager = options.zIndexManager;
             this.zIndexManager.register(this, this.model.get('zIndex'));
@@ -42,38 +42,29 @@ define([
         render: function() {
             var me = this;
 
-            me.constructor.__super__.render.call(me);
+            Panel.prototype.render.call(me);
 
             me.$el
                 .one('mousedown', function (evt) {
                     me.$el
                         .draggable({
                             containment: me.containment,
-                            start: me._mask,
+                            start: function() { me.$el.trigger('dragstart'); },
                             stop: function(evt, ui) {
-                                me._unmask();
+                                me.$el.trigger('dragend');
                                 me._onMove(evt, ui);
                             }
                         })
                         .trigger(evt);
-                })
-                .resizable({
-                    minHeight: 50,
-                    minWidth: 50,
-                    start: me._mask,
-                    resize: _.bind(me._onResize, me),
-                    stop: me._unmask
+
+                    me.on('remove', function(view) {
+                        view.$el.draggable('destroy');
+                    });
                 });
+    
+            ResizableWidget.render.call(this, undefined, true, true);
 
             return me;
-        },
-
-        close: function () {
-            this.$el
-                .draggable( 'destroy' )
-                .resizable( 'destroy' );
-
-            this.constructor.__super__.close.apply(this, arguments);
         },
 
         updateMinimize: function() {
@@ -86,11 +77,12 @@ define([
 
         updateActive: function() {
             Panel.prototype.updateActive.apply(this, arguments);
-            if (this.model.get('active') && this.zIndexManager != null) {
-                this.zIndexManager.bringToFront(this);
-            }
 
             if (this.zIndexManager) {
+                if (this.model.get('active')) {
+                    this.zIndexManager.bringToFront(this);
+                }
+
                 this.model.set('zIndex', this.zIndexManager.getLogicalIndex(this));
             }
         },
@@ -99,32 +91,17 @@ define([
             var model = this.model;
             return {
                 'style':    'left:' + model.get('x') + 'px;' +
-                            'top:' + model.get('y') + 'px;' + 
-                            'width:' + model.get('width') + 'px;' +
-                            'height:' + model.get('height') + 'px;'
+                            'top:' + model.get('y') + 'px;'
             };
         },
 
         //TODO: refactor
-        _mask: function () {
-            $('#mask').removeClass('hide');
-        },
-
-        //TODO: refactor 
-        _unmask: function () {
-            $('#mask').addClass('hide');
-        },
-
-        _onResize: function (evt, ui) {
-            this.model.set('height', ui.size.height);
-            this.model.set('width', ui.size.width);
-        },
 
         _onMove: function(evt, ui) {
             this.model.set('x', ui.position.left);
             this.model.set('y', ui.position.top);
         }
 
-    });
+    }));
 
 });

@@ -16,8 +16,12 @@
 
 package org.ozoneplatform.owf.server.rest.mix_ins
 
-import com.fasterxml.jackson.annotation.*
-import org.ozoneplatform.commons.server.domain.model.*
+import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
+import org.ozoneplatform.commons.server.domain.model.DashboardTemplate
+import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.commons.server.domain.model.Stack
 
 abstract class GroupMixIn {
     GroupMixIn(@JsonProperty("name") String name) {}
@@ -25,7 +29,8 @@ abstract class GroupMixIn {
     @JsonProperty abstract boolean isIsPermissionsActive()
     @JsonIgnore abstract boolean getAutomatic()
     @JsonProperty abstract boolean isIsAutomatic()
-    @JsonIgnore abstract Iterable<Stack> getStacks()
-    @JsonIgnore abstract Iterable<Person> getPersons()
+    @JsonIgnore abstract Set<Stack> getStacks()
+    @JsonIgnore abstract Set<Person> getPersons()
+    @JsonBackReference abstract Set<DashboardTemplate> getDashboardTemplates()
 }
 

@@ -17,21 +17,24 @@
 /*global require, initialWidgetDefinitions, initialDashboards*/
 define([
     'router',
+    'events/EventBus',
+    'views/Banner',
     'views/DashboardContainer',
+    'views/dashboardswitcher/DashboardSwitcher',
     'collections/PersonalWidgetDefinitionsCollection',
-    'collections/PersonalDashboardsCollection',
+    'collections/DashboardInstancesCollection',
     'models/WidgetStateModel',
 
     'backbone',
     'jquery'
-], function (Router, DashboardContainer, PersonalWidgetDefinitionsCollection, PersonalDashboardsCollection,
+], function (Router, EventBus, Banner, DashboardContainer, DashboardSwitcher, PersonalWidgetDefinitionsCollection, DashboardInstancesCollection,
              WidgetStateModel, Backbone, $) {
 
     // create a collection of dashboards from initial data
     var personalWidgetDefinitionsCollection = new PersonalWidgetDefinitionsCollection(initialWidgetDefinitions);
 
     // create a collection of dashboards from initial data
-    var personalDashboardsCollection = new PersonalDashboardsCollection(initialDashboards);
+    var dashboardInstancesCollection = new DashboardInstancesCollection(initialDashboards);
 
     //alter widgetstatemodel so the get function will lookup any properties it doesn't have on the corresponding widgetdef
     WidgetStateModel.prototype.get = function(attr) {
@@ -50,9 +53,14 @@ define([
         return returnValue;
     };
 
+    var banner = new Banner({});
+//    var dashboardSwitcher = new DashboardSwitcher({
+//        dashboardInstancesCollection: dashboardInstancesCollection
+//    });
+    
     var dashboardContainer = new DashboardContainer({
         personalWidgetDefinitionsCollection: personalWidgetDefinitionsCollection,
-        personalDashboardsCollection: personalDashboardsCollection
+        dashboardInstancesCollection: dashboardInstancesCollection
     });
 
     var router = new Router();
@@ -81,10 +89,64 @@ define([
         }
     });
 
+    EventBus.on('dashboard:showSwitcher', function (evt) {
+
+        // Lazily create a dashboard switcher and add it to the document body.
+        if(!this.dashboardSwitcher) {
+            this.dashboardSwitcher = new DashboardSwitcher({
+                dashboardInstancesCollection: dashboardInstancesCollection
+            });
+            $(document.body).append(this.dashboardSwitcher.render().$el);
+        }
+
+        // Display the switcher and switch its active style.
+        this.dashboardSwitcher.show();
+        this.dashboardSwitcher.$el.one('hidden', function () {
+            $(evt.currentTarget).removeClass('active');
+        });
+        $(evt.currentTarget).addClass('active');
+        return false;
+
+    });
+    
+    EventBus.on('dashboard:create', function() {
+        require([
+            'views/dashboard/CreateEditDashboard',
+            'views/designer/Designer',
+            'services/Dashboard'
+        ], function(CreateEditDashboard, DashboardDesigner, DashboardService) {
+            
+            var cd = new CreateEditDashboard({
+                title: 'Create Dashboard',
+                removeOnClose: true
+            });
+
+            cd.show();
+           
+            cd.create().then(function( dashboardModel ) {
+                var me =this,
+                    dd = new DashboardDesigner({
+                        model: dashboardModel
+                    });
+
+                dd.render();
+                $(document.body).append(dd.$el);
+
+                dd.design().then(function(config) {
+                    dd.remove();
+
+                    dashboardModel.set( 'layoutConfig', DashboardService.convertForDashboard( config ) );
+
+                    dashboardInstancesCollection.add( dashboardModel );
+                });
+            });
+        });
+    });
+
     return {
         router: router,
         dashboardContainer: dashboardContainer,
         personalWidgetDefinitionsCollection: personalWidgetDefinitionsCollection,
-        personalDashboardsCollection: personalDashboardsCollection
+        DashboardInstancesCollection: DashboardInstancesCollection
     };
 });

@@ -1,0 +1,30 @@
+<html>
+<head>
+  <title>Eventing RPC Widget</title>
+
+  <!--<link href="../../../../css/dragAndDrop.css" rel="stylesheet" type="text/css">-->
+  <script type="text/javascript" src="/base/target/minified-output/js-min/owf-widget-debug.js"></script>
+
+
+  <script type="text/javascript">
+
+    OWF.relayFile = '/base/target/minified-output/js/eventing/rpc_relay.uncompressed.html';
+
+    window.owfjQuery(document).ready(function() {
+      var widgetEventingController = OWF.Eventing._Widget.getInstance(function(wc) {
+          wc.registerHandler("_rpc_widget_test", function (sender, message) {
+              window.owfjQuery('#message').html('received message: <b>' + message + '</b>');
+            return 'rpc_widget_test:' + message;
+          });
+
+          var serviceName = '_rpc_test';
+          wc.send('..', serviceName, null, wc.getWidgetId(), 'I sent you a message from the widget!!!');
+      },OWF.relayFile);
+    });
+  </script>
+</head>
+
+<body>
+  <div id="message"></div>
+</body>
+</html>

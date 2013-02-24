@@ -22,18 +22,20 @@ define([
     'services/ZIndexManager',
     'jquery',
     'backbone'
-], function (Pane, WidgetWindow, Taskbar, WindowHeader, ZIndexManager, $, Backbone) {
+], function (LayoutPane, WidgetWindow, Taskbar, WindowHeader, ZIndexManager, $, Backbone) {
     
     'use strict';
 
-    return Pane.extend({
+    return LayoutPane.extend({
+        vtype: 'desktoppane',
+
         $body: null, //jquery element for the dashboard body
         taskbar: null, //taskbar View
 
-        className: 'pane desktoppane',
+        className: LayoutPane.prototype.className + ' desktoppane',
 
         initialize: function() {
-            Pane.prototype.initialize.apply(this, arguments);
+            LayoutPane.prototype.initialize.apply(this, arguments);
 
             this.zIndexManager = new ZIndexManager();
         },
@@ -41,14 +43,24 @@ define([
         render: function () {
             var me = this;
 
-//            console.time('pane');
-            this.constructor.__super__.render.call(this);
+            me.renderTaskbar();
 
-            this.renderTaskbar();
-            this.renderWidgets();
+            me.$body = $('<div class="body">');
+            me.$el.append(me.$body);
 
-//            console.timeEnd('pane');
-            return this;
+            me.renderCollection({
+                $body: me.$body,
+                viewFactory: function(model) {
+                    return new WidgetWindow({
+                        model: model,
+                        containment: me.$body,
+                        zIndexManager: me.zIndexManager
+                    });
+                },
+                collection: me.collection
+            });
+            
+            return LayoutPane.prototype.render.apply(me, arguments);
         },
 
         renderTaskbar: function() {
@@ -61,41 +73,15 @@ define([
             this.$el.append(this.taskbar.$el);
         },
 
-        renderWidgets: function() {
+        updateSize: function() {
             var me = this;
 
-            me.$body = $(document.createElement('div')).addClass('body');
+            LayoutPane.prototype.updateSize.apply(me, arguments);
 
-            this.collection.each(function (widgetState) {
-                me.renderWidget(widgetState);
-            });
-
-            me.$el.append(me.$body);
-        },
-
-        renderWidget: function(widgetState) {
-//            console.time('widget');
-        
-            var ww = new WidgetWindow({
-                model: widgetState,
-                containment: this.$body,
-                zIndexManager: this.zIndexManager
-            });
-
-            this.$body.append(ww.render().$el);
-
-//            console.timeEnd('widget');
-
-            return ww;
-        },
-
-        addWidget: function(widget) {
-            this.renderWidget(widget);
-        },
-
-        launchWidget: function (evt, model) {
-            var ww = this.renderWidget(model);
-            return ww;
+            //adjust to new size once it is worked out
+            setTimeout(function() {
+                me.taskbar.updateSize();
+            }, 0);
         }
     });
 });

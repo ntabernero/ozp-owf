@@ -16,13 +16,15 @@
 
 package org.ozoneplatform.owf.server.rest
 
+import org.ozoneplatform.commons.server.domain.model.Group
+import org.ozoneplatform.commons.server.domain.model.Person
+import org.ozoneplatform.owf.server.service.api.PersonService
+
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
-import org.ozoneplatform.owf.server.service.api.PersonService
-import org.ozoneplatform.commons.server.domain.model.Person
 
 @Path("/persons")
 @Produces("application/json")
@@ -106,4 +108,33 @@ class PersonController {
         Response.ok(personService.fetchPreference(id, namespace, name)).build();
     }
 
+    /**
+     * Adds a group to the specified person
+     */
+    @POST
+    @Path("/{id}/groups")
+    Response addGroup(@PathParam("id") String id, Group groupInfo) {
+        def person = personService.addGroup(id, groupInfo.id)
+        Response.ok(person).build()
+    }
+
+    /**
+     * Removes a group from the specified person
+     */
+    @DELETE
+    @Path("/{id}/groups")
+    Response removeGroup(@PathParam("id") String id, Group groupInfo) {
+        def person = personService.removeGroup(id, groupInfo.id)
+        Response.ok(person).build()
+    }
+
+    /**
+     * Returns the list of groups for the specified person
+     */
+    @GET
+    @Path("/{id}/groups")
+    Response getGroups(@PathParam("id") String id) {
+        def groups = personService.getGroups(id)
+        Response.ok(groups).build()
+    }
 }

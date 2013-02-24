@@ -43,28 +43,34 @@ $headerLineHeight: 2.5em;
         white-space: nowrap;
 
         & > li {
+            $lineHeight: $baseFontSize * 2.5;
+            
             float: left;
-            line-height: $baseFontSize * 2.5;
-            height: $baseFontSize * 2.5;
+            line-height: $lineHeight;
+            height: $lineHeight;
 
             &.close-li {
                 padding: 0 0.5em 0 0.5em;
                 background: darken($widgetInactiveBackground, 10%);
             }
-        }
 
-        > .restore {
-            display: none;
-        }
-        
-        & > li > a {
-            text-decoration: none;
-            color: $widgetInactiveColor;
+            & > a {
+                text-decoration: none;
+                color: $widgetInactiveColor;
 
-            &:hover {
-                background: transparent;
-                color: $widgetInactiveColorHover;
+                &:hover {
+                    background: transparent;
+                    color: $widgetInactiveColorHover;
+                }
+
+                & > i {
+                    line-height: $lineHeight !important; // Required for IE7
+                }
             }
+        }
+
+        > .restore, > .expand {
+            display: none;
         }
     }
 }
@@ -100,6 +106,16 @@ $headerLineHeight: 2.5em;
     }
 
     > .actions > .restore {
+        display: inline-block;
+    }
+}
+
+.collapsed .header, .collapsed.header {
+    > .actions > .collapse {
+        display: none;
+    }
+
+    > .actions > .expand {
         display: inline-block;
     }
 }

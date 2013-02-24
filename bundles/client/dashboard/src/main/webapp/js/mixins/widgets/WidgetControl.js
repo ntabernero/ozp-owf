@@ -32,11 +32,15 @@ define([
             'change:active': 'updateActive',
             'change:maximized': 'updateMaximize',
             'change:minimized': 'updateMinimize',
+            'change:collapsed': 'updateCollapse',
             'destroy': 'remove'
         },
 
         initialize: function() {
             this.updateActive();
+            this.updateMinimize();
+            this.updateMaximize();
+            this.updateCollapse();
         },
 
         updateMinimize: function() {
@@ -47,8 +51,16 @@ define([
             this.$el[this.model.get('maximized') ? 'addClass' : 'removeClass']('maximized');
         },
 
+        updateCollapse: function() {
+            this.$el[this.model.get('collapsed') ? 'addClass' : 'removeClass']('collapsed');
+        },
+
         updateActive: function() {
             this.$el[this.model.get('active') ? 'addClass' : 'removeClass']('active');
+
+            if (this.model.get('active')) {
+                this.model.set('minimized', false);
+            }
         },
 
         activateWidget: function() {

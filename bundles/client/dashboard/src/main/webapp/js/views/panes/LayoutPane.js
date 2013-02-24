@@ -15,40 +15,51 @@
  */
 
 define([
-    'views/View',
+    'views/panes/Pane',
+    'mixins/CollectionView',
     'collections/WidgetStatesCollection',
     'backbone',
     'jquery',
     'lodash'
-], function (View, WidgetStatesCollection, Backbone, $, _) {
-
+], function (Pane, CollectionView, WidgetStatesCollection, Backbone, $, _) {
+    
     'use strict';
 
-    return View.extend({
+    //by mixing in CollectionView we get the renderCollection method.  However
+    //it is up to subclasses to call that method with the appropriate arguments
+    return Pane.extend(_.extend({}, CollectionView, {
+        vtype: 'layoutpane',
 
         className: 'pane',
 
         modelEvents: {
-            'add': 'addWidget'
+            'add': 'widgetAdded'
         },
 
+        views: function () {
+            return this.options.box;
+        },
+        
         initialize: function () {
-            View.prototype.initialize.apply(this, arguments);
-
-            //for now, accept collections as either 'collection' or 'widgets'
-            var collectionProp = this.options.collection ? 'collection' : 'widgets';
-
-            this.collection = this.options[collectionProp] instanceof Backbone.Collection ?
-                    this.options[collectionProp] : new WidgetStatesCollection(this.options[collectionProp] || []);
+            this.collection = this.options.widgets instanceof Backbone.Collection ? 
+                this.options.widgets :
+                new WidgetStatesCollection(this.options.widgets || []);
 
             this.collection.on('change:active', _.bind(this.changeActivation, this));
+
+            Pane.prototype.initialize.apply(this, arguments);
+
+            //if no widget is active, activate first widget
+            if (this.collection.length && !this.collection.where({active: true}).length) {
+                this.collection.at(0).set('active', true);
+            }
         },
 
-        render: function () {
-            this.$el.append('<div class="paneshim hide"></div>');
+        afterRender: function () {
+            this.$el.append( '<div class="paneshim hide"></div>' );
         },
 
-        //abstract method, override to provide widget activation semantics
+
         changeActivation: function (widget) {
             var active = widget.get('active');
 
@@ -62,11 +73,10 @@ define([
             }
         },
 
-        addWidget: $.noop, //abstract
-
-        launchWidget: function (evt, model) {
+        widgetAdded: function(widget) {
+            if (widget.get('active')) {
+                this.changeActivation(widget);
+            }
         }
-
-    });
-
+    }));
 });

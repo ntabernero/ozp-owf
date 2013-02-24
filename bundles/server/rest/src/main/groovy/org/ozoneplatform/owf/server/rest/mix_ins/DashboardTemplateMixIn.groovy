@@ -1,7 +1,9 @@
 package org.ozoneplatform.owf.server.rest.mix_ins
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.ozoneplatform.commons.server.domain.model.Group
 import org.ozoneplatform.commons.server.domain.model.WidgetDefinition
 
 public abstract class DashboardTemplateMixIn extends DashboardMixIn {
@@ -11,10 +13,7 @@ public abstract class DashboardTemplateMixIn extends DashboardMixIn {
     @JsonIgnore
     abstract Set<WidgetDefinition> getWidgets()
 
-    @JsonIgnore
-    abstract String layoutConfig
-
-    @JsonProperty("layoutConfig")
-    abstract Object getLayoutConfigJson()
+    @JsonManagedReference
+    abstract Set<Group> getGroups()
 
 }

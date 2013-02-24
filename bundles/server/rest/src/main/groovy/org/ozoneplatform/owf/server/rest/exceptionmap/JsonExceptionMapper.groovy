@@ -17,6 +17,7 @@
 package org.ozoneplatform.owf.server.rest.exceptionmap
 
 import groovy.json.JsonException
+
 import javax.ws.rs.core.Response
 import javax.ws.rs.ext.ExceptionMapper
 import javax.ws.rs.ext.Provider

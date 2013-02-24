@@ -22,6 +22,7 @@ define([
     'use strict';
 
     var tpl =
+        '<img src="{{icon-src}}" class="header-icon"/>' +
         '<span class="name">{{name}}</span>' +
         '<ul class="actions nav">' +
             '{{{btnTemplate}}}' +

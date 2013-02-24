@@ -21,19 +21,19 @@ define([
     'views/Taskbar',
     'backbone',
     'jquery'
-], function (Pane, Header, WidgetControlIframe, Taskbar, Backbone, $) {
+], function (LayoutPane, Header, WidgetControlIframe, Taskbar, Backbone, $) {
     'use strict';
 
-    return Pane.extend({
-        className: 'pane tabbedpane',
+    return LayoutPane.extend({
+		vtype: 'tabbedpane',
+		
+        className: LayoutPane.prototype.className + ' tabbedpane',
 
         $body: null,
         tabbar: null,
 
         render: function() {
             var me = this; 
-
-            Pane.prototype.render.apply(me, arguments);
 
             me.tabbar = new Taskbar({
                 collection: me.collection,
@@ -45,24 +45,28 @@ define([
             me.$el.append(me.tabbar.render().$el)
                     .append(me.$body);
 
-            me.collection.each(function(widgetState) {
-                  me.addWidget(widgetState);             
+            me.renderCollection({
+                $body: me.$body,
+                collection: me.collection,
+                viewFactory: function(model) {
+                    return new WidgetControlIframe({
+                        model: model
+                    });
+                }
             });
 
-            //if no widget is active, activate first widget
-            if (!me.$('.widgetframe.active').length && me.collection.length) {
-                me.collection.at(0).set('active', true);
-            }
-
-            return me;
+            return LayoutPane.prototype.render.apply(me, arguments);
         },
 
-        addWidget: function(widget) {
-            var frame = new WidgetControlIframe({
-                model: widget
-            });
+        updateSize: function() {
+            var me = this;
 
-            this.$body.append(frame.render().$el);
+            LayoutPane.prototype.updateSize.apply(me, arguments);
+
+            //adjust to new size once it is worked out
+            setTimeout(function() {
+                me.tabbar.updateSize();
+            }, 0);
         }
     });
 });

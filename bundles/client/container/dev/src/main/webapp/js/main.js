@@ -30,7 +30,9 @@ require.config({
         backbone: '../libs/js/backbone',
         'backbone.declarative.views': '../libs/js/backbone.declarative.views',
         handlebars: '../libs/js/handlebars',
-        modernizr: '../libs/js/modernizr'
+        modernizr: '../libs/js/modernizr',
+        'jquery-splitter': '../libs/js/jquery-splitter',
+        'bootstrap-editable': '../libs/js/bootstrap-editable'
         // // match handlebars requirejs plugin to avoid having to edit the contents of handlebars plugin when updating it to a new version
         // hbs: 'js/handlebars/handlebars-plugin-0.2.1',
         // json2: 'js/json2',
@@ -38,7 +40,6 @@ require.config({
     },
 
     shim: {
-        // Backbone library depends on lodash and jQuery.
         jquery: {
             exports: '$'
         },
@@ -47,6 +48,10 @@ require.config({
         },
         backbone: {
             deps: ['lodash', 'jquery'],
+            exports: 'Backbone'
+        },
+        'backbone.declarative.views': {
+            deps: ['lodash', 'backbone'],
             exports: 'Backbone'
         },
 
@@ -62,13 +67,25 @@ require.config({
             deps: ['jquery', 'bootstrap/bootstrap-transition'],
             exports: '$'
         },
+        'bootstrap/bootstrap-tooltip': {
+            deps: ['jquery', 'bootstrap/bootstrap-transition'],
+            exports: '$'
+        },
+        'bootstrap/bootstrap-popover': {
+            deps: ['jquery', 'bootstrap/bootstrap-transition', 'bootstrap/bootstrap-tooltip'],
+            exports: '$'
+        },
+        'bootstrap-editable': {
+            deps: ['jquery', 'bootstrap/bootstrap-transition', 'bootstrap/bootstrap-tooltip', 'bootstrap/bootstrap-popover'],
+            exports: '$'
+        },
         'jqueryui/jquery-ui.custom': {
             deps: ['jquery'],
             exports: '$'
         },
-        'backbone.declarative.views': {
-            deps: ['lodash', 'backbone'],
-            exports: 'Backbone'
+        'jquery-splitter': {
+            deps: ['jquery'],
+            exports: '$'
         }
     }
 

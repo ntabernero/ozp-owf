@@ -16,25 +16,25 @@
 
 /*global require, initialWidgetDefinitions, initialDashboards*/
 define([
-    'models/PersonalDashboardModel',
-	'views/dashboard/PersonalDashboard',
+    'models/DashboardInstanceModel',
+	'views/dashboard/DashboardInstance',
 	'collections/StacksCollection',
     'collections/WidgetDefinitionsCollection',
     'collections/PreferencesCollection',
     'collections/PeopleCollection',
     'collections/GroupsCollection',
     'collections/PersonalWidgetDefinitionsCollection',
-    'collections/PersonalDashboardsCollection',
+    'collections/DashboardInstancesCollection',
     'models/WidgetStateModel',
-
+	'services/Dashboard',
 	'jquery'
-], function (PersonalDashboardModel, Dashboard,
+], function (DashboardInstanceModel, Dashboard,
              StacksCollection, WidgetDefinitionsCollection, PreferencesCollection,
              PeopleCollection, GroupsCollection, PersonalWidgetDefinitionsCollection,
-             PersonalDashboardsCollection, WidgetStateModel, $) {
+             DashboardInstancesCollection, WidgetStateModel, DashboardService, $) {
 	// Pull in a collection of dashboards.
-    var personalDashboardsCollection = new PersonalDashboardsCollection();
-    personalDashboardsCollection.fetch({
+    var dashboardInstancesCollection = new DashboardInstancesCollection();
+    dashboardInstancesCollection.fetch({
         success: function(collection) {
             console.log("Loaded " + collection.length + " Dashboards");
         },
@@ -54,7 +54,7 @@ define([
         }
     });
    
-    // Pull in a collection of dashboards.
+    // Pull in a collection of widget definitions
     var widgetDefinitionsCollection = new WidgetDefinitionsCollection();
     widgetDefinitionsCollection.fetch({
         success: function(collection) {
@@ -65,18 +65,7 @@ define([
         }
     });
     
-    // Pull in a collection of dashboards.
-    var preferencesCollection = new PreferencesCollection();
-    preferencesCollection.fetch({
-        success: function(collection) {
-            console.log("Loaded " + collection.length + " preferences");
-        },
-        error: function() {
-            console.log("Failed to load any preferences");
-        }
-    });
-    
-    // Pull in a collection of dashboards.
+    // Pull in a collection of people
     var peopleCollection = new PeopleCollection();
     peopleCollection.fetch({
         success: function(collection) {
@@ -87,7 +76,7 @@ define([
         }
     });
     
-    // Pull in a collection of dashboards.
+    // Pull in a collection of groups
     var groupsCollection = new GroupsCollection();
     groupsCollection.fetch({
         success: function(collection) {
@@ -98,11 +87,11 @@ define([
         }
     });
 
-    // create a collection of dashboards from initial data
+    // create a collection of PersonalWidgetDefinitions from the WidgetDefinitions
     var personalWidgetDefinitionsCollection = new PersonalWidgetDefinitionsCollection(initialWidgetDefinitions);
 
     // create a collection of dashboards from initial data
-    var pdc = new PersonalDashboardsCollection(initialDashboards);
+    var dashboards = new DashboardInstancesCollection(initialDashboards);
 
     //alter widgetstatemodel so the get function will lookup any properties it doesn't have on the corresponding widgetdef
     WidgetStateModel.prototype.get = function(attr) {
@@ -122,9 +111,9 @@ define([
     };
 
     // Create a test dashboard.
-    var testDashboard = new PersonalDashboardModel({
+    var testDashboard = new DashboardInstanceModel({
         name: 'Test Dashboard',
-        layoutConfig: pdc.at(0).get('layoutConfig')
+        layoutConfig: dashboards.at(0).get('layoutConfig')
     });
     
     // Save the dashboard to the server.
@@ -147,6 +136,124 @@ define([
             });
             $('body').append(dashboard.render().el);
         }
+    });
+
+    $('#create-dashboard').on('click', function () {
+        require([
+            'views/dashboard/CreateEditDashboard',
+            'views/designer/Designer'
+        ], function(CreateEditDashboard, DashboardDesigner) {
+            
+            var cd = new CreateEditDashboard({
+                title: 'Create Dashboard',
+                removeOnClose: true
+            });
+
+            cd.show();
+           
+            cd.create().then(function( dashboardModel ) {
+                var me =this,
+                    dd = new DashboardDesigner({
+                        model: dashboardModel
+                    });
+
+                dd.render();
+                $(document.body).append(dd.$el);
+
+                dd.design().then(function(config) {
+                    dd.remove();
+                    dashboardModel.set( 'layoutConfig', config );
+
+                    console.log(config);
+                });
+            });
+        });
+    });
+
+    $('#design-dashboard').on('click', function() {
+
+        require([
+            'views/designer/Designer'
+        ], function(DashboardDesigner) {
+            
+            var me = this,
+                dashboardModel = new DashboardInstanceModel({
+                    layoutConfig: {
+                        vtype: 'designerpane',
+                        paneType: 'tabbed',
+                        box: {
+                            vtype: 'hbox',
+                            panes: [{
+                                vtype: 'designerpane',
+                                htmlText: '50%',
+                                width: '50%'
+                            }, {
+                                vtype: 'designerpane',
+                                htmlText: '50%',
+                                width: '50%',
+                                box: {
+                                    vtype: 'vbox',
+                                    panes: [{
+                                        vtype: 'designerpane',
+                                        htmlText: '50%',
+                                        height: '50%',
+                                        box: {
+                                            vtype: 'vbox',
+                                            panes: [{
+                                                vtype: 'designerpane',
+                                                htmlText: '50%',
+                                                height: '50%'
+                                            }, {
+                                                vtype: 'designerpane',
+                                                htmlText: '50%',
+                                                height: '50%'
+                                            }]
+                                        }
+                                    }, {
+                                        vtype: 'designerpane',
+                                        htmlText: '50%',
+                                        height: '50%',
+                                        box: {
+                                            vtype: 'vbox',
+                                            panes: [{
+                                                vtype: 'designerpane',
+                                                htmlText: '50%',
+                                                height: '50%'
+                                            }, {
+                                                vtype: 'designerpane',
+                                                htmlText: '50%',
+                                                height: '50%'
+                                            }]
+                                        }
+                                    }]
+                                }
+                            }]
+                        }
+                    }
+                });
+            
+            var dd = new DashboardDesigner({
+                    model: dashboardModel
+                });
+
+            dd.design().then(function(config) {
+                dd.remove();
+                config = DashboardService.convertForDashboard( config );
+                dashboardModel.set( 'layoutConfig', config );
+
+                console.log( config );
+
+                $('.dashboard').data('view').remove();
+
+                var dashboard = new Dashboard({
+                    model: dashboardModel
+                });
+                $('body').append(dashboard.render().el);
+            });
+        
+            $(document.body).append(dd.$el);
+        });
+       
     });
 
 });

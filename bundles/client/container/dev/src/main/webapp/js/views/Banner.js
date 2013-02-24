@@ -1,8 +1,9 @@
 define([
     'app',
+    'events/EventBus',
 
 //    'views/launchmenu/LaunchMenu',
-//    'views/dashboardswitcher/DashboardSwitcher',
+    'views/dashboardswitcher/DashboardSwitcher',
 //    'views/UserProfileWindow',
 //    'views/AboutWindow',
 
@@ -11,8 +12,8 @@ define([
     'jquery'
 ],
 
-function(app,
-//         LaunchMenu, DashboardSwitcher, UserProfileWindow, AboutWindow,
+function(app, EventBus, DashboardSwitcher,
+//         LaunchMenu, UserProfileWindow, AboutWindow,
          Backbone, $) {
 
     var $body = $(document.body),
@@ -24,6 +25,7 @@ function(app,
 
         events: {
             'click .launchmenu-btn': 'showLaunchMenu',
+            'click .create-dashboard-btn': 'createDashboard',
             'click .dashboards-btn': 'showDashboardsWindow',
             'click .admin-btn': 'showAdminWindow',
             'click .user-profile-btn': 'showProfileWindow',
@@ -45,18 +47,16 @@ function(app,
             return false;
         },
 
+        createDashboard: function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            EventBus.trigger('dashboard:create');
+        },
+
         showDashboardsWindow: function(evt) {
-//            if(!this.dashboardSwitcher) {
-//                this.dashboardSwitcher = new DashboardSwitcher();
-//                $body.append(this.dashboardSwitcher.render().$el);
-//            }
-//
-//            this.dashboardSwitcher.show();
-//            this.dashboardSwitcher.$el.one('hidden', function () {
-//                $(evt.currentTarget).removeClass('active');
-//            });
-//            $(evt.currentTarget).addClass('active');
-            return false;
+            evt.preventDefault();
+            evt.stopPropagation();
+            EventBus.trigger('dashboard:showSwitcher', evt);
         },
 
         showAdminWindow: function(e) {
