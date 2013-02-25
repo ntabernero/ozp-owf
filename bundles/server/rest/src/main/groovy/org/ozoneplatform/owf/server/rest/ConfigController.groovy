@@ -19,8 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.text.SimpleTemplateEngine
 import org.ozoneplatform.owf.server.service.api.DashboardInstanceService
 import org.ozoneplatform.owf.server.service.api.WidgetDefinitionService
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 import javax.ws.rs.GET
 import javax.ws.rs.Path
@@ -37,8 +35,6 @@ class ConfigController {
     ObjectMapperProvider objectMapperProvider
 
     SimpleTemplateEngine templateEngine = new groovy.text.SimpleTemplateEngine()
-
-    Logger logger = LoggerFactory.getLogger(DashboardTemplateController.class)
 
     @GET
     @Path("/serverConfig.js")
