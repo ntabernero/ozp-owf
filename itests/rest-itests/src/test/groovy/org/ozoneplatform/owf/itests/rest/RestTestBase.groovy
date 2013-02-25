@@ -26,7 +26,7 @@ abstract class RestTestBase extends OzoneTestSupport {
                 ozoneDistributionConfiguration(),
                 keepRuntimeFolder(),
                 provision(
-                        mavenBundle().groupId('org.codehaus.groovy').artifactId('groovy-all').version('2.0.6'),
+                        mavenBundle().groupId('org.codehaus.groovy').artifactId('groovy-all').version('2.1.0'),
                         mavenBundle().groupId('org.apache.httpcomponents').artifactId('httpclient-osgi').version('4.2.1'),
                         mavenBundle().groupId('org.apache.httpcomponents').artifactId('httpcore-osgi').version('4.2.1'),
                 )
@@ -37,7 +37,7 @@ abstract class RestTestBase extends OzoneTestSupport {
     void setup() {
         executeCommands('features:addurl mvn:org.apache.cxf.karaf/apache-cxf/2.7.2/xml/features', 'features:install http', 'features:install cxf')
         // TODO: Get current project version from MVN
-        executeCommands('features:addurl mvn:org.ozoneplatform.owf/features/8.0.0-ALPHA-SPRINT3-SNAPSHOT/xml/features', 'features:install owf-rest')
+        executeCommands('features:addurl mvn:org.ozoneplatform.owf/features/8.0.0-ALPHA-SPRINT4-SNAPSHOT/xml/features', 'features:install owf-rest')
 
         System.err.println executeCommand('osgi:list | grep Ozone')
         waitForServices()
@@ -74,6 +74,10 @@ abstract class RestTestBase extends OzoneTestSupport {
         def responseJson = Request.Post(uri).bodyString(json, ContentType.APPLICATION_JSON).addHeader('Accept','application/json').
                 execute().returnContent().asString()
         jsonSlurper.parseText(responseJson)
+    }
+
+    def getJavascript(def uri) {
+        Request.Get(uri).addHeader('Accept','text/javascript').execute().returnContent().asString()
     }
 
 }
