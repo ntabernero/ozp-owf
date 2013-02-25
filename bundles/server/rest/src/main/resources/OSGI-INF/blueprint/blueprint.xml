@@ -20,7 +20,7 @@
            xsi:schemaLocation="
            http://www.osgi.org/xmlns/blueprint/v1.0.0
            http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
-           http://cxf.apache.org/blueprint/jaxrs 
+           http://cxf.apache.org/blueprint/jaxrs
            http://cxf.apache.org/schemas/blueprint/jaxrs.xsd
            ">
 
@@ -61,8 +61,9 @@
     <bean id="personalWidgetDefinitions" class="org.ozoneplatform.owf.server.rest.PersonalWidgetDefinitionController">
         <property name="personalWidgetDefinitionService" ref="personalWidgetDefinitionService"/>
     </bean>
-    <bean id="welcome" class="org.ozoneplatform.owf.server.rest.WelcomeController">
+    <bean id="config" class="org.ozoneplatform.owf.server.rest.ConfigController">
         <property name="dashboardInstanceService" ref="dashboardInstanceService"/>
+        <property name="widgetDefinitionService" ref="widgetDefinitionService"/>
         <property name="objectMapperProvider" ref="objectMapperProvider"/>
     </bean>
 
@@ -88,27 +89,27 @@
         <property name="methodRolesMap">
             <map>
                 <entry key="create" value="ROLE_ADMIN"/>
-                <entry key="update" value="ROLE_ADMIN"/>  
+                <entry key="update" value="ROLE_ADMIN"/>
             </map>
-        </property> 
+        </property>
     </bean>
-    
+
     <bean id="authorizationFilter" class="org.apache.cxf.jaxrs.security.SimpleAuthorizingFilter">
         <property name="interceptor" ref="authorizationInterceptor"/>
     </bean>
     -->
-    
+
     <!--
         Annotation Authorization Providers
-    
+
     <bean id="groupsAuthInterceptor" class="org.apache.cxf.interceptor.security.SecureAnnotationsInterceptor">
         <property name="securedObject" ref="groups"/>
     </bean>
-    
+
     <bean id="groupsAuthFilter" class="org.apache.cxf.jaxrs.security.SimpleAuthorizingFilter">
         <property name="interceptor" ref="groupsAuthInterceptor"/>
     </bean>
-    
+
     <bean id="prefsAuthInterceptor" class="org.apache.cxf.interceptor.security.SecureAnnotationsInterceptor">
         <property name="securedObject" ref="preferences"/>
     </bean>
@@ -134,7 +135,7 @@
             <ref component-id="stacks"/>
             <ref component-id="widgetDefinitions"/>
             <ref component-id="personalWidgetDefinitions"/>
-            <ref component-id="welcome"/>
+            <ref component-id="config"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref component-id="validationExceptionMap"/>
@@ -142,10 +143,10 @@
             <ref component-id="jsonExceptionMap" />
             <ref component-id="objectMapperProvider"/>
             <ref component-id="jsonProvider" />
-            
+
         </jaxrs:providers>
     </jaxrs:server>
-    
+
     <jaxrs:server id="ozoneplatform_cxf_groups_endpoint"  address="/owf/groups">
         <jaxrs:serviceBeans>
             <ref component-id="groups"/>
@@ -159,5 +160,5 @@
             <ref component-id="jsonProvider" />
         </jaxrs:providers>
     </jaxrs:server>
-    
+
 </blueprint>

@@ -19,7 +19,7 @@
             <groupId>org.ozoneplatform.owf.server</groupId>
             <artifactId>services-api</artifactId>
             <version>${project.version}</version>
-        </dependency>
+        </dependency>        
         
         <dependency>
             <groupId>org.apache.cxf</groupId>

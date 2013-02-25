@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.ozoneplatform.owf</groupId>
+        <artifactId>owf</artifactId>
+        <version>8.0.0-ALPHA-SPRINT4-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>org.ozoneplatform.owf</groupId>
+    <artifactId>itests</artifactId>
+    <version>8.0.0-ALPHA-SPRINT4-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Ozone Platform :: OWF Integration Tests</name>
+
+    <properties>
+        <exam.version>2.4.0</exam.version>
+        <url.version>1.5.0</url.version>
+        <felix.version>3.2.2</felix.version>
+    </properties>
+
+    <modules>
+        <module>rest-itests</module>
+    </modules>
+</project>
