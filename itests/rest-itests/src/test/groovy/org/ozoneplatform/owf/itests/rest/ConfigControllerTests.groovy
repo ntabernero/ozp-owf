@@ -9,8 +9,9 @@ class ConfigControllerTests extends RestTestBase {
     Logger logger = LoggerFactory.getLogger(ConfigControllerTests.class)
 
     @Test
-    void returnsDashboardTemplates() {
-        def severConfig = getJson("${uriBase}/serverConfig.js")
-        assert serverConfig.contains('var initialWidgetDefinitions')
+    void returnsServerConfig() {
+        def serverConfig = getJavascript("${uriBase}/serverConfig.js")
+        assert serverConfig.contains('initialWidgetDefinitions = [')
+        assert serverConfig.contains('initialDashboards = [')
     }
 }
