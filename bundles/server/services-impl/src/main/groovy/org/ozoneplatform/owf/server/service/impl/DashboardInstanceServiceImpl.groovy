@@ -132,6 +132,7 @@ class DashboardInstanceServiceImpl implements DashboardInstanceService {
             "paneType": "tabbedpane"
         }
         """
+        dashboardInstance.floatingWidgets = '{}'
         dashboardMap[dashboardInstance.id] = dashboardInstance
 
         dashboardInstance = person.createDashboardInstance("Test Dashboard 2", 1, )
@@ -270,6 +271,7 @@ class DashboardInstanceServiceImpl implements DashboardInstanceService {
             "paneType": "fitpane"
         }
         """
+        dashboardInstance.floatingWidgets = '{}'
         dashboardMap[dashboardInstance.id] = dashboardInstance
     }
 }
